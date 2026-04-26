@@ -1354,6 +1354,152 @@ aside.aside strong {
   .builder { padding: 24px 20px; }
   .dater { padding: 22px 20px; }
 }
+
+/* —————— find: describe-your-problem search —————— */
+
+.find {
+  margin: 56px 0 0;
+  padding: 36px 0 40px;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.find-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 22, "SOFT" 80;
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--ink);
+  margin-bottom: 6px;
+  display: block;
+}
+.find-eyebrow em {
+  color: var(--claret);
+  font-style: italic;
+}
+
+.find-hint {
+  font-family: var(--serif-body);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 60ch;
+  margin-bottom: 20px;
+}
+
+.find-textarea {
+  width: 100%;
+  font-family: var(--serif-body);
+  font-size: 18px;
+  font-variation-settings: "opsz" 18;
+  line-height: 1.55;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ink-soft);
+  padding: 10px 0 14px;
+  color: var(--ink);
+  resize: none;
+  min-height: 56px;
+  transition: border-color 0.2s ease;
+}
+.find-textarea:focus {
+  outline: none;
+  border-bottom-color: var(--claret);
+}
+.find-textarea::placeholder {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 18, "SOFT" 80;
+  color: var(--ink-faint);
+}
+
+.find-results {
+  display: none;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--rule);
+}
+.find-results.show {
+  display: block;
+  animation: fadeUp 0.3s ease;
+}
+
+.find-results-label {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "SOFT" 80;
+  font-size: 14px;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+}
+
+.find-result {
+  display: grid;
+  grid-template-columns: 36px 1fr 24px;
+  gap: 16px;
+  padding: 14px 8px;
+  border-top: 1px solid var(--rule-soft);
+  align-items: baseline;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease;
+}
+.find-result:hover { background: var(--paper-deep); }
+.find-result:hover .find-result-arrow { transform: translateX(3px); color: var(--claret-deep); }
+
+.find-result-rank {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 22, "SOFT" 80;
+  font-size: 22px;
+  color: var(--claret);
+  line-height: 1;
+  text-align: right;
+}
+
+.find-result-body { min-width: 0; }
+
+.find-result-title {
+  font-family: var(--serif-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 20, "SOFT" 50;
+  font-size: 19px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.find-result-section {
+  display: block;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 13, "SOFT" 80;
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+
+.find-result-arrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  color: var(--claret);
+  font-size: 18px;
+  transition: transform 0.2s ease, color 0.2s ease;
+  text-align: right;
+}
+
+.find-empty {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 16, "SOFT" 80;
+  font-size: 16px;
+  color: var(--ink-soft);
+  padding: 8px 0;
+  line-height: 1.5;
+}
+.find-empty a {
+  color: var(--claret);
+  border-bottom: 1px solid var(--claret-pale);
+}
 </style>
 </head>
 <body>
@@ -1392,6 +1538,15 @@ aside.aside strong {
     </ol>
   </nav>
 </header>
+
+<!-- ═══════════════════════════════ FIND / SMART SEARCH ═══════════════════════════════ -->
+
+<section class="find" id="find" aria-label="Describe your problem">
+  <span class="find-eyebrow">Not sure where to start? <em>Describe what's happening.</em></span>
+  <p class="find-hint">In your own words — like you'd write it in an email. We'll point you to the section that answers it. (No email gets sent.)</p>
+  <textarea class="find-textarea" id="find-input" rows="2" placeholder="e.g. I paid for my class but my dashboard still says I haven't paid"></textarea>
+  <div class="find-results" id="find-results"></div>
+</section>
 
 <!-- ═══════════════════════════════ I. URGENT ═══════════════════════════════ -->
 
@@ -1603,7 +1758,7 @@ aside.aside strong {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="err-prereq">
       <summary>
         <div class="entry-msg">Prerequisite Pending Review</div>
         <div class="entry-tag wait icon-plus">wait</div>
@@ -1655,7 +1810,7 @@ aside.aside strong {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="err-regfail">
       <summary>
         <div class="entry-msg">Registration Failed (no specific message)</div>
         <div class="entry-tag act icon-plus">check detail</div>
@@ -1673,7 +1828,7 @@ aside.aside strong {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="err-dropfail">
       <summary>
         <div class="entry-msg">Drop Failed</div>
         <div class="entry-tag act icon-plus">email — once</div>
@@ -1861,49 +2016,49 @@ aside.aside strong {
   </div>
 
   <div class="mistakes">
-    <article class="mistake">
+    <article class="mistake" id="m-browser-closed">
       <div>
         <h3 class="mistake-title">Closed the browser after paying</h3>
         <p class="mistake-fix"><strong>Fix —</strong> see <a href="#sym-paid">"charged but unpaid"</a>. Don't pay again. Email once with payment evidence.</p>
       </div>
     </article>
-    <article class="mistake">
+    <article class="mistake" id="m-resubmit">
       <div>
         <h3 class="mistake-title">Resubmitted while a status was Pending</h3>
         <p class="mistake-fix"><strong>Fix —</strong> only one application per course at a time. Duplicate submissions confuse the review. Wait for the existing one to resolve before submitting again.</p>
       </div>
     </article>
-    <article class="mistake">
+    <article class="mistake" id="m-drop-first">
       <div>
         <h3 class="mistake-title">Dropped the wrong class first, then registered for the right one</h3>
         <p class="mistake-fix"><strong>Fix —</strong> the order matters. Always register for the new class first (locks the seat), pay, then drop the old one. Money does not transfer between classes.</p>
       </div>
     </article>
-    <article class="mistake">
+    <article class="mistake" id="m-paid-oos">
       <div>
         <h3 class="mistake-title">Paid the out-of-state tuition because it looked correct</h3>
         <p class="mistake-fix"><strong>Fix —</strong> in-state is $46 per unit. If you saw $400 or more for 3 units and paid, email CVC support with payment evidence. Refunds take weeks. <strong>Always verify residency before paying.</strong></p>
       </div>
     </article>
-    <article class="mistake">
+    <article class="mistake" id="m-tc-canvas">
       <div>
         <h3 class="mistake-title">Tried to find class in the Teaching College's Canvas</h3>
         <p class="mistake-fix"><strong>Fix —</strong> always use your Home College's Canvas; that's how the trust relationship works. The Teaching College's Canvas won't show your CVC enrollment directly.</p>
       </div>
     </article>
-    <article class="mistake">
+    <article class="mistake" id="m-quick-email">
       <div>
         <h3 class="mistake-title">Emailed support six hours after a "Pending" status</h3>
         <p class="mistake-fix"><strong>Fix —</strong> wait 3–5 business days for normal Pending; 5–7 for non-CCC prereqs. <a href="#dater">Use the date tool</a> to confirm. Premature emails just mean the same answer ("still processing") sent twice.</p>
       </div>
     </article>
-    <article class="mistake">
+    <article class="mistake" id="m-cert">
       <div>
         <h3 class="mistake-title">Asked CVC about a certificate program or course articulation</h3>
         <p class="mistake-fix"><strong>Fix —</strong> certificates are awarded by individual colleges, not CVC. Articulation lives at <a href="https://assist.org" target="_blank">assist.org</a>. Both questions go to your Home College's <strong>counselor,</strong> not us.</p>
       </div>
     </article>
-    <article class="mistake">
+    <article class="mistake" id="m-w">
       <div>
         <h3 class="mistake-title">Assumed a "W" was a system bug</h3>
         <p class="mistake-fix"><strong>Fix —</strong> a "W" on transcript is the normal outcome of dropping after the no-notation deadline. It doesn't affect GPA. Different from a failure or a denial.</p>
@@ -1923,7 +2078,7 @@ aside.aside strong {
     </div>
   </div>
 
-  <details>
+  <details id="t-register">
     <summary>
       <div class="task-summary">
         <div>
@@ -1969,7 +2124,7 @@ aside.aside strong {
     </div>
   </details>
 
-  <details>
+  <details id="t-pay">
     <summary>
       <div class="task-summary">
         <div>
@@ -1990,7 +2145,7 @@ aside.aside strong {
     </div>
   </details>
 
-  <details>
+  <details id="t-drop">
     <summary>
       <div class="task-summary">
         <div>
@@ -2028,7 +2183,7 @@ aside.aside strong {
     </div>
   </details>
 
-  <details>
+  <details id="t-canvas">
     <summary>
       <div class="task-summary">
         <div>
@@ -2047,7 +2202,7 @@ aside.aside strong {
     </div>
   </details>
 
-  <details>
+  <details id="t-aid">
     <summary>
       <div class="task-summary">
         <div>
@@ -2070,7 +2225,7 @@ aside.aside strong {
     </div>
   </details>
 
-  <details>
+  <details id="t-transcript">
     <summary>
       <div class="task-summary">
         <div>
@@ -2088,7 +2243,7 @@ aside.aside strong {
     </div>
   </details>
 
-  <details>
+  <details id="t-eligibility">
     <summary>
       <div class="task-summary">
         <div>
@@ -2400,6 +2555,189 @@ if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-mot
   }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
   document.querySelectorAll('section.section .section-head').forEach(el => obs.observe(el));
 }
+
+// ════════════════════════════════════════════════════════════════════
+// FIND — describe-your-problem search
+// ════════════════════════════════════════════════════════════════════
+
+const STOPWORDS = new Set([
+  'the','a','an','is','are','was','were','be','been','being','am',
+  'and','or','but','to','for','of','in','on','at','with','from','by',
+  'my','i','me','we','us','you','your','this','that','these','those',
+  'it','its','have','has','had','will','would','could','should','do',
+  'does','did','so','as','if','then','than','when','where','why','how',
+  'just','now','any','all','some','can','cant','won','wont'
+]);
+
+const CORPUS = [
+  // Urgent fast-lanes
+  { id:'urgent-pending', title:'Class begins in 48 hours and I\'m still Pending', section:'§i. Urgent matters',
+    tags:['urgent','class start','starts soon','class begins','48 hours','about to start','class starts','tomorrow class','still pending','no progress','not enrolled yet','class is starting','very soon'] },
+  { id:'urgent-drop', title:'My drop deadline is today or tomorrow', section:'§i. Urgent matters',
+    tags:['urgent','drop deadline','today','tomorrow','last day to drop','cant drop','unable to drop','withdraw','leave class','quit class','remove class','drop deadline today'] },
+  { id:'urgent-paid', title:'My card was charged but I\'m not enrolled', section:'§i. Urgent matters',
+    tags:['urgent','paid','card charged','charged','payment','money taken','not enrolled','paid but','dashboard says pay','need refund','double charge'] },
+
+  // Errors — error decoder
+  { id:'sym-pending', title:'Pending Person Match', section:'§iii. Error decoder',
+    tags:['pending person match','pending match','still processing','waiting','review','no progress','stuck','how long','been a while','how many days','pending'] },
+  { id:'err-prereq', title:'Prerequisite Pending Review', section:'§iii. Error decoder',
+    tags:['prerequisite','prereq','pending review','transcripts','documents','docs','unofficial transcript','requirement','passed prereq','completed prereq','chemistry','biology','math','english','non-ccc','outside transcript','from another school','university','four year','out of state','prereqs','prerequisite pending','prereq pending'] },
+  { id:'sym-failed', title:'Course Filled / Class is full', section:'§iii. Error decoder',
+    tags:['course filled','class full','no seats','no spots','at capacity','closed','reached capacity','full class','no more seats','waitlist','add code','cant get in','class is full','already full','section filled'] },
+  { id:'err-regfail', title:'Registration Failed (no specific message)', section:'§iii. Error decoder',
+    tags:['registration failed','register failed','cant register','unable to register','reg failed','vague error','generic error','no error message','what does this mean'] },
+  { id:'err-dropfail', title:'Drop Failed', section:'§iii. Error decoder',
+    tags:['drop failed','cant drop','unable to drop','wont drop','drop error','drop button','drop course','withdraw failed','drop wont work','dropping failed'] },
+  { id:'sym-denied', title:'Application Denied', section:'§iii. Error decoder',
+    tags:['application denied','denied','rejected','not accepted','declined','turned down','no reason given','application rejected'] },
+  { id:'sym-update-failed', title:'Status Update Failed (on a class you dropped)', section:'§iii. Error decoder',
+    tags:['status update failed','already dropped','still showing','dropped class still there','display issue','dashboard wrong','should be dropped'] },
+  { id:'sym-tuition', title:'Tuition shows $400+ for 3 units', section:'§iii. Error decoder',
+    tags:['tuition too high','expensive','too much','high cost','high fees','out of state tuition','not in state','residency','wrong tuition','outrageous price','hundreds dollars','thousand dollars','too expensive','overcharged','out of state'] },
+  { id:'sym-paid', title:'Card charged but dashboard says "Pay Now"', section:'§iii. Error decoder',
+    tags:['paid but pay now','card charged','charged my card','already paid','payment didnt go through','confirm payment','didnt confirm','closed browser after paying','money taken','pay now still showing','says pay now','still says pay'] },
+  { id:'sym-canvas', title:'Class doesn\'t show up in Canvas', section:'§iii. Error decoder',
+    tags:['canvas','class missing','course missing','cant find class','no class in canvas','canvas empty','where is my class','course not appearing','canvas course missing','class doesnt appear','dont see my class'] },
+  { id:'sym-unknown', title:'I don\'t know what I\'m looking at', section:'§iii. Error decoder',
+    tags:['confused','lost','help','dont know','no idea','not sure','what is this','what does this mean','overwhelmed','first time'] },
+
+  // Mistakes
+  { id:'m-browser-closed', title:'Closed the browser after paying', section:'§v. Common mistakes',
+    tags:['closed browser','closed window','closed tab','after paying','didnt confirm','tab closed','accidentally closed'] },
+  { id:'m-resubmit', title:'Resubmitted while a status was Pending', section:'§v. Common mistakes',
+    tags:['resubmitted','submitted twice','submitted multiple times','duplicate','tried again','reapplied','two applications'] },
+  { id:'m-drop-first', title:'Dropped the wrong class first, then registered for the right one', section:'§v. Common mistakes',
+    tags:['switch class','wrong class','change class','swap class','dropped first','order mistake','lost both classes'] },
+  { id:'m-paid-oos', title:'Paid the out-of-state tuition because it looked correct', section:'§v. Common mistakes',
+    tags:['paid out of state','overpaid','paid too much','high tuition paid','accidentally paid','paid wrong amount'] },
+  { id:'m-tc-canvas', title:'Tried to find class in the Teaching College\'s Canvas', section:'§v. Common mistakes',
+    tags:['wrong canvas','teaching college canvas','cant log in','login issue','wrong login','two canvas accounts'] },
+  { id:'m-quick-email', title:'Emailed support six hours after a "Pending" status', section:'§v. Common mistakes',
+    tags:['emailed too soon','impatient','just submitted','how long should i wait','support reply','followup'] },
+  { id:'m-cert', title:'Asked CVC about a certificate program or course articulation', section:'§v. Common mistakes',
+    tags:['certificate','articulation','transfer','degree','major','counselor','program planning','will it transfer','assist','assist.org','course transfer','units transfer','degree audit','requirements'] },
+  { id:'m-w', title:'Assumed a "W" was a system bug', section:'§v. Common mistakes',
+    tags:['w grade','withdraw on transcript','transcript w','what is a w','grade w','dropped after deadline'] },
+
+  // Tasks (how-to)
+  { id:'t-register', title:'Register for a class', section:'§vi. Step-by-step guides',
+    tags:['register','sign up','enroll','how to register','first time','new student','add a class','take a class','start enrolling'] },
+  { id:'t-pay', title:'Pay tuition', section:'§vi. Step-by-step guides',
+    tags:['how to pay','pay tuition','pay fees','make payment','payment instructions','steps to pay','confirm payment'] },
+  { id:'t-drop', title:'Drop or switch a class', section:'§vi. Step-by-step guides',
+    tags:['how to drop','drop class','withdraw','switch class','change class','quit class','remove class','drop deadline'] },
+  { id:'t-canvas', title:'Find your class in Canvas', section:'§vi. Step-by-step guides',
+    tags:['canvas access','login canvas','find class','course link','view course','canvas instructions','how to use canvas','class link missing'] },
+  { id:'t-aid', title:'Use financial aid (CCPG, FAFSA, Pell)', section:'§vi. Step-by-step guides',
+    tags:['financial aid','fafsa','ccpg','pell','promise grant','aid','reimburse','free tuition','grant','financial help','need money','cant afford','ssn','ssn match'] },
+  { id:'t-transcript', title:'Get a transcript', section:'§vi. Step-by-step guides',
+    tags:['transcript','grades','records','official transcript','send transcript','my grades','grade report','final grade'] },
+  { id:'t-eligibility', title:'Eligibility — special cases', section:'§vi. Step-by-step guides',
+    tags:['eligible','eligibility','high school','dual enrollment','f1 visa','international','ab540','adult ed','adult education','dso','restricted','can i enroll'] }
+];
+
+function tokenize(s) {
+  return [...new Set(
+    (s || '').toLowerCase()
+      .replace(/[^\w\s']/g, ' ')
+      .split(/\s+/)
+      .filter(t => t.length >= 2 && !STOPWORDS.has(t))
+  )];
+}
+
+function scoreItem(query, item) {
+  const q = query.toLowerCase().trim();
+  if (q.length < 3) return 0;
+
+  const tokens = tokenize(q);
+  if (tokens.length === 0) return 0;
+
+  const titleLower = item.title.toLowerCase();
+  const tagsJoined = item.tags.join(' | ').toLowerCase();
+  const haystack = titleLower + ' | ' + tagsJoined;
+
+  let score = 0;
+
+  // full-phrase containment
+  if (haystack.includes(q)) score += 80;
+  if (titleLower.includes(q)) score += 40;
+
+  // bigrams
+  for (let i = 0; i < tokens.length - 1; i++) {
+    const bigram = tokens[i] + ' ' + tokens[i + 1];
+    if (haystack.includes(bigram)) score += 22;
+    if (titleLower.includes(bigram)) score += 15;
+  }
+
+  // single-token matches
+  for (const token of tokens) {
+    let tagHit = false;
+    for (const tag of item.tags) {
+      const tagLower = tag.toLowerCase();
+      if (tagLower === token) { score += 18; tagHit = true; break; }
+      if (tagLower.split(/\s+/).includes(token)) { score += 12; tagHit = true; }
+      if (!tagHit && tagLower.includes(token)) { score += 5; }
+    }
+    if (titleLower.split(/\s+/).includes(token)) score += 9;
+    else if (titleLower.includes(token)) score += 4;
+  }
+
+  return score;
+}
+
+function findMatches(query) {
+  const ranked = CORPUS
+    .map(item => ({ item, score: scoreItem(query, item) }))
+    .filter(x => x.score > 0)
+    .sort((a, b) => b.score - a.score);
+  return ranked.slice(0, 4);
+}
+
+function renderResults(results, query) {
+  const wrap = document.getElementById('find-results');
+  if (!query.trim() || query.trim().length < 3) {
+    wrap.classList.remove('show');
+    wrap.innerHTML = '';
+    return;
+  }
+  if (results.length === 0) {
+    wrap.classList.add('show');
+    wrap.innerHTML = `<div class="find-empty">No close match. Try the <a href="#symptoms">symptom picker</a> below, or browse the <a href="#errors">error decoder</a>.</div>`;
+    return;
+  }
+  const labels = ['i.','ii.','iii.','iv.'];
+  wrap.classList.add('show');
+  wrap.innerHTML =
+    `<div class="find-results-label">Sounds like you mean —</div>` +
+    results.map((r, i) =>
+      `<a class="find-result" href="#${r.item.id}">
+         <div class="find-result-rank">${labels[i]}</div>
+         <div class="find-result-body">
+           <div class="find-result-title">${r.item.title}</div>
+           <span class="find-result-section">${r.item.section}</span>
+         </div>
+         <div class="find-result-arrow">→</div>
+       </a>`
+    ).join('');
+}
+
+const findInput = document.getElementById('find-input');
+let findTimer;
+findInput.addEventListener('input', (e) => {
+  clearTimeout(findTimer);
+  const q = e.target.value;
+  findTimer = setTimeout(() => {
+    renderResults(findMatches(q), q);
+  }, 160);
+});
+
+// when user clicks a result, also open the matching details if applicable
+document.getElementById('find-results').addEventListener('click', (e) => {
+  const a = e.target.closest('a.find-result');
+  if (!a) return;
+  setTimeout(openIfAnchored, 50);
+});
 </script>
 
 </body>
