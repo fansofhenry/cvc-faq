@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CVC Exchange — Student FAQ</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f7f8fa;color:#1a202c;line-height:1.55;-webkit-font-smoothing:antialiased;padding:24px 16px}
+.wrap{max-width:760px;margin:0 auto}
+.hero{padding:0 0 20px;border-bottom:1px solid #e5e9ef;margin-bottom:20px}
+.hero h1{font-size:22px;font-weight:600;margin-bottom:6px;color:#1a202c}
+.hero p{font-size:14px;color:#5a6675;margin:0}
+.warn{background:#fff9e6;border-left:3px solid #d49b00;border-radius:0 6px 6px 0;padding:10px 14px;margin:14px 0 0;font-size:13px;color:#5d4a00}
+.warn strong{font-weight:600;color:#8a6f00}
+.controls{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+input[type=search]{width:100%;padding:10px 14px;font-size:14px;border:1px solid #cdd2da;border-radius:8px;background:#fff;color:#1a202c;font-family:inherit}
+input[type=search]:focus{outline:none;border-color:#1f4e79;box-shadow:0 0 0 3px rgba(31,78,121,.1)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{padding:5px 12px;font-size:12px;border:1px solid #cdd2da;border-radius:20px;background:#fff;color:#5a6675;cursor:pointer;font-family:inherit;transition:all .15s}
+.chip:hover{border-color:#1f4e79;color:#1f4e79}
+.chip.active{background:#1a202c;color:#fff;border-color:#1a202c}
+.list{display:flex;flex-direction:column;background:#fff;border:1px solid #e5e9ef;border-radius:10px;overflow:hidden}
+.qa{border-bottom:1px solid #e5e9ef}
+.qa.hidden{display:none}
+.qa:last-child{border-bottom:none}
+.qh{padding:14px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;background:none;border:none;width:100%;text-align:left;font-family:inherit;color:inherit;transition:background .1s}
+.qh:hover{background:#f7f8fa}
+.q{font-size:14px;font-weight:500;flex:1;line-height:1.4;color:#1a202c}
+.tg{font-size:18px;color:#a0aec0;flex-shrink:0;transition:transform .2s;line-height:1;font-weight:300}
+.qa.open .tg{transform:rotate(45deg);color:#1f4e79}
+.qb{display:none;padding:0 18px 16px}
+.qa.open .qb{display:block}
+.qb p{font-size:14px;line-height:1.6;margin:0 0 8px;color:#2d3748}
+.qb p:last-child{margin-bottom:0}
+.qb ol,.qb ul{margin:4px 0 8px 22px;font-size:14px;line-height:1.6;color:#2d3748}
+.qb li{margin-bottom:3px}
+.qb a{color:#1f4e79}
+.qb strong{font-weight:600}
+.flag{background:#fff9e6;border-left:3px solid #d49b00;border-radius:0 6px 6px 0;padding:8px 12px;font-size:13px;margin:8px 0;color:#5d4a00}
+.flag strong{font-weight:600;color:#8a6f00}
+.resources{margin-top:24px;padding-top:20px;border-top:1px solid #e5e9ef}
+.resources h2{font-size:11px;font-weight:600;color:#5a6675;margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em}
+.resgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.res{display:flex;flex-direction:column;gap:2px;padding:10px 12px;background:#fff;border:1px solid #e5e9ef;border-radius:8px;text-decoration:none;color:#1a202c;font-size:13px;transition:border-color .15s}
+.res:hover{border-color:#1f4e79}
+.reslabel{font-size:11px;color:#5a6675}
+.reslink{font-weight:500}
+.support{margin-top:12px;padding:12px 14px;background:#eef2f7;border-radius:8px;font-size:13px;color:#1f4e79}
+.support a{color:#1f4e79;font-weight:500}
+.none{text-align:center;padding:24px;color:#8895a3;font-size:13px;display:none;background:#fff;border:1px dashed #cdd2da;border-radius:10px;margin-top:8px}
+.none.show{display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="hero">
+<h1>CVC Exchange — Student FAQ</h1>
+<p>Quick answers for enrolling, paying, dropping, and getting help.</p>
+<div class="warn"><strong>Always click Confirm Payment</strong> after the bank page redirects you back to CVC. Skipping it is the #1 reason students get dropped after paying.</div>
+</div>
+
+<div class="controls">
+<input type="search" id="s" placeholder="Search..." autocomplete="off">
+<div class="chips" id="chips">
+<button class="chip active" data-f="all">All</button>
+<button class="chip" data-f="enroll">Enrolling</button>
+<button class="chip" data-f="pay">Paying</button>
+<button class="chip" data-f="drop">Dropping</button>
+<button class="chip" data-f="canvas">Canvas</button>
+<button class="chip" data-f="transcripts">Transcripts</button>
+<button class="chip" data-f="aid">Financial aid</button>
+<button class="chip" data-f="trouble">Problems</button>
+</div>
+</div>
+
+<div class="list" id="list"></div>
+<div class="none" id="none">No matching questions.</div>
+
+<div class="resources">
+<h2>Official resources</h2>
+<div class="resgrid">
+<a href="https://search.cvc.edu/users/sign_in" target="_blank" class="res"><span class="reslabel">Log in</span><span class="reslink">search.cvc.edu</span></a>
+<a href="https://www.cvc.edu/students/student-eligibility/" target="_blank" class="res"><span class="reslabel">Eligibility</span><span class="reslink">Who can enroll</span></a>
+<a href="https://www.cvc.edu/students/financial-aid/" target="_blank" class="res"><span class="reslabel">Financial aid</span><span class="reslink">Aid &amp; CCPG</span></a>
+<a href="https://www.cvc.edu/students/transcripts-students/" target="_blank" class="res"><span class="reslabel">Transcripts</span><span class="reslink">How to get one</span></a>
+<a href="https://www.cvc.edu/students/refunds/" target="_blank" class="res"><span class="reslabel">Refunds</span><span class="reslink">By college</span></a>
+<a href="https://cvc.freshservice.com/support/solutions" target="_blank" class="res"><span class="reslabel">Help center</span><span class="reslink">Self-service</span></a>
+</div>
+</div>
+
+<div class="support">Still stuck? Email <a href="mailto:cvc.customersupport@parchment.com">cvc.customersupport@parchment.com</a> with your CCCID, course, and what happened.</div>
+
+</div>
+
+<script>
+const D=[
+{t:['enroll'],q:"How do I register for a class?",a:"<ol><li>Search at <a href='https://www.cvc.edu/' target='_blank'>cvc.edu</a> and click <strong>Add Class</strong></li><li>Log in via your Home College</li><li>Sign the consent form (type your full name)</li><li>Fill out the enrollment form, upload prereq docs if asked, confirm residency</li><li>Click Submit, then pay immediately</li></ol>"},
+{t:['enroll','trouble'],q:"My status says 'Pending'. What does that mean?",a:"<p>Your registration is being processed at the Teaching College. Normal for a few business days. <strong>Contact support if it's been over a week</strong> or your class start date is approaching.</p>"},
+{t:['pay'],q:"How do I pay?",a:"<ol><li>After registering, click <strong>Pay Fees</strong></li><li>Enter payment info on the Teaching College's payment page (usually TouchNet)</li><li>You'll be sent back to CVC — <strong>click Confirm Payment</strong></li></ol><div class='flag'><strong>Don't skip Confirm Payment.</strong> If you close the browser before clicking it, your card will be charged but the Teaching College won't see you as paid — and may drop you.</div>"},
+{t:['pay','trouble'],q:"I paid but my class still shows unpaid.",a:"<p>You probably didn't click <strong>Confirm Payment</strong> after the bank page. Check your CVC dashboard — does Class Schedule say 'Pay Now' or 'Enrolled &amp; Paid'?</p><p>If your card was charged but you're not showing as paid, email support with your CCCID, course, payment date/time, last 4 of the card, and amount.</p>"},
+{t:['pay','trouble'],q:"My class costs way more than expected (like $1,000+ for 3 units).",a:"<p>In-state CCC tuition is <strong>$46/unit</strong> ($138 for 3 units). If you're seeing 3-9× that, your California residency probably wasn't confirmed at the Teaching College.</p><p><strong>Don't pay yet.</strong> Contact the Teaching College's Admissions &amp; Records office and ask them to confirm your CA residency. Once corrected, tuition recalculates.</p>"},
+{t:['drop'],q:"How do I drop a class?",a:"<ol><li>Log in to your CVC dashboard</li><li>Go to <strong>Class Schedule</strong></li><li>Click <strong>Drop Course</strong> and confirm</li></ol><p>Dropping can affect your refund eligibility, transcript (W grade), and financial aid. If unsure, talk to a counselor first.</p>"},
+{t:['drop','enroll'],q:"I registered for the wrong class. How do I switch?",a:"<ol><li><strong>Register for the correct class first</strong> — lock in the seat</li><li>Pay for the new class</li><li>Then drop the wrong one</li><li>Request a refund from the Teaching College that received the original payment</li></ol><p><strong>Money does not transfer between classes.</strong> You'll pay separately for the new class and wait for the refund from the dropped one.</p>"},
+{t:['drop'],q:"How do I get a refund?",a:"<p>Refunds come from the Teaching College, not from CVC. Each college has its own process and timeline (usually 2-6 weeks). Find your college's refund info at <a href='https://www.cvc.edu/students/refunds/' target='_blank'>cvc.edu/students/refunds</a>.</p><p><strong>Drop deadlines matter.</strong> Drop before the deadline (usually before classes start) for a full refund.</p>"},
+{t:['canvas'],q:"How do I find my class in Canvas?",a:"<ol><li>Log in to your CVC dashboard</li><li>Go to <strong>Class Schedule</strong></li><li>Click the link below your course to open your Home College's Canvas</li><li>In Canvas, click <strong>View All Courses</strong></li></ol><p>It can take 24-48 hours after registration to appear. Contact support if missing after 3 business days.</p>"},
+{t:['canvas','trouble'],q:"Canvas is giving me a 'trust relationship' or login error.",a:"<p>This is a college IT issue, not a CVC issue. Try a different browser or incognito mode first. If still broken, contact your <strong>Home College's IT helpdesk</strong> or the CCC Tech Center.</p>"},
+{t:['transcripts'],q:"How do I get a transcript for my CVC course?",a:"<p><strong>For your Home College:</strong> the Teaching College sends it automatically after the term ends. Allow 4-6 weeks. If grades aren't showing after that, contact your Home College's A&amp;R first.</p><p><strong>For external transcripts</strong> (4-year schools, employers): request from the Teaching College that taught the course. Details at <a href='https://www.cvc.edu/students/transcripts-students/' target='_blank'>cvc.edu/students/transcripts-students</a>.</p>"},
+{t:['aid','pay'],q:"Can I use financial aid or CCPG?",a:"<p>Financial aid works as <strong>reimbursement</strong> — you pay upfront, then your Home College reimburses you. You can't skip payment because aid will cover it.</p><p>CCPG (Promise Grant) covers per-unit fees if you're eligible at your Home College — it generally applies to CVC courses too. Apply through your Home College or via <a href='https://bog.opencccapply.net/' target='_blank'>BOG online</a>.</p><p>Full details: <a href='https://www.cvc.edu/students/financial-aid/' target='_blank'>cvc.edu/students/financial-aid</a></p>"},
+{t:['enroll'],q:"I'm a high school / Adult Ed / F-1 visa student. Can I enroll?",a:"<p>Possibly, but you need authorization first:</p><ul><li><strong>High school:</strong> dual enrollment authorization from your high school + parent</li><li><strong>Adult Education:</strong> authorization from your Adult Ed program</li><li><strong>F-1 visa:</strong> talk to your Designated School Official before registering — federal regulations restrict concurrent enrollment</li></ul><p>Without proper authorization you may be charged extra fees and dropped. Full details at <a href='https://www.cvc.edu/students/student-eligibility/' target='_blank'>cvc.edu/students/student-eligibility</a>.</p>"},
+{t:['trouble'],q:"My class shows 'Status Update Failed'.",a:"<p>This is sometimes a display issue — your drop or registration may have actually succeeded. <strong>Don't re-attempt.</strong> Email support with your CCCID and course so they can verify the real status with the Teaching College.</p>"},
+{t:['trouble','enroll'],q:"I'm waiting on prerequisite clearance. How long should it take?",a:"<p>Most colleges process prereqs within <strong>3-5 business days</strong>. If it's been longer, check your CVC inbox for any info requests, then email support to escalate — especially if class start is close.</p>"},
+{t:['trouble'],q:"Where do I find my CCCID?",a:"<p>It's a 7-character ID that's the same across all CCCs. Find it on your CVC dashboard, your Home College student portal, or your CCCApply confirmation email. If you can't find it, your Home College's A&amp;R office can look it up.</p>"}
+];
+
+const list=document.getElementById('list');
+D.forEach(item=>{
+  const el=document.createElement('div');
+  el.className='qa';
+  el.dataset.tags=item.t.join(' ');
+  el.dataset.search=(item.q+' '+item.a).toLowerCase().replace(/<[^>]*>/g,' ');
+  el.innerHTML='<button class="qh"><span class="q">'+item.q+'</span><span class="tg">+</span></button><div class="qb">'+item.a+'</div>';
+  list.appendChild(el);
+});
+
+let af='all';
+document.getElementById('chips').addEventListener('click',e=>{
+  const c=e.target.closest('.chip');
+  if(!c)return;
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+  c.classList.add('active');
+  af=c.dataset.f;
+  apply();
+});
+
+const s=document.getElementById('s');
+s.addEventListener('input',apply);
+
+function apply(){
+  const term=s.value.toLowerCase().trim();
+  let n=0;
+  document.querySelectorAll('.qa').forEach(qa=>{
+    const tm=af==='all'||(' '+qa.dataset.tags+' ').includes(' '+af+' ');
+    const sm=!term||qa.dataset.search.includes(term);
+    const show=tm&&sm;
+    qa.classList.toggle('hidden',!show);
+    if(show)n++;
+  });
+  document.getElementById('none').classList.toggle('show',n===0);
+}
+
+list.addEventListener('click',e=>{
+  const h=e.target.closest('.qh');
+  if(h)h.parentElement.classList.toggle('open');
+});
+
+apply();
+</script>
+</body>
+</html>
