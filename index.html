@@ -1924,6 +1924,92 @@ article.mistake .copy-link {
   .float-help { bottom: 18px; right: 18px; width: 50px; height: 50px; font-size: 22px; }
 }
 
+/* —————— left sidebar outline (desktop only) —————— */
+
+.outline {
+  position: fixed;
+  top: 110px;
+  left: 24px;
+  width: 188px;
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+  z-index: 40;
+  display: none;
+  padding: 18px 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--serif-body);
+}
+@media (min-width: 1280px) {
+  .outline { display: block; }
+}
+@media (min-width: 1440px) {
+  .outline { left: 36px; width: 200px; }
+}
+
+.outline-label {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 13, "SOFT" 80;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 14px 18px;
+  display: block;
+}
+
+.outline-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.outline-list li { margin: 0; }
+.outline-list a {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 10px;
+  align-items: baseline;
+  padding: 8px 16px 8px 18px;
+  font-size: 13px;
+  font-variation-settings: "opsz" 13;
+  color: var(--ink-faint);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+.outline-list a:hover {
+  color: var(--claret);
+  border-left-color: var(--claret-pale);
+}
+.outline-list a.active {
+  color: var(--claret);
+  border-left-color: var(--claret);
+  background: var(--claret-wash);
+  font-weight: 500;
+}
+.outline-list a.active .outline-num {
+  font-variation-settings: "opsz" 14, "SOFT" 100, "wght" 600;
+}
+
+.outline-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "SOFT" 80;
+  font-size: 13px;
+  color: var(--claret);
+  text-align: right;
+  line-height: 1.3;
+}
+
+.outline-divider {
+  border-top: 1px solid var(--rule-soft);
+  margin: 8px 16px;
+}
+
+/* hide outline in print */
+@media print { .outline { display: none !important; } }
+
 /* —————— print stylesheet —————— */
 
 @media print {
@@ -1948,6 +2034,21 @@ article.mistake .copy-link {
 
 <div class="grain" aria-hidden="true"></div>
 <a class="urgent-marker" href="#urgent">Urgent?</a>
+
+<nav class="outline" aria-label="Page outline">
+  <span class="outline-label"><span data-en>Outline</span><span data-es>Esquema</span></span>
+  <ol class="outline-list">
+    <li><a href="#find" data-watch="find"><span class="outline-num">→</span><span><span data-en>Search</span><span data-es>Búsqueda</span></span></a></li>
+    <li><a href="#urgent" data-watch="urgent"><span class="outline-num">i.</span><span><span data-en>Urgent</span><span data-es>Urgente</span></span></a></li>
+    <li><a href="#symptoms" data-watch="symptoms"><span class="outline-num">ii.</span><span><span data-en>Symptoms</span><span data-es>Síntomas</span></span></a></li>
+    <li><a href="#errors" data-watch="errors"><span class="outline-num">iii.</span><span><span data-en>Error decoder</span><span data-es>Errores</span></span></a></li>
+    <li><a href="#dater" data-watch="dater"><span class="outline-num">iv.</span><span><span data-en>Date check</span><span data-es>Plazos</span></span></a></li>
+    <li><a href="#mistakes" data-watch="mistakes"><span class="outline-num">v.</span><span><span data-en>Common mistakes</span><span data-es>Errores comunes</span></span></a></li>
+    <li><a href="#tasks" data-watch="tasks"><span class="outline-num">vi.</span><span><span data-en>How-to guides</span><span data-es>Guías</span></span></a></li>
+    <li><a href="#email" data-watch="email"><span class="outline-num">vii.</span><span><span data-en>Email support?</span><span data-es>¿Email?</span></span></a></li>
+    <li><a href="#glossary" data-watch="glossary"><span class="outline-num">viii.</span><span><span data-en>Glossary</span><span data-es>Glosario</span></span></a></li>
+  </ol>
+</nav>
 
 <div class="page">
 
@@ -3829,6 +3930,53 @@ if ('IntersectionObserver' in window) {
     if (el) seenObs.observe(el);
   });
 }
+
+// ════════════════════════════════════════════════════════════════════
+// LEFT-SIDEBAR OUTLINE — scroll-spy highlights active section
+// ════════════════════════════════════════════════════════════════════
+
+(function initOutline() {
+  if (!('IntersectionObserver' in window)) return;
+
+  const outlineLinks = document.querySelectorAll('.outline-list a');
+  const linkById = {};
+  outlineLinks.forEach(a => {
+    const id = a.dataset.watch;
+    if (id) linkById[id] = a;
+  });
+
+  // track which sections are currently visible; pick the topmost-visible one
+  const visibility = {};
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      visibility[entry.target.id] = entry.isIntersecting ? entry.intersectionRatio : 0;
+    });
+
+    // find the section with the highest intersection ratio
+    let bestId = null;
+    let bestRatio = 0;
+    for (const id in visibility) {
+      if (visibility[id] > bestRatio) {
+        bestRatio = visibility[id];
+        bestId = id;
+      }
+    }
+
+    outlineLinks.forEach(l => l.classList.remove('active'));
+    if (bestId && linkById[bestId]) {
+      linkById[bestId].classList.add('active');
+    }
+  }, {
+    rootMargin: '-20% 0px -50% 0px',
+    threshold: [0, 0.25, 0.5, 0.75, 1]
+  });
+
+  ['find', 'urgent', 'symptoms', 'errors', 'dater', 'mistakes', 'tasks', 'email', 'glossary'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) obs.observe(el);
+  });
+})();
 
 // ════════════════════════════════════════════════════════════════════
 // LANGUAGE TOGGLE — EN / ES
