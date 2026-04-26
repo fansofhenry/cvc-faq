@@ -3,159 +3,1698 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>CVC Exchange — Student FAQ</title>
+<title>CVC Exchange — Get Unstuck</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f7f8fa;color:#1a202c;line-height:1.55;-webkit-font-smoothing:antialiased;padding:24px 16px}
-.wrap{max-width:760px;margin:0 auto}
-.hero{padding:0 0 20px;border-bottom:1px solid #e5e9ef;margin-bottom:20px}
-.hero h1{font-size:22px;font-weight:600;margin-bottom:6px;color:#1a202c}
-.hero p{font-size:14px;color:#5a6675;margin:0}
-.warn{background:#fff9e6;border-left:3px solid #d49b00;border-radius:0 6px 6px 0;padding:10px 14px;margin:14px 0 0;font-size:13px;color:#5d4a00}
-.warn strong{font-weight:600;color:#8a6f00}
-.controls{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
-input[type=search]{width:100%;padding:10px 14px;font-size:14px;border:1px solid #cdd2da;border-radius:8px;background:#fff;color:#1a202c;font-family:inherit}
-input[type=search]:focus{outline:none;border-color:#1f4e79;box-shadow:0 0 0 3px rgba(31,78,121,.1)}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{padding:5px 12px;font-size:12px;border:1px solid #cdd2da;border-radius:20px;background:#fff;color:#5a6675;cursor:pointer;font-family:inherit;transition:all .15s}
-.chip:hover{border-color:#1f4e79;color:#1f4e79}
-.chip.active{background:#1a202c;color:#fff;border-color:#1a202c}
-.list{display:flex;flex-direction:column;background:#fff;border:1px solid #e5e9ef;border-radius:10px;overflow:hidden}
-.qa{border-bottom:1px solid #e5e9ef}
-.qa.hidden{display:none}
-.qa:last-child{border-bottom:none}
-.qh{padding:14px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;background:none;border:none;width:100%;text-align:left;font-family:inherit;color:inherit;transition:background .1s}
-.qh:hover{background:#f7f8fa}
-.q{font-size:14px;font-weight:500;flex:1;line-height:1.4;color:#1a202c}
-.tg{font-size:18px;color:#a0aec0;flex-shrink:0;transition:transform .2s;line-height:1;font-weight:300}
-.qa.open .tg{transform:rotate(45deg);color:#1f4e79}
-.qb{display:none;padding:0 18px 16px}
-.qa.open .qb{display:block}
-.qb p{font-size:14px;line-height:1.6;margin:0 0 8px;color:#2d3748}
-.qb p:last-child{margin-bottom:0}
-.qb ol,.qb ul{margin:4px 0 8px 22px;font-size:14px;line-height:1.6;color:#2d3748}
-.qb li{margin-bottom:3px}
-.qb a{color:#1f4e79}
-.qb strong{font-weight:600}
-.flag{background:#fff9e6;border-left:3px solid #d49b00;border-radius:0 6px 6px 0;padding:8px 12px;font-size:13px;margin:8px 0;color:#5d4a00}
-.flag strong{font-weight:600;color:#8a6f00}
-.resources{margin-top:24px;padding-top:20px;border-top:1px solid #e5e9ef}
-.resources h2{font-size:11px;font-weight:600;color:#5a6675;margin:0 0 10px;text-transform:uppercase;letter-spacing:.06em}
-.resgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
-.res{display:flex;flex-direction:column;gap:2px;padding:10px 12px;background:#fff;border:1px solid #e5e9ef;border-radius:8px;text-decoration:none;color:#1a202c;font-size:13px;transition:border-color .15s}
-.res:hover{border-color:#1f4e79}
-.reslabel{font-size:11px;color:#5a6675}
-.reslink{font-weight:500}
-.support{margin-top:12px;padding:12px 14px;background:#eef2f7;border-radius:8px;font-size:13px;color:#1f4e79}
-.support a{color:#1f4e79;font-weight:500}
-.none{text-align:center;padding:24px;color:#8895a3;font-size:13px;display:none;background:#fff;border:1px dashed #cdd2da;border-radius:10px;margin-top:8px}
-.none.show{display:block}
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f6f4;
+  --bg-tertiary: #efeeec;
+  --bg-info: #e6f1fb;
+  --bg-warning: #faeeda;
+  --bg-success: #e1f5ee;
+  --bg-danger: #faece7;
+  --bg-purple: #eeedfe;
+  --text-primary: #1a1a18;
+  --text-secondary: #5e5e58;
+  --text-tertiary: #8e8e87;
+  --text-info: #0c447c;
+  --text-warning: #633806;
+  --text-success: #085041;
+  --text-danger: #712b13;
+  --text-purple: #3c3489;
+  --border-subtle: rgba(0,0,0,0.07);
+  --border-default: rgba(0,0,0,0.14);
+  --border-strong: rgba(0,0,0,0.22);
+  --border-info: #185fa5;
+  --border-warning: #ba7517;
+  --border-success: #1a8472;
+  --border-danger: #b8523a;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1f1f1d;
+    --bg-secondary: #2a2a27;
+    --bg-tertiary: #353532;
+    --bg-info: #0c447c;
+    --bg-warning: #412402;
+    --bg-success: #0a2d24;
+    --bg-danger: #3d1a0e;
+    --bg-purple: #2a2540;
+    --text-primary: #f5f5f4;
+    --text-secondary: #b8b8b1;
+    --text-tertiary: #88887f;
+    --text-info: #b5d4f4;
+    --text-warning: #fac775;
+    --text-success: #8fd9c1;
+    --text-danger: #e8a995;
+    --text-purple: #c0b8ee;
+    --border-subtle: rgba(255,255,255,0.08);
+    --border-default: rgba(255,255,255,0.16);
+    --border-strong: rgba(255,255,255,0.24);
+  }
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 16px; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  padding: 0 16px 80px;
+  min-height: 100vh;
+}
+.wrap { max-width: 800px; margin: 0 auto; }
+
+.panic {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  margin: 0 -16px;
+  padding: 10px 16px;
+  background: var(--text-danger);
+  color: var(--bg-danger);
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.panic a {
+  color: var(--bg-danger);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.head { padding: 28px 0 8px; }
+.head h1 {
+  font-size: clamp(24px, 5vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0 0 8px;
+}
+.head .lede {
+  font-size: 15px;
+  color: var(--text-secondary);
+  max-width: 60ch;
+}
+
+h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0 0 4px;
+}
+h3 {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 6px;
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.eyebrow::before {
+  content: "";
+  width: 14px;
+  height: 1px;
+  background: var(--text-tertiary);
+}
+.section { margin-top: 40px; }
+.section-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  max-width: 60ch;
+  margin: 4px 0 18px;
+}
+
+.callout {
+  display: flex; gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  border: 0.5px solid;
+  font-size: 13.5px;
+  line-height: 1.6;
+  margin: 12px 0;
+}
+.callout-icon {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px;
+  margin-top: 1px;
+}
+.callout strong { font-weight: 600; }
+.callout.warn { background: var(--bg-warning); color: var(--text-warning); border-color: var(--border-warning); }
+.callout.warn .callout-icon { background: var(--text-warning); color: var(--bg-warning); }
+.callout.info { background: var(--bg-info); color: var(--text-info); border-color: var(--border-info); }
+.callout.info .callout-icon { background: var(--text-info); color: var(--bg-info); }
+.callout.tip { background: var(--bg-success); color: var(--text-success); border-color: var(--border-success); }
+.callout.tip .callout-icon { background: var(--text-success); color: var(--bg-success); }
+.callout.danger { background: var(--bg-danger); color: var(--text-danger); border-color: var(--border-danger); }
+.callout.danger .callout-icon { background: var(--text-danger); color: var(--bg-danger); }
+
+.fast-lanes {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 0;
+}
+@media (min-width: 600px) {
+  .fast-lanes { grid-template-columns: 1fr 1fr 1fr; }
+}
+.lane {
+  padding: 16px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  transition: all 0.15s;
+  display: flex; flex-direction: column;
+  gap: 6px;
+  text-decoration: none;
+}
+.lane:hover {
+  border-color: var(--text-danger);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.lane-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-danger);
+  display: flex; align-items: center; gap: 6px;
+}
+.lane-tag::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text-danger);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.lane-q { font-size: 14px; font-weight: 600; }
+.lane-a { font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; }
+
+.symptoms {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 0;
+}
+@media (min-width: 600px) {
+  .symptoms { grid-template-columns: 1fr 1fr; }
+}
+.symptom {
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+.symptom:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+.symptom-badge {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+}
+.symptom-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.symptom-q { font-size: 14px; font-weight: 600; line-height: 1.4; }
+.symptom-h {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  background: var(--bg-secondary);
+  padding: 1px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 2px;
+  width: fit-content;
+}
+.symptom-arrow {
+  color: var(--text-tertiary);
+  font-size: 16px;
+}
+
+.errors { display: grid; gap: 8px; }
+.err {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.err-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  padding: 14px 16px;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  width: 100%;
+  font-family: inherit;
+  color: inherit;
+  text-align: left;
+}
+.err-msg {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.err-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.err-tag.wait { background: var(--bg-info); color: var(--text-info); }
+.err-tag.act { background: var(--bg-warning); color: var(--text-warning); }
+.err-tag.stop { background: var(--bg-danger); color: var(--text-danger); }
+.err-tag.normal { background: var(--bg-success); color: var(--text-success); }
+.err-body {
+  display: none;
+  padding: 0 16px 16px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 14px;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.err.open .err-body { display: block; }
+.err-grid {
+  display: grid;
+  gap: 10px;
+}
+@media (min-width: 600px) {
+  .err-grid { grid-template-columns: 1fr 1fr; }
+}
+.err-cell {
+  padding: 10px 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+}
+.err-cell-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.err-cell-v { font-size: 13px; color: var(--text-primary); }
+.err-action {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: var(--bg-info);
+  color: var(--text-info);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--text-info);
+  font-size: 13px;
+}
+.err-action strong { font-weight: 600; }
+
+.flow {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 4px;
+  margin: 12px 0;
+}
+.step-row {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  gap: 12px;
+  padding: 14px 14px 14px 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+}
+.step-row:last-child { border-bottom: none; }
+.step-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--text-info);
+  color: var(--bg-info);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  margin-top: 1px;
+}
+.step-text {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.step-text strong { font-weight: 600; }
+.step-text .gotcha {
+  display: block;
+  margin-top: 6px;
+  padding: 8px 10px;
+  background: var(--bg-warning);
+  color: var(--text-warning);
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  border-left: 2px solid var(--text-warning);
+}
+
+.task {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.task-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+.task-icon {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+.task-title {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+}
+.task-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+  font-weight: 400;
+}
+.task-toggle {
+  font-size: 18px;
+  color: var(--text-tertiary);
+  transition: transform 0.2s;
+  font-weight: 300;
+}
+.task.open .task-toggle { transform: rotate(45deg); color: var(--text-info); }
+.task-body {
+  display: none;
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 14px;
+}
+.task.open .task-body { display: block; }
+.task-body p { font-size: 14px; line-height: 1.65; margin-bottom: 10px; }
+.task-body ul, .task-body ol { margin: 6px 0 12px 20px; font-size: 14px; line-height: 1.65; }
+.task-body li { margin-bottom: 6px; }
+.task-body a { color: var(--text-info); }
+
+.mistakes {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
+}
+@media (min-width: 700px) {
+  .mistakes { grid-template-columns: 1fr 1fr; }
+}
+.mistake {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.mistake-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mistake-x {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--text-danger);
+  color: var(--bg-danger);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.mistake-q { font-size: 14px; font-weight: 600; }
+.mistake-fix {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+  padding-left: 32px;
+}
+.mistake-fix strong { color: var(--text-primary); font-weight: 600; }
+
+.dual {
+  display: grid;
+  gap: 10px;
+}
+@media (min-width: 600px) { .dual { grid-template-columns: 1fr 1fr; } }
+.dual-card {
+  padding: 16px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+.dual-card h4 {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex; align-items: center; gap: 8px;
+}
+.dual-card.no h4 { color: var(--text-danger); }
+.dual-card.yes h4 { color: var(--text-success); }
+.dual-card ul { list-style: none; font-size: 13.5px; line-height: 1.55; }
+.dual-card li {
+  padding: 5px 0 5px 22px;
+  position: relative;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.dual-card li:last-child { border-bottom: none; }
+.dual-card.no li::before {
+  content: "×";
+  position: absolute; left: 0; top: 4px;
+  color: var(--text-danger);
+  font-weight: 700;
+  font-size: 16px;
+}
+.dual-card.yes li::before {
+  content: "✓";
+  position: absolute; left: 0; top: 4px;
+  color: var(--text-success);
+  font-weight: 700;
+}
+
+.builder {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  margin-top: 14px;
+}
+.field { margin-bottom: 14px; }
+.field-lbl {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.field-hint {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: inherit;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--border-info);
+  box-shadow: 0 0 0 3px var(--bg-info);
+}
+.field textarea { min-height: 70px; resize: vertical; }
+.builder-out {
+  background: var(--bg-secondary);
+  border: 1px dashed var(--border-default);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: var(--text-primary);
+  margin-top: 8px;
+}
+.builder-actions { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.btn {
+  padding: 9px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.12s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-primary { background: var(--text-info); color: var(--bg-info); }
+.btn-primary:hover { opacity: 0.9; }
+.btn-secondary { background: var(--bg-tertiary); color: var(--text-primary); }
+.btn-secondary:hover { background: var(--bg-secondary); }
+.copied {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 12px;
+  color: var(--text-success);
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.copied.show { opacity: 1; }
+
+.checkpoint {
+  background: var(--bg-purple);
+  border: 1px solid var(--text-purple);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  margin: 16px 0;
+  color: var(--text-purple);
+}
+.checkpoint h3 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex; align-items: center; gap: 8px;
+}
+.checkpoint h3::before {
+  content: "?";
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--text-purple);
+  color: var(--bg-purple);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+}
+.check-item {
+  display: flex; gap: 10px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(60,52,137,0.15);
+  font-size: 13.5px;
+  line-height: 1.55;
+  align-items: flex-start;
+}
+.check-item input[type="checkbox"] {
+  margin-top: 4px;
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  accent-color: var(--text-purple);
+}
+.check-item label { cursor: pointer; }
+
+.dater {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-top: 14px;
+}
+.dater label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.dater input {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+.dater-out {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  line-height: 1.55;
+  display: none;
+}
+.dater-out.show { display: block; }
+.dater-out.ok { background: var(--bg-success); color: var(--text-success); border-left: 3px solid var(--text-success); }
+.dater-out.wait { background: var(--bg-warning); color: var(--text-warning); border-left: 3px solid var(--text-warning); }
+.dater-out strong { font-weight: 700; }
+
+.glossary {
+  display: grid;
+  gap: 8px;
+}
+.gloss {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  align-items: start;
+}
+.gloss-term {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.gloss-def {
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+.gloss-def strong { color: var(--text-primary); font-weight: 600; }
+
+.res-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+.res {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: all 0.12s;
+  font-size: 13px;
+}
+.res:hover { border-color: var(--border-strong); }
+.res-arrow { margin-left: auto; color: var(--text-tertiary); }
+
+.support {
+  background: var(--bg-info);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  font-size: 13px;
+  color: var(--text-info);
+  line-height: 1.55;
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+}
+.support-icon {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--text-info);
+  color: var(--bg-info);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+  flex-shrink: 0;
+}
+.support strong { font-weight: 700; }
+.support a { color: var(--text-info); font-weight: 600; text-decoration: underline; }
+
+.toc {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 16px 0 4px;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+}
+.toc a {
+  padding: 6px 10px;
+  font-size: 12px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-radius: 14px;
+  text-decoration: none;
+  border: 1px solid var(--border-subtle);
+}
+.toc a:hover { border-color: var(--border-strong); }
 </style>
 </head>
 <body>
+
+<div class="panic">
+  <strong>Class starts within 48 hours and you're stuck?</strong>
+  <a href="#fast-lane">Use the urgent path →</a>
+</div>
+
 <div class="wrap">
 
-<div class="hero">
-<h1>CVC Exchange — Student FAQ</h1>
-<p>Quick answers for enrolling, paying, dropping, and getting help.</p>
-<div class="warn"><strong>Always click Confirm Payment</strong> after the bank page redirects you back to CVC. Skipping it is the #1 reason students get dropped after paying.</div>
+<div class="head">
+  <h1>Get Unstuck</h1>
+  <p class="lede">A guided self-help tool for CVC Exchange students. Most issues resolve from this page in under two minutes — no email needed.</p>
+
+  <div class="toc">
+    <a href="#fast-lane">Urgent</a>
+    <a href="#symptoms">What you see</a>
+    <a href="#errors">Error decoder</a>
+    <a href="#mistakes">Common mistakes</a>
+    <a href="#tasks">How-to guides</a>
+    <a href="#email">Should I email?</a>
+    <a href="#glossary">Glossary</a>
+  </div>
 </div>
 
-<div class="controls">
-<input type="search" id="s" placeholder="Search..." autocomplete="off">
-<div class="chips" id="chips">
-<button class="chip active" data-f="all">All</button>
-<button class="chip" data-f="enroll">Enrolling</button>
-<button class="chip" data-f="pay">Paying</button>
-<button class="chip" data-f="drop">Dropping</button>
-<button class="chip" data-f="canvas">Canvas</button>
-<button class="chip" data-f="transcripts">Transcripts</button>
-<button class="chip" data-f="aid">Financial aid</button>
-<button class="chip" data-f="trouble">Problems</button>
-</div>
+<div class="section" id="fast-lane">
+  <span class="eyebrow">Section 1 — Urgent</span>
+  <h2>Time-sensitive? Start here.</h2>
+  <p class="section-desc">If your class starts soon or a deadline is today/tomorrow, follow these exact steps. Don't read the rest of the page first.</p>
+
+  <div class="fast-lanes">
+    <a class="lane" href="#urgent-pending">
+      <div class="lane-tag">Class soon</div>
+      <div class="lane-q">Class starts in 48 hours and I'm still "Pending"</div>
+      <div class="lane-a">Three steps to escalate before the start date.</div>
+    </a>
+    <a class="lane" href="#urgent-drop">
+      <div class="lane-tag">Drop deadline</div>
+      <div class="lane-q">My drop deadline is today or tomorrow</div>
+      <div class="lane-a">What to do if the system won't let you drop.</div>
+    </a>
+    <a class="lane" href="#urgent-paid">
+      <div class="lane-tag">Charged but not enrolled</div>
+      <div class="lane-q">My card was charged but I'm not in the class</div>
+      <div class="lane-a">Recover the payment in 4 steps.</div>
+    </a>
+  </div>
+
+  <div class="task" id="urgent-pending">
+    <button class="task-head">
+      <div class="task-icon" style="background:var(--bg-warning); color:var(--text-warning)">!</div>
+      <div style="flex:1">
+        <div class="task-title">Class starts in 48 hours and I'm still "Pending"</div>
+        <div class="task-sub">Exact steps before you panic-email</div>
+      </div>
+      <span class="task-toggle">+</span>
+    </button>
+    <div class="task-body">
+      <ol>
+        <li><strong>Check your CVC inbox</strong> (search.cvc.edu, after login). The Teaching College may have requested a document. If they did, you have to respond before they can finish.</li>
+        <li><strong>Confirm your status hasn't changed.</strong> "Pending Person Match" and "Prerequisite Pending Review" both look stuck — but they mean the Teaching College is actively reviewing you. They are not "denied."</li>
+        <li><strong>Email support</strong> with the words "URGENT — CLASS START [date]" in the subject line, plus the info from the <a href="#email">ticket builder below</a>. Replies on time-sensitive tickets are typically same-day.</li>
+        <li><strong>While you wait, identify a backup section</strong> at <a href="https://search.cvc.edu" target="_blank">search.cvc.edu</a>. If the original Teaching College can't move fast enough, you may need to register for a different open section.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="task" id="urgent-drop">
+    <button class="task-head">
+      <div class="task-icon" style="background:var(--bg-danger); color:var(--text-danger)">!</div>
+      <div style="flex:1">
+        <div class="task-title">My drop deadline is today or tomorrow</div>
+        <div class="task-sub">What to do if drop fails or you're stuck</div>
+      </div>
+      <span class="task-toggle">+</span>
+    </button>
+    <div class="task-body">
+      <ol>
+        <li><strong>Try the drop one time.</strong> Don't retry repeatedly — that doesn't help and creates duplicate records that slow resolution.</li>
+        <li><strong>Take a screenshot of any error.</strong> The exact error message determines what kind of fix is needed.</li>
+        <li><strong>Email support immediately</strong> with subject "URGENT — DROP DEADLINE [date]" and your CCCID, course/CRN, and screenshot. Use the <a href="#email">ticket builder</a> to format it correctly.</li>
+        <li><strong>Email the Teaching College's Admissions &amp; Records office in parallel.</strong> Your email is documented intent to drop before the deadline. If anything goes wrong on our end, that record protects you. Find the A&amp;R email at <a href="https://www.cvc.edu/students/refunds/" target="_blank">cvc.edu/students/refunds</a>.</li>
+      </ol>
+      <div class="callout info">
+        <div class="callout-icon">i</div>
+        <div>Drop deadlines are <strong>per-section, not per-term.</strong> Look up your specific date on the Teaching College's deadline tool — don't assume the standard semester schedule.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task" id="urgent-paid">
+    <button class="task-head">
+      <div class="task-icon" style="background:var(--bg-warning); color:var(--text-warning)">$</div>
+      <div style="flex:1">
+        <div class="task-title">My card was charged but I'm not enrolled</div>
+        <div class="task-sub">99% of the time it's the missing Confirm Payment click</div>
+      </div>
+      <span class="task-toggle">+</span>
+    </button>
+    <div class="task-body">
+      <ol>
+        <li><strong>Log in to <a href="https://search.cvc.edu" target="_blank">search.cvc.edu</a></strong>. Look at your Class Schedule. Does it say "Pay Now" or "Enrolled &amp; Paid"?</li>
+        <li><strong>If it says "Pay Now":</strong> the system never received your payment confirmation. The fix is on our side; we can reconcile it. Email support with your CCCID, course, payment date/time, last 4 of card, and amount.</li>
+        <li><strong>If it says "Enrolled &amp; Paid":</strong> you're fine — the dashboard caught up. Done.</li>
+        <li><strong>Don't pay again.</strong> A second payment goes to the same place and creates a refund headache, not enrollment.</li>
+      </ol>
+      <div class="callout danger">
+        <div class="callout-icon">!</div>
+        <div>This happens because students close the browser after the bank confirms the charge — but before clicking the <strong>Confirm Payment</strong> button on the page CVC redirects you to. <strong>Always click Confirm Payment.</strong></div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="list" id="list"></div>
-<div class="none" id="none">No matching questions.</div>
+<div class="section" id="symptoms">
+  <span class="eyebrow">Section 2 — What you see</span>
+  <h2>What's showing on your screen?</h2>
+  <p class="section-desc">Find the closest match. Different statuses look similar but mean very different things — picking the right one saves hours.</p>
 
-<div class="resources">
-<h2>Official resources</h2>
-<div class="resgrid">
-<a href="https://search.cvc.edu/users/sign_in" target="_blank" class="res"><span class="reslabel">Log in</span><span class="reslink">search.cvc.edu</span></a>
-<a href="https://www.cvc.edu/students/student-eligibility/" target="_blank" class="res"><span class="reslabel">Eligibility</span><span class="reslink">Who can enroll</span></a>
-<a href="https://www.cvc.edu/students/financial-aid/" target="_blank" class="res"><span class="reslabel">Financial aid</span><span class="reslink">Aid &amp; CCPG</span></a>
-<a href="https://www.cvc.edu/students/transcripts-students/" target="_blank" class="res"><span class="reslabel">Transcripts</span><span class="reslink">How to get one</span></a>
-<a href="https://www.cvc.edu/students/refunds/" target="_blank" class="res"><span class="reslabel">Refunds</span><span class="reslink">By college</span></a>
-<a href="https://cvc.freshservice.com/support/solutions" target="_blank" class="res"><span class="reslabel">Help center</span><span class="reslink">Self-service</span></a>
-</div>
+  <div class="symptoms">
+    <a class="symptom" href="#sym-pending">
+      <div class="symptom-badge" style="background:var(--bg-warning); color:var(--text-warning)">⏳</div>
+      <div class="symptom-text">
+        <div class="symptom-q">Status says "Pending" or "Pending Review"</div>
+        <span class="symptom-h">In progress, not failed</span>
+      </div>
+      <span class="symptom-arrow">→</span>
+    </a>
+    <a class="symptom" href="#sym-failed">
+      <div class="symptom-badge" style="background:var(--bg-danger); color:var(--text-danger)">⊗</div>
+      <div class="symptom-text">
+        <div class="symptom-q">Status says "Registration Failed" or "Drop Failed"</div>
+        <span class="symptom-h">Real failure — error decoder needed</span>
+      </div>
+      <span class="symptom-arrow">→</span>
+    </a>
+    <a class="symptom" href="#sym-denied">
+      <div class="symptom-badge" style="background:var(--bg-danger); color:var(--text-danger)">⊘</div>
+      <div class="symptom-text">
+        <div class="symptom-q">Status says "Application Denied"</div>
+        <span class="symptom-h">Manually reviewed and rejected</span>
+      </div>
+      <span class="symptom-arrow">→</span>
+    </a>
+    <a class="symptom" href="#sym-paid">
+      <div class="symptom-badge" style="background:var(--bg-warning); color:var(--text-warning)">$</div>
+      <div class="symptom-text">
+        <div class="symptom-q">Charged but dashboard shows unpaid</div>
+        <span class="symptom-h">Almost certainly the Confirm Payment trap</span>
+      </div>
+      <span class="symptom-arrow">→</span>
+    </a>
+    <a class="symptom" href="#sym-tuition">
+      <div class="symptom-badge" style="background:var(--bg-purple); color:var(--text-purple)">$$$</div>
+      <div class="symptom-text">
+        <div class="symptom-q">Tuition shows $400+ for 3 units</div>
+        <span class="symptom-h">Residency wasn't confirmed — don't pay</span>
+      </div>
+      <span class="symptom-arrow">→</span>
+    </a>
+    <a class="symptom" href="#sym-canvas">
+      <div class="symptom-badge" style="background:var(--bg-info); color:var(--text-info)">○</div>
+      <div class="symptom-text">
+        <div class="symptom-q">Class doesn't appear in Canvas</div>
+        <span class="symptom-h">Usually just timing</span>
+      </div>
+      <span class="symptom-arrow">→</span>
+    </a>
+    <a class="symptom" href="#sym-update-failed">
+      <div class="symptom-badge" style="background:var(--bg-info); color:var(--text-info)">◑</div>
+      <div class="symptom-text">
+        <div class="symptom-q">Says "Status Update Failed" on a class I dropped</div>
+        <span class="symptom-h">Display issue — drop probably worked</span>
+      </div>
+      <span class="symptom-arrow">→</span>
+    </a>
+    <a class="symptom" href="#sym-unknown">
+      <div class="symptom-badge" style="background:var(--bg-tertiary); color:var(--text-secondary)">?</div>
+      <div class="symptom-text">
+        <div class="symptom-q">I don't know what I'm looking at</div>
+        <span class="symptom-h">Walk me through it</span>
+      </div>
+      <span class="symptom-arrow">→</span>
+    </a>
+  </div>
 </div>
 
-<div class="support">Still stuck? Email <a href="mailto:cvc.customersupport@parchment.com">cvc.customersupport@parchment.com</a> with your CCCID, course, and what happened.</div>
+<div class="section" id="errors">
+  <span class="eyebrow">Section 3 — Decode the error</span>
+  <h2>What does this error mean?</h2>
+  <p class="section-desc">Click any error to see the real meaning, the realistic timeline, and what (if anything) you should do.</p>
+
+  <div class="errors">
+
+    <div class="err" id="sym-pending">
+      <button class="err-head">
+        <span class="err-msg">Pending Person Match</span>
+        <span class="err-tag wait">Wait</span>
+      </button>
+      <div class="err-body">
+        <div class="err-grid">
+          <div class="err-cell"><div class="err-cell-lbl">What it means</div><div class="err-cell-v">The Teaching College needs to match your CCCID to a record in their system. Normal step — not a failure.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Whose ball</div><div class="err-cell-v">The Teaching College's. CVC has handed it to them.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Realistic timeline</div><div class="err-cell-v">1–3 business days at most colleges. 5+ days is unusual.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">When to email support</div><div class="err-cell-v">After 5 business days OR if class starts within 48 hours.</div></div>
+        </div>
+        <div class="err-action"><strong>Action now:</strong> nothing. Don't resubmit; don't email yet. Use the <a href="#dater">date checker below</a> to confirm exactly when to follow up.</div>
+      </div>
+    </div>
+
+    <div class="err">
+      <button class="err-head">
+        <span class="err-msg">Prerequisite Pending Review</span>
+        <span class="err-tag wait">Wait</span>
+      </button>
+      <div class="err-body">
+        <div class="err-grid">
+          <div class="err-cell"><div class="err-cell-lbl">What it means</div><div class="err-cell-v">Teaching College's A&amp;R is reviewing your prerequisite documents. <strong>You are not denied — you are waiting.</strong></div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Whose ball</div><div class="err-cell-v">The Teaching College's A&amp;R office.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Timeline</div><div class="err-cell-v">3–5 business days for CCC prereqs. 5–7 for non-CCC (private/4-year/out-of-state).</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">When to email</div><div class="err-cell-v">After the timeline above OR if class starts within 48 hours.</div></div>
+        </div>
+        <div class="err-action"><strong>Critical:</strong> do <em>not</em> resubmit while waiting. Duplicate submissions create conflicting records and slow the review. One application at a time.</div>
+      </div>
+    </div>
+
+    <div class="err" id="sym-failed">
+      <button class="err-head">
+        <span class="err-msg">Course Filled / Class is full</span>
+        <span class="err-tag stop">Move on</span>
+      </button>
+      <div class="err-body">
+        <div class="err-grid">
+          <div class="err-cell"><div class="err-cell-lbl">What it means</div><div class="err-cell-v">The section reached capacity before your registration completed.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Common misread</div><div class="err-cell-v">Students often think their prereqs were rejected. <strong>They weren't</strong> — the system never got that far. The seat check happens first.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Waitlist?</div><div class="err-cell-v"><strong>No.</strong> The CVC Exchange has no waitlists or add codes. Once full, you can't queue.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Email support?</div><div class="err-cell-v">No — there's no fix. This is correct system behavior.</div></div>
+        </div>
+        <div class="err-action"><strong>Three options:</strong> (1) find another open section at any Teaching College via search.cvc.edu, (2) apply directly to the Teaching College outside CVC at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a> — they may have their own waitlist, (3) take the course in a future term.</div>
+      </div>
+    </div>
+
+    <div class="err">
+      <button class="err-head">
+        <span class="err-msg">Registration Failed (no specific message)</span>
+        <span class="err-tag act">Check error detail</span>
+      </button>
+      <div class="err-body">
+        <div class="err-grid">
+          <div class="err-cell"><div class="err-cell-lbl">What it means</div><div class="err-cell-v">"Registration Failed" is a category, not a specific cause. The actual reason is in the Application Errors field on your enrollment record.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Where to look</div><div class="err-cell-v">CVC dashboard → Class Schedule → click on the failed enrollment → read the error message exactly.</div></div>
+        </div>
+        <div class="err-action"><strong>Action:</strong> match the exact error text against this decoder above. If the error mentions "Course Filled," "prerequisite," "residency," or "hold," see the matching entry. If it's something else, copy the exact text and email support.</div>
+      </div>
+    </div>
+
+    <div class="err">
+      <button class="err-head">
+        <span class="err-msg">Drop Failed</span>
+        <span class="err-tag act">Email support — once</span>
+      </button>
+      <div class="err-body">
+        <div class="err-grid">
+          <div class="err-cell"><div class="err-cell-lbl">What it means</div><div class="err-cell-v">The drop didn't process. Possible reasons: a hold on your account, a passed deadline, or a system error on our side.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Don't retry</div><div class="err-cell-v">Repeat attempts won't fix it and create duplicate records that slow resolution.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Time pressure</div><div class="err-cell-v">If your drop deadline is within 72 hours, mark the email URGENT.</div></div>
+        </div>
+        <div class="err-action"><strong>Email once</strong> with CCCID, course/CRN, screenshot of the error, and your drop deadline date. Use the <a href="#email">ticket builder</a>.</div>
+      </div>
+    </div>
+
+    <div class="err" id="sym-denied">
+      <button class="err-head">
+        <span class="err-msg">Application Denied</span>
+        <span class="err-tag act">Read inbox first</span>
+      </button>
+      <div class="err-body">
+        <div class="err-grid">
+          <div class="err-cell"><div class="err-cell-lbl">What it means</div><div class="err-cell-v">Someone at the Teaching College reviewed your application and declined it. Different from "Registration Failed" (system error).</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Common reasons</div><div class="err-cell-v">Prerequisite not accepted, residency status, eligibility (GPA/holds), capacity at the program level.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">First step</div><div class="err-cell-v">Check your CVC inbox — most colleges send a denial reason there.</div></div>
+        </div>
+        <div class="err-action"><strong>If no reason given:</strong> email support so we can ask the college on your behalf. Don't keep resubmitting — that re-triggers the same denial.</div>
+      </div>
+    </div>
+
+    <div class="err" id="sym-update-failed">
+      <button class="err-head">
+        <span class="err-msg">Status Update Failed (on a class you dropped)</span>
+        <span class="err-tag normal">Probably nothing wrong</span>
+      </button>
+      <div class="err-body">
+        <div class="err-grid">
+          <div class="err-cell"><div class="err-cell-lbl">What it usually means</div><div class="err-cell-v">A display issue. The drop actually succeeded at the Teaching College; the dashboard just shows a stale state.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Don't re-attempt</div><div class="err-cell-v">Re-dropping a class that's already dropped creates problems.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">How to verify</div><div class="err-cell-v">Email support with your CCCID and course — we can confirm the real state with the Teaching College in 1 business day.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="err" id="sym-tuition">
+      <button class="err-head">
+        <span class="err-msg">Tuition shows $400+ for 3 units</span>
+        <span class="err-tag stop">DON'T PAY</span>
+      </button>
+      <div class="err-body">
+        <div class="err-grid">
+          <div class="err-cell"><div class="err-cell-lbl">What it means</div><div class="err-cell-v">Your California residency wasn't confirmed at the Teaching College, so the system is charging you out-of-state tuition.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">In-state rate</div><div class="err-cell-v">$46 per unit. $138 for 3 units. $184 for 4. If you see anywhere near 3–9× that, it's a residency issue.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Whose fix</div><div class="err-cell-v">The Teaching College's Admissions &amp; Records office. They update the residency flag in their system.</div></div>
+        </div>
+        <div class="err-action"><strong>Do not pay.</strong> Email the Teaching College's A&amp;R office, ask them to confirm your CA residency on file. Tuition recalculates after they fix it. If you've already paid, email CVC support — refunding overpayments takes weeks.</div>
+      </div>
+    </div>
+
+    <div class="err" id="sym-paid">
+      <button class="err-head">
+        <span class="err-msg">My card was charged but dashboard says "Pay Now"</span>
+        <span class="err-tag act">Recoverable</span>
+      </button>
+      <div class="err-body">
+        <div class="err-grid">
+          <div class="err-cell"><div class="err-cell-lbl">What happened</div><div class="err-cell-v">The bank processed the charge, but you didn't click <strong>Confirm Payment</strong> on the CVC page that opened after. The Teaching College never got the "paid" signal.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Don't pay twice</div><div class="err-cell-v">A second payment goes to the same place. It doesn't fix the first; it just creates a refund problem.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Fix timeline</div><div class="err-cell-v">Support reconciles these in 1–2 business days.</div></div>
+        </div>
+        <div class="err-action"><strong>Email once</strong> with: CCCID, course/CRN, payment date/time, last 4 of card, amount charged. Use the <a href="#email">ticket builder</a>. We do the rest.</div>
+      </div>
+    </div>
+
+    <div class="err" id="sym-canvas">
+      <button class="err-head">
+        <span class="err-msg">Class doesn't show up in Canvas</span>
+        <span class="err-tag wait">Wait — usually timing</span>
+      </button>
+      <div class="err-body">
+        <div class="err-grid">
+          <div class="err-cell"><div class="err-cell-lbl">Normal timeline</div><div class="err-cell-v">24–48 hours after registration. Some colleges only provision Canvas closer to class start.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Where to look</div><div class="err-cell-v">Your <em>Home College's</em> Canvas, not the Teaching College's. Click the link from CVC dashboard → Class Schedule. In Canvas, click "View All Courses" if it's not on the dashboard.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">Login error</div><div class="err-cell-v">"Trust relationship" or SSO errors are college IT issues. Try a different browser or incognito mode first.</div></div>
+          <div class="err-cell"><div class="err-cell-lbl">When to email</div><div class="err-cell-v">After 3 business days OR within 24 hours of class start.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="err" id="sym-unknown">
+      <button class="err-head">
+        <span class="err-msg">I don't know what I'm looking at</span>
+        <span class="err-tag normal">Walk through it</span>
+      </button>
+      <div class="err-body">
+        <p style="font-size:14px; line-height:1.6;">Open <a href="https://search.cvc.edu" target="_blank">search.cvc.edu</a>, log in, and look at your <strong>Class Schedule</strong>. For each course, you'll see a status. Match it below:</p>
+        <ul style="font-size:14px; line-height:1.65; margin:10px 0 0 22px;">
+          <li><strong>Validated &amp; Registered</strong> — you're enrolled. Done.</li>
+          <li><strong>Enrolled &amp; Paid</strong> — also done.</li>
+          <li><strong>Pay Now</strong> — payment didn't go through. See <a href="#sym-paid">"charged but unpaid"</a> if you already tried.</li>
+          <li><strong>Pending</strong> anything — system is still working. <a href="#dater">Check the date tool</a> for when to follow up.</li>
+          <li><strong>Failed / Denied</strong> — see the error decoder above.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" id="dater">
+  <span class="eyebrow">Section 4 — Date check</span>
+  <h2>Have I waited long enough to email support?</h2>
+  <p class="section-desc">Most "still pending" tickets are sent before the realistic timeline. Enter when your registration was created — get the earliest reasonable follow-up date.</p>
+
+  <div class="dater">
+    <label for="d-date">When did you register or last see a status change?</label>
+    <input type="date" id="d-date">
+    <div id="dater-pending" class="dater-out">
+      <div id="dater-msg"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="mistakes">
+  <span class="eyebrow">Section 5 — Common mistakes</span>
+  <h2>The 8 mistakes that generate most tickets</h2>
+  <p class="section-desc">If you recognize one of these in what you did, the fix is in the entry. No ticket needed.</p>
+
+  <div class="mistakes">
+
+    <div class="mistake">
+      <div class="mistake-head">
+        <div class="mistake-x">×</div>
+        <div class="mistake-q">Closed the browser after paying</div>
+      </div>
+      <div class="mistake-fix"><strong>Fix:</strong> see <a href="#sym-paid">"charged but unpaid"</a>. Don't pay again. Email once with payment evidence.</div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-head">
+        <div class="mistake-x">×</div>
+        <div class="mistake-q">Resubmitted while a status was Pending</div>
+      </div>
+      <div class="mistake-fix"><strong>Fix:</strong> only one application per course at a time. Duplicate submissions confuse the review. Wait for the existing one to resolve before submitting again.</div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-head">
+        <div class="mistake-x">×</div>
+        <div class="mistake-q">Dropped the wrong class first, then registered for the right one</div>
+      </div>
+      <div class="mistake-fix"><strong>Fix:</strong> the order matters. Always register for the new class FIRST (locks the seat), pay, then drop the old one. Money does not transfer between classes.</div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-head">
+        <div class="mistake-x">×</div>
+        <div class="mistake-q">Paid the out-of-state tuition because it looked correct</div>
+      </div>
+      <div class="mistake-fix"><strong>Fix:</strong> in-state is $46/unit. If you saw $400+ for 3 units and paid, email CVC support with payment evidence. Refunds take weeks. <strong>Always verify residency before paying.</strong></div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-head">
+        <div class="mistake-x">×</div>
+        <div class="mistake-q">Tried to find class in the Teaching College's Canvas</div>
+      </div>
+      <div class="mistake-fix"><strong>Fix:</strong> always use your Home College's Canvas — that's how the trust relationship works. The Teaching College's Canvas won't show your CVC enrollment directly.</div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-head">
+        <div class="mistake-x">×</div>
+        <div class="mistake-q">Emailed support 6 hours after a "Pending" status</div>
+      </div>
+      <div class="mistake-fix"><strong>Fix:</strong> wait 3–5 business days for normal Pending, 5–7 for non-CCC prereqs. <a href="#dater">Use the date tool</a> to confirm. Premature emails just mean the same answer ("still processing") sent twice.</div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-head">
+        <div class="mistake-x">×</div>
+        <div class="mistake-q">Asked CVC about a certificate program or course articulation</div>
+      </div>
+      <div class="mistake-fix"><strong>Fix:</strong> certificates are awarded by individual colleges, not CVC. Articulation lives at <a href="https://assist.org" target="_blank">assist.org</a>. Both questions go to your Home College's <strong>counselor</strong>, not us.</div>
+    </div>
+
+    <div class="mistake">
+      <div class="mistake-head">
+        <div class="mistake-x">×</div>
+        <div class="mistake-q">Assumed a "W" was a system bug</div>
+      </div>
+      <div class="mistake-fix"><strong>Fix:</strong> a "W" on transcript is a normal outcome of dropping after the no-notation deadline. It doesn't affect GPA. Different from a failure or denial.</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section" id="tasks">
+  <span class="eyebrow">Section 6 — How-to guides</span>
+  <h2>Step-by-step for the most common tasks</h2>
+  <p class="section-desc">Tap to expand. Each one includes the gotchas that send students to support.</p>
+
+  <div class="task">
+    <button class="task-head">
+      <div class="task-icon" style="background:var(--bg-purple); color:var(--text-purple)">→</div>
+      <div style="flex:1">
+        <div class="task-title">Register for a class</div>
+        <div class="task-sub">5 steps + the prereq + payment gotchas inline</div>
+      </div>
+      <span class="task-toggle">+</span>
+    </button>
+    <div class="task-body">
+      <div class="flow">
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div class="step-text">Search at <a href="https://search.cvc.edu" target="_blank">search.cvc.edu</a> and click <strong>Add Class</strong> on the section you want.</div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div class="step-text">Log in through your <strong>Home College</strong> (the one you already attend).
+            <span class="gotcha"><strong>Gotcha:</strong> if your Home College isn't listed, you can't cross-enroll. Apply directly to the Teaching College at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a> instead.</span>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div class="step-text">Type your full name on the consent form to sign it.</div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">4</div>
+          <div class="step-text">Fill the enrollment form. Upload prerequisite documents if asked. Confirm CA residency.
+            <span class="gotcha"><strong>Gotcha:</strong> non-CCC prereqs (4-year, private, out-of-state) need manual review and take 5–7 business days, not 3.</span>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">5</div>
+          <div class="step-text">Click <strong>Submit</strong>, then pay immediately. <strong>Always click Confirm Payment</strong> after the bank step — this is the single biggest cause of payment tickets.</div>
+        </div>
+      </div>
+      <div class="checkpoint">
+        <h3>Before you submit a registration ticket</h3>
+        <div class="check-item"><input type="checkbox" id="rc1"><label for="rc1">I've waited at least 3 business days since registering (5+ for non-CCC prereqs)</label></div>
+        <div class="check-item"><input type="checkbox" id="rc2"><label for="rc2">I've checked my CVC inbox for any document requests from the Teaching College</label></div>
+        <div class="check-item"><input type="checkbox" id="rc3"><label for="rc3">I haven't resubmitted while the original was pending</label></div>
+        <div class="check-item"><input type="checkbox" id="rc4"><label for="rc4">I've read the exact error message (not just "Failed")</label></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task">
+    <button class="task-head">
+      <div class="task-icon" style="background:var(--bg-warning); color:var(--text-warning)">$</div>
+      <div style="flex:1">
+        <div class="task-title">Pay tuition</div>
+        <div class="task-sub">The Confirm Payment trap and how to avoid it</div>
+      </div>
+      <span class="task-toggle">+</span>
+    </button>
+    <div class="task-body">
+      <div class="flow">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">From your CVC dashboard, click <strong>Pay Fees</strong> on the course.</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">You'll be redirected to the Teaching College's payment page (often TouchNet, NelNet, or Cybersource). Enter your card.</div></div>
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div class="step-text">After the bank approves, you're redirected back to a CVC page with a <strong>Confirm Payment</strong> button.
+            <span class="gotcha"><strong>Don't close the browser yet.</strong> If you do, your card is charged but the Teaching College won't see you as paid. They may drop you. Click Confirm Payment.</span>
+          </div>
+        </div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text">Verify the dashboard now says <strong>Enrolled &amp; Paid</strong>. If it still says Pay Now, the confirmation didn't register — see the error decoder.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task">
+    <button class="task-head">
+      <div class="task-icon" style="background:var(--bg-danger); color:var(--text-danger)">−</div>
+      <div style="flex:1">
+        <div class="task-title">Drop or switch a class</div>
+        <div class="task-sub">Order matters — and money doesn't transfer</div>
+      </div>
+      <span class="task-toggle">+</span>
+    </button>
+    <div class="task-body">
+      <h3 style="margin:8px 0">Just dropping</h3>
+      <div class="flow">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">Log in to <a href="https://search.cvc.edu" target="_blank">search.cvc.edu</a>.</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">Class Schedule → click <strong>Drop Course</strong> on the class.</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">Confirm. <strong>Don't repeat-click</strong> if the page seems slow.</div></div>
+      </div>
+
+      <h3 style="margin:14px 0 8px">Switching classes</h3>
+      <div class="flow">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>Register for the new class first.</strong> This locks the seat. If it fills before you drop the old one, you've lost both.</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">Pay for the new class.</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">Drop the old class.</div></div>
+        <div class="step-row"><div class="step-num">4</div><div class="step-text">Request a refund from the Teaching College of the dropped class. Find their refund process at <a href="https://www.cvc.edu/students/refunds/" target="_blank">cvc.edu/students/refunds</a>. Refunds take 2–6 weeks.</div></div>
+      </div>
+
+      <div class="callout warn">
+        <div class="callout-icon">!</div>
+        <div><strong>Money does not transfer between classes.</strong> You'll pay separately for the new class and wait for the refund from the dropped one.</div>
+      </div>
+
+      <h3 style="margin:14px 0 8px">Find your drop deadline</h3>
+      <p>Drop deadlines are <strong>per-section</strong>, not per-term. Two classes in the same semester can have different deadlines.</p>
+      <ul>
+        <li>Look at the section details on your CVC dashboard.</li>
+        <li>Or check the Teaching College's website — most publish a deadline-by-CRN tool.</li>
+        <li>Or email the Teaching College's A&amp;R office.</li>
+      </ul>
+      <p>Two deadlines to watch: <strong>Last Day to Drop — No Notation</strong> (clean drop, no transcript record) and <strong>Last Day to Drop with "W"</strong> (drop later, get a W on transcript).</p>
+    </div>
+  </div>
+
+  <div class="task">
+    <button class="task-head">
+      <div class="task-icon" style="background:var(--bg-info); color:var(--text-info)">↗</div>
+      <div style="flex:1">
+        <div class="task-title">Find your class in Canvas</div>
+        <div class="task-sub">Always your Home College's Canvas — not the Teaching College's</div>
+      </div>
+      <span class="task-toggle">+</span>
+    </button>
+    <div class="task-body">
+      <div class="flow">
+        <div class="step-row"><div class="step-num">1</div><div class="step-text">Log in to your CVC dashboard.</div></div>
+        <div class="step-row"><div class="step-num">2</div><div class="step-text">Class Schedule → click the link below your course. This opens your <strong>Home College's</strong> Canvas.</div></div>
+        <div class="step-row"><div class="step-num">3</div><div class="step-text">In Canvas, click <strong>View All Courses</strong> if it's not on the dashboard.</div></div>
+      </div>
+      <div class="callout info">
+        <div class="callout-icon">i</div>
+        <div>It can take <strong>24–48 hours</strong> after registering. Some colleges only provision Canvas access closer to class start. Email support after 3 business days OR within 24 hours of class start.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="task">
+    <button class="task-head">
+      <div class="task-icon" style="background:var(--bg-success); color:var(--text-success)">$</div>
+      <div style="flex:1">
+        <div class="task-title">Use financial aid (CCPG, FAFSA, Pell)</div>
+        <div class="task-sub">CVC works as reimbursement, not direct pay</div>
+      </div>
+      <span class="task-toggle">+</span>
+    </button>
+    <div class="task-body">
+      <h3 style="margin:8px 0">CCPG (Promise Grant)</h3>
+      <p>If you qualify at your Home College, CCPG generally covers per-unit fees at the Teaching College too — but only if the match works.</p>
+      <div class="callout info">
+        <div class="callout-icon">i</div>
+        <div><strong>SSN script:</strong> the CVC enrollment form doesn't collect SSN. For CCPG to <em>match</em> your award at the Teaching College, they need your SSN on file. <strong>If your CCPG isn't applying, contact the Teaching College's A&amp;R or Financial Aid office and ask them to confirm your SSN is on record.</strong> That's the fix — not a CVC bug.</div>
+      </div>
+
+      <h3 style="margin:14px 0 8px">Pell Grant</h3>
+      <p><strong>Pell can't be disbursed at the Teaching College.</strong> CVC students sit in a non-Title IV "shell" program at the Teaching College. Pell still works at your Home College for classes you take there. CVC courses count toward your enrollment status for aid purposes, but the disbursement is at the Home College.</p>
+
+      <h3 style="margin:14px 0 8px">How payment actually works</h3>
+      <p>You pay the Teaching College upfront with a card. Your Home College reimburses you according to your aid package, after the fact. <strong>You can't skip payment expecting aid to cover it.</strong> If you don't pay, the Teaching College drops you.</p>
+
+      <p>Full info: <a href="https://www.cvc.edu/students/financial-aid/" target="_blank">cvc.edu/students/financial-aid</a></p>
+    </div>
+  </div>
+
+  <div class="task">
+    <button class="task-head">
+      <div class="task-icon" style="background:var(--bg-secondary); color:var(--text-primary)">📄</div>
+      <div style="flex:1">
+        <div class="task-title">Get a transcript</div>
+        <div class="task-sub">Your home college vs. external schools</div>
+      </div>
+      <span class="task-toggle">+</span>
+    </button>
+    <div class="task-body">
+      <h3 style="margin:8px 0">Sending grades back to your Home College</h3>
+      <p><strong>Automatic.</strong> The Teaching College sends grades to your Home College after the term ends. Allow 4–6 weeks. If grades aren't visible after that, contact your Home College's A&amp;R first — they often just need to refresh.</p>
+
+      <h3 style="margin:14px 0 8px">Sending transcripts to a 4-year college or employer</h3>
+      <p>Request from the <strong>Teaching College</strong> that taught the course (not from your Home College, not from CVC). Most colleges use Parchment or a similar service. Details: <a href="https://www.cvc.edu/students/transcripts-students/" target="_blank">cvc.edu/students/transcripts-students</a></p>
+    </div>
+  </div>
+
+  <div class="task">
+    <button class="task-head">
+      <div class="task-icon" style="background:var(--bg-purple); color:var(--text-purple)">⊕</div>
+      <div style="flex:1">
+        <div class="task-title">Eligibility — special cases</div>
+        <div class="task-sub">High school, F-1, AB540, Adult Ed, holds</div>
+      </div>
+      <span class="task-toggle">+</span>
+    </button>
+    <div class="task-body">
+      <p>Most students are eligible if they're concurrently enrolled at a CCC (Home College) with at least a 2.0 GPA. Special cases:</p>
+      <ul>
+        <li><strong>High school:</strong> need dual-enrollment authorization from your high school + parent <em>before</em> registering.</li>
+        <li><strong>Adult Education:</strong> need authorization from your Adult Ed program.</li>
+        <li><strong>F-1 visa / international:</strong> talk to your Designated School Official (DSO) <em>first</em>. Federal regulations restrict concurrent enrollment.</li>
+        <li><strong>AB540:</strong> enrollment works fine. For fees, file CCPG / Dream Act Application separately at your Home College.</li>
+        <li><strong>Hold on Home College account:</strong> clear it first. The system blocks new registrations while a hold is active.</li>
+        <li><strong>Low GPA at Home College:</strong> system off-ramps you. Resolve the GPA flag at Home College before retrying.</li>
+        <li><strong>Home College not on Exchange:</strong> apply directly to the Teaching College at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a>.</li>
+      </ul>
+      <p>Full rules: <a href="https://www.cvc.edu/students/student-eligibility/" target="_blank">cvc.edu/students/student-eligibility</a></p>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="email">
+  <span class="eyebrow">Section 7 — Email support</span>
+  <h2>Should I actually email support?</h2>
+  <p class="section-desc">Most issues fix themselves with time or a quick check. Save email for things that genuinely need a human.</p>
+
+  <div class="dual">
+    <div class="dual-card no">
+      <h4>Don't email — wait or self-resolve</h4>
+      <ul>
+        <li>Status is "Pending" anything, less than 5 business days</li>
+        <li>"Prerequisite Pending Review" with non-CCC prereqs, less than 7 business days</li>
+        <li>Canvas course missing, less than 48 hours since registering</li>
+        <li>Refund hasn't arrived, less than 4 weeks</li>
+        <li>"Course Filled" — there's no fix, find another section</li>
+        <li>"Status Update Failed" on a class you already dropped (display issue)</li>
+        <li>Question about a certificate, articulation, or degree audit (counselor at Home College)</li>
+        <li>Asking about a waitlist (none exist on Exchange)</li>
+        <li>Tuition shows out-of-state — call the Teaching College's A&amp;R first</li>
+        <li>Resubmitted while another submission is pending</li>
+      </ul>
+    </div>
+    <div class="dual-card yes">
+      <h4>Yes — email now</h4>
+      <ul>
+        <li>Status hasn't changed in 5+ business days</li>
+        <li>Class starts within 48 hours and you're still pending or failed</li>
+        <li>Charged but never enrolled, with bank evidence</li>
+        <li>"Drop Failed" persisting after one careful try</li>
+        <li>Out-of-state tuition was charged and you're a CA resident</li>
+        <li>"Application Denied" with no reason given</li>
+        <li>You believe an eligibility decision is wrong, with documentation</li>
+        <li>Drop deadline is within 72 hours and the system is broken</li>
+        <li>Anything time-sensitive — drop deadline, exam, financial aid disbursement</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="checkpoint">
+    <h3>Final checkpoint before you email</h3>
+    <div class="check-item"><input type="checkbox" id="ck1"><label for="ck1">I've matched my issue against the error decoder above</label></div>
+    <div class="check-item"><input type="checkbox" id="ck2"><label for="ck2">I've waited the realistic timeline (use the date checker)</label></div>
+    <div class="check-item"><input type="checkbox" id="ck3"><label for="ck3">I have my CCCID, course/CRN, Teaching College, and exact error message ready</label></div>
+    <div class="check-item"><input type="checkbox" id="ck4"><label for="ck4">I have a screenshot of the error or status</label></div>
+    <div class="check-item"><input type="checkbox" id="ck5"><label for="ck5">I'm not asking about certificates, articulation, or degree audit (those go to my Home College counselor)</label></div>
+  </div>
+
+  <h3 style="margin-top:24px">Ticket builder</h3>
+  <p style="font-size:14px; color:var(--text-secondary); margin:4px 0 4px">Fill these fields. We generate a properly-formatted email you can copy and paste.</p>
+
+  <div class="builder">
+    <div class="field">
+      <label class="field-lbl" for="b-issue">What's wrong?</label>
+      <select id="b-issue">
+        <option value="">— pick one —</option>
+        <option>Charged but not enrolled</option>
+        <option>Drop Failed</option>
+        <option>Pending more than 5 business days</option>
+        <option>Application Denied — no reason given</option>
+        <option>Out-of-state tuition for a CA resident</option>
+        <option>"Status Update Failed" on a dropped class</option>
+        <option>Class starts within 48 hours and I'm not enrolled</option>
+        <option>Other (describe in details)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label class="field-lbl" for="b-cccid">CCCID <span style="color:var(--text-secondary); font-weight:400">(7-character ID)</span></label>
+      <div class="field-hint">Find it on your CVC dashboard or Home College portal.</div>
+      <input id="b-cccid" type="text" placeholder="e.g. CAF3028" maxlength="20">
+    </div>
+    <div class="field">
+      <label class="field-lbl" for="b-course">Course name + CRN</label>
+      <input id="b-course" type="text" placeholder="e.g. MATH-185 / CRN 80024">
+    </div>
+    <div class="field">
+      <label class="field-lbl" for="b-tc">Teaching College</label>
+      <input id="b-tc" type="text" placeholder="e.g. Santiago Canyon College">
+    </div>
+    <div class="field">
+      <label class="field-lbl" for="b-when">When did this happen?</label>
+      <input id="b-when" type="date">
+    </div>
+    <div class="field">
+      <label class="field-lbl" for="b-error">Exact error message (copy-paste)</label>
+      <input id="b-error" type="text" placeholder='e.g. "Course Filled" or "Status Update Failed"'>
+    </div>
+    <div class="field">
+      <label class="field-lbl" for="b-detail">Anything else? (deadline, what you've tried, etc.)</label>
+      <textarea id="b-detail" placeholder="My drop deadline is April 28. I tried twice and got the same error each time."></textarea>
+    </div>
+
+    <h3 style="margin-top:8px">Your email</h3>
+    <div class="builder-out" id="b-out">Fill in the fields above to generate your email.</div>
+    <div class="builder-actions">
+      <button class="btn btn-primary" id="b-copy">Copy email</button>
+      <a class="btn btn-secondary" id="b-mail" href="mailto:cvc.customersupport@parchment.com">Open email client</a>
+      <span class="copied" id="b-copied">Copied to clipboard</span>
+    </div>
+  </div>
+</div>
+
+<div class="section" id="glossary">
+  <span class="eyebrow">Section 8 — Glossary</span>
+  <h2>What does that word mean?</h2>
+  <p class="section-desc">Common terms in the dashboard and on this page, in plain English.</p>
+
+  <div class="glossary">
+    <div class="gloss"><div class="gloss-term">Home College</div><div class="gloss-def">The CCC you primarily attend. Where you log in from. Where your transcripts and aid live.</div></div>
+    <div class="gloss"><div class="gloss-term">Teaching College</div><div class="gloss-def">The CCC offering the cross-enrollment class you're taking. Where the section actually meets.</div></div>
+    <div class="gloss"><div class="gloss-term">CCCID</div><div class="gloss-def">Your 7-character California Community Colleges ID. Same across all CCCs. Required for support tickets.</div></div>
+    <div class="gloss"><div class="gloss-term">CRN</div><div class="gloss-def">Course Reference Number — the section's unique ID at the Teaching College.</div></div>
+    <div class="gloss"><div class="gloss-term">AER</div><div class="gloss-def">Authorization to Enroll Request. The form you fill out when registering. Doesn't collect SSN.</div></div>
+    <div class="gloss"><div class="gloss-term">CCPG</div><div class="gloss-def">California College Promise Grant. Per-unit fee waiver. Apply at your Home College.</div></div>
+    <div class="gloss"><div class="gloss-term">Pending Person Match</div><div class="gloss-def">Teaching College is matching your CCCID to their internal record. Normal — wait 1–3 business days.</div></div>
+    <div class="gloss"><div class="gloss-term">Validated &amp; Registered</div><div class="gloss-def">You're fully enrolled. The good outcome.</div></div>
+    <div class="gloss"><div class="gloss-term">Drop Delete Code</div><div class="gloss-def">A Banner SIS quirk that wipes the registration record on drop. Surfaces as "Status Update Failed" — display issue, not a real failure.</div></div>
+    <div class="gloss"><div class="gloss-term">Confirm Payment</div><div class="gloss-def">The button on the post-bank CVC page that signals payment. Skipping it = card charged, college doesn't know.</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <span class="eyebrow">Official resources</span>
+  <h2>Direct links</h2>
+  <div class="res-grid" style="margin-top:12px">
+    <a href="https://search.cvc.edu/users/sign_in" target="_blank" class="res">Log in<span class="res-arrow">→</span></a>
+    <a href="https://www.cvc.edu/students/student-eligibility/" target="_blank" class="res">Eligibility rules<span class="res-arrow">→</span></a>
+    <a href="https://www.cvc.edu/students/financial-aid/" target="_blank" class="res">Financial aid<span class="res-arrow">→</span></a>
+    <a href="https://www.cvc.edu/students/transcripts-students/" target="_blank" class="res">Transcripts<span class="res-arrow">→</span></a>
+    <a href="https://www.cvc.edu/students/refunds/" target="_blank" class="res">Refunds by college<span class="res-arrow">→</span></a>
+    <a href="https://icangotocollege.com" target="_blank" class="res">Apply directly<span class="res-arrow">→</span></a>
+    <a href="https://assist.org" target="_blank" class="res">Will it transfer? (assist.org)<span class="res-arrow">→</span></a>
+    <a href="https://cvc.freshservice.com/support/solutions" target="_blank" class="res">Help center<span class="res-arrow">→</span></a>
+  </div>
+</div>
+
+<div class="support">
+  <div class="support-icon">@</div>
+  <div>
+    <strong>Still stuck after working through this page?</strong> Use the <a href="#email">ticket builder above</a> to format your email, then send it to <a href="mailto:cvc.customersupport@parchment.com">cvc.customersupport@parchment.com</a>. Replies typically within 1 business day; same-day for urgent (deadline-related) tickets.
+  </div>
+</div>
 
 </div>
 
 <script>
-const D=[
-{t:['enroll'],q:"How do I register for a class?",a:"<ol><li>Search at <a href='https://www.cvc.edu/' target='_blank'>cvc.edu</a> and click <strong>Add Class</strong></li><li>Log in via your Home College</li><li>Sign the consent form (type your full name)</li><li>Fill out the enrollment form, upload prereq docs if asked, confirm residency</li><li>Click Submit, then pay immediately</li></ol>"},
-{t:['enroll','trouble'],q:"My status says 'Pending'. What does that mean?",a:"<p>Your registration is being processed at the Teaching College. Normal for a few business days. <strong>Contact support if it's been over a week</strong> or your class start date is approaching.</p>"},
-{t:['pay'],q:"How do I pay?",a:"<ol><li>After registering, click <strong>Pay Fees</strong></li><li>Enter payment info on the Teaching College's payment page (usually TouchNet)</li><li>You'll be sent back to CVC — <strong>click Confirm Payment</strong></li></ol><div class='flag'><strong>Don't skip Confirm Payment.</strong> If you close the browser before clicking it, your card will be charged but the Teaching College won't see you as paid — and may drop you.</div>"},
-{t:['pay','trouble'],q:"I paid but my class still shows unpaid.",a:"<p>You probably didn't click <strong>Confirm Payment</strong> after the bank page. Check your CVC dashboard — does Class Schedule say 'Pay Now' or 'Enrolled &amp; Paid'?</p><p>If your card was charged but you're not showing as paid, email support with your CCCID, course, payment date/time, last 4 of the card, and amount.</p>"},
-{t:['pay','trouble'],q:"My class costs way more than expected (like $1,000+ for 3 units).",a:"<p>In-state CCC tuition is <strong>$46/unit</strong> ($138 for 3 units). If you're seeing 3-9× that, your California residency probably wasn't confirmed at the Teaching College.</p><p><strong>Don't pay yet.</strong> Contact the Teaching College's Admissions &amp; Records office and ask them to confirm your CA residency. Once corrected, tuition recalculates.</p>"},
-{t:['drop'],q:"How do I drop a class?",a:"<ol><li>Log in to your CVC dashboard</li><li>Go to <strong>Class Schedule</strong></li><li>Click <strong>Drop Course</strong> and confirm</li></ol><p>Dropping can affect your refund eligibility, transcript (W grade), and financial aid. If unsure, talk to a counselor first.</p>"},
-{t:['drop','enroll'],q:"I registered for the wrong class. How do I switch?",a:"<ol><li><strong>Register for the correct class first</strong> — lock in the seat</li><li>Pay for the new class</li><li>Then drop the wrong one</li><li>Request a refund from the Teaching College that received the original payment</li></ol><p><strong>Money does not transfer between classes.</strong> You'll pay separately for the new class and wait for the refund from the dropped one.</p>"},
-{t:['drop'],q:"How do I get a refund?",a:"<p>Refunds come from the Teaching College, not from CVC. Each college has its own process and timeline (usually 2-6 weeks). Find your college's refund info at <a href='https://www.cvc.edu/students/refunds/' target='_blank'>cvc.edu/students/refunds</a>.</p><p><strong>Drop deadlines matter.</strong> Drop before the deadline (usually before classes start) for a full refund.</p>"},
-{t:['canvas'],q:"How do I find my class in Canvas?",a:"<ol><li>Log in to your CVC dashboard</li><li>Go to <strong>Class Schedule</strong></li><li>Click the link below your course to open your Home College's Canvas</li><li>In Canvas, click <strong>View All Courses</strong></li></ol><p>It can take 24-48 hours after registration to appear. Contact support if missing after 3 business days.</p>"},
-{t:['canvas','trouble'],q:"Canvas is giving me a 'trust relationship' or login error.",a:"<p>This is a college IT issue, not a CVC issue. Try a different browser or incognito mode first. If still broken, contact your <strong>Home College's IT helpdesk</strong> or the CCC Tech Center.</p>"},
-{t:['transcripts'],q:"How do I get a transcript for my CVC course?",a:"<p><strong>For your Home College:</strong> the Teaching College sends it automatically after the term ends. Allow 4-6 weeks. If grades aren't showing after that, contact your Home College's A&amp;R first.</p><p><strong>For external transcripts</strong> (4-year schools, employers): request from the Teaching College that taught the course. Details at <a href='https://www.cvc.edu/students/transcripts-students/' target='_blank'>cvc.edu/students/transcripts-students</a>.</p>"},
-{t:['aid','pay'],q:"Can I use financial aid or CCPG?",a:"<p>Financial aid works as <strong>reimbursement</strong> — you pay upfront, then your Home College reimburses you. You can't skip payment because aid will cover it.</p><p>CCPG (Promise Grant) covers per-unit fees if you're eligible at your Home College — it generally applies to CVC courses too. Apply through your Home College or via <a href='https://bog.opencccapply.net/' target='_blank'>BOG online</a>.</p><p>Full details: <a href='https://www.cvc.edu/students/financial-aid/' target='_blank'>cvc.edu/students/financial-aid</a></p>"},
-{t:['enroll'],q:"I'm a high school / Adult Ed / F-1 visa student. Can I enroll?",a:"<p>Possibly, but you need authorization first:</p><ul><li><strong>High school:</strong> dual enrollment authorization from your high school + parent</li><li><strong>Adult Education:</strong> authorization from your Adult Ed program</li><li><strong>F-1 visa:</strong> talk to your Designated School Official before registering — federal regulations restrict concurrent enrollment</li></ul><p>Without proper authorization you may be charged extra fees and dropped. Full details at <a href='https://www.cvc.edu/students/student-eligibility/' target='_blank'>cvc.edu/students/student-eligibility</a>.</p>"},
-{t:['trouble'],q:"My class shows 'Status Update Failed'.",a:"<p>This is sometimes a display issue — your drop or registration may have actually succeeded. <strong>Don't re-attempt.</strong> Email support with your CCCID and course so they can verify the real status with the Teaching College.</p>"},
-{t:['trouble','enroll'],q:"I'm waiting on prerequisite clearance. How long should it take?",a:"<p>Most colleges process prereqs within <strong>3-5 business days</strong>. If it's been longer, check your CVC inbox for any info requests, then email support to escalate — especially if class start is close.</p>"},
-{t:['trouble'],q:"Where do I find my CCCID?",a:"<p>It's a 7-character ID that's the same across all CCCs. Find it on your CVC dashboard, your Home College student portal, or your CCCApply confirmation email. If you can't find it, your Home College's A&amp;R office can look it up.</p>"}
-];
-
-const list=document.getElementById('list');
-D.forEach(item=>{
-  const el=document.createElement('div');
-  el.className='qa';
-  el.dataset.tags=item.t.join(' ');
-  el.dataset.search=(item.q+' '+item.a).toLowerCase().replace(/<[^>]*>/g,' ');
-  el.innerHTML='<button class="qh"><span class="q">'+item.q+'</span><span class="tg">+</span></button><div class="qb">'+item.a+'</div>';
-  list.appendChild(el);
+document.querySelectorAll('.task-head').forEach(h => {
+  h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
 });
 
-let af='all';
-document.getElementById('chips').addEventListener('click',e=>{
-  const c=e.target.closest('.chip');
-  if(!c)return;
-  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
-  c.classList.add('active');
-  af=c.dataset.f;
-  apply();
+document.querySelectorAll('.err-head').forEach(h => {
+  h.addEventListener('click', () => h.parentElement.classList.toggle('open'));
 });
 
-const s=document.getElementById('s');
-s.addEventListener('input',apply);
-
-function apply(){
-  const term=s.value.toLowerCase().trim();
-  let n=0;
-  document.querySelectorAll('.qa').forEach(qa=>{
-    const tm=af==='all'||(' '+qa.dataset.tags+' ').includes(' '+af+' ');
-    const sm=!term||qa.dataset.search.includes(term);
-    const show=tm&&sm;
-    qa.classList.toggle('hidden',!show);
-    if(show)n++;
-  });
-  document.getElementById('none').classList.toggle('show',n===0);
+function openIfAnchored() {
+  const id = location.hash.replace('#','');
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (el.classList.contains('err') || el.classList.contains('task')) {
+    el.classList.add('open');
+  } else {
+    const err = el.closest('.err');
+    if (err) err.classList.add('open');
+  }
 }
+window.addEventListener('hashchange', openIfAnchored);
+openIfAnchored();
 
-list.addEventListener('click',e=>{
-  const h=e.target.closest('.qh');
-  if(h)h.parentElement.classList.toggle('open');
+const dDate = document.getElementById('d-date');
+const dOut = document.getElementById('dater-pending');
+const dMsg = document.getElementById('dater-msg');
+function addBusinessDays(start, days) {
+  const d = new Date(start);
+  let added = 0;
+  while (added < days) {
+    d.setDate(d.getDate() + 1);
+    const day = d.getDay();
+    if (day !== 0 && day !== 6) added++;
+  }
+  return d;
+}
+function fmt(d) { return d.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' }); }
+dDate.addEventListener('change', () => {
+  if (!dDate.value) { dOut.classList.remove('show'); return; }
+  const start = new Date(dDate.value + 'T12:00:00');
+  const today = new Date();
+  const ccc = addBusinessDays(start, 5);
+  const nonCcc = addBusinessDays(start, 7);
+  const elapsed = Math.floor((today - start) / (1000*60*60*24));
+  if (today >= ccc) {
+    dOut.className = 'dater-out show ok';
+    dMsg.innerHTML = `<strong>You've waited long enough.</strong> It's been ${elapsed} days since ${fmt(start)}. If your status hasn't changed, email support now using the <a href="#email">ticket builder</a>.`;
+  } else {
+    dOut.className = 'dater-out show wait';
+    dMsg.innerHTML = `<strong>Don't email yet.</strong> Earliest reasonable follow-up: <strong>${fmt(ccc)}</strong> for CCC prereqs / standard pending, or <strong>${fmt(nonCcc)}</strong> if your prereqs came from a non-CCC school. It's only been ${elapsed} day${elapsed===1?'':'s'} so far.`;
+  }
 });
 
-apply();
+const bIssue = document.getElementById('b-issue');
+const bCccid = document.getElementById('b-cccid');
+const bCourse = document.getElementById('b-course');
+const bTc = document.getElementById('b-tc');
+const bWhen = document.getElementById('b-when');
+const bError = document.getElementById('b-error');
+const bDetail = document.getElementById('b-detail');
+const bOut = document.getElementById('b-out');
+const bCopy = document.getElementById('b-copy');
+const bMail = document.getElementById('b-mail');
+const bCopied = document.getElementById('b-copied');
+
+function buildEmail() {
+  const issue = bIssue.value;
+  const cccid = bCccid.value.trim();
+  const course = bCourse.value.trim();
+  const tc = bTc.value.trim();
+  const when = bWhen.value;
+  const err = bError.value.trim();
+  const detail = bDetail.value.trim();
+  if (!issue && !cccid && !course && !tc && !err) {
+    bOut.textContent = 'Fill in the fields above to generate your email.';
+    return null;
+  }
+  const subject = `[CVC] ${issue || 'Help needed'} — ${course || 'course TBD'}`;
+  const body = [
+    `Subject: ${subject}`,
+    ``,
+    `Hi CVC Support,`,
+    ``,
+    `Issue: ${issue || '(not specified)'}`,
+    `CCCID: ${cccid || '(missing — please provide)'}`,
+    `Course / CRN: ${course || '(missing)'}`,
+    `Teaching College: ${tc || '(missing)'}`,
+    `When it happened: ${when || '(missing)'}`,
+    `Exact error message: ${err || '(none / not applicable)'}`,
+    ``,
+    `Details: ${detail || '(none)'}`,
+    ``,
+    `Thanks,`
+  ].join('\n');
+  return { subject, body };
+}
+function refresh() {
+  const e = buildEmail();
+  if (!e) return;
+  bOut.textContent = e.body;
+  bMail.href = `mailto:cvc.customersupport@parchment.com?subject=${encodeURIComponent(e.subject)}&body=${encodeURIComponent(e.body.split('\n').slice(2).join('\n'))}`;
+}
+[bIssue, bCccid, bCourse, bTc, bWhen, bError, bDetail].forEach(el => el.addEventListener('input', refresh));
+bCopy.addEventListener('click', () => {
+  const e = buildEmail();
+  if (!e) return;
+  navigator.clipboard.writeText(e.body).then(() => {
+    bCopied.classList.add('show');
+    setTimeout(() => bCopied.classList.remove('show'), 2000);
+  });
+});
 </script>
+
 </body>
 </html>
