@@ -1352,25 +1352,26 @@ aside.aside strong {
 /* —————— find: describe-your-problem search —————— */
 
 .find {
-  margin: 56px 0 0;
-  padding: 36px 0 40px;
-  border-top: 1px solid var(--ink);
+  margin: 0 0 0;
+  padding: 8px 0 44px;
   border-bottom: 1px solid var(--ink);
 }
 
 .find-eyebrow {
   font-family: var(--serif-display);
-  font-style: italic;
-  font-variation-settings: "opsz" 22, "SOFT" 80;
-  font-size: 22px;
-  line-height: 1.35;
+  font-weight: 400;
+  font-variation-settings: "opsz" 96, "SOFT" 50;
+  font-size: clamp(28px, 4.2vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: var(--ink);
-  margin-bottom: 6px;
+  margin-bottom: 14px;
   display: block;
 }
 .find-eyebrow em {
   color: var(--claret);
   font-style: italic;
+  font-variation-settings: "opsz" 96, "SOFT" 100;
 }
 
 .find-hint {
@@ -1494,6 +1495,89 @@ aside.aside strong {
   color: var(--claret);
   border-bottom: 1px solid var(--claret-pale);
 }
+
+/* —————— table of contents —————— */
+
+.toc-section {
+  margin: 0 0 64px;
+  padding: 36px 0 8px;
+  border-top: 1px solid var(--rule);
+}
+
+.toc-label {
+  display: block;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 16, "SOFT" 80;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.toc-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 56px;
+}
+@media (max-width: 640px) {
+  .toc-list { grid-template-columns: 1fr; gap: 0; }
+}
+
+.toc-list li {
+  display: block;
+  border-top: 1px solid var(--rule-soft);
+}
+.toc-list li:first-child { border-top: none; }
+@media (min-width: 641px) {
+  .toc-list li:nth-child(2) { border-top: none; }
+}
+
+.toc-list a {
+  display: grid;
+  grid-template-columns: 38px 1fr 16px;
+  gap: 14px;
+  align-items: baseline;
+  padding: 16px 6px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease, padding 0.15s ease;
+}
+.toc-list a:hover {
+  background: var(--claret-wash);
+  color: var(--claret);
+  padding-left: 12px;
+}
+.toc-list a:hover .toc-arrow { color: var(--claret); transform: translateX(2px); }
+
+.toc-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 26, "SOFT" 80;
+  color: var(--claret);
+  font-size: 22px;
+  line-height: 1;
+  text-align: right;
+}
+
+.toc-name {
+  font-family: var(--serif-body);
+  font-size: 17px;
+  font-variation-settings: "opsz" 17;
+  line-height: 1.35;
+}
+
+.toc-arrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  color: var(--ink-ghost);
+  font-size: 14px;
+  text-align: right;
+  transition: color 0.15s ease, transform 0.15s ease;
+  display: inline-block;
+}
 </style>
 </head>
 <body>
@@ -1517,30 +1601,32 @@ aside.aside strong {
   <h1>Get<br><em>Unstuck.</em></h1>
 
   <p class="dek">A guided manual for cross-enrollment students. Most issues resolve from this page in under two minutes — without ever sending an email.</p>
-
-  <nav class="contents" aria-label="Table of contents">
-    <span class="contents-label">Contents</span>
-    <ol class="contents-list">
-      <li><a href="#urgent"><span class="num">i.</span> Urgent matters</a></li>
-      <li><a href="#symptoms"><span class="num">ii.</span> What's on your screen</a></li>
-      <li><a href="#errors"><span class="num">iii.</span> Decoding error messages</a></li>
-      <li><a href="#dater"><span class="num">iv.</span> Have I waited long enough?</a></li>
-      <li><a href="#mistakes"><span class="num">v.</span> Eight common mistakes</a></li>
-      <li><a href="#tasks"><span class="num">vi.</span> Step-by-step guides</a></li>
-      <li><a href="#email"><span class="num">vii.</span> Should I email support?</a></li>
-      <li><a href="#glossary"><span class="num">viii.</span> A small glossary</a></li>
-    </ol>
-  </nav>
 </header>
 
 <!-- ═══════════════════════════════ FIND / SMART SEARCH ═══════════════════════════════ -->
 
-<section class="find" id="find" aria-label="Describe your problem">
-  <span class="find-eyebrow">Not sure where to start? <em>Describe what's happening.</em></span>
-  <p class="find-hint">In your own words — like you'd write it in an email. We'll point you to the section that answers it. (No email gets sent.)</p>
+<section class="find" id="find" aria-label="Type your question">
+  <span class="find-eyebrow">Got a question? <em>Type it here.</em></span>
+  <p class="find-hint">Describe what's happening in your own words — like you'd write it in an email. As you type, we'll recommend the right section below. <strong>Most issues resolve from the recommendation alone.</strong> Nothing gets sent.</p>
   <textarea class="find-textarea" id="find-input" rows="2" placeholder="e.g. I paid for my class but my dashboard still says I haven't paid"></textarea>
   <div class="find-results" id="find-results"></div>
 </section>
+
+<!-- ═══════════════════════════════ TABLE OF CONTENTS ═══════════════════════════════ -->
+
+<nav class="toc-section" aria-label="Table of contents">
+  <span class="toc-label">— or jump straight to a section —</span>
+  <ol class="toc-list">
+    <li><a href="#urgent"><span class="toc-num">i.</span><span class="toc-name">Urgent matters</span><span class="toc-arrow">→</span></a></li>
+    <li><a href="#symptoms"><span class="toc-num">ii.</span><span class="toc-name">What's on your screen</span><span class="toc-arrow">→</span></a></li>
+    <li><a href="#errors"><span class="toc-num">iii.</span><span class="toc-name">Decoding error messages</span><span class="toc-arrow">→</span></a></li>
+    <li><a href="#dater"><span class="toc-num">iv.</span><span class="toc-name">Have I waited long enough?</span><span class="toc-arrow">→</span></a></li>
+    <li><a href="#mistakes"><span class="toc-num">v.</span><span class="toc-name">Eight common mistakes</span><span class="toc-arrow">→</span></a></li>
+    <li><a href="#tasks"><span class="toc-num">vi.</span><span class="toc-name">Step-by-step guides</span><span class="toc-arrow">→</span></a></li>
+    <li><a href="#email"><span class="toc-num">vii.</span><span class="toc-name">Should I email support?</span><span class="toc-arrow">→</span></a></li>
+    <li><a href="#glossary"><span class="toc-num">viii.</span><span class="toc-name">A small glossary</span><span class="toc-arrow">→</span></a></li>
+  </ol>
+</nav>
 
 <!-- ═══════════════════════════════ I. URGENT ═══════════════════════════════ -->
 
