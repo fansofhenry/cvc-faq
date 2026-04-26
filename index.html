@@ -1383,30 +1383,98 @@ aside.aside strong {
   margin-bottom: 20px;
 }
 
+.find-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "SOFT" 80;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--claret);
+  margin: 8px 0 10px;
+}
+.find-label-arrow {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  display: inline-block;
+  animation: nudge 1.8s ease-in-out infinite;
+}
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .find-label-arrow { animation: none; }
+}
+
 .find-textarea {
   width: 100%;
   font-family: var(--serif-body);
   font-size: 18px;
   font-variation-settings: "opsz" 18;
-  line-height: 1.55;
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--ink-soft);
-  padding: 10px 0 14px;
+  line-height: 1.5;
+  background: var(--paper-deep);
+  border: 1.5px solid var(--ink-soft);
+  border-radius: 4px;
+  padding: 16px 18px;
   color: var(--ink);
-  resize: none;
-  min-height: 56px;
-  transition: border-color 0.2s ease;
+  resize: vertical;
+  min-height: 96px;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 .find-textarea:focus {
   outline: none;
-  border-bottom-color: var(--claret);
+  border-color: var(--claret);
+  background: var(--paper);
+  box-shadow: 0 0 0 3px var(--claret-pale);
 }
 .find-textarea::placeholder {
   font-family: var(--serif-display);
   font-style: italic;
   font-variation-settings: "opsz" 18, "SOFT" 80;
   color: var(--ink-faint);
+  opacity: 1;
+}
+
+.find-examples {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 14px;
+}
+.find-examples-label {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "SOFT" 80;
+  font-size: 14px;
+  color: var(--ink-faint);
+  margin-right: 4px;
+}
+.find-example {
+  font-family: var(--serif-body);
+  font-size: 14px;
+  font-variation-settings: "opsz" 14;
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  padding: 6px 14px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.find-example:hover {
+  border-color: var(--claret);
+  color: var(--claret);
+  background: var(--claret-wash);
+}
+.find-example:focus-visible {
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
 }
 
 .find-results {
@@ -1608,7 +1676,20 @@ aside.aside strong {
 <section class="find" id="find" aria-label="Type your question">
   <span class="find-eyebrow">Got a question? <em>Type it here.</em></span>
   <p class="find-hint">Describe what's happening in your own words — like you'd write it in an email. As you type, we'll recommend the right section below. <strong>Most issues resolve from the recommendation alone.</strong> Nothing gets sent.</p>
-  <textarea class="find-textarea" id="find-input" rows="2" placeholder="e.g. I paid for my class but my dashboard still says I haven't paid"></textarea>
+
+  <label for="find-input" class="find-label">
+    <span class="find-label-arrow" aria-hidden="true">↓</span> Type your question
+  </label>
+  <textarea class="find-textarea" id="find-input" rows="3" placeholder="Start typing here. For example: I paid for my class but my dashboard still says I haven't paid."></textarea>
+
+  <div class="find-examples">
+    <span class="find-examples-label">Or tap an example:</span>
+    <button class="find-example" type="button" data-q="I paid for my class but the system says I haven't paid">"I paid but I'm not enrolled"</button>
+    <button class="find-example" type="button" data-q="My class is full and I can't register">"My class is full"</button>
+    <button class="find-example" type="button" data-q="How do I drop a class?">"How do I drop a class?"</button>
+    <button class="find-example" type="button" data-q="My financial aid CCPG isn't working">"Financial aid issues"</button>
+  </div>
+
   <div class="find-results" id="find-results"></div>
 </section>
 
@@ -2810,6 +2891,17 @@ findInput.addEventListener('input', (e) => {
   findTimer = setTimeout(() => {
     renderResults(findMatches(q), q);
   }, 160);
+});
+
+// Example chips — click to fill input + run search immediately
+document.querySelectorAll('.find-example').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const q = btn.dataset.q || btn.textContent.replace(/^["']|["']$/g, '').trim();
+    findInput.value = q;
+    findInput.focus();
+    renderResults(findMatches(q), q);
+    findInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
 });
 
 // when user clicks a result, also open the matching details if applicable
