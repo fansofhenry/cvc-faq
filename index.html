@@ -1646,6 +1646,302 @@ aside.aside strong {
   transition: color 0.15s ease, transform 0.15s ease;
   display: inline-block;
 }
+
+.toc-list .seen .toc-num::after {
+  content: "✓";
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 12px;
+  color: var(--moss);
+  font-style: normal;
+}
+
+/* —————— language toggle —————— */
+
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  margin-left: auto;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 13, "SOFT" 80;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  padding: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--ink-faint);
+}
+.lang-btn {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 12, "SOFT" 80;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  background: transparent;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 14px;
+  cursor: pointer;
+  color: var(--ink-faint);
+  transition: all 0.15s ease;
+}
+.lang-btn.active {
+  background: var(--claret);
+  color: var(--paper);
+}
+.lang-btn:hover:not(.active) { color: var(--claret); }
+
+/* dual-language span pattern: hide non-active language */
+[data-es] { display: none; }
+html[lang="es"] [data-en] { display: none; }
+html[lang="es"] [data-es] { display: inline; }
+html[lang="es"] p[data-es],
+html[lang="es"] div[data-es] { display: block; }
+
+/* —————— voice mic on search —————— */
+
+.find-input-wrap {
+  position: relative;
+}
+.find-mic {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+.find-mic:hover {
+  border-color: var(--claret);
+  color: var(--claret);
+}
+.find-mic.listening {
+  background: var(--claret);
+  color: var(--paper);
+  border-color: var(--claret);
+  animation: pulse-soft 1.2s ease-in-out infinite;
+}
+@keyframes pulse-soft {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 102, 186, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(0, 102, 186, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .find-mic.listening { animation: none; }
+}
+
+/* —————— urgency prompt under search —————— */
+
+.urgency-prompt {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 4px 0;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "SOFT" 80;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.urgency-prompt a {
+  color: var(--alert);
+  border-bottom: 1px solid var(--alert);
+  padding-bottom: 1px;
+  font-style: italic;
+  font-weight: 500;
+}
+.urgency-prompt a:hover {
+  background: var(--claret-wash);
+}
+
+/* —————— keyboard shortcut hint —————— */
+
+.kbd-hint {
+  display: inline-block;
+  margin-left: 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--ink-faint);
+  vertical-align: middle;
+}
+
+/* —————— search result snippets / matched tags —————— */
+
+.find-match {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-faint);
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+.find-match em {
+  font-style: italic;
+  color: var(--claret);
+}
+
+/* —————— did this help feedback —————— */
+
+.helpful-prompt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 18px;
+  padding: 12px 16px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "SOFT" 80;
+  font-size: 14px;
+  color: var(--ink-soft);
+  flex-wrap: wrap;
+}
+.helpful-btn {
+  font-family: var(--serif-body);
+  font-size: 13px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  padding: 5px 14px;
+  cursor: pointer;
+  color: var(--ink);
+  transition: all 0.15s ease;
+}
+.helpful-btn:hover {
+  border-color: var(--claret);
+  color: var(--claret);
+}
+.helpful-thanks {
+  font-style: italic;
+  color: var(--moss);
+  font-family: var(--serif-display);
+}
+
+/* —————— copy-link buttons on entries —————— */
+
+.copy-link {
+  font-family: var(--mono);
+  font-size: 11px;
+  background: transparent;
+  border: 1px solid var(--rule-soft);
+  border-radius: 4px;
+  padding: 2px 8px;
+  cursor: pointer;
+  color: var(--ink-faint);
+  margin-left: 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease, all 0.15s ease;
+  flex-shrink: 0;
+}
+details:hover .copy-link,
+details[open] .copy-link,
+article.mistake:hover .copy-link {
+  opacity: 1;
+}
+.copy-link:hover {
+  border-color: var(--claret);
+  color: var(--claret);
+}
+.copy-link.copied {
+  background: var(--moss);
+  color: var(--paper);
+  border-color: var(--moss);
+  opacity: 1;
+}
+@media (max-width: 720px) {
+  .copy-link { opacity: 1; }
+}
+
+/* mistake copy-link positioning */
+article.mistake { position: relative; }
+article.mistake .copy-link {
+  position: absolute;
+  top: 28px;
+  right: 6px;
+}
+
+/* —————— floating help button (bottom-right) —————— */
+
+.float-help {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--claret);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 28, "SOFT" 100;
+  font-size: 26px;
+  font-weight: 500;
+  z-index: 60;
+  box-shadow: 0 4px 16px rgba(0, 47, 109, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s ease;
+  pointer-events: none;
+  font-family: inherit;
+}
+.float-help.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+.float-help:hover {
+  background: var(--claret-deep);
+  transform: translateY(-2px) scale(1.05);
+}
+@media (max-width: 640px) {
+  .float-help { bottom: 18px; right: 18px; width: 50px; height: 50px; font-size: 22px; }
+}
+
+/* —————— print stylesheet —————— */
+
+@media print {
+  .grain, .urgent-marker, .float-help, .find-mic,
+  .copy-link, .helpful-prompt, .lang-toggle, .urgency-prompt,
+  .find-results, .find-textarea, .find-examples {
+    display: none !important;
+  }
+  body { background: white; padding: 0; }
+  .page { max-width: none; padding: 24px; }
+  details { break-inside: avoid; }
+  details:not([open]) { display: none; }
+  details summary::after { content: none; }
+  .section { break-before: auto; }
+  a { color: var(--ink); text-decoration: none; }
+  .section-num { color: var(--ink); }
+  .lane:hover, .symptom:hover { background: white; transform: none; }
+}
 </style>
 </head>
 <body>
@@ -1659,36 +1955,78 @@ aside.aside strong {
 
 <header class="masthead">
   <div class="masthead-meta">
-    <span>The CVC Exchange</span>
+    <span data-en>The CVC Exchange</span><span data-es>Intercambio CVC</span>
     <span class="dot"></span>
-    <span>Student Companion</span>
+    <span data-en>Student Companion</span><span data-es>Guía del Estudiante</span>
     <span class="dot"></span>
     <span>Vol. I — 2026</span>
+    <span class="lang-toggle" role="group" aria-label="Language">
+      <button class="lang-btn active" data-lang="en" type="button">EN</button>
+      <button class="lang-btn" data-lang="es" type="button">ES</button>
+    </span>
   </div>
 
-  <h1>Get<br><em>Unstuck.</em></h1>
+  <h1>
+    <span data-en>Get<br><em>Unstuck.</em></span>
+    <span data-es>Sin<br><em>Bloqueos.</em></span>
+  </h1>
 
-  <p class="dek">A guided manual for cross-enrollment students. Most issues resolve from this page in under two minutes — without ever sending an email.</p>
+  <p class="dek">
+    <span data-en>A guided manual for cross-enrollment students. Most issues resolve from this page in under two minutes — without ever sending an email.</span>
+    <span data-es>Una guía para estudiantes de inscripción cruzada. La mayoría de los problemas se resuelven aquí en menos de dos minutos — sin necesidad de enviar un correo.</span>
+  </p>
 </header>
 
 <!-- ═══════════════════════════════ FIND / SMART SEARCH ═══════════════════════════════ -->
 
 <section class="find" id="find" aria-label="Type your question">
-  <span class="find-eyebrow">Got a question? <em>Type it here.</em></span>
-  <p class="find-hint">Describe what's happening in your own words — like you'd write it in an email. As you type, we'll recommend the right section below. <strong>Most issues resolve from the recommendation alone.</strong> Nothing gets sent.</p>
+  <span class="find-eyebrow">
+    <span data-en>Got a question? <em>Type it here.</em></span>
+    <span data-es>¿Tienes una pregunta? <em>Escríbela aquí.</em></span>
+  </span>
+  <p class="find-hint">
+    <span data-en>Describe what's happening in your own words — like you'd write it in an email. As you type, we'll recommend the right section below. <strong>Most issues resolve from the recommendation alone.</strong> Nothing gets sent.</span>
+    <span data-es>Describe lo que está pasando con tus propias palabras — como lo escribirías en un correo. Mientras escribes, recomendaremos la sección correcta abajo. <strong>La mayoría de los problemas se resuelven con la recomendación.</strong> No se envía nada.</span>
+  </p>
 
   <label for="find-input" class="find-label">
-    <span class="find-label-arrow" aria-hidden="true">↓</span> Type your question
+    <span class="find-label-arrow" aria-hidden="true">↓</span>
+    <span data-en>Type your question</span><span data-es>Escribe tu pregunta</span>
+    <span class="kbd-hint" aria-label="Keyboard shortcut">Press /</span>
   </label>
-  <textarea class="find-textarea" id="find-input" rows="3" placeholder="Start typing here. For example: I paid for my class but my dashboard still says I haven't paid."></textarea>
+  <div class="find-input-wrap">
+    <textarea class="find-textarea" id="find-input" rows="3"
+      placeholder="Start typing here. For example: I paid for my class but my dashboard still says I haven't paid."
+      data-placeholder-en="Start typing here. For example: I paid for my class but my dashboard still says I haven't paid."
+      data-placeholder-es="Empieza a escribir aquí. Por ejemplo: Pagué mi clase pero el panel dice que no he pagado."></textarea>
+    <button class="find-mic" id="find-mic" type="button" aria-label="Speak your question" title="Tap to speak">🎤</button>
+  </div>
 
   <div class="find-examples">
-    <span class="find-examples-label">Or tap an example:</span>
-    <button class="find-example" type="button" data-q="I paid for my class but the system says I haven't paid">"I paid but I'm not enrolled"</button>
-    <button class="find-example" type="button" data-q="My class is full and I can't register">"My class is full"</button>
-    <button class="find-example" type="button" data-q="How do I drop a class?">"How do I drop a class?"</button>
-    <button class="find-example" type="button" data-q="My financial aid CCPG isn't working">"Financial aid issues"</button>
+    <span class="find-examples-label">
+      <span data-en>Or tap an example:</span><span data-es>O toca un ejemplo:</span>
+    </span>
+    <button class="find-example" type="button" data-q="I paid for my class but the system says I haven't paid">
+      <span data-en>"I paid but I'm not enrolled"</span><span data-es>"Pagué pero no estoy inscrita/o"</span>
+    </button>
+    <button class="find-example" type="button" data-q="My class is full and I can't register">
+      <span data-en>"My class is full"</span><span data-es>"Mi clase está llena"</span>
+    </button>
+    <button class="find-example" type="button" data-q="How do I drop a class?">
+      <span data-en>"How do I drop a class?"</span><span data-es>"¿Cómo cancelo una clase?"</span>
+    </button>
+    <button class="find-example" type="button" data-q="My financial aid CCPG isn't working">
+      <span data-en>"Financial aid issues"</span><span data-es>"Problemas con ayuda financiera"</span>
+    </button>
   </div>
+
+  <p class="urgency-prompt">
+    <span data-en>Class start or drop deadline within 48 hours?</span>
+    <span data-es>¿Empieza tu clase o vence el plazo de cancelación en 48 horas?</span>
+    <a href="#urgent">
+      <span data-en>Skip to urgent →</span><span data-es>Ir a urgente →</span>
+    </a>
+  </p>
 
   <div class="find-results" id="find-results"></div>
 </section>
@@ -1696,7 +2034,10 @@ aside.aside strong {
 <!-- ═══════════════════════════════ TABLE OF CONTENTS ═══════════════════════════════ -->
 
 <nav class="toc-section" aria-label="Table of contents">
-  <span class="toc-label">— or jump straight to a section —</span>
+  <span class="toc-label">
+    <span data-en>— or jump straight to a section —</span>
+    <span data-es>— o salta directo a una sección —</span>
+  </span>
   <ol class="toc-list">
     <li><a href="#urgent"><span class="toc-num">i.</span><span class="toc-name">Urgent matters</span><span class="toc-arrow">→</span></a></li>
     <li><a href="#symptoms"><span class="toc-num">ii.</span><span class="toc-name">What's on your screen</span><span class="toc-arrow">→</span></a></li>
@@ -1715,29 +2056,53 @@ aside.aside strong {
   <div class="section-head">
     <div class="section-num">i.</div>
     <div>
-      <h2 class="section-title"><em>Urgent</em> matters</h2>
-      <p class="section-dek dropcap">If your class begins within forty-eight hours, or a deadline is today or tomorrow, follow these exact steps. Don't read the rest of the page first — come back to it later.</p>
+      <h2 class="section-title">
+        <span data-en><em>Urgent</em> matters</span>
+        <span data-es>Asuntos <em>urgentes</em></span>
+      </h2>
+      <p class="section-dek dropcap">
+        <span data-en>If your class begins within forty-eight hours, or a deadline is today or tomorrow, follow these exact steps. Don't read the rest of the page first — come back to it later.</span>
+        <span data-es>Si tu clase empieza dentro de las próximas cuarenta y ocho horas, o un plazo es hoy o mañana, sigue estos pasos exactos. No leas el resto de la página primero — regresa más tarde.</span>
+      </p>
     </div>
   </div>
 
   <div class="lanes">
     <a class="lane" href="#urgent-pending">
       <div class="lane-marker">A.</div>
-      <h3>Class begins in 48 hours and I'm still <em>Pending</em></h3>
-      <p>Three steps to escalate before the start date.</p>
-      <span class="lane-arrow">Read →</span>
+      <h3>
+        <span data-en>Class begins in 48 hours and I'm still <em>Pending</em></span>
+        <span data-es>La clase empieza en 48 horas y sigo en <em>Pending</em></span>
+      </h3>
+      <p>
+        <span data-en>Three steps to escalate before the start date.</span>
+        <span data-es>Tres pasos para escalar antes de la fecha de inicio.</span>
+      </p>
+      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
     <a class="lane" href="#urgent-drop">
       <div class="lane-marker">B.</div>
-      <h3>My drop deadline is <em>today</em> or tomorrow</h3>
-      <p>What to do if the system won't let you drop.</p>
-      <span class="lane-arrow">Read →</span>
+      <h3>
+        <span data-en>My drop deadline is <em>today</em> or tomorrow</span>
+        <span data-es>Mi plazo para cancelar es <em>hoy</em> o mañana</span>
+      </h3>
+      <p>
+        <span data-en>What to do if the system won't let you drop.</span>
+        <span data-es>Qué hacer si el sistema no te permite cancelar.</span>
+      </p>
+      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
     <a class="lane" href="#urgent-paid">
       <div class="lane-marker">C.</div>
-      <h3>Card was charged, I'm <em>not enrolled</em></h3>
-      <p>Recover the payment in four steps.</p>
-      <span class="lane-arrow">Read →</span>
+      <h3>
+        <span data-en>Card was charged, I'm <em>not enrolled</em></span>
+        <span data-es>Cobraron mi tarjeta, pero <em>no estoy inscrita/o</em></span>
+      </h3>
+      <p>
+        <span data-en>Recover the payment in four steps.</span>
+        <span data-es>Recupera el pago en cuatro pasos.</span>
+      </p>
+      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
   </div>
 
@@ -1807,8 +2172,14 @@ aside.aside strong {
   <div class="section-head">
     <div class="section-num">ii.</div>
     <div>
-      <h2 class="section-title">What's on your <em>screen</em>?</h2>
-      <p class="section-dek">Find the closest match below. Different statuses look similar but mean very different things — picking the right one saves hours.</p>
+      <h2 class="section-title">
+        <span data-en>What's on your <em>screen</em>?</span>
+        <span data-es>¿Qué hay en tu <em>pantalla</em>?</span>
+      </h2>
+      <p class="section-dek">
+        <span data-en>Find the closest match below. Different statuses look similar but mean very different things — picking the right one saves hours.</span>
+        <span data-es>Encuentra la coincidencia más cercana abajo. Estados similares tienen significados muy diferentes — elegir el correcto ahorra horas.</span>
+      </p>
     </div>
   </div>
 
@@ -1816,64 +2187,64 @@ aside.aside strong {
     <a class="symptom" href="#sym-pending">
       <div class="sym-letter">a.</div>
       <div>
-        <div class="sym-q">Status says "Pending" or "Pending Review"</div>
-        <div class="sym-h">in progress, not failed</div>
+        <div class="sym-q"><span data-en>Status says "Pending" or "Pending Review"</span><span data-es>El estado dice "Pending" o "Pending Review"</span></div>
+        <div class="sym-h"><span data-en>in progress, not failed</span><span data-es>en proceso, no falló</span></div>
       </div>
       <div class="sym-arrow">→</div>
     </a>
     <a class="symptom" href="#sym-failed">
       <div class="sym-letter">b.</div>
       <div>
-        <div class="sym-q">"Registration Failed" or "Drop Failed"</div>
-        <div class="sym-h">a real failure — error decoder needed</div>
+        <div class="sym-q"><span data-en>"Registration Failed" or "Drop Failed"</span><span data-es>"Registration Failed" o "Drop Failed"</span></div>
+        <div class="sym-h"><span data-en>a real failure — error decoder needed</span><span data-es>una falla real — necesitas el descifrador</span></div>
       </div>
       <div class="sym-arrow">→</div>
     </a>
     <a class="symptom" href="#sym-denied">
       <div class="sym-letter">c.</div>
       <div>
-        <div class="sym-q">"Application Denied"</div>
-        <div class="sym-h">manually reviewed and rejected</div>
+        <div class="sym-q"><span data-en>"Application Denied"</span><span data-es>"Application Denied" (Solicitud denegada)</span></div>
+        <div class="sym-h"><span data-en>manually reviewed and rejected</span><span data-es>revisada manualmente y rechazada</span></div>
       </div>
       <div class="sym-arrow">→</div>
     </a>
     <a class="symptom" href="#sym-paid">
       <div class="sym-letter">d.</div>
       <div>
-        <div class="sym-q">Charged but dashboard shows unpaid</div>
-        <div class="sym-h">almost certainly the Confirm Payment trap</div>
+        <div class="sym-q"><span data-en>Charged but dashboard shows unpaid</span><span data-es>Cobraron pero el panel dice "no pagado"</span></div>
+        <div class="sym-h"><span data-en>almost certainly the Confirm Payment trap</span><span data-es>casi seguro la trampa de Confirm Payment</span></div>
       </div>
       <div class="sym-arrow">→</div>
     </a>
     <a class="symptom" href="#sym-tuition">
       <div class="sym-letter">e.</div>
       <div>
-        <div class="sym-q">Tuition shows $400+ for 3 units</div>
-        <div class="sym-h">residency wasn't confirmed — don't pay</div>
+        <div class="sym-q"><span data-en>Tuition shows $400+ for 3 units</span><span data-es>La matrícula muestra $400+ por 3 unidades</span></div>
+        <div class="sym-h"><span data-en>residency wasn't confirmed — don't pay</span><span data-es>residencia no confirmada — no pagues</span></div>
       </div>
       <div class="sym-arrow">→</div>
     </a>
     <a class="symptom" href="#sym-canvas">
       <div class="sym-letter">f.</div>
       <div>
-        <div class="sym-q">Class doesn't appear in Canvas</div>
-        <div class="sym-h">usually just a matter of timing</div>
+        <div class="sym-q"><span data-en>Class doesn't appear in Canvas</span><span data-es>La clase no aparece en Canvas</span></div>
+        <div class="sym-h"><span data-en>usually just a matter of timing</span><span data-es>casi siempre es cuestión de tiempo</span></div>
       </div>
       <div class="sym-arrow">→</div>
     </a>
     <a class="symptom" href="#sym-update-failed">
       <div class="sym-letter">g.</div>
       <div>
-        <div class="sym-q">"Status Update Failed" on a class I dropped</div>
-        <div class="sym-h">display issue — drop probably worked</div>
+        <div class="sym-q"><span data-en>"Status Update Failed" on a class I dropped</span><span data-es>"Status Update Failed" en una clase que cancelé</span></div>
+        <div class="sym-h"><span data-en>display issue — drop probably worked</span><span data-es>problema visual — la cancelación probablemente funcionó</span></div>
       </div>
       <div class="sym-arrow">→</div>
     </a>
     <a class="symptom" href="#sym-unknown">
       <div class="sym-letter">h.</div>
       <div>
-        <div class="sym-q">I don't know what I'm looking at</div>
-        <div class="sym-h">walk me through it</div>
+        <div class="sym-q"><span data-en>I don't know what I'm looking at</span><span data-es>No sé qué estoy viendo</span></div>
+        <div class="sym-h"><span data-en>walk me through it</span><span data-es>guíame paso a paso</span></div>
       </div>
       <div class="sym-arrow">→</div>
     </a>
@@ -1886,8 +2257,14 @@ aside.aside strong {
   <div class="section-head">
     <div class="section-num">iii.</div>
     <div>
-      <h2 class="section-title">Decoding the <em>error</em> messages</h2>
-      <p class="section-dek">Click any entry to see the real meaning, the realistic timeline, and what (if anything) you should do. Italics indicate <em>wait</em> — this is correct system behavior.</p>
+      <h2 class="section-title">
+        <span data-en>Decoding the <em>error</em> messages</span>
+        <span data-es>Descifrando los mensajes de <em>error</em></span>
+      </h2>
+      <p class="section-dek">
+        <span data-en>Click any entry to see the real meaning, the realistic timeline, and what (if anything) you should do. Italics indicate <em>wait</em> — this is correct system behavior.</span>
+        <span data-es>Haz clic en cualquier entrada para ver el significado real, el plazo realista y qué hacer (si algo). Las cursivas indican <em>esperar</em> — el sistema funciona correctamente.</span>
+      </p>
     </div>
   </div>
 
@@ -2610,6 +2987,8 @@ aside.aside strong {
 
 </div>
 
+<button class="float-help" id="float-help" type="button" aria-label="Back to search">?</button>
+
 <script>
 // open via hash
 function openIfAnchored() {
@@ -2873,28 +3252,42 @@ function renderResults(results, query) {
   const wrap = document.getElementById('find-results');
   if (!query.trim() || query.trim().length < 3) {
     wrap.classList.remove('show');
-    wrap.innerHTML = '';
+    wrap.innerHTML = query.trim().length > 0 && query.trim().length < 3
+      ? '<div class="find-empty"><span data-en>Keep typing — at least 3 characters.</span><span data-es>Sigue escribiendo — al menos 3 caracteres.</span></div>'
+      : '';
+    if (query.trim().length > 0 && query.trim().length < 3) wrap.classList.add('show');
     return;
   }
   if (results.length === 0) {
     wrap.classList.add('show');
-    wrap.innerHTML = `<div class="find-empty">No close match. Try the <a href="#symptoms">symptom picker</a> below, or browse the <a href="#errors">error decoder</a>.</div>`;
+    wrap.innerHTML = `<div class="find-empty"><span data-en>No close match. Try the <a href="#symptoms">symptom picker</a> below, or browse the <a href="#errors">error decoder</a>.</span><span data-es>Sin coincidencias. Prueba el <a href="#symptoms">selector de síntomas</a> abajo, o consulta el <a href="#errors">descifrador de errores</a>.</span></div>`;
+    if (typeof applyLang === 'function') applyLang();
     return;
   }
   const labels = ['i.','ii.','iii.','iv.'];
+  const tokens = tokenize(query);
   wrap.classList.add('show');
   wrap.innerHTML =
-    `<div class="find-results-label">Sounds like you mean —</div>` +
-    results.map((r, i) =>
-      `<a class="find-result" href="#${r.item.id}">
+    `<div class="find-results-label"><span data-en>Sounds like you mean —</span><span data-es>Parece que te refieres a —</span></div>` +
+    results.map((r, i) => {
+      // find which tags or words matched
+      const matchedTags = r.item.tags.filter(tag =>
+        tokens.some(tok => tag.toLowerCase().includes(tok))
+      ).slice(0, 3);
+      const matchInfo = matchedTags.length
+        ? `<span class="find-match"><span data-en>matched: </span><span data-es>coincide: </span>${matchedTags.map(m => `<em>"${m}"</em>`).join(', ')}</span>`
+        : '';
+      return `<a class="find-result" href="#${r.item.id}" data-result-id="${r.item.id}">
          <div class="find-result-rank">${labels[i]}</div>
          <div class="find-result-body">
            <div class="find-result-title">${r.item.title}</div>
            <span class="find-result-section">${r.item.section}</span>
+           ${matchInfo}
          </div>
          <div class="find-result-arrow">→</div>
-       </a>`
-    ).join('');
+       </a>`;
+    }).join('');
+  if (typeof applyLang === 'function') applyLang();
 }
 
 const findInput = document.getElementById('find-input');
@@ -2915,13 +3308,309 @@ document.querySelectorAll('.find-example').forEach(btn => {
     findInput.focus();
     renderResults(findMatches(q), q);
     findInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    track('chip_click', { q });
   });
 });
+
+// ════════════════════════════════════════════════════════════════════
+// ANALYTICS — track events; send to Cloudflare Worker if configured,
+// otherwise log to localStorage as fallback
+// ════════════════════════════════════════════════════════════════════
+
+const ANALYTICS_URL = window.CVC_ANALYTICS_URL || ''; // set via worker.js deploy
+const SESSION_ID = (() => {
+  let id = sessionStorage.getItem('cvc_sid');
+  if (!id) { id = Math.random().toString(36).slice(2, 12); sessionStorage.setItem('cvc_sid', id); }
+  return id;
+})();
+
+function track(event, data = {}) {
+  const payload = {
+    event,
+    data,
+    sid: SESSION_ID,
+    page: location.pathname,
+    lang: document.documentElement.lang || 'en',
+    ts: Date.now(),
+    ua: navigator.userAgent.slice(0, 80)
+  };
+  if (ANALYTICS_URL) {
+    try {
+      fetch(ANALYTICS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'cors',
+        keepalive: true
+      }).catch(() => storeLocal(payload));
+    } catch (e) { storeLocal(payload); }
+  } else {
+    storeLocal(payload);
+  }
+}
+function storeLocal(payload) {
+  try {
+    const stored = JSON.parse(localStorage.getItem('cvc_logs') || '[]');
+    stored.push(payload);
+    if (stored.length > 200) stored.shift();
+    localStorage.setItem('cvc_logs', JSON.stringify(stored));
+  } catch (e) {}
+}
+window.cvcLogs = () => JSON.parse(localStorage.getItem('cvc_logs') || '[]');
+
+// Track page view
+track('page_view');
+
+// Track search queries (debounced — fire on the same delay as render)
+const _origRenderResults = renderResults;
+renderResults = function(results, query) {
+  _origRenderResults(results, query);
+  if (query && query.trim().length >= 3) {
+    track('search_query', {
+      q: query.slice(0, 200),
+      results: results.length,
+      top_id: results[0]?.item.id || null,
+      top_score: results[0]?.score || 0
+    });
+  }
+  // Inject did-this-help prompt after results render
+  if (results.length > 0 && query.trim().length >= 3) {
+    const wrap = document.getElementById('find-results');
+    if (wrap.querySelector('.helpful-prompt')) return;
+    const helpful = document.createElement('div');
+    helpful.className = 'helpful-prompt';
+    helpful.innerHTML = `
+      <span><span data-en>Did one of these answer your question?</span><span data-es>¿Alguno respondió tu pregunta?</span></span>
+      <button class="helpful-btn" data-helpful="yes" type="button"><span data-en>Yes</span><span data-es>Sí</span></button>
+      <button class="helpful-btn" data-helpful="no" type="button"><span data-en>Not yet</span><span data-es>Todavía no</span></button>
+    `;
+    wrap.appendChild(helpful);
+    helpful.querySelectorAll('.helpful-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const v = btn.dataset.helpful;
+        track('helpful_' + v, { q: query.slice(0, 200), top_id: results[0]?.item.id });
+        helpful.innerHTML = v === 'yes'
+          ? '<span class="helpful-thanks"><span data-en>Glad it helped. ✓</span><span data-es>Qué bien que ayudó. ✓</span></span>'
+          : '<span class="helpful-thanks"><span data-en>Thanks. We\'ll improve the answer.</span><span data-es>Gracias. Mejoraremos la respuesta.</span></span>';
+        applyLang(); // re-apply language to the new content
+      });
+    });
+    applyLang();
+  }
+};
+
+// ════════════════════════════════════════════════════════════════════
+// VOICE INPUT — WebSpeechAPI
+// ════════════════════════════════════════════════════════════════════
+
+const mic = document.getElementById('find-mic');
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SR && mic) {
+  const recog = new SR();
+  recog.interimResults = false;
+  recog.continuous = false;
+
+  mic.addEventListener('click', (e) => {
+    e.preventDefault();
+    recog.lang = document.documentElement.lang === 'es' ? 'es-ES' : 'en-US';
+    try {
+      recog.start();
+      mic.classList.add('listening');
+      track('voice_start');
+    } catch (err) {}
+  });
+  recog.onresult = (e) => {
+    const text = e.results[0][0].transcript;
+    findInput.value = text;
+    findInput.dispatchEvent(new Event('input'));
+    findInput.focus();
+    track('voice_result', { text: text.slice(0, 200) });
+  };
+  recog.onerror = () => mic.classList.remove('listening');
+  recog.onend = () => mic.classList.remove('listening');
+} else if (mic) {
+  mic.style.display = 'none';
+}
+
+// ════════════════════════════════════════════════════════════════════
+// COPY-LINK BUTTONS — auto-inject on every entry with an ID
+// ════════════════════════════════════════════════════════════════════
+
+document.querySelectorAll('details[id], article.mistake[id]').forEach(el => {
+  const id = el.id;
+  if (!id) return;
+  const target = el.querySelector('summary > div, .mistake > div, summary');
+  if (!target) return;
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'copy-link';
+  btn.title = 'Copy link to this entry';
+  btn.setAttribute('aria-label', 'Copy link to this entry');
+  btn.textContent = '🔗 link';
+  btn.addEventListener('click', (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const url = `${location.origin}${location.pathname}#${id}`;
+    navigator.clipboard.writeText(url).then(() => {
+      btn.classList.add('copied');
+      btn.textContent = '✓ copied';
+      track('link_copied', { id });
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.textContent = '🔗 link';
+      }, 1800);
+    }).catch(() => {});
+  });
+
+  if (el.classList.contains('mistake')) {
+    el.appendChild(btn);
+  } else {
+    // For details/entry: append to the inner div of summary
+    const summary = el.querySelector('summary');
+    if (summary) {
+      // Prefer to append into the rightmost child div / right side
+      const taskInner = summary.querySelector('.task-summary > div');
+      if (taskInner) taskInner.appendChild(btn);
+      else summary.appendChild(btn);
+    }
+  }
+});
+
+// Also track when a details opens
+document.querySelectorAll('details[id]').forEach(el => {
+  el.addEventListener('toggle', () => {
+    if (el.open) track('entry_open', { id: el.id });
+  });
+});
+
+// ════════════════════════════════════════════════════════════════════
+// KEYBOARD SHORTCUTS — `/` focuses search, Esc clears it
+// ════════════════════════════════════════════════════════════════════
+
+document.addEventListener('keydown', (e) => {
+  const tag = (document.activeElement.tagName || '').toLowerCase();
+  const isFormField = tag === 'input' || tag === 'textarea' || tag === 'select';
+  if (e.key === '/' && !isFormField) {
+    e.preventDefault();
+    findInput.focus();
+    findInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    track('kbd_slash');
+  }
+  if (e.key === 'Escape' && document.activeElement === findInput) {
+    findInput.value = '';
+    renderResults([], '');
+    findInput.blur();
+  }
+});
+
+// ════════════════════════════════════════════════════════════════════
+// FLOATING HELP BUTTON — appears once user scrolls past find section
+// ════════════════════════════════════════════════════════════════════
+
+const floatHelp = document.getElementById('float-help');
+const findSection = document.getElementById('find');
+if (floatHelp && findSection && 'IntersectionObserver' in window) {
+  const fhObs = new IntersectionObserver((entries) => {
+    const findVisible = entries[0].isIntersecting;
+    floatHelp.classList.toggle('visible', !findVisible);
+  }, { rootMargin: '0px', threshold: 0 });
+  fhObs.observe(findSection);
+
+  floatHelp.addEventListener('click', () => {
+    findInput.focus();
+    findSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    track('float_help_click');
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════
+// RECENTLY-VIEWED — mark TOC entries the user has already opened
+// ════════════════════════════════════════════════════════════════════
+
+const VIEWED_KEY = 'cvc_viewed_sections';
+function getViewed() {
+  try { return JSON.parse(localStorage.getItem(VIEWED_KEY) || '[]'); }
+  catch { return []; }
+}
+function addViewed(id) {
+  const viewed = getViewed();
+  if (!viewed.includes(id)) {
+    viewed.push(id);
+    if (viewed.length > 20) viewed.shift();
+    localStorage.setItem(VIEWED_KEY, JSON.stringify(viewed));
+  }
+  applyViewedToToc();
+}
+function applyViewedToToc() {
+  const viewed = getViewed();
+  document.querySelectorAll('.toc-list li').forEach(li => {
+    const a = li.querySelector('a');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    const id = href.replace('#', '');
+    li.classList.toggle('seen', viewed.includes(id));
+  });
+}
+applyViewedToToc();
+
+// Track when user enters a major section
+if ('IntersectionObserver' in window) {
+  const seenObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+        addViewed(entry.target.id);
+      }
+    });
+  }, { threshold: 0.5 });
+  ['urgent', 'symptoms', 'errors', 'dater', 'mistakes', 'tasks', 'email', 'glossary'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) seenObs.observe(el);
+  });
+}
+
+// ════════════════════════════════════════════════════════════════════
+// LANGUAGE TOGGLE — EN / ES
+// ════════════════════════════════════════════════════════════════════
+
+function applyLang() {
+  const lang = document.documentElement.lang || 'en';
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  // Swap textarea placeholder
+  if (findInput) {
+    const ph = findInput.dataset['placeholder' + (lang === 'es' ? 'Es' : 'En')];
+    if (ph) findInput.setAttribute('placeholder', ph);
+  }
+}
+function setLang(lang) {
+  document.documentElement.lang = lang;
+  try { localStorage.setItem('cvc_lang', lang); } catch (e) {}
+  applyLang();
+  track('lang_switch', { lang });
+}
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+// Restore saved language preference, OR detect from browser
+(function initLang() {
+  let saved;
+  try { saved = localStorage.getItem('cvc_lang'); } catch (e) {}
+  if (saved === 'es' || saved === 'en') {
+    setLang(saved);
+  } else if ((navigator.language || '').toLowerCase().startsWith('es')) {
+    // auto-suggest: don't force, but apply if no preference
+    setLang('es');
+  } else {
+    applyLang();
+  }
+})();
 
 // when user clicks a result, also open the matching details if applicable
 document.getElementById('find-results').addEventListener('click', (e) => {
   const a = e.target.closest('a.find-result');
   if (!a) return;
+  track('result_click', { id: a.dataset.resultId });
   setTimeout(openIfAnchored, 50);
 });
 </script>
