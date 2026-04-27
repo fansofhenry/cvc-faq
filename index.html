@@ -2862,6 +2862,127 @@ section.section#limits .entries {
   padding-top: 4px;
 }
 
+/* College-specific direct-link card — appears above search results when
+   the query mentions a CCC name + a topic (refund, etc.). Routes the
+   student straight to that college's page rather than the cvc.edu
+   overview where they'd have to hunt for their college. */
+.college-context-card {
+  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  border: 1.5px solid var(--ink);
+  border-radius: 10px;
+  padding: 22px 24px 20px;
+  margin: 0 0 18px;
+  position: relative;
+  overflow: hidden;
+}
+.college-context-card::before {
+  content: "Direct link";
+  position: absolute;
+  top: -1.5px;
+  right: 28px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 14px 4px 14px;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "SOFT" 80;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: 0 0 4px 4px;
+}
+.ccc-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 13, "SOFT" 80;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--claret);
+  margin-bottom: 4px;
+}
+.ccc-eyebrow strong {
+  font-style: normal;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--ink);
+  font-variation-settings: "opsz" 14, "wght" 600;
+}
+.ccc-headline {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36, "SOFT" 80;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+.ccc-body {
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink);
+  line-height: 1.55;
+  margin: 0 0 14px;
+  max-width: 64ch;
+}
+.ccc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.ccc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-family: var(--serif-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: transform 0.16s ease, background 0.16s ease, color 0.16s ease;
+}
+.ccc-link.primary {
+  background: var(--claret);
+  color: var(--paper);
+  border: 1px solid var(--claret);
+}
+.ccc-link.primary:hover {
+  background: var(--claret-deep);
+  border-color: var(--claret-deep);
+  transform: translateY(-1px);
+}
+.ccc-link.secondary {
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+}
+.ccc-link.secondary:hover {
+  border-color: var(--ink);
+  background: var(--paper-deep);
+}
+.ccc-icon {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  opacity: 0.85;
+}
+.ccc-advisory {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 13, "SOFT" 80;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  margin: 8px 0 0;
+  border-top: 1px dashed var(--rule-soft);
+  padding-top: 10px;
+  line-height: 1.5;
+}
+
 /* Wrapper for the top result + its quick-actions sibling. Quick-actions
    live OUTSIDE the <a> card to avoid nested-anchor parsing problems. */
 .find-result-card-wrap {
@@ -3632,6 +3753,9 @@ article.mistake .copy-link {
     </button>
     <button class="find-example" type="button" data-q="Im new to CVC how do I set up my account">
       <span data-en>"First time — how do I start?"</span><span data-es>"Primera vez — ¿cómo empiezo?"</span>
+    </button>
+    <button class="find-example" type="button" data-q="how do I get a refund from Foothill College">
+      <span data-en>"Refund from a specific college"</span><span data-es>"Reembolso de una universidad"</span>
     </button>
   </div>
 
@@ -6818,6 +6942,150 @@ const TYPO_FIXES = {
   'tomorrow':       'tomorrow',
 };
 
+// ─────────────────────────────────────────────────────────────────────
+// COLLEGE_LINKS — maps each CCC to its student-service URLs (refund
+// policy, etc.). Lets the search layer answer "Foothill refund" with
+// the actual Foothill page + the CVC overview, instead of just routing
+// to a generic refunds entry.
+// Refund URLs from cvc.edu/students/refunds/ (authoritative source).
+// ─────────────────────────────────────────────────────────────────────
+
+const COLLEGE_LINKS = {
+  'allan_hancock':       { name: 'Allan Hancock College',          aliases: ['allan hancock','hancock college','hancock cc'], refund: 'https://www.hancockcollege.edu/fees/cvc.php' },
+  'american_river':      { name: 'American River College',         aliases: ['american river','arc','american river college'], refund: 'https://arc.losrios.edu/admissions/cost-of-attendance/refunds/refund-application' },
+  'antelope_valley':     { name: 'Antelope Valley College',        aliases: ['antelope valley','avc','antelope valley college'], refund: 'https://www.avc.edu/studentservices/adminrec/tuition#enrollmentfees' },
+  'bakersfield':         { name: 'Bakersfield College',            aliases: ['bakersfield','bakersfield community college','bakersfield college','bc'], refund: 'https://www.bakersfieldcollege.edu/enrollment-aid/tuition-fees.html' },
+  'berkeley_city':       { name: 'Berkeley City College',          aliases: ['berkeley city','berkeley city college','bcc'], refund: 'https://www.peralta.edu/admissions/student-finance/drop-refund' },
+  'cabrillo':            { name: 'Cabrillo College',               aliases: ['cabrillo','cabrillo college'], refund: 'https://www.cabrillo.edu/admissions-and-records/fees-payments-and-refunds/fee-refunds/' },
+  'cerritos':            { name: 'Cerritos College',               aliases: ['cerritos','cerritos college'], refund: 'https://www.cerritos.edu/admissions-and-records/fees/refund-policies-and-procedues.htm' },
+  'cerro_coso':          { name: 'Cerro Coso College',             aliases: ['cerro coso','cerro coso community college'], refund: 'https://www.cerrocoso.edu/studentservices/registration/refund-policy' },
+  'chabot':              { name: 'Chabot College',                 aliases: ['chabot','chabot college'], refund: 'https://www.chabotcollege.edu/admissions/cost-payment/refund.php' },
+  'chaffey':             { name: 'Chaffey College',                aliases: ['chaffey','chaffey college'], refund: 'https://www.chaffey.edu/cashier/cvc-refund-policy.php' },
+  'citrus':              { name: 'Citrus College',                 aliases: ['citrus','citrus college'], refund: 'https://www.citruscollege.edu/general/bursarcashier/' },
+  'clovis':              { name: 'Clovis Community College',       aliases: ['clovis','clovis community college','clovis college'], refund: 'https://www.cloviscollege.edu/admissions-and-aid/business-office/refunds-and-fee-reversals.html' },
+  'coalinga':            { name: 'Coalinga College',               aliases: ['coalinga','coalinga college','west hills coalinga'], refund: 'https://westhillscollege.com/coalinga/admissions/cost-of-attendance/' },
+  'coastline':           { name: 'Coastline College',              aliases: ['coastline','coastline college'], refund: 'https://www.coastline.edu/cost-and-aid/tuition-and-fees/payments.php' },
+  'alameda':             { name: 'College of Alameda',             aliases: ['college of alameda','alameda college','alameda'], refund: 'https://www.peralta.edu/admissions/student-finance/drop-refund' },
+  'canyons':             { name: 'College of the Canyons',         aliases: ['college of the canyons','canyons','coc'], refund: 'https://www.canyons.edu/studentservices/sbo/refunds/index.php' },
+  'desert':              { name: 'College of the Desert',          aliases: ['college of the desert','cod','desert college'], refund: 'https://www.collegeofthedesert.edu/students/bursar/refunds.php' },
+  'redwoods':            { name: 'College of the Redwoods',        aliases: ['college of the redwoods','redwoods','cr'], refund: 'https://redwoods.elumenapp.com/catalog/2022-2023/fees3#mainContent' },
+  'sequoias':            { name: 'College of the Sequoias',        aliases: ['college of the sequoias','sequoias','cos'], refund: 'https://www.cos.edu/en-us/admissions/california-virtual-college' },
+  'siskiyous':           { name: 'College of the Siskiyous',       aliases: ['college of the siskiyous','siskiyous','siskiyou'], refund: 'https://www.siskiyous.edu/admissions/tuition.htm' },
+  'columbia':            { name: 'Columbia College',               aliases: ['columbia college','columbia'], refund: 'https://gocolumbia.edu/online_learning/cvc.html' },
+  'compton':             { name: 'Compton College',                aliases: ['compton','compton college'], refund: 'https://www.compton.edu/admissions-aid/fees.aspx' },
+  'contra_costa':        { name: 'Contra Costa College',           aliases: ['contra costa','contra costa college','ccc'], refund: 'https://www.contracosta.edu/admissions/fees-tuition/' },
+  'copper_mountain':     { name: 'Copper Mountain College',        aliases: ['copper mountain','copper mountain college','cmc'], refund: 'https://www.cmccd.edu/admissions/tuition/' },
+  'cosumnes_river':      { name: 'Cosumnes River College',         aliases: ['cosumnes river','cosumnes','crc'], refund: 'https://crc.losrios.edu/admissions/cost-of-attendance/refunds/refund-application' },
+  'crafton_hills':       { name: 'Crafton Hills College',          aliases: ['crafton hills','crafton','crafton college'], refund: 'https://www.craftonhills.edu/admissions-and-records/enroll/refund-policy.php' },
+  'cuesta':              { name: 'Cuesta College',                 aliases: ['cuesta','cuesta college'], refund: 'https://www.cuesta.edu/student/resources/cashier/cvc-exchange.html' },
+  'cuyamaca':            { name: 'Cuyamaca College',               aliases: ['cuyamaca','cuyamaca college'], refund: 'https://www.gcccd.edu/accounting/refund-policy.php' },
+  'cypress':             { name: 'Cypress College',                aliases: ['cypress','cypress college'], refund: 'https://www.cypresscollege.edu/bursars-office/enrollment-fees/' },
+  'de_anza':             { name: 'De Anza College',                aliases: ['de anza','deanza','de-anza','de anza college'], refund: 'https://www.deanza.edu/cashier/refunds.html' },
+  'diablo_valley':       { name: 'Diablo Valley College',          aliases: ['diablo valley','diablo','dvc'], refund: 'https://www.dvc.edu/college-support/cashier/fees.html' },
+  'east_la':             { name: 'East Los Angeles College',       aliases: ['east los angeles','east la','elac','east la college'], refund: 'https://www.elac.edu/offices/fiscal/policy' },
+  'el_camino':           { name: 'El Camino College',              aliases: ['el camino','el camino college'], refund: 'http://catalog.elcamino.edu/content.php?catoid=3&navoid=119' },
+  'evergreen_valley':    { name: 'Evergreen Valley College',       aliases: ['evergreen valley','evergreen','evc'], refund: 'https://catalog.evc.edu/admissions-registration-fees-financial-aid/refunds/' },
+  'folsom_lake':         { name: 'Folsom Lake College',            aliases: ['folsom lake','folsom','flc'], refund: 'https://flc.losrios.edu/admissions/cost-of-attendance/refunds/refund-application' },
+  'foothill':            { name: 'Foothill College',               aliases: ['foothill','foothill college'], refund: 'https://foothill.edu/reg/cashier/refunds.html' },
+  'fresno_city':         { name: 'Fresno City College',            aliases: ['fresno city','fresno city college','fcc'], refund: 'https://www.fresnocitycollege.edu/admissions-aid/business-office/fee-reversals-and-refunds.html' },
+  'fullerton':           { name: 'Fullerton College',              aliases: ['fullerton','fullerton college'], refund: 'https://fcbursar.fullcoll.edu/refund-policy/' },
+  'gavilan':             { name: 'Gavilan College',                aliases: ['gavilan','gavilan college'], refund: 'https://www.gavilan.edu/admit/fees.php' },
+  'glendale':            { name: 'Glendale College',               aliases: ['glendale','glendale college','glendale community'], refund: 'https://www.glendale.edu/financial-aid-fees/refunds' },
+  'golden_west':         { name: 'Golden West College',            aliases: ['golden west','gwc'], refund: 'https://www.goldenwestcollege.edu/register/index.html' },
+  'grossmont':           { name: 'Grossmont College',              aliases: ['grossmont','grossmont college'], refund: 'https://www.gcccd.edu/accounting/refund-policy.php' },
+  'hartnell':            { name: 'Hartnell College',               aliases: ['hartnell','hartnell college'], refund: 'https://www.hartnell.edu/students/admissions/fees-refunds/index.html' },
+  'imperial_valley':     { name: 'Imperial Valley College',        aliases: ['imperial valley','imperial','ivc-imperial'], refund: 'https://www.imperial.edu/faculty-and-staff/administrative-services/fees-refunds-payment-plan.html' },
+  'irvine_valley':       { name: 'Irvine Valley College',          aliases: ['irvine valley','irvine','ivc'], refund: 'https://www.ivc.edu/bursars/refund-request-information' },
+  'lake_tahoe':          { name: 'Lake Tahoe Community College',   aliases: ['lake tahoe','tahoe','ltcc'], refund: 'http://www.ltcc.edu/admissions/creditandrefund.php' },
+  'laney':               { name: 'Laney College',                  aliases: ['laney','laney college'], refund: 'https://www.peralta.edu/admissions/student-finance/drop-refund' },
+  'las_positas':         { name: 'Las Positas College',            aliases: ['las positas','las positas college','lpc'], refund: 'https://www.laspositascollege.edu/admissions/fees.php' },
+  'lassen':              { name: 'Lassen College',                 aliases: ['lassen','lassen college'], refund: 'https://bankmobiledisbursements.com/refundchoices/' },
+  'lemoore':             { name: 'Lemoore College',                aliases: ['lemoore','lemoore college','west hills lemoore'], refund: 'https://westhillscollege.com/lemoore/admissions/cost-of-attendance/' },
+  'long_beach':          { name: 'Long Beach City College',        aliases: ['long beach','lbcc','long beach city'], refund: 'https://www.lbcc.edu/post/cvc-exchange-student-withdrawals-refunds' },
+  'la_city':             { name: 'Los Angeles City College',       aliases: ['los angeles city','lacc','la city','la city college'], refund: 'https://www.lacc.edu/offices/business/refund-policy' },
+  'la_harbor':           { name: 'Los Angeles Harbor College',     aliases: ['los angeles harbor','la harbor','lahc'], refund: 'https://www.lahc.edu/financial-aid/disbursements-refunds' },
+  'la_mission':          { name: 'Los Angeles Mission College',    aliases: ['los angeles mission','la mission','lamission'], refund: 'https://www.lamission.edu/offices/business-office/refunds' },
+  'la_pierce':           { name: 'Los Angeles Pierce College',     aliases: ['los angeles pierce','la pierce','lapc','pierce'], refund: 'https://www.lapc.edu/cost-tuition/cost-college' },
+  'la_trade':            { name: 'Los Angeles Trade Tech College', aliases: ['los angeles trade','la trade','lattc','trade tech'], refund: 'https://www.lattc.edu/financial-aid/disbursements-refunds' },
+  'la_valley':           { name: 'Los Angeles Valley College',     aliases: ['los angeles valley','la valley','lavc'], refund: 'https://www.lavc.edu/financial-aid/disbursements-refunds' },
+  'los_medanos':         { name: 'Los Medanos College',            aliases: ['los medanos','medanos','lmc'], refund: 'https://www.losmedanos.edu/admissions/fees.aspx' },
+  'madera':              { name: 'Madera College',                 aliases: ['madera','madera college','madera center'], refund: 'https://www.maderacenter.com/admissions-aid/business-services/fee-reversals-and-refunds.html' },
+  'mendocino':           { name: 'Mendocino College',              aliases: ['mendocino','mendocino college'], refund: 'https://www.mendocino.edu/admissions-aid/registration/fees-and-tuition' },
+  'merced':              { name: 'Merced College',                 aliases: ['merced','merced college'], refund: 'https://www.mccd.edu/pay-for-college/tuition-and-fees/refunds/' },
+  'merritt':             { name: 'Merritt College',                aliases: ['merritt','merritt college'], refund: 'https://www.peralta.edu/admissions/student-finance/drop-refund' },
+  'miracosta':           { name: 'MiraCosta College',              aliases: ['miracosta','mira costa','miracosta college'], refund: 'https://www.miracosta.edu/administrative/student-accounts-office/refund-policy.html' },
+  'mission':             { name: 'Mission College',                aliases: ['mission college','mission'], refund: 'https://missioncollege.edu/admissions/paying-for-classes.html' },
+  'modesto':             { name: 'Modesto Junior College',         aliases: ['modesto','modesto junior','mjc'], refund: 'https://mjc.edu/studentservices/business/refunds.php' },
+  'moorpark':            { name: 'Moorpark College',               aliases: ['moorpark','moorpark college'], refund: 'https://www.moorparkcollege.edu/cvc-exchange-student-withdrawals-refunds' },
+  'moreno_valley':       { name: 'Moreno Valley College',          aliases: ['moreno valley','mvc'], refund: 'https://rccd.edu/schedules/refunds_rcc.html' },
+  'mt_sac':              { name: 'Mt. San Antonio College',        aliases: ['mt sac','mt. sac','mtsac','mt san antonio','mount sac'], refund: 'https://www.mtsac.edu/cashier/refunds.html' },
+  'mt_san_jacinto':      { name: 'Mt. San Jacinto College',        aliases: ['mt san jacinto','mt. san jacinto','msjc','mount san jacinto'], refund: 'https://www.msjc.edu/enroll/refund-policy.html' },
+  'norco':               { name: 'Norco College',                  aliases: ['norco','norco college'], refund: 'https://rccd.edu/schedules/refunds_rcc.html' },
+  'ohlone':              { name: 'Ohlone College',                 aliases: ['ohlone','ohlone college'], refund: 'https://www.ohlone.edu/studentrec/refunds' },
+  'orange_coast':        { name: 'Orange Coast College',           aliases: ['orange coast','occ','orange coast college'], refund: 'https://orangecoastcollege.edu/admissions-aid/enrollment/registration/refunds.html' },
+  'oxnard':              { name: 'Oxnard College',                 aliases: ['oxnard','oxnard college'], refund: 'https://www.oxnardcollege.edu/departments/administrative/office-of-business-services/student-business-office/CVC' },
+  'palomar':             { name: 'Palomar College',                aliases: ['palomar','palomar college'], refund: 'https://www.palomar.edu/fiscalservices/refund-policy/' },
+  'pasadena':            { name: 'Pasadena City College',          aliases: ['pasadena','pcc','pasadena city','pasadena city college'], refund: 'https://pasadena.edu/business-administrative-services/fiscal-services/refunds.php' },
+  'porterville':         { name: 'Porterville College',            aliases: ['porterville','porterville college'], refund: 'https://www.portervillecollege.edu/admissions-and-records/tuition-fees.html' },
+  'reedley':             { name: 'Reedley College',                aliases: ['reedley','reedley college'], refund: 'https://www.reedleycollege.edu/admissions-aid/business-services/fee-reversals-and-refunds.html' },
+  'rio_hondo':           { name: 'Rio Hondo College',              aliases: ['rio hondo','rio hondo college'], refund: 'https://www.riohondo.edu/financial-aid/cost-of-attendance/fees-refunds/' },
+  'riverside':           { name: 'Riverside City College',         aliases: ['riverside','riverside city','rcc','riverside community'], refund: 'https://rccd.edu/schedules/refunds_rcc.html' },
+  'sacramento_city':     { name: 'Sacramento City College',        aliases: ['sacramento city','sac city','sacramento city college'], refund: 'https://scc.losrios.edu/admissions/cost-of-attendance/refunds/refund-application' },
+  'saddleback':          { name: 'Saddleback College',             aliases: ['saddleback','saddleback college'], refund: 'https://www.saddleback.edu/apply-pay/tuition-fees/refund-information' },
+  'san_bernardino':      { name: 'San Bernardino Valley College',  aliases: ['san bernardino','sbvc','san bernardino valley'], refund: 'https://catalog.valleycollege.edu/admissions-registration/payment-fees/' },
+  'sd_city':             { name: 'San Diego City College',         aliases: ['san diego city','sdcc','sd city','san diego city college'], refund: 'https://www.sdccd.edu/about/departments-and-offices/instructional-services-division/online-learning-pathways-1/students/cvc_student_faq.aspx' },
+  'sd_mesa':             { name: 'San Diego Mesa College',         aliases: ['san diego mesa','mesa','sd mesa','sd mesa college'], refund: 'https://www.sdccd.edu/about/departments-and-offices/instructional-services-division/online-learning-pathways-1/students/cvc_student_faq.aspx' },
+  'sd_miramar':          { name: 'San Diego Miramar College',      aliases: ['san diego miramar','miramar','sd miramar'], refund: 'https://www.sdccd.edu/about/departments-and-offices/instructional-services-division/online-learning-pathways-1/students/cvc_student_faq.aspx' },
+  'san_joaquin_delta':   { name: 'San Joaquin Delta College',      aliases: ['san joaquin delta','sjdc','delta college'], refund: 'https://www.deltacollege.edu/admissions/admissions-records-registration/fees/refunds' },
+  'sjcc':                { name: 'San Jose City College',          aliases: ['san jose city','sjcc','san jose city college'], refund: 'https://sjcc.edu/admissions-records/fees-refunds.aspx' },
+  'santa_ana':           { name: 'Santa Ana College',              aliases: ['santa ana','sac','santa ana college'], refund: 'https://sac.edu/admissions/fees' },
+  'sbcc':                { name: 'Santa Barbara City College',     aliases: ['santa barbara','sbcc','santa barbara city'], refund: 'https://www.sbcc.edu/fiscalservices/cashier/Refund.php' },
+  'santiago_canyon':     { name: 'Santiago Canyon College',        aliases: ['santiago canyon','scc','santiago canyon college'], refund: 'https://sccollege.edu/students/studentservices/cashiers/SitePages/Home.aspx' },
+  'shasta':              { name: 'Shasta College',                 aliases: ['shasta','shasta college'], refund: 'https://www.shastacollege.edu/cost-financial-aid/cost-of-attendance/refund-policy/' },
+  'southwestern':        { name: 'Southwestern College',           aliases: ['southwestern','southwestern college'], refund: 'https://www.swccd.edu/admissions-and-financial-aid/tuition-and-fees/index.aspx' },
+  'taft':                { name: 'Taft College',                   aliases: ['taft','taft college'], refund: 'https://www.taftcollege.edu/o/faid/page/refund-options' },
+  'ventura':             { name: 'Ventura College',                aliases: ['ventura','ventura college'], refund: 'https://www.venturacollege.edu/departments/student-services/student-business-office/cvc-california-virtual-campus-fees-and-refunds' },
+  'victor_valley':       { name: 'Victor Valley College',          aliases: ['victor valley','vvc'], refund: 'https://www.vvc.edu/fees-refunds' },
+  'west_la':             { name: 'West LA College',                aliases: ['west los angeles','west la','wlac'], refund: 'https://www.wlac.edu/offices/business-office/refunds-paying' },
+  'west_valley':         { name: 'West Valley College',            aliases: ['west valley','west valley college'], refund: 'https://www.westvalley.edu/admissions/fee-schedule.html' },
+  'woodland':            { name: 'Woodland Community College',     aliases: ['woodland','woodland community'], refund: 'https://www.yccd.edu/district-services/education-and-planning/california-virtual-campus/' },
+  'yuba':                { name: 'Yuba College',                   aliases: ['yuba','yuba college'], refund: 'https://www.yccd.edu/district-services/education-and-planning/california-virtual-campus/' },
+};
+
+// Detect which CCC topic the query is asking about (refund, etc.)
+function detectCollegeTopic(q) {
+  const lc = q.toLowerCase();
+  if (/(refund|reimburse|money back|drop.{0,8}fee|withdraw.{0,8}fee|cancel.{0,8}refund|cancellation refund|fees back|return.{0,8}money|get.{0,5}money back)/.test(lc)) return 'refund';
+  return null;
+}
+
+// Find the longest college alias that appears (word-boundary) in the query
+function detectCollegeMatch(q) {
+  const lc = q.toLowerCase();
+  let best = null;
+  for (const [key, info] of Object.entries(COLLEGE_LINKS)) {
+    for (const alias of info.aliases) {
+      const re = new RegExp('\\b' + alias.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+      if (re.test(lc)) {
+        if (!best || alias.length > best.aliasLength) {
+          best = { key, info, alias, aliasLength: alias.length };
+        }
+      }
+    }
+  }
+  return best;
+}
+
+function findCollegeContext(query) {
+  const college = detectCollegeMatch(query);
+  if (!college) return null;
+  const topic = detectCollegeTopic(query);
+  if (!topic) return null;
+  const url = college.info[topic];
+  if (!url) return null;
+  return { college: college.info, topic, url };
+}
+
 // Rough list of CCC name fragments that students commonly reference.
 // When detected in a query, results that mention these get a small boost.
 const COLLEGE_FRAGMENTS = [
@@ -7504,6 +7772,40 @@ const QUICK_ACTIONS = {
   ],
 };
 
+// ─────────────────────────────────────────────────────────────────────
+// COLLEGE CONTEXT CARD — when query mentions "Foothill refund" etc.,
+// render a card with the direct college link + the CVC overview link.
+// Saves the student from clicking through cvc.edu/students/refunds/
+// and hunting for their college in a long table.
+// ─────────────────────────────────────────────────────────────────────
+
+const TOPIC_LABELS = {
+  refund: {
+    eyebrow: 'Direct refund link',
+    headline: collegeName => `${collegeName}'s refund policy`,
+    body: collegeName => `Refunds run through the Teaching College's bursar/cashier office, not CVC. Open ${collegeName}'s page below for their specific deadlines, refund schedule, and request process. Refunds typically take 4–6 weeks to process.`,
+    overviewLabel: 'All colleges (cvc.edu/students/refunds)',
+    overviewUrl: 'https://www.cvc.edu/students/refunds/',
+    advisory: 'CVC routes the data; the actual refund decision is at the Teaching College. For student-aid refunds (CCPG, FAFSA), also contact your Home College\'s Financial Aid office.'
+  }
+};
+
+function renderCollegeContextCard(ctx, qTrim) {
+  const { college, topic, url } = ctx;
+  const labels = TOPIC_LABELS[topic];
+  if (!labels) return '';
+  return `<div class="college-context-card">
+    <div class="ccc-eyebrow">${labels.eyebrow} for <strong>${escapeHtml(college.name)}</strong></div>
+    <h3 class="ccc-headline">${escapeHtml(labels.headline(college.name))}</h3>
+    <p class="ccc-body">${escapeHtml(labels.body(college.name))}</p>
+    <div class="ccc-actions">
+      <a class="ccc-link primary" href="${url}" target="_blank" rel="noopener" data-college="${college.name}" data-topic="${topic}">${escapeHtml(college.name)} → ${topic} page <span class="ccc-icon">↗</span></a>
+      <a class="ccc-link secondary" href="${labels.overviewUrl}" target="_blank" rel="noopener">${escapeHtml(labels.overviewLabel)} <span class="ccc-icon">↗</span></a>
+    </div>
+    <p class="ccc-advisory">${escapeHtml(labels.advisory)}</p>
+  </div>`;
+}
+
 function quickActionsFor(item) {
   const actions = QUICK_ACTIONS[item.id];
   if (!actions || !actions.length) return '';
@@ -7577,6 +7879,15 @@ function renderResults(results, query) {
   const highlightTokens = tokens.filter(t => t.length >= 3 && !STOPWORDS.has(t));
   wrap.classList.add('show');
 
+  let html = didYouMean;
+
+  // Detect college + topic intent (e.g., "Foothill refund") and render
+  // a college-specific direct-link card BEFORE the corpus result.
+  const ctx = findCollegeContext(qTrim);
+  if (ctx) {
+    html += renderCollegeContextCard(ctx, qTrim);
+  }
+
   const top = results[0];
   const others = results.slice(1);
   const topConf = confidenceLabel(top.score);
@@ -7585,7 +7896,6 @@ function renderResults(results, query) {
   // sibling, since nested <a> tags trigger the HTML5 adoption-agency
   // algorithm and break the card layout (browsers split the card into
   // phantom fragments).
-  let html = didYouMean;
   html += `<div class="find-results-label"><span data-en>Best match for "${escapeHtml(qTrim)}"</span><span data-es>Mejor coincidencia para "${escapeHtml(qTrim)}"</span></div>`;
   html += `<div class="find-result-card-wrap">`;
   html += `<a class="find-result find-result-top" href="#${top.item.id}" data-result-id="${top.item.id}">
@@ -8106,6 +8416,13 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
 
 // when user clicks a result, also open the matching details if applicable
 document.getElementById('find-results').addEventListener('click', (e) => {
+  // College-context card click (refund link, etc.) — track and let the
+  // browser navigate normally
+  const ccc = e.target.closest('a[data-college]');
+  if (ccc) {
+    track('college_context_click', { college: ccc.dataset.college, topic: ccc.dataset.topic });
+    return;
+  }
   // "Did you mean" suggestion click — run the suggested query
   const suggest = e.target.closest('a[data-suggest]');
   if (suggest) {
