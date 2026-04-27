@@ -2677,6 +2677,51 @@ section.section#limits .entries {
   outline-offset: 2px;
 }
 
+.find-recent {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.find-recent[hidden] { display: none; }
+.find-recent-chip {
+  appearance: none;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-soft);
+  border-radius: 999px;
+  padding: 4px 10px 4px 14px;
+  font-family: var(--serif-body);
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.16s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.find-recent-chip::before { content: "↻"; font-size: 10px; color: var(--ink-faint); }
+.find-recent-chip:hover {
+  border-color: var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+}
+.find-recent-clear {
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 4px 8px;
+  margin-left: auto;
+}
+.find-recent-clear:hover { color: var(--claret); }
+
 .find-results {
   display: none;
   margin-top: 22px;
@@ -3502,20 +3547,37 @@ article.mistake .copy-link {
 
   <div class="find-examples">
     <span class="find-examples-label">
-      <span data-en>Or tap an example:</span><span data-es>O toca un ejemplo:</span>
+      <span data-en>Or tap a real student question:</span><span data-es>O toca una pregunta real:</span>
     </span>
     <button class="find-example" type="button" data-q="I paid for my class but the system says I haven't paid">
       <span data-en>"I paid but I'm not enrolled"</span><span data-es>"Pagué pero no estoy inscrita/o"</span>
     </button>
-    <button class="find-example" type="button" data-q="My class is full and I can't register">
-      <span data-en>"My class is full"</span><span data-es>"Mi clase está llena"</span>
+    <button class="find-example" type="button" data-q="my tuition shows $1864 but I'm a CA resident">
+      <span data-en>"Tuition way too high"</span><span data-es>"Matrícula muy alta"</span>
     </button>
-    <button class="find-example" type="button" data-q="How do I drop a class?">
-      <span data-en>"How do I drop a class?"</span><span data-es>"¿Cómo cancelo una clase?"</span>
+    <button class="find-example" type="button" data-q="I can't drop my class — drop failed">
+      <span data-en>"Drop failed"</span><span data-es>"No puedo cancelar mi clase"</span>
     </button>
-    <button class="find-example" type="button" data-q="My financial aid CCPG isn't working">
-      <span data-en>"Financial aid issues"</span><span data-es>"Problemas con ayuda financiera"</span>
+    <button class="find-example" type="button" data-q="when does the summer 2026 schedule come out">
+      <span data-en>"When does summer schedule appear?"</span><span data-es>"¿Cuándo sale el horario de verano?"</span>
     </button>
+    <button class="find-example" type="button" data-q="how do I get a 1098-T tax form">
+      <span data-en>"Where's my 1098-T?"</span><span data-es>"¿Dónde está mi 1098-T?"</span>
+    </button>
+    <button class="find-example" type="button" data-q="my home college fixed residency but TC still charges out of state">
+      <span data-en>"HC fixed residency, TC didn't"</span><span data-es>"HC arregló residencia, TC no"</span>
+    </button>
+    <button class="find-example" type="button" data-q="I can't find my past classes from CCC Online">
+      <span data-en>"Lost past CCC Online classes"</span><span data-es>"Clases pasadas perdidas"</span>
+    </button>
+    <button class="find-example" type="button" data-q="how do I change the email on my CVC account">
+      <span data-en>"Change my email"</span><span data-es>"Cambiar mi email"</span>
+    </button>
+  </div>
+
+  <div class="find-recent" id="find-recent" hidden>
+    <span class="find-examples-label"><span data-en>Recent searches —</span><span data-es>Búsquedas recientes —</span></span>
+    <div id="find-recent-list"></div>
   </div>
 
   <div class="find-results" id="find-results"></div>
@@ -4371,6 +4433,54 @@ article.mistake .copy-link {
       </div>
     </details>
 
+    <details class="entry" id="err-seat-count">
+      <summary>
+        <div class="entry-msg">"Live Seat Count: Unavailable" — can't tell if seats are open</div>
+        <div class="entry-tag act icon-plus">try anyway</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What it means</div>
+          <div class="entry-cell-v">CVC's seat-count display can fall back to "Unavailable" when the Teaching College's SIS isn't returning live seat data — usually a temporary integration issue, not a sold-out class. Has been seen as a cluster at some TCs (Coalinga, Lemoore, Peralta-area colleges) tied to specific SIS configurations.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What to do</div>
+          <div class="entry-cell-v">Try the registration anyway — the seat check happens server-side at submit, so an "Unavailable" display doesn't actually block the attempt. If your AER goes through and reaches "Pending Validation," seats were available. If it fails with "Course Filled," they weren't.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If it fails repeatedly</div>
+          <div class="entry-cell-v">Email CVC support with CCCID, course, TC, exact timestamp, and the unavailable display. We verify with the TC's A&amp;R whether seats actually exist and report any cluster patterns to the implementation tracker.</div>
+        </div>
+        <div class="entry-action"><strong>Don't wait.</strong> The display issue doesn't gate registration. Each minute you wait, real seats may be claimed by someone else who tried.</div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-denied-rereview">
+      <summary>
+        <div class="entry-msg">My prereq application was denied even though I qualify</div>
+        <div class="entry-tag act icon-plus">re-review path</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">First — read the denial reason</div>
+          <div class="entry-cell-v">Check your CVC inbox for the denial email. It usually states one of: missing documentation, insufficient prereq evidence, class already started, or system error during waiver. Different reasons need different fixes.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If "missing documentation" or "insufficient prereq"</div>
+          <div class="entry-cell-v">Re-submit with stronger evidence: official transcript (not unofficial), a letter from the prereq instructor confirming you've completed the equivalent, or your HC's assessment results. Email these directly to the Teaching College's A&amp;R office along with your re-review request.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If "class already started"</div>
+          <div class="entry-cell-v">CVC stops accepting registrations after the TC's add deadline (typically the day classes begin). If your AER was submitted before but the prereq review took past the start date, the TC may still accept a late add — you'll need to apply directly to the TC and use the instructor's add code.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If "system error" — prereq waiver wasn't applied</div>
+          <div class="entry-cell-v">This is a CVC bug worth reporting. Email CVC support with: CCCID, course, X-tracing ID (in your CVC inbox), and the exact denial text. We can re-trigger the prereq waiver and re-submit your AER.</div>
+        </div>
+        <div class="entry-action"><strong>Don't simply re-submit a fresh AER.</strong> A second submission while the first is still in the system creates duplicate batch applications. Resolve the original denial through the TC or CVC support before re-applying.</div>
+      </div>
+    </details>
+
     <details class="entry" id="err-prereq-after-start">
       <summary>
         <div class="entry-msg">Prereq still pending and class has already started</div>
@@ -4557,6 +4667,12 @@ article.mistake .copy-link {
       <div>
         <h3 class="mistake-title">Updated residency at the Home College, expected the Teaching College to auto-sync</h3>
         <p class="mistake-fix"><strong>Fix —</strong> each college keeps its own residency record under California Title 5. There is no shared statewide residency database. Your HC's reclassification doesn't propagate. Email the <em>Teaching College's</em> A&amp;R office with proof of HC residency (screenshot of HC portal showing CA Resident status, or HC A&amp;R letter) and ask them to update <em>their</em> record. See <a href="#t-residency">§vi residency guide</a> for the email template.</p>
+      </div>
+    </article>
+    <article class="mistake" id="m-paid-directly">
+      <div>
+        <h3 class="mistake-title">Paid the Teaching College directly when CVC's payment kept failing</h3>
+        <p class="mistake-fix"><strong>Fix —</strong> sometimes necessary as a last resort, but always tell CVC. Email support with CCCID, course, term, the date and method of your direct payment, and the receipt/reference number. We verify with the TC's bursar and update your batch application's payment status — your dashboard will reflect "Enrolled &amp; Paid" within 1–2 business days. <a href="#t-paid-school-directly">Full guidance</a>. Don't pay direct as a default — try CVC's flow with a different browser/card first; reconciliation is one more step that can go wrong.</p>
       </div>
     </article>
     <article class="mistake" id="m-paid-then-fixed">
@@ -5453,6 +5569,213 @@ article.mistake .copy-link {
       <p style="margin-top: 18px;">Source: <a href="https://www.cvc.edu/students/student-residency/" target="_blank">cvc.edu/students/student-residency</a> · CA Education Code §68075 (military residency) · Title 5 §54000+ (residency determination)</p>
     </div>
   </details>
+
+  <details id="t-1098t">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">Get a 1098-T tax form for a CVC class</div>
+          <span class="task-sub">Each Teaching College issues its own — CVC and your HC don't have it</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+      <p>The IRS Form 1098-T is the tuition statement colleges send to students who paid qualifying education expenses. For a CVC course, <strong>the Teaching College that taught the class is the college that issues the 1098-T</strong> — not CVC, not your Home College. This trips students up every January when they go looking for the form on their HC's portal and don't see it.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Where to find it</p>
+      <ol>
+        <li><strong>Identify which Teaching College taught the class.</strong> Your CVC dashboard's Class Schedule shows the TC for each course you've taken.</li>
+        <li><strong>Contact that TC's Bursar / Student Accounts office.</strong> Tell them you took a CVC Exchange class with them in [year] and need a 1098-T. They'll either point you to a self-service portal, mail it, or email it.</li>
+        <li><strong>Repeat for every TC you used.</strong> If you took CVC classes at three different Teaching Colleges, you'll receive three separate 1098-Ts. CVC does not consolidate them.</li>
+      </ol>
+
+      <aside class="aside"><strong>Common confusion —</strong> students assume their Home College's 1098-T includes the CVC class because that's where their financial aid disbursed. It doesn't. The TC issues a 1098-T because the TC received your tuition payment. Each TC = each form.</aside>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">If you can't reach the TC's portal</p>
+      <p>You may not have a TC student login (CVC doesn't normally provision one). Email the TC's Bursar / Student Accounts office directly with: your full name, your CCCID, the term and course you took, and the email and mailing address you want the form sent to. Most TCs accommodate this.</p>
+
+      <p style="margin-top: 14px;">Note: this entry is informational only. <strong>For tax advice, talk to a tax professional</strong> — CVC support, your HC, and your TC's bursar can confirm what they sent and where, but none of us can advise on whether a specific expense is deductible.</p>
+    </div>
+  </details>
+
+  <details id="t-summer-schedule">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">When does the summer / fall / spring schedule appear?</div>
+          <span class="task-sub">Each Teaching College sets its own publish date — and the registration window is separate</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+      <p>"When can I register?" is one of the most common pre-registration questions. The answer is more nuanced than a single date — there are two distinct events, set independently by each Teaching College.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Two different dates to track</p>
+      <ul>
+        <li><strong>Schedule visibility</strong> — when the TC publishes their term catalog, making courses searchable on cvc.edu. Typically <strong>around 60–90 days before the term starts</strong>, but each TC sets its own date. Some publish all at once; some roll out by department.</li>
+        <li><strong>Registration window opens</strong> — when the "Add Class" button activates for cross-enrollment. Often the same day as schedule visibility, but not always — some TCs publish the catalog first as a preview, then open registration a week or two later.</li>
+      </ul>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Typical CCC term cadence (varies)</p>
+      <ul>
+        <li><strong>Summer term</strong> — schedules typically appear March–April; registration opens shortly after.</li>
+        <li><strong>Fall term</strong> — schedules typically appear April–May; registration opens by June for most TCs.</li>
+        <li><strong>Spring term</strong> — schedules typically appear October–November; registration opens by December.</li>
+      </ul>
+      <p>These windows are typical but not guaranteed. Each TC publishes on their own academic calendar — check the specific TC's website for confirmed dates.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">The 4 PM PST gotcha</p>
+      <p>Even when the TC announces a registration open date, CVC's "Add Class" button appears at <strong>4 PM PST the day before</strong>. <strong>But registrations submitted between 4 PM and midnight PST will silently fail.</strong> Wait until midnight Pacific Time on the announced open date. <a href="#err-window">Full err-window details</a>.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Pre-registration checklist</p>
+      <p>While you wait for visibility, make sure your account is ready:</p>
+      <ul>
+        <li>Confirmed enrolled at your Home College for the upcoming term (or actively taking a class if first-term).</li>
+        <li>No outstanding holds at your HC.</li>
+        <li>Residency confirmed at HC (so the AER form pulls correct data).</li>
+        <li>If you're a special population (AB540, military, veterans), paperwork already filed at HC.</li>
+      </ul>
+
+      <aside class="aside"><strong>Don't email asking when courses will be visible.</strong> CVC support can't accelerate a TC's catalog publish. Bookmark cvc.edu and check periodically; most browsers can set a watch on a specific search URL.</aside>
+    </div>
+  </details>
+
+  <details id="t-past-enrollments">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">Find your past CVC enrollments (and their transcripts)</div>
+          <span class="task-sub">Especially if you took CCC Online classes years ago and need them now</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+      <p>This comes up most often when students apply to graduate programs (PA school, nursing, transfer) and need transcripts from every college they've ever taken classes at — including CVC Exchange courses they may not remember the details of. The good news: every record exists. The not-so-good: it's in pieces.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Where your past CVC records live</p>
+      <ul>
+        <li><strong>Your CVC Exchange dashboard</strong> at <a href="https://search.cvc.edu" target="_blank">search.cvc.edu</a> shows your enrollment history within the current Exchange platform — typically going back to the launch of CVC's current system.</li>
+        <li><strong>Each Teaching College</strong> keeps the academic record (grades, transcripts) for the class you took with them. They issue the official transcript, not CVC.</li>
+        <li><strong>Older "CCC Online" enrollments</strong> (the predecessor to CVC Exchange) may not appear in the current dashboard. Those records are at the Teaching Colleges that hosted the courses — but you may need to remember which colleges those were.</li>
+      </ul>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">If your dashboard is missing past enrollments</p>
+      <ol>
+        <li><strong>Check your Home College's transcript first.</strong> Per CVC's official process, classes you took via Exchange were <em>automatically transcripted back to your HC</em> (typically within 3 weeks of term end). Your HC transcript should list every CVC class as transfer credit, including the Teaching College and term.</li>
+        <li><strong>Check your Canvas history.</strong> Log into your HC's Canvas and click "All Courses." Past CVC courses should appear in the archive — even if just as a course shell. The course code and term will tell you which TC.</li>
+        <li><strong>Email CVC support</strong> with: your CCCID, your name on file, approximate years/terms you took CVC courses. We can look up your historical batch applications and tell you which TCs you used.</li>
+        <li><strong>Then contact each TC's A&amp;R</strong> to order an official transcript. (CVC does not order transcripts on your behalf — see <a href="#t-transcript">§vi transcripts</a>.)</li>
+      </ol>
+
+      <aside class="aside"><strong>If you applied for older CCC Online classes via FERPA-protected paper records</strong> — note that some CCCs purge inactive student records after a fixed retention period (often 5 years). If a TC's A&amp;R can't find your record, ask if they have a long-term archive or if it was purged.</aside>
+    </div>
+  </details>
+
+  <details id="t-email-change">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">Change the email on your CVC account</div>
+          <span class="task-sub">CVC syncs from OpenCCC — update there, not on CVC directly</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+      <p>Your CVC Exchange account doesn't have its own editable email field — it pulls from your <strong>OpenCCC profile</strong>. Updating the email on CVC alone won't stick; the next sync overwrites it. The fix is to change it at OpenCCC.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Steps</p>
+      <ol>
+        <li>Go to <a href="https://www.opencccapply.net" target="_blank">opencccapply.net</a> and sign in with your existing OpenCCC credentials.</li>
+        <li>Open <strong>My Account</strong> → <strong>Personal Information</strong>. Update the email address. Save.</li>
+        <li>Allow <strong>24–48 hours</strong> for the change to propagate to CVC. The next time you log into search.cvc.edu, your new email should reflect.</li>
+        <li>If your OpenCCC email is what you sign in <em>with</em> (not just contact), update your sign-in email at OpenCCC's account settings — that's a separate field.</li>
+      </ol>
+
+      <aside class="aside"><strong>Edge case —</strong> if you can't sign in to OpenCCC because you've lost access to the email tied to it, contact <a href="https://www.opencccapply.net/" target="_blank">OpenCCC support</a> directly (not CVC). They handle account recovery.</aside>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">If your Home College changed email systems on you</p>
+      <p>Some HCs migrate from one email provider to another (e.g., from Google Workspace to Microsoft) and can break login flows for ex-students. If the change locked you out, contact your HC's IT helpdesk first — they can issue a new credential. Then update OpenCCC and CVC will resync.</p>
+    </div>
+  </details>
+
+  <details id="t-class-cancelled">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">My class was cancelled by the Teaching College</div>
+          <span class="task-sub">Refunds come from the TC's bursar, not CVC</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+      <p>Sometimes a Teaching College cancels a section before it starts (low enrollment, instructor unavailability). Your CVC dashboard may or may not catch up immediately. The refund process runs through the TC, not CVC.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Steps</p>
+      <ol>
+        <li><strong>Confirm the cancellation</strong> with the Teaching College's A&amp;R office. Get the cancellation in writing (email or formal notice) — you'll need it for the refund.</li>
+        <li><strong>Contact the TC's Bursar / Student Accounts office</strong> with that confirmation. State that you paid through CVC for [course] in [term] and the section was cancelled. Ask for a refund processed back to your original payment method. Allow 4–6 weeks.</li>
+        <li><strong>Email CVC support</strong> in parallel — we can update your batch application's status to "cancelled" so the dashboard reflects reality. We can't issue the refund (only the TC can), but we can confirm to the TC that you paid through us.</li>
+        <li><strong>If you used financial aid</strong> at the TC (CCPG, etc.), that part of the refund may flow back to the aid program rather than to you. The TC's financial aid office handles that side.</li>
+      </ol>
+
+      <aside class="aside"><strong>Different from a self-drop refund —</strong> when YOU drop a class within the refund period, that's a different process. See <a href="#t-residency">§vi residency</a> for non-resident refund issues, or the <a href="https://www.cvc.edu/students/refunds/" target="_blank">cvc.edu refunds page</a> for general drop refunds. Cancelled-by-TC is its own path.</aside>
+    </div>
+  </details>
+
+  <details id="t-paid-school-directly">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">I paid the Teaching College directly (outside CVC's payment flow)</div>
+          <span class="task-sub">Possible to reconcile, but the dashboard won't auto-update</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+      <p>Sometimes CVC's payment page fails repeatedly (TouchNet glitches, Cybersource timeouts, the TC's processor down) and the only way to actually pay is to go directly to the Teaching College's portal or call their cashier. This works to keep your enrollment alive — but CVC's dashboard won't know about the payment until someone tells it.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">If you've already paid the TC directly</p>
+      <ol>
+        <li><strong>Email CVC support</strong> with: CCCID, course, term, the date and method of your direct payment, and the receipt/reference number from the TC.</li>
+        <li><strong>We verify with the Teaching College's bursar</strong> that the payment cleared. Once confirmed, we update your batch application's payment status — your dashboard will reflect "Enrolled &amp; Paid" within 1–2 business days.</li>
+        <li><strong>You don't need to do anything more</strong> at the TC's end once payment is confirmed.</li>
+      </ol>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">If you're considering paying directly — pause first</p>
+      <p>Direct payment is a workaround, not a recommended path. Try once more through CVC's flow (different browser, different card, after-hours retry) before going around it. Direct payment can create reconciliation issues if you miss a step. If CVC's payment page repeatedly fails:</p>
+      <ul>
+        <li>Email CVC support describing the exact error message you see.</li>
+        <li>Ask if the TC's payment processor is having a known outage (TouchNet has had multi-hour outages).</li>
+        <li>Wait an hour and retry through CVC.</li>
+      </ul>
+      <p>Only go direct if the deadline is imminent and CVC's flow keeps failing.</p>
+    </div>
+  </details>
+
+  <details id="t-repeat-recency">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">Repeat a course (e.g., for nursing recency requirement)</div>
+          <span class="task-sub">Petition path — your Home College's counselor leads, CVC routes</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+      <p>Some programs (nursing being the most common) have a "recency requirement" — a course taken more than 5 or 7 years ago doesn't count toward admission. If you've already taken the equivalent course at a CCC and need to retake it, the standard "no repeat for credit" rule needs a petition.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Steps</p>
+      <ol>
+        <li><strong>Talk to your Home College's academic counselor</strong> first. They handle academic petitions and know your degree path. They'll review whether the recency rule actually requires a repeat or if there's another way (challenge exam, recent equivalent).</li>
+        <li><strong>If repeat is the right path</strong>, your HC counselor files a course-repeat petition with HC's Articulation/Academic Standards office. Get an approval letter showing the petition is granted.</li>
+        <li><strong>Find a Teaching College offering the same C-ID equivalent course</strong> via CVC search. The course at the TC must articulate to the same C-ID as your HC course for the petition to apply.</li>
+        <li><strong>Cross-enroll through CVC</strong> normally. Upload the HC's repeat petition approval as part of your prerequisite documentation when prompted, or email it to the TC's A&amp;R office immediately after submitting the AER.</li>
+      </ol>
+
+      <aside class="aside advisory"><strong>Counselor-led decision —</strong> recency rules vary by university and program. Your counselor is the one who knows whether the schools you're applying to (UC, CSU, private) accept repeats and under what conditions. CVC routes the cross-enrollment but cannot determine whether a repeat satisfies your specific transfer plan.</aside>
+    </div>
+  </details>
+
 </section>
 
 <!-- ═══════════════════════════════ VII. EMAIL ═══════════════════════════════ -->
@@ -5659,6 +5982,10 @@ article.mistake .copy-link {
     <div class="gloss"><dt class="gloss-term">CNTER (AB540 form)</dt><dd class="gloss-def">California Nonresident Tuition Exemption Request — the form you file to claim AB540 status. Must be filed at <em>each</em> college separately (your Home College AND the Teaching College). The HC's approval doesn't transfer; the TC reviews CNTER fresh.</dd></div>
     <div class="gloss"><dt class="gloss-term">Parent School Authorization Letter (PSA)</dt><dd class="gloss-def">A letter from your Home College's Veterans Resource Center (VRC) that authorizes the Teaching College to extend specific accommodations for a CVC course — most commonly for active-duty military residency exemption (Cal. Ed. Code §68075) or VA benefit certification. <strong>Request the PSA before registering through CVC</strong>; it must be in place when the TC processes your enrollment.</dd></div>
     <div class="gloss"><dt class="gloss-term">CA Education Code §68075</dt><dd class="gloss-def">The California statute that grants in-state tuition to active-duty military service members stationed in California (and their dependents) regardless of formal residency. Process: HC's VRC certifies status, sends a Parent School Authorization Letter to the TC, TC updates residency flag.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Calbright College</dt><dd class="gloss-def">A 116th California Community College — the system's online-only competency-based college. <strong>Calbright students are eligible to use CVC Exchange</strong> just like any other CCC student (Calbright as Home College, any other CCC as Teaching College). The eligibility rules apply normally (18+, 2.0 GPA or none yet, no holds, CA address).</dd></div>
+    <div class="gloss"><dt class="gloss-term">1098-T (tax form)</dt><dd class="gloss-def">The IRS tuition statement issued by colleges. For CVC courses, <strong>each Teaching College issues a separate 1098-T</strong> for tuition paid to them — not your Home College, not CVC. If you took CVC classes at three TCs, you'll need three 1098-Ts (one from each). See <a href="#t-1098t">§vi 1098-T guide</a>.</dd></div>
+    <div class="gloss"><dt class="gloss-term">OpenCCC</dt><dd class="gloss-def">The shared identity system that issues your CCCID and stores your name, email, and core demographics. CVC pulls from OpenCCC at every login — to <strong>change your email or name on CVC, update it at OpenCCC first</strong> (<a href="https://www.opencccapply.net" target="_blank">opencccapply.net</a>); allow 24–48 hours to propagate.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Recency requirement</dt><dd class="gloss-def">A program admission rule (most common in nursing) that requires prerequisite coursework to have been completed within the last N years (often 5–7). If you took the prereq longer ago, you'll need to repeat it. Repeat-for-credit requires a petition through your Home College's counselor — see <a href="#t-repeat-recency">§vi repeat course</a>.</dd></div>
     <div class="gloss"><dt class="gloss-term">Non-resident tuition</dt><dd class="gloss-def">The rate charged to students who haven't established California residency at a given college. Varies by college; commonly $300–$500/unit. Real ticket examples: $1,000 (3 units), $1,400 (3 units), $1,864 (4 units). If you're seeing this on a CVC course as a CA resident, your residency wasn't confirmed at the Teaching College — see the <a href="#t-residency">§vi residency guide</a>.</dd></div>
   </dl>
 </section>
@@ -5745,6 +6072,28 @@ article.mistake .copy-link {
           <div class="entry-cell-lbl">What this means in practice</div>
           <div class="entry-cell-v">CVC courses count toward your enrollment status for aid purposes. The aid still comes from your Home College's financial aid office. You pay the Teaching College upfront with a card; the HC reimburses you per your aid package. The TC's FAFSA data is not transferred, and your TC units don't write back to your HC's aid system automatically.</div>
         </div>
+      </div>
+    </details>
+
+    <details class="entry" id="lim-same-district">
+      <summary>
+        <div class="entry-msg">After taking a CVC class at one college in a district, you can't directly register at the sibling college</div>
+        <div class="entry-tag normal icon-plus">designed guardrail</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What happens</div>
+          <div class="entry-cell-v">Example: a student takes a CVC course at Santiago Canyon College (SCC), then tries to register directly at Santa Ana College (SAC) — both in Rancho Santiago CCD. The TC's portal shows the student as already having a "CVC account" and refuses to let them register through normal admission.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Why it's designed this way</div>
+          <div class="entry-cell-v">CCC districts share student records across sibling colleges to avoid double-counting for state funding (FTES). The CVC enrollment path is one record that prevents collisions with separate direct-admission records in the same district.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Two paths forward</div>
+          <div class="entry-cell-v"><strong>(A)</strong> Continue using CVC Exchange for the sibling college — register through CVC selecting the new TC. This works without changes to your record. <strong>(B)</strong> If you want a direct (non-CVC) student account at the sibling college, contact the district A&amp;R office and request your CVC record be unlinked from the original college. This is a manual process at the district level.</div>
+        </div>
+        <div class="entry-action"><strong>Not a CVC support ticket.</strong> CVC routes enrollments; the district A&amp;R office decides how their student records are structured. Contact the district directly for the unlinking process.</div>
       </div>
     </details>
 
@@ -6024,6 +6373,229 @@ const STOPWORDS = new Set([
   'just','now','any','all','some','can','cant','won','wont'
 ]);
 
+// ─────────────────────────────────────────────────────────────────────
+// SEARCH UPGRADE: synonym expansion + typo correction + college detect
+// Built from real ticket-data patterns across 386 student support
+// tickets. Synonyms expand a single token into the equivalents that
+// students actually type ("log in" / "sign in" / "logon"). Typo fixes
+// catch the misspellings that come up repeatedly in tickets.
+// ─────────────────────────────────────────────────────────────────────
+
+// Multi-word phrase aliases — applied to query before tokenization.
+// Each entry: if the FROM phrase appears anywhere in the query, the TO
+// phrase is appended (so both forms participate in matching).
+const PHRASE_EXPAND = [
+  ['log in', 'login'], ['log-in', 'login'], ['signing in', 'login signin'],
+  ['sign in', 'login signin'], ['log on', 'login logon'], ['logging in', 'login signin'],
+  ['logged in', 'login'], ['cant log in', 'login error'], ['can\'t log in', 'login error'],
+  ['can not log in', 'login error'], ['cannot log in', 'login error'],
+  ['log out', 'logout signout'],
+  ['drop class', 'drop withdraw'], ['drop a class', 'drop withdraw'],
+  ['cancel class', 'drop withdraw cancel'], ['quit class', 'drop withdraw'],
+  ['leave class', 'drop withdraw'], ['remove class', 'drop'],
+  ['cant drop', 'drop failed'], ['can\'t drop', 'drop failed'],
+  ['unable to drop', 'drop failed'], ['drop wont', 'drop failed'],
+  ['home college', 'hc home'], ['teaching college', 'tc teaching'],
+  ['cross enroll', 'cross-enroll cross enrollment'], ['cross-enroll', 'cross enrollment'],
+  ['cross enrollment', 'cross-enroll'],
+  ['out of state', 'out-of-state oos non-resident nonresident'],
+  ['out-of-state', 'out of state oos non-resident'],
+  ['in state', 'in-state instate resident'],
+  ['pre req', 'prerequisite prereq'], ['pre-req', 'prerequisite prereq'],
+  ['high school', 'highschool dual hs'], ['under 18', 'underage minor'],
+  ['1098 t', '1098-t taxform tax'], ['1098-t', '1098 tax form taxform'],
+  ['1098t', '1098-t tax form'],
+  ['ab 540', 'ab540'], ['ab-540', 'ab540'], ['ab 450', 'ab540 ab-540'],
+  ['ab450', 'ab540'],  // common typo: AB 450 instead of 540
+  ['summer 2026', 'summer schedule when registration open'],
+  ['summer schedule', 'summer when courses available registration'],
+  ['fall 2026', 'fall schedule registration'],
+  ['active duty', 'military active-duty psa'],
+  ['lost my classes', 'past enrollments lost classes ccc online'],
+  ['lost all classes', 'past enrollments lost ccc online'],
+  ['cant find my classes', 'past enrollments lost'],
+  ['paid directly', 'paid school directly bypass payment'],
+  ['paid the school', 'paid directly bypass'],
+  ['change my email', 'email change update openccc'],
+  ['update my email', 'email change openccc'],
+  ['change email', 'email update openccc'],
+  ['email change', 'update openccc'],
+  ['live seat count', 'seat count unavailable'],
+  ['cccid not found', 'cccid invalid cccid'], ['ccc id', 'cccid'],
+  ['class cancelled', 'class cancelled refund tc'],
+  ['class canceled', 'class cancelled refund tc'],
+  ['my class was cancelled', 'class cancelled refund'],
+  ['repeat course', 'repeat recency nursing petition'],
+  ['recency requirement', 'repeat recency nursing'],
+  ['nursing prereq', 'nursing prerequisite repeat recency'],
+  ['network academy', 'tc email special access'],
+  ['mfa', 'multi-factor two-factor mfa'],
+  ['paid but', 'paid not enrolled confirm payment'],
+  ['paid but says', 'paid not enrolled confirm'],
+  ['failed payment', 'payment failed'],
+  ['cant pay', 'payment failed'],
+  ['unable to pay', 'payment failed'],
+  ['payment not going through', 'payment failed'],
+  ['hc change', 'change home college wrong hc'],
+  ['change home college', 'wrong hc home college change'],
+  ['switch home college', 'change home college'],
+  ['home campus', 'home college'],
+  ['signed up', 'registered enrolled'],
+  ['signing up', 'register enrollment'],
+  ['signed in', 'login'],
+  ['my course was', 'course cancelled'],
+  ['transcript transfer', 'transcript ordering 4 year'],
+  ['didnt receive', 'not received missing'],
+  ['havent received', 'not received missing'],
+  ['credit transfer', 'transcript credit grade not posted'],
+  ['credit hasnt', 'credit transfer transcript grade'],
+  ['canvas login', 'canvas access trust'],
+  ['canvas access', 'canvas trust login'],
+  ['expired', 'past deadline late'],
+];
+
+// Single-token synonyms — applied during expandTokens() so each query
+// token can match against a richer set of related terms.
+const SYNONYMS = {
+  'login':     ['signin','logon','authenticate','signon'],
+  'signin':    ['login','logon'],
+  'drop':      ['withdraw','cancel','remove'],
+  'withdraw':  ['drop','withdrawal','withdrew'],
+  'register':  ['enroll','signup','enrollment'],
+  'enroll':    ['register','signup','enrollment'],
+  'enrollment':['register','enroll','signup'],
+  'tuition':   ['cost','fees','price','charge'],
+  'cost':      ['tuition','price','fees'],
+  'price':     ['tuition','cost'],
+  'residency': ['resident','residence','status'],
+  'resident':  ['residency','residence'],
+  'prereq':    ['prerequisite','requirement','preq'],
+  'prerequisite':['prereq','requirement'],
+  'cccid':     ['cccapply','student-id'],
+  'canvas':    ['lms','course','classroom'],
+  'transcript':['record','grades','transcripts'],
+  'transcripts':['transcript','records','grades'],
+  'refund':    ['reimburse','reimbursement','money-back'],
+  'denied':    ['rejected','declined','refused'],
+  'pending':   ['processing','review','waiting'],
+  'failed':    ['error','broken','wont','cant'],
+  'urgent':    ['emergency','asap','deadline'],
+  'cancel':    ['withdraw','drop','cancelled','canceled'],
+  'cancelled': ['cancel','canceled'],
+  'canceled':  ['cancel','cancelled'],
+  'email':     ['mail','address'],
+  'change':    ['update','modify','edit'],
+  'update':    ['change','modify','edit'],
+  'help':      ['assist','support','need'],
+  'lost':      ['cant-find','missing','disappeared'],
+  'missing':   ['lost','cant-find'],
+  'past':      ['old','previous','former','prior'],
+  'fall':      ['autumn','semester'],
+  'summer':    ['term','semester'],
+  'spring':    ['term','semester'],
+  '1098':      ['1098-t','tax-form','taxform'],
+  '1098t':     ['1098-t','tax-form'],
+  'tax':       ['1098','1098-t','taxform'],
+  'eppn':      ['saml','sso','identity','login'],
+  'saml':      ['sso','login','authentication'],
+  'sso':       ['saml','login','authentication'],
+  'mfa':       ['multifactor','two-factor','2fa'],
+  '2fa':       ['mfa','multifactor'],
+  'underage':  ['minor','under-18'],
+  'military':  ['veteran','active-duty','va'],
+  'veteran':   ['military','va','vrc'],
+  'va':        ['veteran','military','vrc'],
+  'ab540':     ['ab-540','cnter','dream-act','undocumented'],
+  'cnter':     ['ab540','tuition-exemption'],
+  'international':['f1','visa','dso','foreign'],
+  'foreign':   ['international','f1','visa'],
+  'f1':        ['international','visa','foreign'],
+  'visa':      ['international','f1'],
+  'calbright': ['online-college','116th'],
+  'rooms':     ['seats'],
+  'seats':     ['capacity','full','rooms'],
+  'unavailable':['blank','empty','not-shown','hidden'],
+  'foothill':  ['fhda','de-anza','foothill-de-anza'],
+  'deanza':    ['fhda','de-anza','foothill'],
+  'sac':       ['santa-ana'],
+  'scc':       ['santiago-canyon','sacramento-city'],
+  'pcc':       ['pasadena'],
+  'lacc':      ['los-angeles-city'],
+  'ccsf':      ['san-francisco','sf-city'],
+  'sbcc':      ['santa-barbara'],
+  'sjcc':      ['san-jose-city'],
+  'msjc':      ['mt-san-jacinto'],
+  'mtsac':     ['mt-san-antonio'],
+  'occ':       ['orange-coast'],
+  'sdcc':      ['san-diego-city'],
+  'csm':       ['college-of-san-mateo'],
+  'rcc':       ['riverside','riverside-city'],
+  'ivc':       ['irvine-valley'],
+};
+
+// Common typos and misspellings that appear in tickets.
+// Each: input substring → corrected form (applied with word boundaries).
+const TYPO_FIXES = {
+  'tutition':       'tuition',
+  'tuiton':         'tuition',
+  'tuiton fee':     'tuition',
+  'enrollement':    'enrollment',
+  'enrolement':     'enrollment',
+  'enrolement':     'enrollment',
+  'regsitration':   'registration',
+  'registeration':  'registration',
+  'registery':      'registry',
+  'withrawal':      'withdrawal',
+  'withdrawl':      'withdrawal',
+  'withrdraw':      'withdraw',
+  'tranccript':     'transcript',
+  'transcrip':      'transcript',
+  'transccript':    'transcript',
+  'preq':           'prereq',
+  'prerq':          'prereq',
+  'prereqs':        'prereq',
+  'prerquisite':    'prerequisite',
+  'requesite':      'prerequisite',
+  'campys':         'campus',
+  'compose':        'composition',
+  'cancelation':    'cancellation',
+  'recieve':        'receive',
+  'cant':           'cant',  // keep — handled by stopword
+  'whats':          'what',
+  'theyre':         'they are',
+  'youre':          'you are',
+  'recieved':       'received',
+  'tomorrow':       'tomorrow',
+};
+
+// Rough list of CCC name fragments that students commonly reference.
+// When detected in a query, results that mention these get a small boost.
+const COLLEGE_FRAGMENTS = [
+  'saddleback','foothill','de anza','deanza','el camino','santa ana',
+  'santiago canyon','riverside','citrus','san jose city','evergreen',
+  'cuesta','coalinga','lemoore','compton','antelope valley','lake tahoe',
+  'mt san jacinto','msjc','chabot','las positas','rio hondo','los angeles',
+  'lacc','la valley','ventura','moorpark','san bernardino','crafton hills',
+  'hartnell','clovis','modesto','merced','san francisco','ccsf',
+  'solano','butte','fresno','reedley','copper mountain','college of the desert',
+  'cod','college of the canyons','coc','san diego city','sdcc','calbright',
+  'irvine valley','ivc','orange coast','occ','golden west','los rios',
+  'sacramento city','folsom lake','american river','cosumnes river',
+  'gavilan','monterey','peninsula','skyline','canada','cabrillo',
+  'college of marin','lassen','feather river','siskiyou','redwoods',
+  'santa rosa','sonoma','napa valley','contra costa','diablo valley',
+  'los medanos','laney','merritt','peralta','berkeley city','alameda',
+  'san mateo','college of san mateo','csm','santa monica','smc','palomar',
+  'miramar','mesa','imperial valley','victor valley','barstow','glendale',
+  'pasadena','pcc','mt san antonio','mtsac','la trade','la mission',
+  'west la','la harbor','la pierce','la southwest','san joaquin delta',
+  'sjdc','sierra','shasta','sequoias','porterville','san luis obispo',
+  'allan hancock','oxnard','santa barbara','sbcc','ohlone','mission',
+  'norco','moreno valley','mt san jacinto','grossmont','cuyamaca',
+  'southwestern','taft','evc','sjsu','sjcc','rcc','ric','santa rosa jc'
+];
+
+
 const CORPUS = [
   // ────────────────────── §i. URGENT FAST-LANES ──────────────────────
   { id:'urgent-pending', cat:'urgent', section:'§i. Urgent matters',
@@ -6082,7 +6654,7 @@ const CORPUS = [
   { id:'err-dropfail', cat:'error-act', section:'§iii. Error decoder',
     title:'Drop Failed',
     preview:'Most likely cause is an account hold at the Teaching College (often financial). Check the TC portal, clear the hold, then retry. Don\'t click multiple times.',
-    tags:['drop failed','cant drop','unable to drop','wont drop','drop error','drop button','drop course','withdraw failed','drop wont work','dropping failed','cant withdraw','hold on account','account hold','financial hold','blocked drop','saddleback drop'] },
+    tags:['drop failed','cant drop','unable to drop','wont drop','drop error','drop button','drop course','withdraw failed','drop wont work','dropping failed','cant withdraw','hold on account','account hold','financial hold','blocked drop','saddleback drop','drop class','drop a class','drop my class','need to drop','want to drop','withdraw','cancel class','quit class','remove class','drop request','drop not loading','course drop request','drop request not loading','withdrawal request','withdraw class','dropping','drop saddleback','drop foothill','drop el camino','drop pasadena','drop riverside'] },
   { id:'sym-denied', cat:'error-act', section:'§iii. Error decoder',
     title:'Application Denied',
     preview:'TC reviewed and declined. Different from system error. Check your CVC inbox for a denial reason; if missing, email support.',
@@ -6132,6 +6704,14 @@ const CORPUS = [
     title:'A past payment was declined and I just found out',
     preview:'Email support with CCCID, term, course, what TC told you, and approximate date. CVC can pull the original transaction record.',
     tags:['old payment declined','silent decline','last year payment','college says no payment','payment never received','old transaction','past charge','declined long ago','never notified','payment from last year'] },
+  { id:'err-seat-count', cat:'error-act', section:'§iii. Error decoder',
+    title:'"Live Seat Count: Unavailable" — can\'t tell if seats are open',
+    preview:'Display issue at certain TCs (Coalinga, Lemoore, Peralta-area). Seat check happens server-side at submit, so try the registration anyway. Don\'t wait — real seats may be claimed.',
+    tags:['live seat count','seat count unavailable','seat count blank','seats unavailable','seat count missing','seats not showing','cant see seats','no seat count','blank seats','seats hidden','coalinga seats','lemoore seats','peralta seats','seat display','section availability unknown','seats unknown','class availability','live seat'] },
+  { id:'err-denied-rereview', cat:'error-act', section:'§iii. Error decoder',
+    title:'My prereq application was denied even though I qualify',
+    preview:'Read the denial reason in your CVC inbox. Re-submit with stronger evidence (official transcript, instructor letter). System errors get logged — email CVC with X-tracing ID for re-trigger.',
+    tags:['denied second time','denied again','prereq denied','application denied','denied unfairly','denied wrongly','math denied','trigonometry denied','physiology denied','prereq rejected','re-review','rereview','review again','reconsider denial','denial reason','why denied','denied but i qualify','i have prereq','already completed prereq','re-submit prereq','prereq waiver not applied','class already started denial','too late to register'] },
   { id:'err-prereq-after-start', cat:'error-stop', section:'§iii. Error decoder',
     title:'Prereq still pending and class has already started',
     preview:'Different urgency from "Pending Review" alone. Email TC\'s A&R directly today, persistent contact daily until resolved. Don\'t wait on CVC.',
@@ -6162,6 +6742,10 @@ const CORPUS = [
     title:'Updated residency at the Home College, expected the Teaching College to auto-sync',
     preview:'Each college keeps its own residency record under Title 5. There is no shared statewide database. Email the TC\'s A&R with HC proof to update their record.',
     tags:['hc fixed but tc didnt','home college fixed','still charged','no propagation','residency not synced','sync','two college residency','expected auto sync','auto-sync','auto update','automatic update','hc updated tc didnt','residency mistake'] },
+  { id:'m-paid-directly', cat:'mistake', section:'§v. Common mistakes',
+    title:'Paid the Teaching College directly when CVC\'s payment kept failing',
+    preview:'Tell CVC support — we verify with TC\'s bursar and update batch app within 1-2 business days. Don\'t pay direct as default; try CVC flow with different browser/card first.',
+    tags:['paid school directly','paid the college','paid teaching college','bypass cvc payment','direct payment','payment workaround','dashboard not reflecting','paid offline','paid through college portal','paid college bursar'] },
   { id:'m-paid-then-fixed', cat:'mistake', section:'§v. Common mistakes',
     title:'Paid non-resident tuition, then got reclassified, expected an automatic refund',
     preview:'Batch application can\'t be retroactively updated post-payment (designed limit). TC bursar decides on rebill or refund. CVC can\'t issue refunds. Allow 4-6 weeks for TC processing.',
@@ -6262,8 +6846,36 @@ const CORPUS = [
     tags:['transcript','grades','records','official transcript','send transcript','my grades','grade report','final grade','order transcript','get records','for transfer','transcripts each college'] },
   { id:'t-eligibility', cat:'task', section:'§vi. Step-by-step guides',
     title:'Eligibility — basic requirements + special populations',
-    preview:'Basic: 18+, currently enrolled at HC, 2.0 GPA or none, no fees, CA address. NOT eligible: HS dual-enrollment, F-1, Adult Ed (per cvc.edu). AB540 and Veterans ARE eligible with extra steps.',
-    tags:['eligible','eligibility','can i enroll','high school','dual enrollment','f1 visa','international student','ab540','dream act','adult ed','adult education','dso','restricted','underage','17 years old','before 18','veterans','va','gi bill','non-traditional','returning adult'] },
+    preview:'Basic: 18+, currently enrolled at HC, 2.0 GPA or none, no fees, CA address. NOT eligible: HS dual-enrollment, F-1, Adult Ed (per cvc.edu). AB540, Veterans, and Calbright students ARE eligible with extra steps.',
+    tags:['eligible','eligibility','can i enroll','high school','dual enrollment','f1 visa','international student','ab540','dream act','adult ed','adult education','dso','restricted','underage','17 years old','before 18','veterans','va','gi bill','non-traditional','returning adult','calbright','calbright college','online only college','116th college','hiset','ged','high school equivalency','minor','full time student under 18','out of state student','live out of state','foreign student','i live in another state','can students from other states use cvc'] },
+  { id:'t-1098t', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Get a 1098-T tax form for a CVC class',
+    preview:'The Teaching College that taught the class issues the 1098-T — not CVC, not your HC. Each TC = a separate form. Contact each TC\'s Bursar / Student Accounts directly.',
+    tags:['1098','1098-t','1098t','tax form','tax document','tax statement','irs form','tuition statement','tax info','file taxes','where is my 1098','need 1098','request 1098','tax filing','tax season','foothill tax form','santa ana 1098','no 1098 from home college','where to get 1098','student tax form'] },
+  { id:'t-summer-schedule', cat:'task', section:'§vi. Step-by-step guides',
+    title:'When does the summer / fall / spring schedule appear?',
+    preview:'Each TC publishes its catalog independently — typically 60-90 days before term. Registration window is separate from visibility. Check the specific TC\'s academic calendar.',
+    tags:['summer schedule','summer 2026 classes','fall schedule','spring schedule','when is summer','when does summer','when can i register','schedule visibility','catalog release','course release','summer cvc','fall cvc','registration window','when do classes appear','when can i sign up','when registration opens','course catalog','class schedule','term schedule','registration date','schedules go live','course listings'] },
+  { id:'t-past-enrollments', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Find your past CVC enrollments (and their transcripts)',
+    preview:'Check HC transcript first (CVC classes auto-transcripted back). Check HC Canvas archive. Email CVC support with CCCID for historical batch lookup. Each TC issues their official transcript.',
+    tags:['lost classes','lost all classes','cant find past classes','past enrollments','past enrollment','old enrollments','prior classes','classes i\'ve taken','ccc online classes','old ccc online','classes from years ago','where are my classes','lost my classes','dont remember which college','need transcript old class','transcripts from past','classes have disappeared','no record of class','where did my class go','class history','enrollment history'] },
+  { id:'t-email-change', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Change the email on your CVC account',
+    preview:'CVC pulls from OpenCCC. Update at opencccapply.net → My Account → Personal Information. Allow 24-48 hours to sync.',
+    tags:['change email','change my email','update email','update my email','email change','new email','email update','old email','wrong email','change address','update address','email is wrong','want to change email','change account email','email on file','wrong email on cvc','my email','openccc email','open ccc email','recover email','lost email access','email migration','college changed email'] },
+  { id:'t-class-cancelled', cat:'task', section:'§vi. Step-by-step guides',
+    title:'My class was cancelled by the Teaching College',
+    preview:'Confirm cancellation in writing from TC\'s A&R, then contact TC\'s Bursar/Student Accounts for refund. Email CVC to update batch app status. CVC can\'t issue refunds — only the TC can.',
+    tags:['class cancelled','class canceled','course cancelled','course canceled','section cancelled','section canceled','tc cancelled my class','college cancelled','class was cancelled','need refund cancelled','cancelled refund','cancelled class refund','course cancelled refund','class cancellation','class no longer offered','class removed','section closed','section dropped by college'] },
+  { id:'t-paid-school-directly', cat:'task', section:'§vi. Step-by-step guides',
+    title:'I paid the Teaching College directly (outside CVC\'s payment flow)',
+    preview:'Possible to reconcile — email CVC support with CCCID, course, payment date/method, receipt number. We verify with TC\'s bursar and update batch app within 1-2 business days.',
+    tags:['paid school directly','paid college directly','paid tc directly','paid the college','paid the school','paid teaching college','direct payment','outside cvc payment','paid bursar','paid through college','paid offline','dashboard not updated','paid but cvc doesnt know','payment not reflected','paid outside system','bypass cvc payment','cvc payment failing','payment kept failing','workaround payment'] },
+  { id:'t-repeat-recency', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Repeat a course (e.g., for nursing recency requirement)',
+    preview:'Petition path. HC counselor reviews, files repeat petition, you cross-enroll via CVC at the TC offering the C-ID equivalent. Upload approval letter as prereq doc.',
+    tags:['repeat course','retake course','recency requirement','nursing prereq','nursing program','nursing recency','5 year recency','7 year recency','too old prereq','prereq too old','need to repeat','need to retake','old prereq','take again','re-enroll','reenroll','course repeat petition','academic standards','repeat for credit','same course twice','transfer recency','program recency'] },
   { id:'t-residency', cat:'task', section:'§vi. Step-by-step guides',
     title:'Fix California residency for CVC tuition (the 2-step fix)',
     preview:'Each college keeps its own residency record. HC fix doesn\'t auto-sync to TC. Step 1: confirm residency at HC. Step 2: push proof to TC\'s A&R. Special paths for AB540 (CNTER form), active-duty military (Cal Ed Code §68075 + PSA letter), recently reclassified, and post-payment recourse.',
@@ -6286,6 +6898,10 @@ const CORPUS = [
     title:'Federal aid only disburses at your Home College',
     preview:'Pell / FAFSA loans flow through HC only. TC FAFSA data not transferred. CVC courses count toward enrollment status, but disbursement at HC.',
     tags:['federal aid','pell at tc','fafsa at teaching college','aid disburse','where does aid come from','title iv','no aid at tc'] },
+  { id:'lim-same-district', cat:'limit', section:'§ix. Designed limits',
+    title:'Can\'t directly register at a sibling college after a CVC class in the same district',
+    preview:'Districts share student records to avoid FTES double-counting. Path A: continue using CVC for the sibling college. Path B: contact district A&R to unlink your CVC record manually.',
+    tags:['santiago canyon then santa ana','same district block','sister college','sibling college','rancho santiago','district level','district admissions','disabled my account','blocked at sister','cant register at sister college','district share records','ftes','same district registration','already cvc account','cvc account blocking direct','cant register direct','district policy','two colleges same district'] },
   { id:'lim-residency', cat:'limit', section:'§ix. Designed limits',
     title:'Once your residency is validated, you can\'t change it for the term',
     preview:'HC validation captured in batch application. Pre-payment: TC fixes their record, CVC verifies batch. Post-payment: TC bursar decides on refund. Title 5 requires each CCC to maintain its own residency record.',
@@ -6329,6 +6945,42 @@ function tokenize(s) {
   )];
 }
 
+// Apply typo fixes and phrase aliases BEFORE tokenization.
+// Returns the corrected query with synonym expansions appended.
+function preprocessQuery(q) {
+  if (!q) return '';
+  let lc = q.toLowerCase();
+
+  // 1) Typo fixes (word-boundary)
+  for (const [typo, fix] of Object.entries(TYPO_FIXES)) {
+    if (typo === fix) continue; // skip no-ops
+    const re = new RegExp('\\b' + typo.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'g');
+    lc = lc.replace(re, fix);
+  }
+
+  // 2) Phrase expansion — APPEND aliases so both forms are searchable
+  let extras = [];
+  for (const [from, to] of PHRASE_EXPAND) {
+    if (lc.includes(from)) {
+      extras.push(to);
+    }
+  }
+  if (extras.length) lc = lc + ' ' + extras.join(' ');
+
+  return lc;
+}
+
+// Detect any college fragment in the query — used to flag a "college
+// boost" that nudges results mentioning that college.
+function detectColleges(q) {
+  const lc = q.toLowerCase();
+  const found = [];
+  for (const frag of COLLEGE_FRAGMENTS) {
+    if (lc.includes(frag)) found.push(frag);
+  }
+  return found;
+}
+
 // Light stemming — strip common English suffixes when token is long enough.
 // Conservative: only suffixes that don't change meaning. Used for matching
 // only; original tokens still shown to users.
@@ -6346,14 +6998,21 @@ function stem(t) {
   return t;
 }
 
-// Tokens-from-text plus stemmed versions — used when matching against
-// tags and titles to allow forgiving matches.
+// Tokens-from-text plus stemmed versions and synonyms — used when matching
+// against tags and titles to allow forgiving matches.
 function expandTokens(tokens) {
   const out = new Set();
   for (const t of tokens) {
     out.add(t);
     const s = stem(t);
     if (s !== t) out.add(s);
+    // Synonym expansion
+    if (SYNONYMS[t]) {
+      for (const syn of SYNONYMS[t]) out.add(syn);
+    }
+    if (s !== t && SYNONYMS[s]) {
+      for (const syn of SYNONYMS[s]) out.add(syn);
+    }
   }
   return [...out];
 }
@@ -6475,21 +7134,37 @@ function scoreItem(query, item, intents) {
 }
 
 function findMatches(query) {
-  const intents = detectIntent(query);
+  // Preprocess: typo correction + phrase expansion BEFORE tokenization
+  const processed = preprocessQuery(query);
+  const colleges = detectColleges(query); // detect from original — students paste actual names
+  const intents = detectIntent(processed);
+
   const ranked = CORPUS
     .map(item => {
-      const r = scoreItem(query, item, intents);
-      return { item, score: r.score, hits: r.hits };
+      const r = scoreItem(processed, item, intents);
+      let score = r.score;
+
+      // College boost: any item whose tags or title mentions a college from the query
+      if (colleges.length > 0 && score > 0) {
+        const itemText = (item.title + ' ' + item.tags.join(' ') + ' ' + (item.preview || '')).toLowerCase();
+        for (const c of colleges) {
+          if (itemText.includes(c)) {
+            score += 18;
+            break;
+          }
+        }
+      }
+
+      return { item, score, hits: r.hits };
     })
     .filter(x => x.score > 4) // filter very weak matches
     .sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
-      // tiebreak by category priority
       const ap = CAT_PRIORITY[a.item.cat] || 0;
       const bp = CAT_PRIORITY[b.item.cat] || 0;
       return bp - ap;
     });
-  return ranked.slice(0, 5);
+  return ranked.slice(0, 6); // show up to 6 — students benefit from one extra fallback
 }
 
 // ───── highlight matched terms in text via <mark> ─────
@@ -6533,18 +7208,39 @@ function renderResults(results, query) {
   // No match
   if (results.length === 0) {
     wrap.classList.add('show');
+    // Popular alternative suggestions — most common ticket patterns
+    const popular = [
+      { id:'sym-tuition',    label:'Tuition way too high', q:'tuition too high' },
+      { id:'sym-paid',       label:'Paid but not enrolled', q:'paid but not enrolled' },
+      { id:'err-dropfail',   label:'Drop failed', q:'drop failed' },
+      { id:'err-residency-not-synced', label:'Residency wrong at TC', q:'residency wrong at teaching college' },
+      { id:'t-1098t',        label:'1098-T tax form', q:'1098-T tax form' },
+    ];
+    const popHtml = popular.map(p => `<button type="button" class="find-recent-chip" onclick="document.getElementById('find-input').value='${p.q}';document.getElementById('find-input').dispatchEvent(new Event('input'));">${p.label}</button>`).join(' ');
     wrap.innerHTML = `<div class="find-empty">
       <strong><span data-en>No close match for that.</span><span data-es>Sin coincidencia exacta.</span></strong>
       <span data-en> Three things to try:</span><span data-es> Tres cosas que puedes intentar:</span>
       <ul class="find-empty-list">
         <li><span data-en>Use the <strong>exact error message</strong> you see (e.g. "Drop Failed", "Course Filled")</span><span data-es>Usa el <strong>mensaje de error exacto</strong> que ves (ej. "Drop Failed", "Course Filled")</span></li>
-        <li><span data-en>Or pick from the <a href="#symptoms">symptom picker</a> below</span><span data-es>O elige del <a href="#symptoms">selector de síntomas</a> abajo</span></li>
-        <li><span data-en>Or browse the full <a href="#errors">error decoder</a> for known statuses</span><span data-es>O consulta el <a href="#errors">descifrador de errores</a> completo</span></li>
+        <li><span data-en>Or try one of the most common questions:</span><span data-es>O prueba una de las preguntas más comunes:</span></li>
       </ul>
-      <p class="find-empty-foot"><span data-en>Still stuck? Email support using the <a href="#email">ticket builder</a>.</span><span data-es>¿Aún sin respuesta? Envía un correo usando el <a href="#email">generador de tickets</a>.</span></p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 12px;">${popHtml}</div>
+      <p class="find-empty-foot"><span data-en>Or pick from the <a href="#symptoms">symptom picker</a> below, or use the <a href="#email">ticket builder</a> to email support.</span><span data-es>O elige del <a href="#symptoms">selector de síntomas</a> abajo, o usa el <a href="#email">generador de tickets</a>.</span></p>
     </div>`;
     if (typeof applyLang === 'function') applyLang();
     return;
+  }
+
+  // "Did you mean?" — when the top result has a weak score, suggest a stronger alternative
+  // by finding the canonical query that would best match the top result
+  let didYouMean = '';
+  if (results[0].score < 35 && results[0].score > 4) {
+    // Suggest the strongest tag from top result
+    const topItem = results[0].item;
+    const strongTag = topItem.tags && topItem.tags[0];
+    if (strongTag && strongTag.length > 4 && !qTrim.toLowerCase().includes(strongTag)) {
+      didYouMean = `<div class="find-results-label" style="margin-top:8px;font-style:italic;">Did you mean <a href="#" data-suggest="${strongTag}" style="color:var(--claret);text-decoration:underline;">${strongTag}</a>?</div>`;
+    }
   }
 
   const tokens = tokenize(qTrim);
@@ -6556,7 +7252,8 @@ function renderResults(results, query) {
   const topConf = confidenceLabel(top.score);
 
   // Top result — full card
-  let html = `<div class="find-results-label"><span data-en>Best match for "${escapeHtml(qTrim)}"</span><span data-es>Mejor coincidencia para "${escapeHtml(qTrim)}"</span></div>`;
+  let html = didYouMean;
+  html += `<div class="find-results-label"><span data-en>Best match for "${escapeHtml(qTrim)}"</span><span data-es>Mejor coincidencia para "${escapeHtml(qTrim)}"</span></div>`;
   html += `<a class="find-result find-result-top" href="#${top.item.id}" data-result-id="${top.item.id}">
     <div class="find-result-confidence ${topConf.cls}" title="${topConf.label}">${topConf.dots}</div>
     <div class="find-result-body">
@@ -6597,7 +7294,8 @@ findInput.addEventListener('input', (e) => {
   const q = e.target.value;
   findTimer = setTimeout(() => {
     renderResults(findMatches(q), q);
-  }, 160);
+    if (q.trim().length >= 4) saveRecentSearch(q.trim());
+  }, 220);
 });
 
 // Example chips — click to fill input + run search immediately
@@ -6607,10 +7305,63 @@ document.querySelectorAll('.find-example').forEach(btn => {
     findInput.value = q;
     findInput.focus();
     renderResults(findMatches(q), q);
+    saveRecentSearch(q);
     findInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
     track('chip_click', { q });
   });
 });
+
+// ════════════════════════════════════════════════════════════════════
+// RECENT SEARCHES — last 5 queries in localStorage, shown as chips
+// ════════════════════════════════════════════════════════════════════
+
+const RECENT_KEY = 'cvc-faq-recent-searches';
+const RECENT_MAX = 5;
+
+function getRecent() {
+  try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); }
+  catch (e) { return []; }
+}
+function saveRecentSearch(q) {
+  if (!q || q.length < 4) return;
+  const norm = q.trim();
+  let list = getRecent();
+  list = list.filter(x => x.toLowerCase() !== norm.toLowerCase());
+  list.unshift(norm);
+  list = list.slice(0, RECENT_MAX);
+  try { localStorage.setItem(RECENT_KEY, JSON.stringify(list)); } catch (e) {}
+  renderRecent();
+}
+function renderRecent() {
+  const wrap = document.getElementById('find-recent');
+  const list = document.getElementById('find-recent-list');
+  if (!wrap || !list) return;
+  const items = getRecent();
+  if (items.length === 0) { wrap.hidden = true; return; }
+  wrap.hidden = false;
+  list.innerHTML = items.map(q => {
+    const escaped = q.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const display = escaped.length > 50 ? escaped.slice(0, 47) + '…' : escaped;
+    return `<button type="button" class="find-recent-chip" data-q="${escaped}">${display}</button>`;
+  }).join('') + '<button type="button" class="find-recent-clear" id="find-recent-clear">clear</button>';
+
+  list.querySelectorAll('.find-recent-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const q = btn.dataset.q;
+      findInput.value = q;
+      findInput.focus();
+      renderResults(findMatches(q), q);
+      track('recent_click', { q });
+    });
+  });
+  const clearBtn = document.getElementById('find-recent-clear');
+  if (clearBtn) clearBtn.addEventListener('click', () => {
+    try { localStorage.removeItem(RECENT_KEY); } catch (e) {}
+    renderRecent();
+  });
+}
+// Initial render
+renderRecent();
 
 // ════════════════════════════════════════════════════════════════════
 // ANALYTICS — track events; send to Cloudflare Worker if configured,
@@ -7018,6 +7769,16 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
 
 // when user clicks a result, also open the matching details if applicable
 document.getElementById('find-results').addEventListener('click', (e) => {
+  // "Did you mean" suggestion click — run the suggested query
+  const suggest = e.target.closest('a[data-suggest]');
+  if (suggest) {
+    e.preventDefault();
+    const q = suggest.dataset.suggest;
+    findInput.value = q;
+    renderResults(findMatches(q), q);
+    track('did_you_mean_click', { q });
+    return;
+  }
   const a = e.target.closest('a.find-result');
   if (!a) return;
   track('result_click', { id: a.dataset.resultId });
