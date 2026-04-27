@@ -2862,12 +2862,19 @@ section.section#limits .entries {
   padding-top: 4px;
 }
 
-/* Inline quick-action chips inside the top result */
+/* Wrapper for the top result + its quick-actions sibling. Quick-actions
+   live OUTSIDE the <a> card to avoid nested-anchor parsing problems. */
+.find-result-card-wrap {
+  margin-bottom: 6px;
+}
+
+/* Quick-action chips — sibling row below the top result card */
 .quick-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin: 8px 0 4px;
+  padding: 0 16px 4px;
 }
 .qa-chip {
   appearance: none;
@@ -2875,39 +2882,48 @@ section.section#limits .entries {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 5px 12px;
+  padding: 6px 14px;
   background: var(--paper);
   border: 1px solid var(--claret);
   border-radius: 999px;
   font-family: var(--serif-body);
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 500;
   color: var(--claret);
   letter-spacing: 0.01em;
   cursor: pointer;
-  transition: background 0.16s ease, color 0.16s ease;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+  line-height: 1.3;
 }
 .qa-chip:hover,
 .qa-chip:focus-visible {
   background: var(--claret);
   color: var(--paper);
+  transform: translateY(-1px);
   outline: none;
 }
 .qa-chip-icon {
   font-family: var(--serif-display);
   font-style: italic;
   font-size: 11px;
-  opacity: 0.8;
+  opacity: 0.85;
+  margin-left: 2px;
 }
 
-/* Highlighted match terms */
+/* Highlighted match terms — kept subtle so they don't dominate the
+   typography. Ensure they flow inline naturally. */
 .find-result-title mark,
 .find-result-preview mark {
-  background: var(--moss-pale);
-  color: var(--ink);
-  padding: 0 2px;
-  border-radius: 2px;
+  background: rgba(228, 196, 80, 0.32);
+  color: inherit;
+  padding: 0;
+  border-radius: 1px;
   font-weight: inherit;
+  font-style: inherit;
+  display: inline;
+  white-space: inherit;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .find-empty {
@@ -7452,7 +7468,7 @@ function quickActionsFor(item) {
   const chips = actions.map(a => {
     const target = a.external ? 'target="_blank" rel="noopener"' : '';
     const icon = a.external ? '↗' : '→';
-    return `<a class="qa-chip" href="${a.href}" ${target} data-qa-id="${item.id}" data-qa-label="${escapeHtml(a.label)}" onclick="event.stopPropagation();">${escapeHtml(a.label)} <span class="qa-chip-icon">${icon}</span></a>`;
+    return `<a class="qa-chip" href="${a.href}" ${target} data-qa-id="${item.id}" data-qa-label="${escapeHtml(a.label)}">${escapeHtml(a.label)} <span class="qa-chip-icon">${icon}</span></a>`;
   }).join('');
   return `<div class="quick-actions">${chips}</div>`;
 }
@@ -7513,22 +7529,28 @@ function renderResults(results, query) {
   }
 
   const tokens = tokenize(qTrim);
-  const stemmedTokens = expandTokens(tokens);
+  // For visual highlighting, use ONLY the user's original tokens — not the
+  // expanded synonym/stem set. Otherwise nearly every word in the title
+  // gets marked, creating visual noise that breaks readability.
+  const highlightTokens = tokens.filter(t => t.length >= 3 && !STOPWORDS.has(t));
   wrap.classList.add('show');
 
   const top = results[0];
   const others = results.slice(1);
   const topConf = confidenceLabel(top.score);
 
-  // Top result — full card
+  // Top result — full card. Quick-actions render OUTSIDE the <a> as a
+  // sibling, since nested <a> tags trigger the HTML5 adoption-agency
+  // algorithm and break the card layout (browsers split the card into
+  // phantom fragments).
   let html = didYouMean;
   html += `<div class="find-results-label"><span data-en>Best match for "${escapeHtml(qTrim)}"</span><span data-es>Mejor coincidencia para "${escapeHtml(qTrim)}"</span></div>`;
+  html += `<div class="find-result-card-wrap">`;
   html += `<a class="find-result find-result-top" href="#${top.item.id}" data-result-id="${top.item.id}">
     <div class="find-result-confidence ${topConf.cls}" title="${topConf.label}">${topConf.dots}</div>
     <div class="find-result-body">
-      <div class="find-result-title">${highlightTerms(top.item.title, stemmedTokens)}</div>
-      ${top.item.preview ? `<div class="find-result-preview">${highlightTerms(top.item.preview, stemmedTokens)}</div>` : ''}
-      ${quickActionsFor(top.item)}
+      <div class="find-result-title">${highlightTerms(top.item.title, highlightTokens)}</div>
+      ${top.item.preview ? `<div class="find-result-preview">${highlightTerms(top.item.preview, highlightTokens)}</div>` : ''}
       <div class="find-result-meta">
         <span class="find-result-section">${escapeHtml(top.item.section)}</span>
         ${top.hits.length ? `<span class="find-result-tags">· matched <em>${top.hits.map(h => '"' + escapeHtml(h) + '"').join(', ')}</em></span>` : ''}
@@ -7536,6 +7558,9 @@ function renderResults(results, query) {
     </div>
     <div class="find-result-arrow">→</div>
   </a>`;
+  // Quick actions go AFTER the </a>, as a sibling inside the wrapper
+  html += quickActionsFor(top.item);
+  html += `</div>`;
 
   // Other results — compact list
   if (others.length > 0) {
@@ -7545,7 +7570,7 @@ function renderResults(results, query) {
       return `<a class="find-result find-result-other" href="#${r.item.id}" data-result-id="${r.item.id}">
         <div class="find-result-confidence ${conf.cls}" title="${conf.label}">${conf.dots}</div>
         <div class="find-result-body">
-          <div class="find-result-title">${highlightTerms(r.item.title, stemmedTokens)}</div>
+          <div class="find-result-title">${highlightTerms(r.item.title, highlightTokens)}</div>
           <div class="find-result-meta"><span class="find-result-section">${escapeHtml(r.item.section)}</span></div>
         </div>
         <div class="find-result-arrow">→</div>
