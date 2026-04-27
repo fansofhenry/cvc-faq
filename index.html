@@ -550,6 +550,34 @@ aside.aside strong {
   color: var(--ink);
 }
 
+/* Advisory callout — for counselor / FA-office referrals */
+aside.aside.advisory {
+  background: var(--paper-deep);
+  border-left-color: var(--claret);
+  padding: 12px 18px;
+  border-radius: 0 4px 4px 0;
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+aside.aside.advisory::before {
+  content: "?";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--claret);
+  color: var(--paper);
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  margin-right: 10px;
+  vertical-align: 2px;
+}
+aside.aside.advisory strong { color: var(--claret-deep); }
+
 /* —————— section ii: symptom picker —————— */
 
 .symptoms {
@@ -628,6 +656,248 @@ aside.aside strong {
 .entries {
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--ink);
+}
+
+/* ─────────────────────────── VISUAL DIAGRAMS ─────────────────────────── */
+/* Editorial SVG illustrations to help visual learners. Center-prioritized
+   for: t-primer (two-college), t-aid (money flow), t-transcript (paths),
+   t-eligibility (checklist), t-happy-path (journey timeline). */
+
+.diagram {
+  margin: 18px 0 22px;
+  padding: 24px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  position: relative;
+}
+.diagram-caption {
+  display: block;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 13, "SOFT" 80;
+  font-size: 13px;
+  color: var(--ink-faint);
+  text-align: center;
+  margin: 12px 0 0;
+  letter-spacing: 0.02em;
+}
+.diagram-caption strong {
+  font-style: normal;
+  font-variation-settings: "opsz" 13, "wght" 600;
+  color: var(--ink);
+}
+.diagram svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+
+/* Two-college relationship diagram */
+.dia-two-college {
+  background: var(--paper);
+}
+.dia-two-college .col-circle { fill: var(--paper-deep); stroke: var(--ink); stroke-width: 1.5; }
+.dia-two-college .col-label-major {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 18px;
+  font-variation-settings: "opsz" 22, "SOFT" 80;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.dia-two-college .col-label-minor {
+  font-family: var(--serif-body);
+  font-size: 11px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.dia-two-college .flow-line { stroke: var(--claret); stroke-width: 1.5; fill: none; }
+.dia-two-college .flow-arrow { fill: var(--claret); }
+.dia-two-college .center-pill {
+  fill: var(--claret);
+  stroke: var(--claret-deep);
+}
+.dia-two-college .center-text {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  fill: var(--paper);
+  text-anchor: middle;
+}
+.dia-two-college .flow-label {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 11px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+
+/* Journey timeline */
+.dia-journey {
+  background: var(--paper);
+  overflow-x: auto;
+}
+.dia-journey svg { min-width: 700px; }
+.dia-journey .journey-rule { stroke: var(--rule); stroke-width: 1; }
+.dia-journey .step-circle {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+.dia-journey .step-circle.cvc { stroke: var(--claret); }
+.dia-journey .step-circle.tc   { stroke: var(--ink); }
+.dia-journey .step-circle.done {
+  fill: var(--moss);
+  stroke: var(--moss);
+}
+.dia-journey .step-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 11px;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.dia-journey .step-num.done { fill: var(--paper); }
+.dia-journey .step-label {
+  font-family: var(--serif-body);
+  font-size: 10.5px;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.dia-journey .step-sub {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 9.5px;
+  fill: var(--ink-faint);
+  text-anchor: middle;
+}
+.dia-journey .phase-label {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 11px;
+  fill: var(--claret);
+  text-anchor: middle;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Money flow */
+.dia-money {
+  background: var(--paper);
+}
+.dia-money .actor {
+  fill: var(--paper-deep);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+.dia-money .actor-label {
+  font-family: var(--serif-display);
+  font-size: 14px;
+  font-variation-settings: "opsz" 16, "wght" 500;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.dia-money .actor-sub {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 11px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.dia-money .arrow-up { stroke: var(--claret); stroke-width: 2; fill: none; marker-end: url(#arr-claret); }
+.dia-money .arrow-down { stroke: var(--moss); stroke-width: 2; fill: none; marker-end: url(#arr-moss); }
+.dia-money .arrow-label-up {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 11px;
+  fill: var(--claret);
+  text-anchor: middle;
+}
+.dia-money .arrow-label-down {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 11px;
+  fill: var(--moss);
+  text-anchor: middle;
+}
+
+/* Transcript paths */
+.dia-transcript .path-auto { stroke: var(--moss); stroke-width: 2; fill: none; marker-end: url(#arr-moss); }
+.dia-transcript .path-manual { stroke: var(--claret); stroke-width: 2; stroke-dasharray: 5,4; fill: none; marker-end: url(#arr-claret); }
+.dia-transcript .endpoint {
+  fill: var(--paper-deep);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+.dia-transcript .endpoint-label {
+  font-family: var(--serif-display);
+  font-size: 13px;
+  font-variation-settings: "opsz" 14, "wght" 500;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.dia-transcript .path-label {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 11px;
+  text-anchor: middle;
+}
+.dia-transcript .path-label.auto { fill: var(--moss); }
+.dia-transcript .path-label.manual { fill: var(--claret); }
+
+/* Eligibility checklist */
+.dia-eligibility {
+  background: var(--paper);
+}
+.checklist-row {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  align-items: baseline;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.checklist-row:last-child { border-bottom: none; }
+.checklist-row.yes { color: var(--ink); }
+.checklist-row.no  { color: var(--ink-soft); }
+.checklist-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif-display);
+  font-weight: 600;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.checklist-icon.yes { background: var(--moss); color: var(--paper); }
+.checklist-icon.no  { background: var(--alert); color: var(--paper); }
+.checklist-text strong {
+  font-weight: 600;
+  font-variation-settings: "opsz" 15, "wght" 600;
+}
+
+/* shared SVG arrow markers */
+.diagram-defs { width: 0; height: 0; position: absolute; }
+
+/* drawing animation on first view */
+@media (prefers-reduced-motion: no-preference) {
+  .diagram svg .draw-animate {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw-line 1.6s ease-out 0.3s forwards;
+  }
+  @keyframes draw-line {
+    to { stroke-dashoffset: 0; }
+  }
+  .diagram svg .fade-in {
+    opacity: 0;
+    animation: fade-in 0.6s ease-out 1.2s forwards;
+  }
+  @keyframes fade-in {
+    to { opacity: 1; }
+  }
 }
 
 /* §ix Designed Limits — visually distinct as a reference section */
@@ -2696,7 +2966,7 @@ article.mistake .copy-link {
         </div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">Realistic timeline</div>
-          <div class="entry-cell-v">1–3 business days at most colleges. Five or more days is unusual.</div>
+          <div class="entry-cell-v">Typically around 1–3 business days, but varies by college. Five or more days is unusual.</div>
         </div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">When to email support</div>
@@ -2722,7 +2992,7 @@ article.mistake .copy-link {
         </div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">Timeline</div>
-          <div class="entry-cell-v">3–5 business days for CCC prereqs. 5–7 for non-CCC (private, four-year, or out-of-state).</div>
+          <div class="entry-cell-v">Typically around 3–5 business days for CCC prereqs; usually a bit longer (around 5–7) for non-CCC documents (private, four-year, out-of-state). Each Teaching College sets its own pace.</div>
         </div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">When to email</div>
@@ -2883,7 +3153,7 @@ article.mistake .copy-link {
         </div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">Fix timeline</div>
-          <div class="entry-cell-v">Support reconciles these in 1–2 business days.</div>
+          <div class="entry-cell-v">Reconciliations are typically resolved within a couple of business days, sometimes longer depending on the college.</div>
         </div>
         <div class="entry-action"><strong>Email once —</strong> with CCCID, course/CRN, payment date and time, last 4 of card, and amount charged. Use the <a href="#email">ticket builder</a>. We do the rest.</div>
       </div>
@@ -3297,7 +3567,7 @@ article.mistake .copy-link {
     <article class="mistake" id="m-cert">
       <div>
         <h3 class="mistake-title">Asked CVC about a certificate program or course articulation</h3>
-        <p class="mistake-fix"><strong>Fix —</strong> certificates are awarded by individual colleges, not CVC. Articulation lives at <a href="https://assist.org" target="_blank">assist.org</a>. Both questions go to your Home College's <strong>counselor,</strong> not us.</p>
+        <p class="mistake-fix"><strong>Always meet with an academic counselor at your Home College</strong> for these questions. Certificates are awarded by individual colleges, not CVC. Course articulation is at <a href="https://assist.org" target="_blank">assist.org</a>. Whether a specific course will count toward <em>your</em> degree, certificate, or transfer plan — only your counselor can confirm. CVC can route enrollments; counselors plan paths.</p>
       </div>
     </article>
     <article class="mistake" id="m-w">
@@ -3393,6 +3663,36 @@ article.mistake .copy-link {
       </div>
     </summary>
     <div class="body">
+      <figure class="diagram dia-two-college" aria-label="How CVC Exchange connects your Home College and the Teaching College">
+        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <defs>
+            <marker id="arr-claret" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+          </defs>
+          <!-- Home College circle -->
+          <circle class="col-circle" cx="100" cy="100" r="60"/>
+          <text class="col-label-major" x="100" y="92">Home</text>
+          <text class="col-label-major" x="100" y="116">College</text>
+          <text class="col-label-minor" x="100" y="178">where you log in,</text>
+          <text class="col-label-minor" x="100" y="192">where aid lives</text>
+          <!-- Teaching College circle -->
+          <circle class="col-circle" cx="500" cy="100" r="60"/>
+          <text class="col-label-major" x="500" y="92">Teaching</text>
+          <text class="col-label-major" x="500" y="116">College</text>
+          <text class="col-label-minor" x="500" y="178">where the class</text>
+          <text class="col-label-minor" x="500" y="192">actually meets</text>
+          <!-- Center "CVC Exchange" pill -->
+          <rect class="center-pill" x="240" y="85" width="120" height="30" rx="15"/>
+          <text class="center-text" x="300" y="105">CVC Exchange</text>
+          <!-- Top arrow: enrollment + payment going TC-ward -->
+          <path class="flow-line draw-animate" d="M 165 80 C 215 60, 260 60, 240 92" style="color:var(--claret)" marker-end="url(#arr-claret)"/>
+          <text class="flow-label fade-in" x="200" y="55">enrollment · payment</text>
+          <!-- Bottom arrow: grades + transcript flowing back -->
+          <path class="flow-line draw-animate" d="M 360 108 C 380 145, 420 145, 435 122" style="color:var(--claret)" marker-end="url(#arr-claret)"/>
+          <text class="flow-label fade-in" x="400" y="160">grades · transcripts</text>
+        </svg>
+        <figcaption class="diagram-caption"><strong>Two colleges, one routing layer.</strong> CVC sits between them; enrollment and payment flow from you to the Teaching College, and grades/transcripts flow back to your Home College.</figcaption>
+      </figure>
+
       <p>The <strong>California Virtual Campus (CVC) Exchange</strong> is a system run by the California Community Colleges that lets you take a class at a different CCC than the one you primarily attend — without a separate application. Think of it as a routing layer between 115 community colleges.</p>
 
       <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">The two-college concept</p>
@@ -3426,6 +3726,72 @@ article.mistake .copy-link {
       </div>
     </summary>
     <div class="body">
+      <figure class="diagram dia-journey" aria-label="The registration journey from start to taking your class">
+        <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <!-- horizontal rule -->
+          <line class="journey-rule" x1="40" y1="60" x2="720" y2="60"/>
+          <!-- 8 step circles -->
+          <g>
+            <circle class="step-circle done" cx="55" cy="60" r="14"/>
+            <text class="step-num done" x="55" y="64">1</text>
+            <text class="step-label" x="55" y="92">Created</text>
+            <text class="step-sub" x="55" y="106">you started</text>
+          </g>
+          <g>
+            <circle class="step-circle done" cx="140" cy="60" r="14"/>
+            <text class="step-num done" x="140" y="64">2</text>
+            <text class="step-label" x="140" y="92">Consent</text>
+            <text class="step-sub" x="140" y="106">signed form</text>
+          </g>
+          <g>
+            <circle class="step-circle done" cx="225" cy="60" r="14"/>
+            <text class="step-num done" x="225" y="64">3</text>
+            <text class="step-label" x="225" y="92">AER Submitted</text>
+            <text class="step-sub" x="225" y="106">enrollment form</text>
+          </g>
+          <g>
+            <circle class="step-circle cvc" cx="310" cy="60" r="14"/>
+            <text class="step-num" x="310" y="64">4</text>
+            <text class="step-label" x="310" y="92">Eligible &amp;</text>
+            <text class="step-label" x="310" y="105">Approved</text>
+            <text class="step-sub" x="310" y="119">~minutes</text>
+          </g>
+          <g>
+            <circle class="step-circle tc" cx="395" cy="60" r="14"/>
+            <text class="step-num" x="395" y="64">5</text>
+            <text class="step-label" x="395" y="92">Pending</text>
+            <text class="step-label" x="395" y="105">Validation</text>
+            <text class="step-sub" x="395" y="119">~1–2 biz days</text>
+          </g>
+          <g>
+            <circle class="step-circle tc" cx="480" cy="60" r="14"/>
+            <text class="step-num" x="480" y="64">6</text>
+            <text class="step-label" x="480" y="92">Validated &amp;</text>
+            <text class="step-label" x="480" y="105">Registered</text>
+            <text class="step-sub" x="480" y="119">you're in</text>
+          </g>
+          <g>
+            <circle class="step-circle cvc" cx="565" cy="60" r="14"/>
+            <text class="step-num" x="565" y="64">7</text>
+            <text class="step-label" x="565" y="92">Enrolled</text>
+            <text class="step-label" x="565" y="105">&amp; Paid</text>
+            <text class="step-sub" x="565" y="119">click Confirm!</text>
+          </g>
+          <g>
+            <circle class="step-circle tc" cx="650" cy="60" r="14"/>
+            <text class="step-num" x="650" y="64">8</text>
+            <text class="step-label" x="650" y="92">Canvas</text>
+            <text class="step-label" x="650" y="105">access</text>
+            <text class="step-sub" x="650" y="119">~24–48h</text>
+          </g>
+          <!-- phase labels -->
+          <text class="phase-label" x="140" y="36">— You —</text>
+          <text class="phase-label" x="395" y="36">— System review —</text>
+          <text class="phase-label" x="650" y="36">— Take the class —</text>
+        </svg>
+        <figcaption class="diagram-caption"><strong>The full registration journey.</strong> Steps 1–3 are you. Steps 4–6 are CVC and the Teaching College reviewing. Step 7 is paying. Step 8 is Canvas opening up. Times shown are typical, but each Teaching College sets its own pace.</figcaption>
+      </figure>
+
       <p>The whole journey from first click to "you're enrolled" runs through these states. Each is normal. If you're stuck on one for longer than expected, that's where to start asking.</p>
       <div class="flow">
         <div class="step"><div class="step-num">i.</div><div class="step-text"><strong>Created</strong> — you started a CVC enrollment. Just means you got into the form.</div></div>
@@ -3605,7 +3971,7 @@ article.mistake .copy-link {
         <div class="step"><div class="step-num">ii.</div><div class="step-text">Class Schedule → click the link below your course. This opens your <strong>Home College's</strong> Canvas.</div></div>
         <div class="step"><div class="step-num">iii.</div><div class="step-text">In Canvas, click <strong>View All Courses</strong> if it's not on the dashboard.</div></div>
       </div>
-      <aside class="aside"><strong>Note —</strong> it can take 24–48 hours after registering. Some colleges only provision Canvas access closer to class start. Email support after 3 business days OR within 24 hours of class start.</aside>
+      <aside class="aside"><strong>Note —</strong> typically 24–48 hours after registering, sometimes longer. Some colleges only provision Canvas access closer to class start. Reach out to support if it's been more than a few business days, or if your class starts within 24 hours.</aside>
     </div>
   </details>
 
@@ -3619,6 +3985,36 @@ article.mistake .copy-link {
       </div>
     </summary>
     <div class="body">
+      <figure class="diagram dia-money" aria-label="How money flows for a CVC course">
+        <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <defs>
+            <marker id="arr-claret" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
+            <marker id="arr-moss" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
+          </defs>
+          <!-- Three actors: Student (center top), HC (left), TC (right) -->
+          <rect class="actor" x="240" y="20" width="120" height="50" rx="6"/>
+          <text class="actor-label" x="300" y="42">You</text>
+          <text class="actor-sub" x="300" y="58">(student)</text>
+          <rect class="actor" x="40" y="155" width="170" height="50" rx="6"/>
+          <text class="actor-label" x="125" y="177">Home College</text>
+          <text class="actor-sub" x="125" y="193">where aid lives</text>
+          <rect class="actor" x="390" y="155" width="170" height="50" rx="6"/>
+          <text class="actor-label" x="475" y="177">Teaching College</text>
+          <text class="actor-sub" x="475" y="193">where you pay first</text>
+          <!-- Up-arrow: Student → TC (upfront payment) -->
+          <path class="arrow-up draw-animate" d="M 360 60 C 460 80, 480 110, 475 150"/>
+          <text class="arrow-label-up fade-in" x="450" y="105">① pay upfront</text>
+          <text class="arrow-label-up fade-in" x="450" y="120">(card)</text>
+          <!-- Down-arrow: HC → Student (reimbursement, if eligible) -->
+          <path class="arrow-down draw-animate" d="M 125 150 C 135 110, 175 80, 240 60"/>
+          <text class="arrow-label-down fade-in" x="155" y="105">② aid reimburses</text>
+          <text class="arrow-label-down fade-in" x="155" y="120">(if approved)</text>
+        </svg>
+        <figcaption class="diagram-caption"><strong>Money flows two ways.</strong> You pay the Teaching College upfront. Your Home College reimburses you per your aid package — only if you're enrolled in 6+ units at your HC and your request is approved. Federal aid never disburses at the Teaching College.</figcaption>
+      </figure>
+
+      <aside class="aside advisory"><strong>Always check with your Home College's Financial Aid office</strong> for the most accurate, up-to-date guidance on your specific situation. The information below is general — your aid eligibility, packaging, and timing depend on factors only your HC's FA staff can confirm.</aside>
+
       <aside class="aside"><strong>Read this first —</strong> per CVC's official guidance: <em>"Clicking the request box does not mean you will receive financial aid."</em> Submitting a financial aid request during enrollment only sends the request to your Home College for review. <strong>You are still responsible for paying the Teaching College upfront</strong> while your Home College considers your request. If you don't pay, the Teaching College drops you — even if your aid is later approved.</aside>
 
       <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">How payment actually works</p>
@@ -3657,8 +4053,34 @@ article.mistake .copy-link {
       </div>
     </summary>
     <div class="body">
+      <figure class="diagram dia-transcript" aria-label="The two paths your transcripts can take after a CVC class">
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <defs>
+            <marker id="arr-moss-t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
+            <marker id="arr-claret-t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
+          </defs>
+          <!-- Source: Teaching College -->
+          <rect class="endpoint" x="20" y="85" width="150" height="50" rx="6"/>
+          <text class="endpoint-label" x="95" y="106">Teaching</text>
+          <text class="endpoint-label" x="95" y="124">College</text>
+          <!-- Path 1 (auto): TC → Home College -->
+          <path d="M 170 100 C 280 80, 360 80, 425 95" stroke="var(--moss)" stroke-width="2" fill="none" marker-end="url(#arr-moss-t)" class="draw-animate"/>
+          <rect class="endpoint" x="425" y="75" width="155" height="50" rx="6"/>
+          <text class="endpoint-label" x="502" y="96">Home College</text>
+          <text class="endpoint-label" x="502" y="114" style="font-size:11px;font-style:italic;font-variation-settings:'opsz' 12,'SOFT' 80;">automatic</text>
+          <text class="path-label auto fade-in" x="298" y="68">automatic — around 3 weeks</text>
+          <!-- Path 2 (manual): TC → 4-year/employer -->
+          <path d="M 170 120 C 280 160, 360 160, 425 145" stroke="var(--claret)" stroke-width="2" stroke-dasharray="5,4" fill="none" marker-end="url(#arr-claret-t)" class="draw-animate"/>
+          <rect class="endpoint" x="425" y="135" width="155" height="50" rx="6"/>
+          <text class="endpoint-label" x="502" y="156">4-year college</text>
+          <text class="endpoint-label" x="502" y="174" style="font-size:11px;font-style:italic;font-variation-settings:'opsz' 12,'SOFT' 80;">or employer</text>
+          <text class="path-label manual fade-in" x="298" y="200">you order it — TC's request process</text>
+        </svg>
+        <figcaption class="diagram-caption"><strong>Two transcript paths after your class.</strong> The grade flows back to your Home College automatically. Sending an official transcript to a 4-year college or employer requires you to order it from the Teaching College through their normal request process.</figcaption>
+      </figure>
+
       <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 8px 0 6px;">Sending grades back to your Home College</p>
-      <p><strong>Automatic.</strong> Per cvc.edu: "the college teaching the course will automatically send an electronic copy of your transcript to your Home College" after the term ends. Official timeline: <strong>up to 3 weeks</strong>. If grades aren't visible after that, contact your Home College's A&amp;R first — they often just need to refresh.</p>
+      <p><strong>Automatic.</strong> Per cvc.edu: "the college teaching the course will automatically send an electronic copy of your transcript to your Home College" after the term ends. Timeline is typically <strong>around 3 weeks</strong>, but it varies by college and term. If grades aren't visible after that, contact your Home College's A&amp;R first — they often just need to refresh.</p>
       <p>Note: if your CVC class was taken to <em>fulfill a prerequisite,</em> credit may not appear automatically on your HC transcript. Initiate a transcript evaluation with your HC's counselor or evaluations office.</p>
 
       <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Sending transcripts to a 4-year college or employer</p>
@@ -3678,6 +4100,22 @@ article.mistake .copy-link {
       </div>
     </summary>
     <div class="body">
+      <figure class="diagram dia-eligibility" aria-label="At-a-glance eligibility checklist">
+        <div style="font-family: var(--serif-display); font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 80; font-size: 13px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 10px;">Need ALL of these to be eligible</div>
+        <div class="checklist-row yes"><span class="checklist-icon yes">✓</span><span class="checklist-text"><strong>18 years or older</strong></span></div>
+        <div class="checklist-row yes"><span class="checklist-icon yes">✓</span><span class="checklist-text"><strong>Currently enrolled at a CCC Home College</strong> (or actively taking a class there if it's your first term)</span></div>
+        <div class="checklist-row yes"><span class="checklist-icon yes">✓</span><span class="checklist-text"><strong>2.0 GPA</strong> or no established GPA yet</span></div>
+        <div class="checklist-row yes"><span class="checklist-icon yes">✓</span><span class="checklist-text"><strong>No outstanding fees</strong> at your Home College</span></div>
+        <div class="checklist-row yes"><span class="checklist-icon yes">✓</span><span class="checklist-text"><strong>California address on file</strong> at your Home College</span></div>
+        <div style="font-family: var(--serif-display); font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 80; font-size: 13px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.16em; margin: 18px 0 10px;">NOT eligible to cross-enroll via CVC</div>
+        <div class="checklist-row no"><span class="checklist-icon no">×</span><span class="checklist-text"><strong>Dual-enrolled high school students</strong> — apply directly to the Teaching College via CCCApply</span></div>
+        <div class="checklist-row no"><span class="checklist-icon no">×</span><span class="checklist-text"><strong>F-1 visa students</strong> — talk to your DSO about your options</span></div>
+        <div class="checklist-row no"><span class="checklist-icon no">×</span><span class="checklist-text"><strong>Adult Education students</strong> — typically not permitted; check with your AE program</span></div>
+        <figcaption class="diagram-caption" style="margin-top: 14px;">Source: <a href="https://www.cvc.edu/students/student-eligibility/" target="_blank" style="color: var(--claret); border-bottom: 1px solid var(--claret-pale);">cvc.edu/students/student-eligibility</a> — the authoritative source.</figcaption>
+      </figure>
+
+      <aside class="aside advisory"><strong>For any planning question — talk to your Home College's academic counselor first.</strong> They know your degree path, prerequisites, transfer plan, and special-admit status better than any FAQ can. The list below covers eligibility <em>rules</em>; whether a specific class fits your plan is counselor territory.</aside>
+
       <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 8px 0 6px;">The basic requirements (all must be true)</p>
       <ul>
         <li>You are at least <strong>18 years old.</strong></li>
@@ -4043,7 +4481,7 @@ article.mistake .copy-link {
       <div class="entry-body">
         <div class="entry-cell">
           <div class="entry-cell-lbl">What's automatic</div>
-          <div class="entry-cell-v">Grades from your CVC class flow back to your Home College's records system, typically 4–6 weeks after the term ends. That part works.</div>
+          <div class="entry-cell-v">Grades from your CVC class flow back to your Home College's records system after the term ends — typically around 3 weeks per cvc.edu, though it can vary by college. That part works.</div>
         </div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">What's manual</div>
