@@ -1504,53 +1504,119 @@ aside.aside strong {
   font-family: var(--serif-display);
   font-style: italic;
   font-variation-settings: "opsz" 14, "SOFT" 80;
-  font-size: 14px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--ink-faint);
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
+.find-results-label span { font-style: italic; text-transform: none; letter-spacing: 0; }
 
-.find-result {
-  display: grid;
-  grid-template-columns: 36px 1fr 24px;
-  gap: 16px;
-  padding: 14px 8px;
-  border-top: 1px solid var(--rule-soft);
-  align-items: baseline;
-  text-decoration: none;
-  color: inherit;
-  transition: background 0.15s ease;
-}
-.find-result:hover { background: var(--paper-deep); }
-.find-result:hover .find-result-arrow { transform: translateX(3px); color: var(--claret-deep); }
-
-.find-result-rank {
-  font-family: var(--serif-display);
-  font-style: italic;
-  font-variation-settings: "opsz" 22, "SOFT" 80;
-  font-size: 22px;
-  color: var(--claret);
-  line-height: 1;
-  text-align: right;
-}
-
-.find-result-body { min-width: 0; }
-
-.find-result-title {
-  font-family: var(--serif-display);
-  font-weight: 400;
-  font-variation-settings: "opsz" 20, "SOFT" 50;
-  font-size: 19px;
-  line-height: 1.3;
-  color: var(--ink);
-}
-.find-result-section {
-  display: block;
+.find-results-also {
   font-family: var(--serif-display);
   font-style: italic;
   font-variation-settings: "opsz" 13, "SOFT" 80;
   font-size: 13px;
   color: var(--ink-faint);
-  margin-top: 4px;
+  margin: 18px 0 6px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--rule-soft);
+}
+
+/* ───── Top "best match" result — emphasized card ───── */
+.find-result {
+  display: grid;
+  grid-template-columns: 44px 1fr 22px;
+  gap: 14px;
+  padding: 14px 12px;
+  align-items: start;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease, transform 0.15s ease;
+  border-radius: 6px;
+}
+.find-result:hover { background: var(--paper-deep); }
+.find-result:hover .find-result-arrow { transform: translateX(3px); color: var(--claret-deep); }
+.find-result:focus-visible { outline: 2px solid var(--claret); outline-offset: 2px; }
+
+.find-result-top {
+  background: var(--claret-wash);
+  border: 1px solid var(--claret-pale);
+  padding: 18px 16px;
+  margin-bottom: 6px;
+}
+.find-result-top:hover { background: #e3eef8; }
+
+.find-result-other {
+  border-top: 1px solid var(--rule-soft);
+  border-radius: 0;
+  padding: 12px 12px;
+}
+.find-result-other:first-of-type { border-top: none; }
+
+/* Confidence dots */
+.find-result-confidence {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+  text-align: center;
+  padding-top: 4px;
+}
+.find-result-confidence.conf-strong { color: var(--moss); }
+.find-result-confidence.conf-medium { color: var(--claret); }
+.find-result-confidence.conf-low { color: var(--ink-ghost); }
+
+.find-result-body { min-width: 0; }
+
+.find-result-title {
+  font-family: var(--serif-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 22, "SOFT" 50, "wght" 500;
+  font-size: 19px;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.find-result-top .find-result-title {
+  font-size: 21px;
+  font-variation-settings: "opsz" 24, "SOFT" 50, "wght" 500;
+}
+.find-result-other .find-result-title {
+  font-size: 17px;
+  font-variation-settings: "opsz" 18, "SOFT" 50, "wght" 500;
+}
+
+/* The preview snippet — only on top result */
+.find-result-preview {
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  font-variation-settings: "opsz" 14;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 6px 0 8px;
+  max-width: 64ch;
+}
+
+/* Match-source line */
+.find-result-meta {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 13, "SOFT" 80;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  align-items: baseline;
+}
+.find-result-section {
+  display: inline-block;
+}
+.find-result-tags em {
+  font-style: italic;
+  color: var(--claret);
 }
 
 .find-result-arrow {
@@ -1560,6 +1626,17 @@ aside.aside strong {
   font-size: 18px;
   transition: transform 0.2s ease, color 0.2s ease;
   text-align: right;
+  padding-top: 4px;
+}
+
+/* Highlighted match terms */
+.find-result-title mark,
+.find-result-preview mark {
+  background: var(--moss-pale);
+  color: var(--ink);
+  padding: 0 2px;
+  border-radius: 2px;
+  font-weight: inherit;
 }
 
 .find-empty {
@@ -3707,7 +3784,7 @@ article.mistake .copy-link {
 
   <div class="entries">
 
-    <details class="entry">
+    <details class="entry" id="lim-hc-locked">
       <summary>
         <div class="entry-msg">You can't change your Home College after enrolling</div>
         <div class="entry-tag stop icon-plus">drop + re-enroll required</div>
@@ -3724,7 +3801,7 @@ article.mistake .copy-link {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="lim-oos-address">
       <summary>
         <div class="entry-msg">Out-of-state addresses aren't supported in the AER form</div>
         <div class="entry-tag stop icon-plus">no workaround</div>
@@ -3741,7 +3818,7 @@ article.mistake .copy-link {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="lim-2class">
       <summary>
         <div class="entry-msg">2-class-per-term limit (cross-district only)</div>
         <div class="entry-tag normal icon-plus">good to know</div>
@@ -3762,7 +3839,7 @@ article.mistake .copy-link {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="lim-aid-hc">
       <summary>
         <div class="entry-msg">Federal aid (Pell, FAFSA loans) only disburses at your Home College</div>
         <div class="entry-tag normal icon-plus">structural rule</div>
@@ -3779,7 +3856,7 @@ article.mistake .copy-link {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="lim-residency">
       <summary>
         <div class="entry-msg">Once your residency is validated, you can't change it for the term</div>
         <div class="entry-tag normal icon-plus">manual fix at HC + TC</div>
@@ -3796,7 +3873,7 @@ article.mistake .copy-link {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="lim-autodrop">
       <summary>
         <div class="entry-msg">Teaching Colleges can auto-drop you for non-payment without telling CVC</div>
         <div class="entry-tag stop icon-plus">pay on time, every time</div>
@@ -3817,7 +3894,7 @@ article.mistake .copy-link {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="lim-transcripts">
       <summary>
         <div class="entry-msg">Transcripts back to your Home College aren't always automatic</div>
         <div class="entry-tag act icon-plus">may need follow-up</div>
@@ -3834,7 +3911,7 @@ article.mistake .copy-link {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="lim-localfees">
       <summary>
         <div class="entry-msg">HC↔HC enrollments charge local fees not visible in CVC</div>
         <div class="entry-tag normal icon-plus">check your HC portal</div>
@@ -3851,7 +3928,7 @@ article.mistake .copy-link {
       </div>
     </details>
 
-    <details class="entry">
+    <details class="entry" id="lim-yuba">
       <summary>
         <div class="entry-msg">Some colleges block HC↔HC entirely (Yuba)</div>
         <div class="entry-tag stop icon-plus">apply direct</div>
@@ -4048,72 +4125,276 @@ const STOPWORDS = new Set([
 ]);
 
 const CORPUS = [
-  // Urgent fast-lanes
-  { id:'urgent-pending', title:'Class begins in 48 hours and I\'m still Pending', section:'§i. Urgent matters',
-    tags:['urgent','class start','starts soon','class begins','48 hours','about to start','class starts','tomorrow class','still pending','no progress','not enrolled yet','class is starting','very soon'] },
-  { id:'urgent-drop', title:'My drop deadline is today or tomorrow', section:'§i. Urgent matters',
-    tags:['urgent','drop deadline','today','tomorrow','last day to drop','cant drop','unable to drop','withdraw','leave class','quit class','remove class','drop deadline today'] },
-  { id:'urgent-paid', title:'My card was charged but I\'m not enrolled', section:'§i. Urgent matters',
-    tags:['urgent','paid','card charged','charged','payment','money taken','not enrolled','paid but','dashboard says pay','need refund','double charge'] },
+  // ────────────────────── §i. URGENT FAST-LANES ──────────────────────
+  { id:'urgent-pending', cat:'urgent', section:'§i. Urgent matters',
+    title:'Class begins in 48 hours and I\'m still Pending',
+    preview:'Three steps to escalate before the start date — check your CVC inbox, confirm the status hasn\'t changed, then email support with URGENT subject.',
+    tags:['urgent','class starting','starts tomorrow','starts soon','48 hours','about to start','class begins','still pending','not enrolled yet','class is starting','very soon','start date','tomorrow','dont have access yet'] },
+  { id:'urgent-drop', cat:'urgent', section:'§i. Urgent matters',
+    title:'My drop deadline is today or tomorrow',
+    preview:'Try the drop once, screenshot any error, email support URGENT with deadline date, and email the TC\'s A&R in parallel for documented intent.',
+    tags:['urgent','drop deadline','last day','today','tomorrow','last day to drop','cant drop','unable to drop','withdraw','leave class','quit class','remove class','deadline tonight','deadline tomorrow','before deadline','before midnight'] },
+  { id:'urgent-paid', cat:'urgent', section:'§i. Urgent matters',
+    title:'My card was charged but I\'m not enrolled',
+    preview:'Almost always the missing Confirm Payment click. Check dashboard — if it says Pay Now, email support; don\'t pay again.',
+    tags:['urgent','paid','card charged','charged','payment','money taken','not enrolled','paid but not enrolled','dashboard says pay now','double charge','charged twice','money gone','card was charged'] },
+  { id:'urgent-after-hours', cat:'urgent', section:'§i. Urgent matters',
+    title:'It\'s after-hours or weekend and a deadline is approaching',
+    preview:'Document everything, email CVC support URGENT, email the TC\'s A&R in parallel — the timestamps create your case for retroactive exception.',
+    tags:['after hours','weekend','sunday','saturday','night','midnight','support closed','no one to email','holiday','help now','panic','cant reach support','outside business hours','after work','11pm','late at night'] },
 
-  // Errors — error decoder
-  { id:'sym-pending', title:'Pending Person Match', section:'§iii. Error decoder',
-    tags:['pending person match','pending match','still processing','waiting','review','no progress','stuck','how long','been a while','how many days','pending'] },
-  { id:'err-prereq', title:'Prerequisite Pending Review', section:'§iii. Error decoder',
-    tags:['prerequisite','prereq','pending review','transcripts','documents','docs','unofficial transcript','requirement','passed prereq','completed prereq','chemistry','biology','math','english','non-ccc','outside transcript','from another school','university','four year','out of state','prereqs','prerequisite pending','prereq pending'] },
-  { id:'sym-failed', title:'Course Filled / Class is full', section:'§iii. Error decoder',
-    tags:['course filled','class full','no seats','no spots','at capacity','closed','reached capacity','full class','no more seats','waitlist','add code','cant get in','class is full','already full','section filled'] },
-  { id:'err-regfail', title:'Registration Failed (no specific message)', section:'§iii. Error decoder',
-    tags:['registration failed','register failed','cant register','unable to register','reg failed','vague error','generic error','no error message','what does this mean'] },
-  { id:'err-dropfail', title:'Drop Failed', section:'§iii. Error decoder',
-    tags:['drop failed','cant drop','unable to drop','wont drop','drop error','drop button','drop course','withdraw failed','drop wont work','dropping failed'] },
-  { id:'sym-denied', title:'Application Denied', section:'§iii. Error decoder',
-    tags:['application denied','denied','rejected','not accepted','declined','turned down','no reason given','application rejected'] },
-  { id:'sym-update-failed', title:'Status Update Failed (on a class you dropped)', section:'§iii. Error decoder',
-    tags:['status update failed','already dropped','still showing','dropped class still there','display issue','dashboard wrong','should be dropped'] },
-  { id:'sym-tuition', title:'Tuition shows $400+ for 3 units', section:'§iii. Error decoder',
-    tags:['tuition too high','expensive','too much','high cost','high fees','out of state tuition','not in state','residency','wrong tuition','outrageous price','hundreds dollars','thousand dollars','too expensive','overcharged','out of state'] },
-  { id:'sym-paid', title:'Card charged but dashboard says "Pay Now"', section:'§iii. Error decoder',
-    tags:['paid but pay now','card charged','charged my card','already paid','payment didnt go through','confirm payment','didnt confirm','closed browser after paying','money taken','pay now still showing','says pay now','still says pay'] },
-  { id:'sym-canvas', title:'Class doesn\'t show up in Canvas', section:'§iii. Error decoder',
-    tags:['canvas','class missing','course missing','cant find class','no class in canvas','canvas empty','where is my class','course not appearing','canvas course missing','class doesnt appear','dont see my class'] },
-  { id:'sym-unknown', title:'I don\'t know what I\'m looking at', section:'§iii. Error decoder',
-    tags:['confused','lost','help','dont know','no idea','not sure','what is this','what does this mean','overwhelmed','first time'] },
+  // ────────────────────── §iii. ERROR DECODER ──────────────────────
+  // happy-path / normal states (calm)
+  { id:'state-validated', cat:'state', section:'§iii. Error decoder',
+    title:'Validated & Registered',
+    preview:'You\'re enrolled. Both CVC and the Teaching College agree — this is the success state. Pay if you haven\'t and check Canvas in 24-48 hours.',
+    tags:['validated and registered','enrolled','validated','registered','done','complete','successful','success state','what does validated mean','i\'m in','it worked'] },
+  { id:'state-eligible', cat:'state', section:'§iii. Error decoder',
+    title:'Eligible and Approved',
+    preview:'System green-lit you. CVC handed off to the Teaching College — they\'re processing your registration into their SIS. 1-3 business days then transitions.',
+    tags:['eligible and approved','eligible','approved','green-lit','passed eligibility','status eligible','what does eligible mean','skipped home and teaching approvals','multiple measures'] },
+  { id:'state-pending-validation', cat:'state', section:'§iii. Error decoder',
+    title:'Registered & Pending Validation',
+    preview:'TC has registered you in their SIS. Final automated validation step running. Usually 1-2 business days then transitions to Validated.',
+    tags:['registered and pending validation','pending validation','final check','almost done','what does pending validation mean','one step left'] },
+  // wait states
+  { id:'sym-pending', cat:'error-wait', section:'§iii. Error decoder',
+    title:'Pending Person Match',
+    preview:'The Teaching College needs to match your CCCID to a record in their system. Normal — not a failure. 1-3 business days; 5+ is unusual.',
+    tags:['pending person match','pending match','person match','still processing','waiting','review','no progress','stuck on pending','how long','been a while','how many days','wait person match'] },
+  { id:'err-prereq', cat:'error-wait', section:'§iii. Error decoder',
+    title:'Prerequisite Pending Review',
+    preview:'TC\'s A&R is reviewing your prereq documents. You are not denied — you are waiting. 3-5 business days for CCC prereqs, 5-7 for non-CCC.',
+    tags:['prerequisite pending review','prereq pending','prerequisite pending','transcripts','documents','docs','unofficial transcript','requirement','passed prereq','completed prereq','chemistry','biology','math','english','non-ccc','outside transcript','from another school','university','four year','out of state prereq','prereqs review','prereq submitted'] },
+  { id:'sym-canvas', cat:'error-wait', section:'§iii. Error decoder',
+    title:'Class doesn\'t show up in Canvas',
+    preview:'24-48 hours after registration is normal. Use your Home College\'s Canvas (not TC\'s). Click View All Courses if not on dashboard.',
+    tags:['canvas','class missing','course missing','cant find class','no class in canvas','canvas empty','where is my class','course not appearing','canvas course missing','class doesnt appear','dont see my class','canvas not loading','no class showing','missing class','cant access canvas','cant log into canvas'] },
+  // act/stop states
+  { id:'sym-failed', cat:'error-stop', section:'§iii. Error decoder',
+    title:'Course Filled / Class is full',
+    preview:'Section reached capacity before your registration. Your prereqs weren\'t the issue. No waitlist on Exchange — find another section, apply directly to TC, or wait for next term.',
+    tags:['course filled','class full','no seats','no spots','at capacity','closed','reached capacity','full class','no more seats','waitlist','add code','cant get in','class is full','already full','section filled','full section','no room','no availability','sold out'] },
+  { id:'err-regfail', cat:'error-act', section:'§iii. Error decoder',
+    title:'Registration Failed (no specific message)',
+    preview:'"Registration Failed" is a category, not a cause. Look in Application Errors field for the specific error, then match against this decoder.',
+    tags:['registration failed','register failed','cant register','unable to register','reg failed','vague error','generic error','no error message','what does this mean','registration error'] },
+  { id:'err-dropfail', cat:'error-act', section:'§iii. Error decoder',
+    title:'Drop Failed',
+    preview:'Most likely cause is an account hold at the Teaching College (often financial). Check the TC portal, clear the hold, then retry. Don\'t click multiple times.',
+    tags:['drop failed','cant drop','unable to drop','wont drop','drop error','drop button','drop course','withdraw failed','drop wont work','dropping failed','cant withdraw','hold on account','account hold','financial hold','blocked drop','saddleback drop'] },
+  { id:'sym-denied', cat:'error-act', section:'§iii. Error decoder',
+    title:'Application Denied',
+    preview:'TC reviewed and declined. Different from system error. Check your CVC inbox for a denial reason; if missing, email support.',
+    tags:['application denied','denied','rejected','not accepted','declined','turned down','no reason given','application rejected','tc denied'] },
+  { id:'sym-tuition', cat:'error-stop', section:'§iii. Error decoder',
+    title:'Tuition shows $400+ for 3 units',
+    preview:'Your CA residency wasn\'t confirmed at the TC. In-state is $46/unit ($138 for 3 units). Don\'t pay — contact TC\'s A&R to fix residency.',
+    tags:['tuition too high','expensive','too much','high cost','high fees','out of state tuition','not in state','residency','wrong tuition','outrageous price','hundreds of dollars','thousand dollars','too expensive','overcharged','out of state','non-resident','huge tuition','wrong amount','overpriced'] },
+  { id:'sym-paid', cat:'error-act', section:'§iii. Error decoder',
+    title:'Card charged but dashboard says "Pay Now"',
+    preview:'Bank processed the charge but you didn\'t click Confirm Payment after. We can reconcile — email once with CCCID, course, payment date, last 4, amount.',
+    tags:['paid but pay now','card charged','charged my card','already paid','payment didnt go through','confirm payment','didnt confirm','closed browser after paying','money taken','pay now still showing','says pay now','still says pay','paid but not showing','paid but unpaid','card was charged'] },
+  { id:'sym-update-failed', cat:'state', section:'§iii. Error decoder',
+    title:'Status Update Failed (on a class you dropped)',
+    preview:'Usually a display issue, not a real failure. Drop probably succeeded; the dashboard hasn\'t caught up. Don\'t re-attempt.',
+    tags:['status update failed','already dropped','still showing','dropped class still there','display issue','dashboard wrong','should be dropped','glitch','class still showing after drop'] },
+  // new entries from tickets + Confluence
+  { id:'err-cccid', cat:'error-act', section:'§iii. Error decoder',
+    title:'"Invalid CCCID" or "CCCID not found"',
+    preview:'Your Home College\'s SSO isn\'t passing your CCCID through. Verify CCCID at OpenCCC matches what your HC has; if not, contact HC\'s A&R.',
+    tags:['invalid cccid','cccid not found','cccid error','no cccid','missing cccid','cant authenticate','sso error','login fails','duplicate cccid','wrong cccid','two cccids','multiple cccids','openccc','my id is wrong'] },
+  { id:'err-wrong-hc', cat:'error-stop', section:'§iii. Error decoder',
+    title:'I selected the wrong Home College at signup',
+    preview:'Cannot be changed after the fact (designed limit). Drop the cross-enrollment and re-cross-enroll with the correct HC. There\'s no shortcut.',
+    tags:['wrong home college','wrong hc','picked wrong college','change home college','update home college','need to change hc','old college','i graduated','no longer attending','old account','attending different college','transfer hc'] },
+  { id:'err-window', cat:'error-wait', section:'§iii. Error decoder',
+    title:'"Add Class" appears but registration fails — and it\'s evening',
+    preview:'4 PM PST gotcha — Add Class appears 4 PM the day before opens, but registrations 4 PM-midnight PST silently fail. Wait until midnight PST.',
+    tags:['add class fails','registration fails evening','registration fails night','wont register','silent failure','works tomorrow','4pm pst','before midnight','registration window','open enrollment','first day','open registration','class registration not working tonight','register tonight'] },
+  { id:'err-corequisite', cat:'error-act', section:'§iii. Error decoder',
+    title:'Co-requisite lab error: "prerequisite not met"',
+    preview:'You\'re in the lecture but the lab\'s prereq check fires before recognizing concurrent enrollment. Email instructor + TC A&R for override.',
+    tags:['corequisite','co-requisite','co requisite','lab','companion lab','lab error','prereq error on lab','cant enroll lab','concurrent','same time','anth 101l','bio lab','chem lab'] },
+  { id:'err-duplicate-login', cat:'error-act', section:'§iii. Error decoder',
+    title:'Login error: "duplicate account" or password reset loop',
+    preview:'Multiple OpenCCC profiles cause this. Try OpenCCC global logout, clear cookies, try different browser. If still broken: CCC Tech Center, not CVC.',
+    tags:['duplicate account','password reset loop','login loop','duplicate login','duplicate openccc','password reset failed','cant log in','keeps asking password','sso loop','duplicate profile','two accounts','old account login','password not working','cant access','login error'] },
+  { id:'err-records-research', cat:'error-act', section:'§iii. Error decoder',
+    title:'Transcript on hold for "Records Research"',
+    preview:'Almost always a name spelling mismatch. Look up exact name at the TC, re-submit Parchment order with that exact spelling.',
+    tags:['records research','transcript on hold','transcript stuck','transcript not processing','parchment hold','name mismatch','name not matching','cant find record','wrong last name','cant locate record'] },
+  { id:'err-old-payment', cat:'error-act', section:'§iii. Error decoder',
+    title:'A past payment was declined and I just found out',
+    preview:'Email support with CCCID, term, course, what TC told you, and approximate date. CVC can pull the original transaction record.',
+    tags:['old payment declined','silent decline','last year payment','college says no payment','payment never received','old transaction','past charge','declined long ago','never notified','payment from last year'] },
+  { id:'err-prereq-after-start', cat:'error-stop', section:'§iii. Error decoder',
+    title:'Prereq still pending and class has already started',
+    preview:'Different urgency from "Pending Review" alone. Email TC\'s A&R directly today, persistent contact daily until resolved. Don\'t wait on CVC.',
+    tags:['prereq pending after class started','prereq still pending','class started prereq pending','behind on class','missing class','two days behind','one week behind','prereq taking too long','class started no prereq'] },
+  { id:'sym-unknown', cat:'state', section:'§iii. Error decoder',
+    title:'I don\'t know what I\'m looking at',
+    preview:'Walk-through to identify your status. Open search.cvc.edu, log in, look at Class Schedule. Match what you see against the labeled list.',
+    tags:['confused','lost','help','dont know','no idea','not sure','what is this','what does this mean','overwhelmed','first time','cant figure out','what should i do'] },
 
-  // Mistakes
-  { id:'m-browser-closed', title:'Closed the browser after paying', section:'§v. Common mistakes',
-    tags:['closed browser','closed window','closed tab','after paying','didnt confirm','tab closed','accidentally closed'] },
-  { id:'m-resubmit', title:'Resubmitted while a status was Pending', section:'§v. Common mistakes',
-    tags:['resubmitted','submitted twice','submitted multiple times','duplicate','tried again','reapplied','two applications'] },
-  { id:'m-drop-first', title:'Dropped the wrong class first, then registered for the right one', section:'§v. Common mistakes',
-    tags:['switch class','wrong class','change class','swap class','dropped first','order mistake','lost both classes'] },
-  { id:'m-paid-oos', title:'Paid the out-of-state tuition because it looked correct', section:'§v. Common mistakes',
-    tags:['paid out of state','overpaid','paid too much','high tuition paid','accidentally paid','paid wrong amount'] },
-  { id:'m-tc-canvas', title:'Tried to find class in the Teaching College\'s Canvas', section:'§v. Common mistakes',
-    tags:['wrong canvas','teaching college canvas','cant log in','login issue','wrong login','two canvas accounts'] },
-  { id:'m-quick-email', title:'Emailed support six hours after a "Pending" status', section:'§v. Common mistakes',
-    tags:['emailed too soon','impatient','just submitted','how long should i wait','support reply','followup'] },
-  { id:'m-cert', title:'Asked CVC about a certificate program or course articulation', section:'§v. Common mistakes',
-    tags:['certificate','articulation','transfer','degree','major','counselor','program planning','will it transfer','assist','assist.org','course transfer','units transfer','degree audit','requirements'] },
-  { id:'m-w', title:'Assumed a "W" was a system bug', section:'§v. Common mistakes',
-    tags:['w grade','withdraw on transcript','transcript w','what is a w','grade w','dropped after deadline'] },
+  // ────────────────────── §v. COMMON MISTAKES ──────────────────────
+  { id:'m-browser-closed', cat:'mistake', section:'§v. Common mistakes',
+    title:'Closed the browser after paying',
+    preview:'Card was charged but Confirm Payment never registered. Don\'t pay again — email support with payment evidence to reconcile.',
+    tags:['closed browser after paying','closed window after pay','closed tab','accidentally closed','tab closed','window closed','navigated away'] },
+  { id:'m-resubmit', cat:'mistake', section:'§v. Common mistakes',
+    title:'Resubmitted while a status was Pending',
+    preview:'Duplicate submissions confuse review and slow it down. Wait for the existing one to resolve before submitting again.',
+    tags:['resubmitted','submitted twice','submitted multiple times','duplicate submission','tried again','reapplied','two applications','submitted again'] },
+  { id:'m-drop-first', cat:'mistake', section:'§v. Common mistakes',
+    title:'Dropped the wrong class first, then registered for the right one',
+    preview:'Order matters. Always register for the new class FIRST (locks the seat), pay, then drop the old. Money does not transfer.',
+    tags:['switch class','swap class','wrong class first','dropped first then registered','change class','swap classes','order mistake','lost both classes','dropped before registering'] },
+  { id:'m-paid-oos', cat:'mistake', section:'§v. Common mistakes',
+    title:'Paid the out-of-state tuition because it looked correct',
+    preview:'In-state is $46/unit. If $400+ for 3 units and you paid, email support with payment evidence. Refunds take weeks.',
+    tags:['paid out of state','overpaid','paid too much','high tuition paid','accidentally paid','paid wrong amount','non-resident tuition','paid hundreds','paid thousand'] },
+  { id:'m-tc-canvas', cat:'mistake', section:'§v. Common mistakes',
+    title:'Tried to find class in the Teaching College\'s Canvas',
+    preview:'Wrong Canvas. Always use Home College\'s Canvas — the trust relationship makes the TC course appear there.',
+    tags:['wrong canvas','teaching college canvas','tc canvas','two canvas accounts','wrong login','cant find class in canvas'] },
+  { id:'m-quick-email', cat:'mistake', section:'§v. Common mistakes',
+    title:'Emailed support six hours after a "Pending" status',
+    preview:'Wait 3-5 business days for normal Pending, 5-7 for non-CCC prereqs. Use the date checker to confirm timing.',
+    tags:['emailed too soon','impatient','just submitted','how long should i wait','followup','too quick to email','hours not days'] },
+  { id:'m-cert', cat:'mistake', section:'§v. Common mistakes',
+    title:'Asked CVC about a certificate program or course articulation',
+    preview:'Wrong channel. Certificates from individual colleges; articulation at assist.org. Both questions go to your HC counselor.',
+    tags:['certificate','certificate program','articulation','transfer','degree','major','counselor','program planning','will it transfer','assist','assist.org','course transfer','units transfer','degree audit','requirements','transfers to ucla'] },
+  { id:'m-w', cat:'mistake', section:'§v. Common mistakes',
+    title:'Assumed a "W" was a system bug',
+    preview:'A "W" on transcript is normal outcome of dropping after no-notation deadline. Doesn\'t affect GPA. Different from a failure.',
+    tags:['w grade','w on transcript','withdraw','transcript w','what is a w','grade w','dropped after deadline','got a w'] },
+  { id:'m-late-register', cat:'mistake', section:'§v. Common mistakes',
+    title:'Tried to register the day class starts',
+    preview:'Exchange registration cuts off the day before add codes are required. After that, apply directly to the TC and use add codes.',
+    tags:['register day of','too late to register','class started','class begins','add codes','no time to register','registration closed','first day of class','too late'] },
+  { id:'m-at-one', cat:'mistake', section:'§v. Common mistakes',
+    title:'Confused a CVC course with an @ONE badge or training',
+    preview:'@ONE is for educators (instructors). Students wanting badges/certificates ask their Home College, not @ONE.',
+    tags:['at one','atone','badge','training','certificate of completion','professional development','online network of educators','one badge','quality review badge','ztc badge'] },
+  { id:'m-cvc-it', cat:'mistake', section:'§v. Common mistakes',
+    title:'Asked CVC to fix a Home College or Canvas login',
+    preview:'Login issues are college IT, not CVC. Try incognito, clear cookies, different browser. Still broken: HC IT helpdesk or CCC Tech Center.',
+    tags:['login issue','cant log in','password not working','sso fails','tech center','college it','canvas login error','trust relationship error','sso error','authentication error'] },
+  { id:'m-aid-direct', cat:'mistake', section:'§v. Common mistakes',
+    title:'Submitted FAFSA expecting CVC to disburse the aid',
+    preview:'Aid disburses from your Home College, not CVC. You pay TC upfront with a card; HC reimburses you per your aid package.',
+    tags:['fafsa expects cvc','aid not coming','no aid yet','aid hasnt come through','financial aid not applied','expected aid coverage','still owe money','aid timing'] },
+  { id:'m-prereq-after', cat:'mistake', section:'§v. Common mistakes',
+    title:'Tried to upload a prereq transcript after the AER form',
+    preview:'Prereq docs go through the AER form during enrollment, not after. If missed, email TC\'s A&R directly with the transcript.',
+    tags:['upload after enrollment','attach transcript later','forgot to upload','missed upload','prereq doc late','transcript after the fact'] },
+  { id:'m-evening-register', cat:'mistake', section:'§v. Common mistakes',
+    title:'Tried to register at 8 PM the night before classes open',
+    preview:'4 PM PST gotcha. Add Class shows but registrations 4 PM-midnight silently fail. Wait until midnight PST.',
+    tags:['register evening before','tried last night','tonight tried','before midnight registered','add class shows but fails','registration window'] },
+  { id:'m-old-hc', cat:'mistake', section:'§v. Common mistakes',
+    title:'Picked an HC where I have an old login but don\'t currently attend',
+    preview:'Wrong HC. Drop and re-cross-enroll with the correct HC — manual changes not supported. Pick the college you actually attend now.',
+    tags:['wrong home college','old college account','no longer attending','old account chose','transferred colleges','left that college','dont attend anymore','old hc'] },
+  { id:'m-multiple-openccc', cat:'mistake', section:'§v. Common mistakes',
+    title:'Created multiple OpenCCC accounts under different emails',
+    preview:'Duplicates trip the SSO system. CCC Tech Center (cccsupport@openccc.net) merges them, not CVC.',
+    tags:['multiple openccc accounts','duplicate accounts','two accounts','three accounts','old account','new account','high school account','college account','different emails'] },
+  { id:'m-tc-autodrop', cat:'mistake', section:'§v. Common mistakes',
+    title:'Got auto-dropped by the TC for non-payment without a notification',
+    preview:'TCs may auto-drop without telling CVC. Pay through TC portal directly if CVC payment failing. Email both immediately if dropped.',
+    tags:['auto-dropped','dropped without telling me','class disappeared','un-enrolled','no longer in class','college dropped me','dropped for non-payment'] },
 
-  // Tasks (how-to)
-  { id:'t-register', title:'Register for a class', section:'§vi. Step-by-step guides',
-    tags:['register','sign up','enroll','how to register','first time','new student','add a class','take a class','start enrolling'] },
-  { id:'t-pay', title:'Pay tuition', section:'§vi. Step-by-step guides',
-    tags:['how to pay','pay tuition','pay fees','make payment','payment instructions','steps to pay','confirm payment'] },
-  { id:'t-drop', title:'Drop or switch a class', section:'§vi. Step-by-step guides',
-    tags:['how to drop','drop class','withdraw','switch class','change class','quit class','remove class','drop deadline'] },
-  { id:'t-canvas', title:'Find your class in Canvas', section:'§vi. Step-by-step guides',
-    tags:['canvas access','login canvas','find class','course link','view course','canvas instructions','how to use canvas','class link missing'] },
-  { id:'t-aid', title:'Use financial aid (CCPG, FAFSA, Pell)', section:'§vi. Step-by-step guides',
-    tags:['financial aid','fafsa','ccpg','pell','promise grant','aid','reimburse','free tuition','grant','financial help','need money','cant afford','ssn','ssn match'] },
-  { id:'t-transcript', title:'Get a transcript', section:'§vi. Step-by-step guides',
-    tags:['transcript','grades','records','official transcript','send transcript','my grades','grade report','final grade'] },
-  { id:'t-eligibility', title:'Eligibility — special cases', section:'§vi. Step-by-step guides',
-    tags:['eligible','eligibility','high school','dual enrollment','f1 visa','international','ab540','adult ed','adult education','dso','restricted','can i enroll'] }
+  // ────────────────────── §vi. STEP-BY-STEP GUIDES ──────────────────────
+  { id:'t-primer', cat:'task', section:'§vi. Step-by-step guides',
+    title:'What is the CVC Exchange? (60-second primer)',
+    preview:'Read this if you\'re new — orientation to home/teaching college, cost, journey. The 5W of cross-enrollment in two minutes.',
+    tags:['what is cvc','what is the exchange','new to cvc','first time','orientation','introduction','overview','how does this work','cvc explained','cross enrollment basics'] },
+  { id:'t-happy-path', cat:'task', section:'§vi. Step-by-step guides',
+    title:'What success looks like at each step',
+    preview:'10-step flow showing what each status means. Match your dashboard against this — if your status is at step 6+, you\'re fine.',
+    tags:['what does each status mean','what should happen','what is normal','what status','timeline','journey','steps','what comes next','phases'] },
+  { id:'t-register', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Register for a class',
+    preview:'5 steps: search, log in via HC, sign consent, fill AER + upload prereqs, submit + pay (Always click Confirm Payment).',
+    tags:['register','sign up','enroll','how to register','first time','new student','add a class','take a class','start enrolling','want to take a class','how do i register'] },
+  { id:'t-pay', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Pay tuition',
+    preview:'Click Pay Fees, enter card on TC payment page, then click Confirm Payment on CVC return page. Don\'t close the browser before Confirm.',
+    tags:['how to pay','pay tuition','pay fees','make payment','payment instructions','steps to pay','confirm payment','where do i pay','payment options'] },
+  { id:'t-drop', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Drop or switch a class',
+    preview:'Order matters. Just dropping: Class Schedule → Drop Course. Switching: register new FIRST, pay, then drop old. Money doesn\'t transfer.',
+    tags:['how to drop','drop class','withdraw','switch class','change class','quit class','remove class','drop deadline','swap classes','dropping','withdrawing'] },
+  { id:'t-canvas', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Find your class in Canvas',
+    preview:'Log in to CVC dashboard, Class Schedule, click course link → opens HC\'s Canvas. View All Courses if not on dashboard. 24-48h after register.',
+    tags:['canvas access','login canvas','find class in canvas','course link','view course','canvas instructions','how to use canvas','class link missing','find canvas'] },
+  { id:'t-aid', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Use financial aid (CCPG, FAFSA, Pell)',
+    preview:'You pay TC upfront; HC reimburses per your aid package. CCPG needs SSN on file at TC. Pell can\'t disburse at TC.',
+    tags:['financial aid','fafsa','ccpg','pell','promise grant','aid','reimburse','free tuition','grant','financial help','need money','cant afford','ssn','ssn match','aid not working'] },
+  { id:'t-transcript', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Get a transcript',
+    preview:'Grades flow back to HC automatically (4-6 weeks). External transcripts: order from the TC that taught the course, not CVC.',
+    tags:['transcript','grades','records','official transcript','send transcript','my grades','grade report','final grade','order transcript','get records','for transfer','transcripts each college'] },
+  { id:'t-eligibility', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Eligibility — special cases',
+    preview:'Basic requirements: 18+, currently enrolled at HC, 2.0 GPA (or none yet), no fees, CA address. Special cases: HS dual, F-1, AB540, Adult Ed.',
+    tags:['eligible','eligibility','can i enroll','high school','dual enrollment','f1 visa','international','ab540','adult ed','adult education','dso','restricted','underage','17 years old','before 18'] },
+
+  // ────────────────────── §ix. DESIGNED LIMITS ──────────────────────
+  { id:'lim-hc-locked', cat:'limit', section:'§ix. Designed limits',
+    title:'Can\'t change Home College after enrolling',
+    preview:'Designed limit. Drop + re-cross-enroll is the only fix. Manual HC changes not supported.',
+    tags:['change home college','wrong home college','update hc','can i change','need different hc'] },
+  { id:'lim-oos-address', cat:'limit', section:'§ix. Designed limits',
+    title:'Out-of-state addresses aren\'t supported in the AER form',
+    preview:'CA address required by design. Limits Good Neighbor + AB540 students without CA address. Update via your HC\'s A&R.',
+    tags:['out of state address','non california address','no ca address','good neighbor','ab540 address','need ca address'] },
+  { id:'lim-2class', cat:'limit', section:'§ix. Designed limits',
+    title:'2-class-per-term limit (cross-district only)',
+    preview:'2-class limit applies across districts only. Doesn\'t apply HC↔HC (within your same district). Need more: work with HC.',
+    tags:['2 class limit','two class limit','class limit','too many classes','third class','cant add another','unit limit','second class','three classes'] },
+  { id:'lim-aid-hc', cat:'limit', section:'§ix. Designed limits',
+    title:'Federal aid only disburses at your Home College',
+    preview:'Pell / FAFSA loans flow through HC only. TC FAFSA data not transferred. CVC courses count toward enrollment status, but disbursement at HC.',
+    tags:['federal aid','pell at tc','fafsa at teaching college','aid disburse','where does aid come from','title iv','no aid at tc'] },
+  { id:'lim-residency', cat:'limit', section:'§ix. Designed limits',
+    title:'Once your residency is validated, you can\'t change it for the term',
+    preview:'HC validation persists. If wrong, fix at HC + manually update TC — no automatic propagation.',
+    tags:['residency wrong','residency validation','residency persists','need to fix residency','wrongly classified','non-resident wrongly','residency status'] },
+  { id:'lim-autodrop', cat:'limit', section:'§ix. Designed limits',
+    title:'TCs can auto-drop you for non-payment without telling CVC',
+    preview:'Pay on time, every time. If CVC payment failing, pay TC portal directly. If dropped, email both immediately.',
+    tags:['auto drop','auto-drop','tc dropped me','dropped without telling me','silent drop','class disappeared','non-payment drop'] },
+  { id:'lim-transcripts', cat:'limit', section:'§ix. Designed limits',
+    title:'Transcripts back to HC aren\'t always automatic for transfer',
+    preview:'Grades flow back to HC automatically; eTranscript to 4-year colleges requires TC manual trigger. Each college does this on their schedule.',
+    tags:['etranscript','transfer transcript','order transcript','transcripts to ucla','transcripts to state','transcript not received','university transcripts','college didnt send'] },
+  { id:'lim-localfees', cat:'limit', section:'§ix. Designed limits',
+    title:'HC↔HC enrollments charge local fees not visible in CVC',
+    preview:'Local fees (parking, etc.) charged by your HC, only visible in HC portal. Pay them there — not optional.',
+    tags:['local fees','hc to hc fees','local district fees','parking fees','student services fee','fees not in cvc','additional fees'] },
+  { id:'lim-yuba', cat:'limit', section:'§ix. Designed limits',
+    title:'Yuba/Woodland blocks HC↔HC entirely',
+    preview:'Yuba CCD blocks HC↔HC cross-enrollment. Apply directly through CCCApply for the other Yuba campus.',
+    tags:['yuba','woodland','yccd','ycd','yuba college','woodland community college','hc to hc blocked','yuba blocks'] }
 ];
+
+// ════════════════════════════════════════════════════════════════════
+// SEARCH — tokenize, light-stem, score with multi-token cohesion, render
+// ════════════════════════════════════════════════════════════════════
+//
+// Scoring philosophy:
+//   1) Title-word matches outweigh tag matches (titles are what students read first)
+//   2) Multiple query tokens hitting the same item compounds (coverage bonus)
+//   3) Light stemming so "register" matches "registration", "drop" matches "dropping"
+//   4) Phrase + bigram + single-token tiers, decreasing weight
+//   5) Category-aware tiebreak: urgent > error > limit > mistake > task
+//   6) Intent detection: urgency words boost urgent items; "how do I" boosts tasks
 
 function tokenize(s) {
   return [...new Set(
@@ -4124,64 +4405,208 @@ function tokenize(s) {
   )];
 }
 
-function scoreItem(query, item) {
+// Light stemming — strip common English suffixes when token is long enough.
+// Conservative: only suffixes that don't change meaning. Used for matching
+// only; original tokens still shown to users.
+function stem(t) {
+  if (!t || t.length <= 4) return t;
+  const suffixes = ['ation', 'tions', 'ings', 'ment', 'ness', 'tion', 'ing', 'ers', 'ies', 'ed', 'es', 'er', 'ly', 's'];
+  for (const suf of suffixes) {
+    if (t.endsWith(suf) && t.length - suf.length >= 3) {
+      const stem = t.slice(0, -suf.length);
+      // Handle "ies" → "y" and "es" after consonant
+      if (suf === 'ies') return stem + 'y';
+      return stem;
+    }
+  }
+  return t;
+}
+
+// Tokens-from-text plus stemmed versions — used when matching against
+// tags and titles to allow forgiving matches.
+function expandTokens(tokens) {
+  const out = new Set();
+  for (const t of tokens) {
+    out.add(t);
+    const s = stem(t);
+    if (s !== t) out.add(s);
+  }
+  return [...out];
+}
+
+function detectIntent(q) {
+  const lc = q.toLowerCase();
+  const intents = { urgency: 0, howto: 0, error: 0, mistake: 0 };
+  if (/(today|tomorrow|tonight|right now|emergency|deadline|asap|urgent|hours)/.test(lc)) intents.urgency = 1;
+  if (/(how do i|how to|how can i|i need to|what are the steps|step by step|instructions)/.test(lc)) intents.howto = 1;
+  if (/(error|failed|wont|cant|won't|can't|doesn't|broken|not working|fail)/.test(lc)) intents.error = 1;
+  if (/(mistake|wrong|shouldn't|did the wrong|by mistake|accident)/.test(lc)) intents.mistake = 1;
+  return intents;
+}
+
+const CAT_PRIORITY = {
+  urgent: 5,
+  'error-stop': 4,
+  'error-act': 3,
+  'error-wait': 3,
+  state: 2,
+  limit: 2,
+  mistake: 1,
+  task: 1
+};
+
+function scoreItem(query, item, intents) {
   const q = query.toLowerCase().trim();
-  if (q.length < 3) return 0;
+  if (q.length < 3) return { score: 0, hits: [] };
 
   const tokens = tokenize(q);
-  if (tokens.length === 0) return 0;
+  if (tokens.length === 0) return { score: 0, hits: [] };
+  const stemTokens = expandTokens(tokens);
 
   const titleLower = item.title.toLowerCase();
-  const tagsJoined = item.tags.join(' | ').toLowerCase();
-  const haystack = titleLower + ' | ' + tagsJoined;
+  const titleWords = titleLower.split(/\s+/);
+  const titleStems = titleWords.map(stem);
+  const tagsLower = item.tags.map(t => t.toLowerCase());
 
   let score = 0;
+  const hits = []; // tags that contributed (for display)
 
-  // full-phrase containment
-  if (haystack.includes(q)) score += 80;
-  if (titleLower.includes(q)) score += 40;
+  // ───── Tier 1: full-phrase containment (highest signal) ─────
+  if (titleLower.includes(q)) score += 100;
+  if (tagsLower.some(t => t === q || t.includes(q))) score += 70;
 
-  // bigrams
+  // ───── Tier 2: bigram matches ─────
   for (let i = 0; i < tokens.length - 1; i++) {
     const bigram = tokens[i] + ' ' + tokens[i + 1];
-    if (haystack.includes(bigram)) score += 22;
-    if (titleLower.includes(bigram)) score += 15;
-  }
-
-  // single-token matches
-  for (const token of tokens) {
-    let tagHit = false;
-    for (const tag of item.tags) {
-      const tagLower = tag.toLowerCase();
-      if (tagLower === token) { score += 18; tagHit = true; break; }
-      if (tagLower.split(/\s+/).includes(token)) { score += 12; tagHit = true; }
-      if (!tagHit && tagLower.includes(token)) { score += 5; }
+    if (titleLower.includes(bigram)) score += 35;
+    for (const tag of tagsLower) {
+      if (tag.includes(bigram)) {
+        score += 22;
+        if (!hits.includes(tag)) hits.push(tag);
+        break;
+      }
     }
-    if (titleLower.split(/\s+/).includes(token)) score += 9;
-    else if (titleLower.includes(token)) score += 4;
   }
 
-  return score;
+  // ───── Tier 3: per-token matches with stemming ─────
+  let tokensThatHit = 0;
+  for (const token of tokens) {
+    const stemTok = stem(token);
+    let tokenHit = false;
+
+    // a) Exact title word match — strongest single-token signal
+    if (titleWords.includes(token) || titleStems.includes(stemTok)) {
+      score += 25;
+      tokenHit = true;
+    } else if (titleLower.includes(token)) {
+      score += 12;
+      tokenHit = true;
+    }
+
+    // b) Tag matches
+    for (const tag of tagsLower) {
+      const tagWords = tag.split(/\s+/);
+      const tagStems = tagWords.map(stem);
+      if (tag === token || tag === stemTok) {
+        score += 22;
+        tokenHit = true;
+        if (!hits.includes(tag)) hits.push(tag);
+        break;
+      }
+      if (tagWords.includes(token) || tagStems.includes(stemTok)) {
+        score += 14;
+        tokenHit = true;
+        if (!hits.includes(tag)) hits.push(tag);
+      } else if (tag.includes(token)) {
+        score += 5;
+        tokenHit = true;
+        if (!hits.includes(tag)) hits.push(tag);
+      }
+    }
+
+    if (tokenHit) tokensThatHit++;
+  }
+
+  // ───── Tier 4: coverage bonus (most tokens hit somewhere) ─────
+  if (tokens.length > 1) {
+    const coverage = tokensThatHit / tokens.length;
+    if (coverage >= 1) score += 25;
+    else if (coverage >= 0.66) score += 12;
+    else if (coverage >= 0.5) score += 5;
+  } else if (tokensThatHit === 1) {
+    // single-token query that matched — small bonus to avoid weak hits dominating
+    score += 3;
+  }
+
+  // ───── Tier 5: category + intent boost ─────
+  if (item.cat) {
+    const baseCat = item.cat.split('-')[0];
+    if (intents.urgency && (item.cat === 'urgent' || item.cat === 'error-stop')) score += 15;
+    if (intents.howto && item.cat === 'task') score += 10;
+    if (intents.error && item.cat.startsWith('error')) score += 8;
+    if (intents.mistake && item.cat === 'mistake') score += 10;
+  }
+
+  return { score, hits: hits.slice(0, 3) };
 }
 
 function findMatches(query) {
+  const intents = detectIntent(query);
   const ranked = CORPUS
-    .map(item => ({ item, score: scoreItem(query, item) }))
-    .filter(x => x.score > 0)
-    .sort((a, b) => b.score - a.score);
-  return ranked.slice(0, 4);
+    .map(item => {
+      const r = scoreItem(query, item, intents);
+      return { item, score: r.score, hits: r.hits };
+    })
+    .filter(x => x.score > 4) // filter very weak matches
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      // tiebreak by category priority
+      const ap = CAT_PRIORITY[a.item.cat] || 0;
+      const bp = CAT_PRIORITY[b.item.cat] || 0;
+      return bp - ap;
+    });
+  return ranked.slice(0, 5);
+}
+
+// ───── highlight matched terms in text via <mark> ─────
+function highlightTerms(text, tokens) {
+  if (!tokens || tokens.length === 0) return escapeHtml(text);
+  let html = escapeHtml(text);
+  // build alternation regex of tokens (longest first, escape regex chars)
+  const sorted = [...tokens].filter(t => t.length >= 2).sort((a, b) => b.length - a.length);
+  const escaped = sorted.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  if (escaped.length === 0) return html;
+  const re = new RegExp('(' + escaped.join('|') + ')', 'gi');
+  return html.replace(re, '<mark>$1</mark>');
+}
+function escapeHtml(s) {
+  return (s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+}
+
+function confidenceLabel(score) {
+  if (score >= 70) return { dots:'●●●', label:'strong match', cls:'conf-strong' };
+  if (score >= 35) return { dots:'●●○', label:'likely match', cls:'conf-medium' };
+  return { dots:'●○○', label:'possible', cls:'conf-low' };
 }
 
 function renderResults(results, query) {
   const wrap = document.getElementById('find-results');
-  if (!query.trim() || query.trim().length < 3) {
+  const qTrim = query.trim();
+
+  // empty query: clear
+  if (!qTrim) {
     wrap.classList.remove('show');
-    wrap.innerHTML = query.trim().length > 0 && query.trim().length < 3
-      ? '<div class="find-empty"><span data-en>Keep typing — at least 3 characters.</span><span data-es>Sigue escribiendo — al menos 3 caracteres.</span></div>'
-      : '';
-    if (query.trim().length > 0 && query.trim().length < 3) wrap.classList.add('show');
+    wrap.innerHTML = '';
     return;
   }
+  // 1-2 chars: encouraging hint
+  if (qTrim.length < 3) {
+    wrap.classList.add('show');
+    wrap.innerHTML = '<div class="find-empty"><span data-en>Keep typing — at least 3 characters.</span><span data-es>Sigue escribiendo — al menos 3 caracteres.</span></div>';
+    if (typeof applyLang === 'function') applyLang();
+    return;
+  }
+  // No match
   if (results.length === 0) {
     wrap.classList.add('show');
     wrap.innerHTML = `<div class="find-empty">
@@ -4197,29 +4622,47 @@ function renderResults(results, query) {
     if (typeof applyLang === 'function') applyLang();
     return;
   }
-  const labels = ['i.','ii.','iii.','iv.'];
-  const tokens = tokenize(query);
+
+  const tokens = tokenize(qTrim);
+  const stemmedTokens = expandTokens(tokens);
   wrap.classList.add('show');
-  wrap.innerHTML =
-    `<div class="find-results-label"><span data-en>Sounds like you mean —</span><span data-es>Parece que te refieres a —</span></div>` +
-    results.map((r, i) => {
-      // find which tags or words matched
-      const matchedTags = r.item.tags.filter(tag =>
-        tokens.some(tok => tag.toLowerCase().includes(tok))
-      ).slice(0, 3);
-      const matchInfo = matchedTags.length
-        ? `<span class="find-match"><span data-en>matched: </span><span data-es>coincide: </span>${matchedTags.map(m => `<em>"${m}"</em>`).join(', ')}</span>`
-        : '';
-      return `<a class="find-result" href="#${r.item.id}" data-result-id="${r.item.id}">
-         <div class="find-result-rank">${labels[i]}</div>
-         <div class="find-result-body">
-           <div class="find-result-title">${r.item.title}</div>
-           <span class="find-result-section">${r.item.section}</span>
-           ${matchInfo}
-         </div>
-         <div class="find-result-arrow">→</div>
-       </a>`;
+
+  const top = results[0];
+  const others = results.slice(1);
+  const topConf = confidenceLabel(top.score);
+
+  // Top result — full card
+  let html = `<div class="find-results-label"><span data-en>Best match for "${escapeHtml(qTrim)}"</span><span data-es>Mejor coincidencia para "${escapeHtml(qTrim)}"</span></div>`;
+  html += `<a class="find-result find-result-top" href="#${top.item.id}" data-result-id="${top.item.id}">
+    <div class="find-result-confidence ${topConf.cls}" title="${topConf.label}">${topConf.dots}</div>
+    <div class="find-result-body">
+      <div class="find-result-title">${highlightTerms(top.item.title, stemmedTokens)}</div>
+      ${top.item.preview ? `<div class="find-result-preview">${highlightTerms(top.item.preview, stemmedTokens)}</div>` : ''}
+      <div class="find-result-meta">
+        <span class="find-result-section">${escapeHtml(top.item.section)}</span>
+        ${top.hits.length ? `<span class="find-result-tags">· matched <em>${top.hits.map(h => '"' + escapeHtml(h) + '"').join(', ')}</em></span>` : ''}
+      </div>
+    </div>
+    <div class="find-result-arrow">→</div>
+  </a>`;
+
+  // Other results — compact list
+  if (others.length > 0) {
+    html += `<div class="find-results-also"><span data-en>Also relevant —</span><span data-es>También relevante —</span></div>`;
+    html += others.map(r => {
+      const conf = confidenceLabel(r.score);
+      return `<a class="find-result find-result-other" href="#${r.item.id}" data-result-id="${r.item.id}">
+        <div class="find-result-confidence ${conf.cls}" title="${conf.label}">${conf.dots}</div>
+        <div class="find-result-body">
+          <div class="find-result-title">${highlightTerms(r.item.title, stemmedTokens)}</div>
+          <div class="find-result-meta"><span class="find-result-section">${escapeHtml(r.item.section)}</span></div>
+        </div>
+        <div class="find-result-arrow">→</div>
+      </a>`;
     }).join('');
+  }
+
+  wrap.innerHTML = html;
   if (typeof applyLang === 'function') applyLang();
 }
 
