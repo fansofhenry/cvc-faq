@@ -1401,11 +1401,13 @@ aside.aside strong {
   font-weight: 600;
   font-size: 16px;
   display: inline-block;
-  animation: nudge 1.8s ease-in-out infinite;
+  /* one-time gentle nudge on first paint, then still */
+  animation: nudge-once 2.4s ease-in-out 1;
 }
-@keyframes nudge {
+@keyframes nudge-once {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(3px); }
+  20%, 50% { transform: translateY(3px); }
+  35%, 65% { transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
   .find-label-arrow { animation: none; }
@@ -1420,7 +1422,7 @@ aside.aside strong {
   background: var(--paper-deep);
   border: 1.5px solid var(--ink-soft);
   border-radius: 4px;
-  padding: 16px 18px;
+  padding: 16px 64px 16px 18px;  /* right padding reserved for mic button */
   color: var(--ink);
   resize: vertical;
   min-height: 96px;
@@ -1445,7 +1447,7 @@ aside.aside strong {
   flex-wrap: wrap;
   align-items: baseline;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 .find-examples-label {
   font-family: var(--serif-display);
@@ -1454,23 +1456,33 @@ aside.aside strong {
   font-size: 14px;
   color: var(--ink-faint);
   margin-right: 4px;
+  width: 100%;        /* on narrow screens, label sits on its own line */
+  margin-bottom: -2px;
+}
+@media (min-width: 600px) {
+  .find-examples-label { width: auto; margin-bottom: 0; }
 }
 .find-example {
   font-family: var(--serif-body);
   font-size: 14px;
   font-variation-settings: "opsz" 14;
-  background: transparent;
+  background: var(--paper);
   border: 1px solid var(--rule);
-  border-radius: 18px;
-  padding: 6px 14px;
+  border-radius: 20px;
+  padding: 8px 16px;       /* bigger touch target */
+  min-height: 36px;        /* min recommended touch target */
   color: var(--ink-soft);
   cursor: pointer;
   transition: all 0.15s ease;
+  line-height: 1.3;
 }
 .find-example:hover {
   border-color: var(--claret);
   color: var(--claret);
   background: var(--claret-wash);
+}
+.find-example:active {
+  transform: scale(0.98);
 }
 .find-example:focus-visible {
   outline: 2px solid var(--claret);
@@ -1562,6 +1574,42 @@ aside.aside strong {
 .find-empty a {
   color: var(--claret);
   border-bottom: 1px solid var(--claret-pale);
+}
+.find-empty strong {
+  display: block;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 18, "SOFT" 80;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.find-empty-list {
+  list-style: none;
+  margin: 10px 0 12px;
+  padding: 0;
+}
+.find-empty-list li {
+  padding: 6px 0 6px 22px;
+  position: relative;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  font-style: normal;
+  font-family: var(--serif-body);
+}
+.find-empty-list li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--claret);
+  font-family: var(--serif-display);
+}
+.find-empty-foot {
+  margin: 8px 0 0;
+  padding-top: 10px;
+  border-top: 1px dashed var(--rule-soft);
+  font-style: italic;
+  color: var(--ink-faint);
 }
 
 /* —————— table of contents —————— */
@@ -1748,26 +1796,65 @@ html[lang="es"] div[data-es] { display: block; }
 /* —————— urgency prompt under search —————— */
 
 .urgency-prompt {
-  display: inline-flex;
+  display: flex;
   align-items: baseline;
   gap: 8px;
-  margin-top: 14px;
-  padding: 4px 0;
+  margin: 16px 0 0;
+  padding: 10px 14px;
+  background: var(--paper-deep);
+  border-left: 3px solid var(--claret);
+  border-radius: 0 4px 4px 0;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 15, "SOFT" 80;
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  flex-wrap: wrap;
+}
+.urgency-prompt a {
+  color: var(--claret);
+  border-bottom: 1px solid var(--claret-pale);
+  padding-bottom: 1px;
+  font-style: italic;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.urgency-prompt a:hover {
+  border-bottom-color: var(--claret);
+  color: var(--claret-deep);
+}
+
+/* —————— after-hours contextual banner —————— */
+
+.after-hours-banner {
+  display: none;
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  background: var(--paper-deep);
+  border-left: 3px solid var(--moss);
+  border-radius: 0 4px 4px 0;
   font-family: var(--serif-display);
   font-style: italic;
   font-variation-settings: "opsz" 14, "SOFT" 80;
   font-size: 14px;
   color: var(--ink-soft);
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: baseline;
 }
-.urgency-prompt a {
-  color: var(--alert);
-  border-bottom: 1px solid var(--alert);
+.after-hours-banner.show { display: flex; }
+.after-hours-banner a {
+  color: var(--moss);
+  border-bottom: 1px solid var(--moss-pale);
   padding-bottom: 1px;
-  font-style: italic;
   font-weight: 500;
+  white-space: nowrap;
 }
-.urgency-prompt a:hover {
-  background: var(--claret-wash);
+.after-hours-banner a:hover { color: var(--ink); border-bottom-color: var(--moss); }
+.after-hours-banner strong {
+  font-style: normal;
+  color: var(--ink);
+  font-variation-settings: "opsz" 14, "wght" 600;
 }
 
 /* —————— keyboard shortcut hint —————— */
@@ -1783,6 +1870,10 @@ html[lang="es"] div[data-es] { display: block; }
   border-radius: 4px;
   color: var(--ink-faint);
   vertical-align: middle;
+}
+/* hide keyboard hint on touch devices where '/' is meaningless */
+@media (hover: none) and (pointer: coarse) {
+  .kbd-hint { display: none; }
 }
 
 /* —————— search result snippets / matched tags —————— */
@@ -2010,6 +2101,26 @@ article.mistake .copy-link {
 /* hide outline in print */
 @media print { .outline { display: none !important; } }
 
+/* —————— skip link (keyboard accessibility) —————— */
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--claret);
+  color: var(--paper);
+  padding: 12px 24px;
+  z-index: 200;
+  text-decoration: none;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 14px;
+  border-radius: 0 0 6px 6px;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 0; outline: 2px solid var(--paper); outline-offset: -4px; }
+
 /* —————— print stylesheet —————— */
 
 @media print {
@@ -2031,6 +2142,8 @@ article.mistake .copy-link {
 </style>
 </head>
 <body>
+
+<a class="skip-link" href="#find"><span data-en>Skip to search</span><span data-es>Ir a búsqueda</span></a>
 
 <div class="grain" aria-hidden="true"></div>
 <a class="urgent-marker" href="#urgent">Urgent?</a>
@@ -2103,6 +2216,23 @@ article.mistake .copy-link {
     <button class="find-mic" id="find-mic" type="button" aria-label="Speak your question" title="Tap to speak">🎤</button>
   </div>
 
+  <p class="urgency-prompt">
+    <span data-en>Class start or drop deadline within 48 hours?</span>
+    <span data-es>¿Empieza tu clase o vence el plazo de cancelación en 48 horas?</span>
+    <a href="#urgent">
+      <span data-en>Skip to urgent →</span><span data-es>Ir a urgente →</span>
+    </a>
+  </p>
+
+  <p class="after-hours-banner" id="after-hours-banner">
+    <strong><span data-en>Heads up —</span><span data-es>Aviso —</span></strong>
+    <span data-en>support is closed right now (Mon–Fri, 8 AM–5 PM PT). If a deadline is approaching,</span>
+    <span data-es>soporte está cerrado ahora (Lun–Vie, 8 AM–5 PM PT). Si un plazo se acerca,</span>
+    <a href="#urgent-after-hours">
+      <span data-en>see the after-hours plan →</span><span data-es>consulta el plan fuera de horario →</span>
+    </a>
+  </p>
+
   <div class="find-examples">
     <span class="find-examples-label">
       <span data-en>Or tap an example:</span><span data-es>O toca un ejemplo:</span>
@@ -2120,14 +2250,6 @@ article.mistake .copy-link {
       <span data-en>"Financial aid issues"</span><span data-es>"Problemas con ayuda financiera"</span>
     </button>
   </div>
-
-  <p class="urgency-prompt">
-    <span data-en>Class start or drop deadline within 48 hours?</span>
-    <span data-es>¿Empieza tu clase o vence el plazo de cancelación en 48 horas?</span>
-    <a href="#urgent">
-      <span data-en>Skip to urgent →</span><span data-es>Ir a urgente →</span>
-    </a>
-  </p>
 
   <div class="find-results" id="find-results"></div>
 </section>
@@ -3344,6 +3466,7 @@ article.mistake .copy-link {
   </div>
   <div class="colophon-block" style="text-align: right;">
     <em>The Student Companion,</em> Vol. I, 2026.<br>
+    <span data-en>Last updated</span><span data-es>Última actualización</span> <time id="last-updated" datetime="2026-04-26">April 26, 2026</time>.<br>
     Set in Fraunces &amp; Newsreader.
   </div>
 </footer>
@@ -3623,7 +3746,16 @@ function renderResults(results, query) {
   }
   if (results.length === 0) {
     wrap.classList.add('show');
-    wrap.innerHTML = `<div class="find-empty"><span data-en>No close match. Try the <a href="#symptoms">symptom picker</a> below, or browse the <a href="#errors">error decoder</a>.</span><span data-es>Sin coincidencias. Prueba el <a href="#symptoms">selector de síntomas</a> abajo, o consulta el <a href="#errors">descifrador de errores</a>.</span></div>`;
+    wrap.innerHTML = `<div class="find-empty">
+      <strong><span data-en>No close match for that.</span><span data-es>Sin coincidencia exacta.</span></strong>
+      <span data-en> Three things to try:</span><span data-es> Tres cosas que puedes intentar:</span>
+      <ul class="find-empty-list">
+        <li><span data-en>Use the <strong>exact error message</strong> you see (e.g. "Drop Failed", "Course Filled")</span><span data-es>Usa el <strong>mensaje de error exacto</strong> que ves (ej. "Drop Failed", "Course Filled")</span></li>
+        <li><span data-en>Or pick from the <a href="#symptoms">symptom picker</a> below</span><span data-es>O elige del <a href="#symptoms">selector de síntomas</a> abajo</span></li>
+        <li><span data-en>Or browse the full <a href="#errors">error decoder</a> for known statuses</span><span data-es>O consulta el <a href="#errors">descifrador de errores</a> completo</span></li>
+      </ul>
+      <p class="find-empty-foot"><span data-en>Still stuck? Email support using the <a href="#email">ticket builder</a>.</span><span data-es>¿Aún sin respuesta? Envía un correo usando el <a href="#email">generador de tickets</a>.</span></p>
+    </div>`;
     if (typeof applyLang === 'function') applyLang();
     return;
   }
@@ -3932,8 +4064,37 @@ if ('IntersectionObserver' in window) {
 }
 
 // ════════════════════════════════════════════════════════════════════
-// LEFT-SIDEBAR OUTLINE — scroll-spy highlights active section
+// TIME-OF-DAY AWARENESS — show after-hours banner if support is closed
 // ════════════════════════════════════════════════════════════════════
+//
+// Computes Pacific Time regardless of student's timezone.
+// Support hours: Monday–Friday, 8 AM – 5 PM PT (approximate).
+//
+(function checkAfterHours() {
+  const banner = document.getElementById('after-hours-banner');
+  if (!banner) return;
+  try {
+    // Get current PT hour and weekday using Intl
+    const fmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Los_Angeles',
+      hour: 'numeric',
+      hour12: false,
+      weekday: 'short'
+    });
+    const parts = fmt.formatToParts(new Date());
+    const hour = parseInt(parts.find(p => p.type === 'hour').value, 10);
+    const weekday = parts.find(p => p.type === 'weekday').value;
+    const isWeekday = ['Mon','Tue','Wed','Thu','Fri'].includes(weekday);
+    const isOpen = isWeekday && hour >= 8 && hour < 17;
+    if (!isOpen) banner.classList.add('show');
+  } catch (e) {
+    // fall back to local time if Intl fails
+    const now = new Date();
+    const day = now.getDay();
+    const hour = now.getHours();
+    if (!(day >= 1 && day <= 5 && hour >= 8 && hour < 17)) banner.classList.add('show');
+  }
+})();
 
 (function initOutline() {
   if (!('IntersectionObserver' in window)) return;
@@ -3991,6 +4152,16 @@ function applyLang() {
   if (findInput) {
     const ph = findInput.dataset['placeholder' + (lang === 'es' ? 'Es' : 'En')];
     if (ph) findInput.setAttribute('placeholder', ph);
+  }
+  // Localize the last-updated date
+  const upd = document.getElementById('last-updated');
+  if (upd && upd.dateTime) {
+    try {
+      const d = new Date(upd.dateTime + 'T12:00:00');
+      upd.textContent = d.toLocaleDateString(lang === 'es' ? 'es-ES' : 'en-US', {
+        year: 'numeric', month: 'long', day: 'numeric'
+      });
+    } catch (e) {}
   }
 }
 function setLang(lang) {
