@@ -2160,6 +2160,7 @@ article.mistake .copy-link {
     <li><a href="#tasks" data-watch="tasks"><span class="outline-num">vi.</span><span><span data-en>How-to guides</span><span data-es>Guías</span></span></a></li>
     <li><a href="#email" data-watch="email"><span class="outline-num">vii.</span><span><span data-en>Email support?</span><span data-es>¿Email?</span></span></a></li>
     <li><a href="#glossary" data-watch="glossary"><span class="outline-num">viii.</span><span><span data-en>Glossary</span><span data-es>Glosario</span></span></a></li>
+    <li><a href="#limits" data-watch="limits"><span class="outline-num">ix.</span><span><span data-en>Designed limits</span><span data-es>Límites de diseño</span></span></a></li>
   </ol>
 </nav>
 
@@ -2270,6 +2271,7 @@ article.mistake .copy-link {
     <li><a href="#tasks"><span class="toc-num">vi.</span><span class="toc-name">Step-by-step guides</span><span class="toc-arrow">→</span></a></li>
     <li><a href="#email"><span class="toc-num">vii.</span><span class="toc-name">Should I email support?</span><span class="toc-arrow">→</span></a></li>
     <li><a href="#glossary"><span class="toc-num">viii.</span><span class="toc-name">A small glossary</span><span class="toc-arrow">→</span></a></li>
+    <li><a href="#limits"><span class="toc-num">ix.</span><span class="toc-name">Designed limits</span><span class="toc-arrow">→</span></a></li>
   </ol>
 </nav>
 
@@ -2761,6 +2763,84 @@ article.mistake .copy-link {
       </div>
     </details>
 
+    <details class="entry" id="err-cccid">
+      <summary>
+        <div class="entry-msg">"Invalid CCCID" / "CCCID not found" at registration</div>
+        <div class="entry-tag act icon-plus">SSO config issue</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What it means</div>
+          <div class="entry-cell-v">Your Home College's login system isn't passing your CCCID through to CVC during single-sign-on. Without the CCCID, the Teaching College has no way to identify you and the registration is rejected.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Why it happens</div>
+          <div class="entry-cell-v">Three common causes: (i) you have a CCCID at OpenCCC but your Home College's IT didn't link it in their system; (ii) you have <em>multiple</em> OpenCCC accounts under different emails — the system can't tell which is "you"; (iii) you're a brand-new student whose CCCID hasn't migrated to the HC's records yet.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">First step (5 minutes)</div>
+          <div class="entry-cell-v">Go to <a href="https://www.opencccapply.net" target="_blank">openccc.net</a>, sign in or recover your account, and confirm your CCCID. Verify it matches what your Home College shows on your student portal.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If they don't match</div>
+          <div class="entry-cell-v">Contact your <strong>Home College's A&amp;R office</strong> (not CVC, not Tech Center) and ask them to update your CCCID in their student record. CVC can't update HC records.</div>
+        </div>
+        <div class="entry-action"><strong>Real talk —</strong> this is the #1 root cause of unsolvable cross-enrollment failures. There's no streamlined fix from the CVC side; it requires the HC to align your record. If your HC isn't responsive, an alternative is to apply directly to the Teaching College via <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a> while the HC sorts itself out.</div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-wrong-hc">
+      <summary>
+        <div class="entry-msg">I selected the wrong Home College at signup</div>
+        <div class="entry-tag stop icon-plus">drop + re-enroll</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What this is</div>
+          <div class="entry-cell-v">When you first cross-enrolled, you picked a Home College where you have a login (maybe an old account) but it's not where you currently attend. The cross-enrollment goes through, but downstream things break: financial aid emails go to the wrong place, transcripts may route to the wrong institution, MIS reporting at the TC may be off.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Can it be changed?</div>
+          <div class="entry-cell-v"><strong>No — manually changing the Home College after the fact is not supported.</strong> The system's verification and authentication paths weren't designed for that, and a back-end change creates more problems than it solves.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">The fix</div>
+          <div class="entry-cell-v"><strong>Drop the cross-enrolled course and re-enroll, this time selecting the correct Home College.</strong> Yes, you'll need to pay again and wait for a refund on the original. Yes, this is annoying. There's no shortcut.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Already finished the class?</div>
+          <div class="entry-cell-v">Email CVC support — late-stage HC corrections are rare and case-by-case. They may need to escalate internally.</div>
+        </div>
+        <div class="entry-action"><strong>Don't keep cross-enrolling under the wrong HC</strong> hoping it sorts itself out. It won't. The longer the wrong HC is on your record, the messier downstream gets.</div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-window">
+      <summary>
+        <div class="entry-msg">"Add Class" appears but registration fails — and it's evening</div>
+        <div class="entry-tag wait icon-plus">wait until midnight PST</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What it means</div>
+          <div class="entry-cell-v">There's a quirk in the timing of when the registration window opens. The "Add Class" button appears at <strong>4 PM PST the day before</strong> open enrollment — but registrations submitted between 4 PM PST and midnight PST will <strong>silently fail</strong>. The system is technically open at midnight in the system's clock, not at 4 PM in yours.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">When this hits you</div>
+          <div class="entry-cell-v">You're trying to register the evening before classes open at your Teaching College. You see "Add Class," click it, fill out the form — and get a generic error or stuck state.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">The fix</div>
+          <div class="entry-cell-v"><strong>Wait until after midnight Pacific Time</strong> on the open-enrollment date and try again. Don't keep retrying in the meantime — the failed attempts can leave artifacts that complicate the next try.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">When to email support</div>
+          <div class="entry-cell-v">If you tried after midnight PST and it still fails. Otherwise this resolves itself in a few hours.</div>
+        </div>
+        <div class="entry-action"><strong>Tell your friends —</strong> this gotcha is real and unfixed. If you know the open date, register Day 1 morning, not Day 0 evening.</div>
+      </div>
+    </details>
+
     <details class="entry" id="err-corequisite">
       <summary>
         <div class="entry-msg">Co-requisite lab error: "prerequisite not met"</div>
@@ -3108,6 +3188,34 @@ article.mistake .copy-link {
       <div>
         <h3 class="mistake-title">Tried to upload a prereq transcript after the AER form was submitted</h3>
         <p class="mistake-fix"><strong>Fix —</strong> prereq documents go through the <strong>AER form during enrollment</strong>, not as a separate upload after. If you missed the upload step, the Teaching College's A&amp;R office may accept a follow-up email with the transcript attached — but you'll need to contact them directly. CVC support can't add documents to a TC's record.</p>
+      </div>
+    </article>
+
+    <article class="mistake" id="m-evening-register">
+      <div>
+        <h3 class="mistake-title">Tried to register at 8 PM the night before classes open</h3>
+        <p class="mistake-fix"><strong>Fix —</strong> the "Add Class" button appears at <strong>4 PM PST the day before</strong> registration opens — but registrations submitted between 4 PM and midnight PST silently fail. The system uses the date in its own clock, not yours. <a href="#err-window">See §iii. window gotcha</a>. <strong>Wait until after midnight Pacific Time.</strong></p>
+      </div>
+    </article>
+
+    <article class="mistake" id="m-old-hc">
+      <div>
+        <h3 class="mistake-title">Picked an HC where I have an old login but don't currently attend</h3>
+        <p class="mistake-fix"><strong>Fix —</strong> the system defines "Home College" as <em>"wherever you can authenticate"</em> — not where you're matriculated. Pick where you currently attend. If you've already enrolled under the wrong HC, the only fix is to <strong>drop and re-cross-enroll</strong> with the correct HC. <a href="#err-wrong-hc">See §iii. wrong HC</a>. Manual changes are not supported.</p>
+      </div>
+    </article>
+
+    <article class="mistake" id="m-multiple-openccc">
+      <div>
+        <h3 class="mistake-title">Created multiple OpenCCC accounts under different emails</h3>
+        <p class="mistake-fix"><strong>Fix —</strong> if you created an OpenCCC account in high school, then again when you started college, then again under a different email — those duplicates trip the SSO system. Identify which CCCID your <strong>current Home College</strong> has on file (check their portal), then go to OpenCCC and recover or close the duplicate accounts. The CCC Tech Center (cccsupport@openccc.net) is the team that merges them — not CVC.</p>
+      </div>
+    </article>
+
+    <article class="mistake" id="m-tc-autodrop">
+      <div>
+        <h3 class="mistake-title">Got auto-dropped by the TC for non-payment without a notification</h3>
+        <p class="mistake-fix"><strong>Fix —</strong> Teaching Colleges may auto-drop you for non-payment, and CVC isn't always notified when they do. <strong>Always pay through CVC at registration.</strong> If your CVC payment is failing, pay through the Teaching College's portal directly while CVC support sorts it out — the TC's clock is what matters. <a href="#sym-paid">See §iii. paid but unpaid</a> for the most common cause.</p>
       </div>
     </article>
   </div>
@@ -3577,7 +3685,192 @@ article.mistake .copy-link {
     <div class="gloss"><dt class="gloss-term">Records Research (Parchment hold)</dt><dd class="gloss-def">When a transcript request can't be matched to a record at the Teaching College — almost always a name spelling mismatch. Order will sit in "Records Research" until you re-submit with the exact name on file at the TC.</dd></div>
     <div class="gloss"><dt class="gloss-term">Hold (Teaching College)</dt><dd class="gloss-def">An account flag on the TC's side that blocks registration changes (most often blocks <em>drops</em>). Often financial (unpaid fees), sometimes registration-related. Banner-based colleges hit this pattern most. Clear with the TC's A&amp;R office or cashier.</dd></div>
     <div class="gloss"><dt class="gloss-term">Parchment</dt><dd class="gloss-def">The vendor that runs the CVC Exchange's student-facing UI <em>and</em> the front-line support email queue. When you email <a href="mailto:cvc.customersupport@parchment.com">cvc.customersupport@parchment.com</a>, Parchment's team replies first. They escalate to CVC staff for back-end actions.</dd></div>
+    <div class="gloss"><dt class="gloss-term">SSO Proxy</dt><dd class="gloss-def">The single-sign-on layer between your Home College and CVC. When your HC's login system passes your CCCID through correctly, you authenticate seamlessly. When it doesn't, you hit the "Proxy Trap" — get redirected to OpenCCC to recover or create your account.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Multiple-measures placement</dt><dd class="gloss-def">When a counselor (typically at your Home College) has cleared you into a course based on your overall academic record rather than a specific completed prereq. Your CVC dashboard may show "Eligible and Approved — Skipped home and teaching approvals." That's normal — not a problem.</dd></div>
+    <div class="gloss"><dt class="gloss-term">eTranscript</dt><dd class="gloss-def">An electronic transcript send from one college to another. After your CVC class ends, the Teaching College must <em>manually trigger</em> an eTranscript send to your Home College's records system. Allow 4–6 weeks; if grades aren't visible after that, contact the TC's A&amp;R office directly to nudge.</dd></div>
+    <div class="gloss"><dt class="gloss-term">BatchApplication</dt><dd class="gloss-def">The internal record CVC creates when you start an enrollment. It tracks which step you're on (Created → Consent Given → AER Submitted → Eligible and Approved → Registered → Validated). When admin staff look up your case, they're reading your BatchApplication's state.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Phase 0 / Phase 1 / Phase 2</dt><dd class="gloss-def">CVC's implementation phases for each college. <strong>Phase 0</strong> = listed as a Home College (you can authenticate from there); <strong>Phase 1</strong> = catalog visible (you can see their courses in Course Finder); <strong>Phase 2</strong> = live as a Teaching College (you can actually cross-enroll). Some colleges are Phase 1 only — you can browse but not register through CVC.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Open enrollment date gate</dt><dd class="gloss-def">Each Teaching College sets its own date when CVC cross-enrollment opens. The "Add Class" button appears at <strong>4 PM PST the day before</strong> that date — but registrations between 4 PM PST and midnight PST will fail. Wait until midnight PST on the open date. <a href="#err-window">See §iii. window gotcha</a>.</dd></div>
   </dl>
+</section>
+
+<!-- ═══════════════════════════════ IX. DESIGNED LIMITS ═══════════════════════════════ -->
+
+<section class="section" id="limits">
+  <div class="section-head">
+    <div class="section-num">ix.</div>
+    <div>
+      <h2 class="section-title"><em>Designed</em> limits — what the system can't do, by design</h2>
+      <p class="section-dek">Some things that look like bugs are actually intentional limits. Knowing the difference saves you from filing tickets that have no fix — and helps you plan around the real boundaries instead of fighting them.</p>
+    </div>
+  </div>
+
+  <div class="entries">
+
+    <details class="entry">
+      <summary>
+        <div class="entry-msg">You can't change your Home College after enrolling</div>
+        <div class="entry-tag stop icon-plus">drop + re-enroll required</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Why this is a designed limit</div>
+          <div class="entry-cell-v">The system's verification path links your CCCID to your selected Home College at enrollment time. Re-mapping that mid-stream creates more problems than it solves (financial aid emails, transcripts, MIS reporting all anchor on the original choice).</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If you got the wrong one</div>
+          <div class="entry-cell-v">Drop the cross-enrolled course → re-cross-enroll with the correct HC → request a refund on the original (refunds take 2–6 weeks). Annoying, but the only path. <a href="#err-wrong-hc">See §iii.</a></div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry">
+      <summary>
+        <div class="entry-msg">Out-of-state addresses aren't supported in the AER form</div>
+        <div class="entry-tag stop icon-plus">no workaround</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Why this matters</div>
+          <div class="entry-cell-v">The Authorization to Enroll form requires a California address. This was a deliberate design choice tied to residency verification, but it limits Good Neighbor (border-state) and AB540 students who may not have a CA address on file.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If this affects you</div>
+          <div class="entry-cell-v">Talk to your Home College's A&amp;R about updating your address record — some students can update to a CA address used for school correspondence. There's no way to skip this requirement at the CVC level.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry">
+      <summary>
+        <div class="entry-msg">2-class-per-term limit (cross-district only)</div>
+        <div class="entry-tag normal icon-plus">good to know</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">The rule</div>
+          <div class="entry-cell-v">The CVC Exchange limits you to <strong>2 classes per term across districts.</strong> If you hit the limit and see a UI error, that's the system enforcing it — not a bug.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Important nuance</div>
+          <div class="entry-cell-v"><strong>The limit does NOT apply to HC↔HC enrollments</strong> (taking a class at another college within your same district). So if you're at one campus of a multi-campus district and want a class at the other campus, the 2-class limit doesn't apply.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Need more than 2?</div>
+          <div class="entry-cell-v">Work with your Home College — they can authorize an exception in some cases. Or apply directly to the additional Teaching Colleges outside the Exchange via <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a>.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry">
+      <summary>
+        <div class="entry-msg">Federal aid (Pell, FAFSA loans) only disburses at your Home College</div>
+        <div class="entry-tag normal icon-plus">structural rule</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Why</div>
+          <div class="entry-cell-v">Title IV federal aid is administered at the institution that admitted you — your Home College. The Teaching College places you in a non-Title IV "shell" program for cross-enrollment. Federal aid can't be disbursed there.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What this means in practice</div>
+          <div class="entry-cell-v">CVC courses count toward your enrollment status for aid purposes. The aid still comes from your Home College's financial aid office. You pay the Teaching College upfront with a card; the HC reimburses you per your aid package. The TC's FAFSA data is not transferred, and your TC units don't write back to your HC's aid system automatically.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry">
+      <summary>
+        <div class="entry-msg">Once your residency is validated, you can't change it for the term</div>
+        <div class="entry-tag normal icon-plus">manual fix at HC + TC</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">The rule</div>
+          <div class="entry-cell-v">When your Home College validates your residency status (CA resident or not), that determination persists in CVC's record for the term. You can't change it through the AER form.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If it was wrong</div>
+          <div class="entry-cell-v">If your HC validated your residency as "no" by mistake and you're actually a CA resident, work with your Home College's A&amp;R to fix it — but the change won't propagate to CVC automatically. The Teaching College's A&amp;R may need to manually update their record too. Both sides require manual coordination.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry">
+      <summary>
+        <div class="entry-msg">Teaching Colleges can auto-drop you for non-payment without telling CVC</div>
+        <div class="entry-tag stop icon-plus">pay on time, every time</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">The risk</div>
+          <div class="entry-cell-v">Each Teaching College has its own policy for dropping unpaid students — and CVC isn't always notified when they do. You may discover you've been dropped only when your class disappears from your dashboard or Canvas.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Protect yourself</div>
+          <div class="entry-cell-v">Pay at the moment of registration if possible. If your CVC payment is failing, pay through the <strong>Teaching College's portal directly</strong> while CVC support investigates. The TC's clock is what matters; their auto-drop is the real risk.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If you got dropped</div>
+          <div class="entry-cell-v">Email both CVC and the TC's A&amp;R immediately. Document any payment attempts. A late re-enrollment may be possible if the section is still open and you're within their grace window — but it's case-by-case.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry">
+      <summary>
+        <div class="entry-msg">Transcripts back to your Home College aren't always automatic</div>
+        <div class="entry-tag act icon-plus">may need follow-up</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What's automatic</div>
+          <div class="entry-cell-v">Grades from your CVC class flow back to your Home College's records system, typically 4–6 weeks after the term ends. That part works.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What's manual</div>
+          <div class="entry-cell-v"><strong>Sending an official transcript to a 4-year college or employer requires the Teaching College to manually trigger an eTranscript send.</strong> If you're transferring and need a transcript, request one from the Teaching College — don't assume it's been sent automatically. Each college does this on their schedule.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry">
+      <summary>
+        <div class="entry-msg">HC↔HC enrollments charge local fees not visible in CVC</div>
+        <div class="entry-tag normal icon-plus">check your HC portal</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What this is</div>
+          <div class="entry-cell-v">If you take a class at another campus within your same district (HC↔HC), the CVC interface only shows tuition + enrollment fees. The local district fees (parking, student services, etc.) are charged by your HC's system but only visible in your HC's portal.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Action</div>
+          <div class="entry-cell-v">After registering, log into your Home College's student portal and check the cashier/fees section. Pay any local fees there. They aren't optional.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry">
+      <summary>
+        <div class="entry-msg">Some colleges block HC↔HC entirely (Yuba)</div>
+        <div class="entry-tag stop icon-plus">apply direct</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Yuba/Woodland-specific</div>
+          <div class="entry-cell-v">Yuba CCD blocks HC↔HC cross-enrollment entirely. If you're at Yuba and want a class at Woodland (or vice versa), you can't use the CVC Exchange for that — apply directly through CCCApply.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">For other colleges</div>
+          <div class="entry-cell-v">Most allow HC↔HC. Some have quirks (Coast assesses local fees on HC↔HC; Chaffey requires manual indicator monitoring). Check the Teaching College's Confluence Special Handling page if you hit unexpected blocks.</div>
+        </div>
+      </div>
+    </details>
+
+  </div>
+
+  <aside class="aside calm" style="margin-top: 28px;"><strong>Why this section exists —</strong> students lose hours to tickets that have no resolution because they're hitting an intentional design boundary, not a bug. Naming the boundary — "this is a designed limit, not broken" — saves the time and points at the real workaround.</aside>
 </section>
 
 <!-- ═══════════════════════════════ RESOURCES ═══════════════════════════════ -->
@@ -4202,7 +4495,7 @@ if ('IntersectionObserver' in window) {
       }
     });
   }, { threshold: 0.5 });
-  ['urgent', 'symptoms', 'errors', 'dater', 'mistakes', 'tasks', 'email', 'glossary'].forEach(id => {
+  ['urgent', 'symptoms', 'errors', 'dater', 'mistakes', 'tasks', 'email', 'glossary', 'limits'].forEach(id => {
     const el = document.getElementById(id);
     if (el) seenObs.observe(el);
   });
@@ -4278,7 +4571,7 @@ if ('IntersectionObserver' in window) {
     threshold: [0, 0.25, 0.5, 0.75, 1]
   });
 
-  ['find', 'urgent', 'symptoms', 'errors', 'dater', 'mistakes', 'tasks', 'email', 'glossary'].forEach(id => {
+  ['find', 'urgent', 'symptoms', 'errors', 'dater', 'mistakes', 'tasks', 'email', 'glossary', 'limits'].forEach(id => {
     const el = document.getElementById(id);
     if (el) obs.observe(el);
   });
