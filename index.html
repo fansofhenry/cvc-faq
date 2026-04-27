@@ -630,6 +630,72 @@ aside.aside strong {
   border-bottom: 1px solid var(--ink);
 }
 
+/* §ix Designed Limits — visually distinct as a reference section */
+section.section#limits {
+  background: var(--paper-deep);
+  margin: 56px -16px 0;
+  padding: 56px clamp(20px, 5vw, 56px) 56px;
+  border-radius: 8px;
+  border-top: 1px solid var(--rule);
+}
+section.section#limits .section-num {
+  color: var(--claret-deep);
+}
+section.section#limits .entries {
+  background: var(--paper);
+  border-radius: 6px;
+  border: 1px solid var(--rule-soft);
+}
+
+/* tag legend at top of error decoder */
+.tag-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  margin: -4px 0 16px;
+  padding: 14px 16px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 13, "SOFT" 80;
+  font-size: 13px;
+  color: var(--ink-soft);
+  align-items: center;
+}
+.tag-legend-label {
+  font-style: normal;
+  font-variation-settings: "opsz" 12, "wght" 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  color: var(--ink-faint);
+  margin-right: 4px;
+}
+.tag-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.tag-legend-item::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.tag-legend-item.wait::before { background: var(--moss); }
+.tag-legend-item.act::before { background: var(--claret); }
+.tag-legend-item.stop::before { background: var(--alert); }
+.tag-legend-item.normal::before { background: var(--ink-faint); }
+.tag-legend-item strong {
+  font-style: normal;
+  font-variation-settings: "opsz" 13, "wght" 600;
+  color: var(--ink);
+}
+
 .entry {
   border-top: 1px solid var(--rule);
 }
@@ -2598,10 +2664,18 @@ article.mistake .copy-link {
         <span data-es>Descifrando los mensajes de <em>error</em></span>
       </h2>
       <p class="section-dek">
-        <span data-en>Click any entry to see the real meaning, the realistic timeline, and what (if anything) you should do. Italics indicate <em>wait</em> — this is correct system behavior.</span>
-        <span data-es>Haz clic en cualquier entrada para ver el significado real, el plazo realista y qué hacer (si algo). Las cursivas indican <em>esperar</em> — el sistema funciona correctamente.</span>
+        <span data-en>Click any entry to see the real meaning, the realistic timeline, and what (if anything) you should do.</span>
+        <span data-es>Haz clic en cualquier entrada para ver el significado real, el plazo realista y qué hacer (si algo).</span>
       </p>
     </div>
+  </div>
+
+  <div class="tag-legend" aria-label="What the tags mean">
+    <span class="tag-legend-label">How to read tags:</span>
+    <span class="tag-legend-item wait"><strong>wait</strong> — system is working, give it time</span>
+    <span class="tag-legend-item act"><strong>act</strong> — recoverable, you'll need to do something</span>
+    <span class="tag-legend-item stop"><strong>stop / move on</strong> — no fix possible from your side</span>
+    <span class="tag-legend-item normal"><strong>normal</strong> — this is a success state, not an error</span>
   </div>
 
   <div class="entries">
@@ -3371,6 +3445,45 @@ article.mistake .copy-link {
     </div>
   </details>
 
+  <details id="t-search">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">Use the search filters effectively</div>
+          <span class="task-sub">Find the right course in 30 seconds — by transfer requirement, format, cost, or schedule</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+      <p>Most students miss half the search filters at <a href="https://www.cvc.edu" target="_blank">cvc.edu</a>. Knowing what each one does saves time:</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Search by</p>
+      <ul>
+        <li><strong>Keyword</strong> — search course titles + descriptions</li>
+        <li><strong>Subject</strong> — biology, English, math, etc.</li>
+        <li><strong>Home College Course Name</strong> (via C-ID mapping) — find a class equivalent to one your HC offers</li>
+        <li><strong>CSU GE-Breadth</strong> — courses that count toward CSU transfer GE</li>
+        <li><strong>IGETC</strong> — courses that count toward UC transfer GE</li>
+      </ul>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Filter by</p>
+      <ul>
+        <li><strong>Instant Enrollment</strong> — sections that allow immediate registration (no waiting for a TC review)</li>
+        <li><strong>Available Seats</strong> — only sections with seats right now (live count)</li>
+        <li><strong>Online Format</strong> — synchronous (live class meeting times) vs asynchronous (work on your own schedule)</li>
+        <li><strong>Course Prerequisites</strong> — toggle whether to show classes with prereqs</li>
+        <li><strong>Term, Term Start/End Dates</strong> — narrow to a specific session</li>
+        <li><strong>Zero Textbook Cost (ZTC)</strong> — sections marked as having no required textbook fees</li>
+        <li><strong>Transferability</strong> — courses that transfer to UC, CSU, or other systems</li>
+        <li><strong>Teaching College</strong> — restrict to a specific college</li>
+        <li><strong>Number of Units</strong> — minimum and maximum unit counts</li>
+      </ul>
+
+      <aside class="aside"><strong>Heads-up on seat counts —</strong> live seat counts are real-time, but the underlying course catalog imports overnight. A class showing as available <em>can</em> fill up between viewing and registering. If you find one you want, register quickly.</aside>
+      <aside class="aside calm"><strong>Pro tip —</strong> if you're transfer-bound, filter by IGETC (for UC) or CSU GE-Breadth (for CSU) and you'll only see classes that count toward your transfer requirements. Saves you from taking units that don't apply.</aside>
+    </div>
+  </details>
+
   <details id="t-register">
     <summary>
       <div class="task-summary">
@@ -3506,17 +3619,29 @@ article.mistake .copy-link {
       </div>
     </summary>
     <div class="body">
-      <aside class="aside"><strong>Read this first —</strong> per CVC's official guidance: "clicking the request box does not mean you will receive financial aid." Submitting a financial aid request during enrollment only sends the request to your Home College for review. <strong>You are still responsible for paying the Teaching College upfront</strong> while your Home College considers your request. If you don't pay, the Teaching College drops you — even if your aid is later approved.</aside>
+      <aside class="aside"><strong>Read this first —</strong> per CVC's official guidance: <em>"Clicking the request box does not mean you will receive financial aid."</em> Submitting a financial aid request during enrollment only sends the request to your Home College for review. <strong>You are still responsible for paying the Teaching College upfront</strong> while your Home College considers your request. If you don't pay, the Teaching College drops you — even if your aid is later approved.</aside>
 
       <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">How payment actually works</p>
       <p>You pay the Teaching College upfront with a card. Your Home College reimburses you according to your aid package, after the fact. Aid does <em>not</em> get sent ahead to the Teaching College on your behalf — it always disburses through your Home College only.</p>
 
-      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">CCPG (Promise Grant)</p>
-      <p>If you qualify at your Home College, CCPG generally covers per-unit fees at the Teaching College too — but only if the match works.</p>
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Federal aid eligibility — the 6-unit rule</p>
+      <p>Per cvc.edu: <strong>"You must be registered in at least six units at your home college to be eligible"</strong> for federal financial aid consideration on CVC courses. CVC class units alone don't count for federal aid — the threshold is what you carry at the HC.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">CCPG (California College Promise Grant)</p>
+      <p>CCPG can cover per-unit fees on a CVC course, but the application happens at the <strong>Teaching College</strong>, not your HC. The official process from cvc.edu:</p>
+      <ol>
+        <li>Visit your Exchange Profile → Class Schedule</li>
+        <li>Click <strong>Pay Now</strong> next to your course</li>
+        <li>Choose <strong>"California Promise Grant (CCPG)"</strong> from the payment options</li>
+        <li>Complete the Teaching College's financial aid application</li>
+      </ol>
       <aside class="aside"><strong>SSN script —</strong> the CVC enrollment form doesn't collect SSN. For CCPG to <em>match</em> your award at the Teaching College, they need your SSN on file. <strong>If your CCPG isn't applying, contact the Teaching College's A&amp;R or Financial Aid office and ask them to confirm your SSN is on record.</strong> That's the fix — not a CVC bug.</aside>
 
       <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Pell Grant</p>
       <p><strong>Pell can't be disbursed at the Teaching College.</strong> CVC students sit in a non-Title IV "shell" program at the Teaching College. Pell still works at your Home College for classes you take there. CVC courses count toward your enrollment status for aid purposes, but the disbursement is at the Home College.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Veterans benefits</p>
+      <p>Veterans can use VA benefits on CVC courses. The process: your Home College's Veterans Resource Center handles benefit certification and contacts the Teaching College with a <strong>Parent School Authorization Letter</strong>. Talk to your HC's VRC before registering so the paperwork is in place.</p>
 
       <p>Full info: <a href="https://www.cvc.edu/students/financial-aid/" target="_blank">cvc.edu/students/financial-aid</a></p>
     </div>
@@ -3533,11 +3658,12 @@ article.mistake .copy-link {
     </summary>
     <div class="body">
       <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 8px 0 6px;">Sending grades back to your Home College</p>
-      <p><strong>Automatic.</strong> The Teaching College sends grades to your Home College after the term ends. Allow 4–6 weeks. If grades aren't visible after that, contact your Home College's A&amp;R first — they often just need to refresh.</p>
+      <p><strong>Automatic.</strong> Per cvc.edu: "the college teaching the course will automatically send an electronic copy of your transcript to your Home College" after the term ends. Official timeline: <strong>up to 3 weeks</strong>. If grades aren't visible after that, contact your Home College's A&amp;R first — they often just need to refresh.</p>
+      <p>Note: if your CVC class was taken to <em>fulfill a prerequisite,</em> credit may not appear automatically on your HC transcript. Initiate a transcript evaluation with your HC's counselor or evaluations office.</p>
 
       <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Sending transcripts to a 4-year college or employer</p>
-      <p>Request from the <strong>Teaching College that taught the course</strong> — not from your Home College, not from CVC. Most colleges use Parchment.</p>
-      <aside class="aside"><strong>Important when you transfer —</strong> per CVC's official guidance, "you will still need to order transcripts from <em>each college individually.</em>" If you took three CVC classes at three different Teaching Colleges, that's three separate transcript orders, plus one from your Home College. <strong>CVC does not consolidate them.</strong></aside>
+      <p>Request from the <strong>Teaching College that taught the course</strong> — not from your Home College, not from CVC. Most colleges use Parchment; some have other providers. You'll need your Teaching College ID number, which is on your CVC Exchange profile at <a href="https://search.cvc.edu/user/edit" target="_blank">search.cvc.edu/user/edit</a>.</p>
+      <aside class="aside"><strong>Important when you transfer —</strong> per CVC's official guidance: <em>"when you are ready to transfer, you will still need to order transcripts from each college individually."</em> If you took three CVC classes at three different Teaching Colleges, that's three separate transcript orders, plus one from your Home College. <strong>CVC does not consolidate them.</strong></aside>
       <p>Details: <a href="https://www.cvc.edu/students/transcripts-students/" target="_blank">cvc.edu/students/transcripts-students</a></p>
     </div>
   </details>
@@ -3561,17 +3687,25 @@ article.mistake .copy-link {
         <li>You have an <strong>in-state (California) address</strong> on file at your Home College.</li>
       </ul>
 
-      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Special cases</p>
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Populations NOT eligible to cross-enroll via CVC</p>
       <ul>
-        <li><strong>High school:</strong> dual-enrollment authorization from your high school + parent <em>before</em> registering.</li>
-        <li><strong>Adult Education:</strong> authorization from your Adult Ed program.</li>
-        <li><strong>F-1 visa / international:</strong> talk to your Designated School Official (DSO) <em>first.</em> Federal regulations restrict concurrent enrollment.</li>
-        <li><strong>AB540:</strong> enrollment works fine. For fees, file CCPG / Dream Act Application separately at your Home College.</li>
+        <li><strong>Dual-enrolled high school students</strong> — cvc.edu states explicitly: "Dual-enrolled high school students are <em>not eligible</em> to enroll in courses via the CVC Exchange, due to the unique policies and procedures in place." If you're an HS dual-enrollment student, talk to your Home College's special-admit counselor or apply directly to the Teaching College.</li>
+        <li><strong>International students on F-1 visa</strong> — federal visa regulations restrict concurrent enrollment outside your sponsoring school. Per cvc.edu: F-1 students are "not able to enroll in courses via the CVC Exchange." Talk to your Designated School Official (DSO) about your options.</li>
+        <li><strong>Adult Education students</strong> — typically not permitted via the Exchange. Contact your Adult Ed program coordinator.</li>
+      </ul>
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Special cases that ARE eligible (with extra steps)</p>
+      <ul>
+        <li><strong>AB540 (California Nonresident Tuition Exemption):</strong> Eligible. First establish AB540 status with your Home College. For CCPG, apply at the <em>Teaching College</em> through CCCApply or the <a href="https://dream.csac.ca.gov/landing" target="_blank">California Dream Act Application</a> with the TC's CADAA code.</li>
+        <li><strong>Veterans:</strong> Eligible. Your Home College's Veterans Resource Center handles benefit certification and contacts the Teaching College with a Parent School Authorization Letter. Talk to your HC's VRC before registering.</li>
+        <li><strong>Returning adult / non-traditional students:</strong> Eligible if you meet the basic requirements above (CCC enrollment, 18+, 2.0 GPA or none yet, no fees, CA address).</li>
+      </ul>
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Other things that block enrollment</p>
+      <ul>
         <li><strong>Hold on Home College account:</strong> clear it first. The system blocks new registrations while a hold is active.</li>
-        <li><strong>Low GPA at Home College:</strong> system off-ramps you. Resolve the GPA flag at Home College before retrying.</li>
+        <li><strong>Low GPA at Home College:</strong> system off-ramps you. Resolve the GPA flag at HC before retrying.</li>
         <li><strong>Home College not on Exchange:</strong> apply directly to the Teaching College at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a>.</li>
       </ul>
-      <p>Full rules: <a href="https://www.cvc.edu/students/student-eligibility/" target="_blank">cvc.edu/students/student-eligibility</a></p>
+      <p>Full rules: <a href="https://www.cvc.edu/students/student-eligibility/" target="_blank">cvc.edu/students/student-eligibility</a> (the authoritative source)</p>
     </div>
   </details>
 </section>
@@ -3731,7 +3865,7 @@ article.mistake .copy-link {
   </div>
 
   <dl class="glossary">
-    <div class="gloss"><dt class="gloss-term">Home College</dt><dd class="gloss-def">Your primary CCC — where you log in from. <strong>Financial aid only disburses from your Home College</strong> (Pell, FAFSA, CCPG) — no aid transfers to a Teaching College for CVC courses. Your <strong>degree or certificate is also issued by your Home College</strong>, not by any Teaching College. Choose carefully — this is the college whose name appears on your final award.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Home College</dt><dd class="gloss-def">Per CVC's official definition: "the college where the student is currently enrolled at the time of registration. This is also the college where the student sets up an Educational Plan and receives benefits, including financial aid, counseling, VETS and EOPS support." <strong>Financial aid disburses from here only</strong> (Pell, FAFSA, CCPG) — no aid transfers to a Teaching College. Your <strong>degree or certificate is also issued by your Home College</strong>, not by any Teaching College. Choose carefully — this is the college whose name appears on your final award.</dd></div>
     <div class="gloss"><dt class="gloss-term">Teaching College</dt><dd class="gloss-def">The CCC offering the cross-enrollment class you're taking. Where the section actually meets.</dd></div>
     <div class="gloss"><dt class="gloss-term">CCCID</dt><dd class="gloss-def">Your 7-character California Community Colleges ID. Same across all CCCs. Required for support tickets.</dd></div>
     <div class="gloss"><dt class="gloss-term">CRN</dt><dd class="gloss-def">Course Reference Number — the section's unique ID at the Teaching College.</dd></div>
@@ -3768,6 +3902,13 @@ article.mistake .copy-link {
     <div class="gloss"><dt class="gloss-term">BatchApplication</dt><dd class="gloss-def">The internal record CVC creates when you start an enrollment. It tracks which step you're on (Created → Consent Given → AER Submitted → Eligible and Approved → Registered → Validated). When admin staff look up your case, they're reading your BatchApplication's state.</dd></div>
     <div class="gloss"><dt class="gloss-term">Phase 0 / Phase 1 / Phase 2</dt><dd class="gloss-def">CVC's implementation phases for each college. <strong>Phase 0</strong> = listed as a Home College (you can authenticate from there); <strong>Phase 1</strong> = catalog visible (you can see their courses in Course Finder); <strong>Phase 2</strong> = live as a Teaching College (you can actually cross-enroll). Some colleges are Phase 1 only — you can browse but not register through CVC.</dd></div>
     <div class="gloss"><dt class="gloss-term">Open enrollment date gate</dt><dd class="gloss-def">Each Teaching College sets its own date when CVC cross-enrollment opens. The "Add Class" button appears at <strong>4 PM PST the day before</strong> that date — but registrations between 4 PM PST and midnight PST will fail. Wait until midnight PST on the open date. <a href="#err-window">See §iii. window gotcha</a>.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Instant Enrollment</dt><dd class="gloss-def">CVC's term for the cross-enrollment process — registering instantly into a course at another CCC without a separate CCCApply application. The CVC Exchange uses "Cross Enrollment" and "Instant Enrollment" interchangeably. <strong>Filter for "Instant Enrollment" courses</strong> in search to see only sections that allow immediate registration.</dd></div>
+    <div class="gloss"><dt class="gloss-term">CSU GE-Breadth</dt><dd class="gloss-def">A series of courses California community college students complete to satisfy lower-division general education requirements before transferring to a CSU. CVC's search lets you filter by CSU GE-Breadth so you can find classes that count toward your transfer plan.</dd></div>
+    <div class="gloss"><dt class="gloss-term">IGETC</dt><dd class="gloss-def">Intersegmental General Education Transfer Curriculum — a series of courses to satisfy most freshman/sophomore-level GE requirements before transferring to a UC campus. Filterable in CVC search.</dd></div>
+    <div class="gloss"><dt class="gloss-term">C-ID</dt><dd class="gloss-def">California Course Identification Numbering System — a statewide standard ID for equivalent courses across CCCs. CVC search lets you find courses by your <em>Home College's</em> course name and find equivalents at other CCCs via C-ID mapping.</dd></div>
+    <div class="gloss"><dt class="gloss-term">ZTC (Zero Textbook Cost)</dt><dd class="gloss-def">Courses where students "pay no additional fees for learning materials (books, lab kits, etc.)" — displayed with a special badge in CVC search. Note: ZTC doesn't guarantee <em>all</em> materials are free; some colleges provide access through library databases. Filter for ZTC sections to reduce overall course cost.</dd></div>
+    <div class="gloss"><dt class="gloss-term">VRC (Veterans Resource Center)</dt><dd class="gloss-def">The office at your Home College that handles VA benefit certification. For CVC courses, your HC's VRC sends a Parent School Authorization Letter to the Teaching College. Talk to them <em>before</em> registering.</dd></div>
+    <div class="gloss"><dt class="gloss-term">EOPS</dt><dd class="gloss-def">Extended Opportunity Programs and Services — a state-funded program at your Home College providing extra academic and financial support for students from disadvantaged backgrounds. EOPS support follows you at the HC; you don't get parallel EOPS at the Teaching College for CVC courses.</dd></div>
   </dl>
 </section>
 
@@ -4194,7 +4335,7 @@ const CORPUS = [
   { id:'sym-paid', cat:'error-act', section:'§iii. Error decoder',
     title:'Card charged but dashboard says "Pay Now"',
     preview:'Bank processed the charge but you didn\'t click Confirm Payment after. We can reconcile — email once with CCCID, course, payment date, last 4, amount.',
-    tags:['paid but pay now','card charged','charged my card','already paid','payment didnt go through','confirm payment','didnt confirm','closed browser after paying','money taken','pay now still showing','says pay now','still says pay','paid but not showing','paid but unpaid','card was charged'] },
+    tags:['paid but pay now','paid but it says i havent paid','says i havent paid','says havent paid','paid but says i haven\'t','card charged','charged my card','already paid','i already paid','payment didnt go through','confirm payment','didnt confirm','closed browser after paying','money taken','pay now still showing','says pay now','still says pay','paid but not showing','paid but unpaid','card was charged','dashboard says pay'] },
   { id:'sym-update-failed', cat:'state', section:'§iii. Error decoder',
     title:'Status Update Failed (on a class you dropped)',
     preview:'Usually a display issue, not a real failure. Drop probably succeeded; the dashboard hasn\'t caught up. Don\'t re-attempt.',
@@ -4316,6 +4457,10 @@ const CORPUS = [
     title:'What success looks like at each step',
     preview:'10-step flow showing what each status means. Match your dashboard against this — if your status is at step 6+, you\'re fine.',
     tags:['what does each status mean','what should happen','what is normal','what status','timeline','journey','steps','what comes next','phases'] },
+  { id:'t-search', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Use the search filters effectively',
+    preview:'Find courses by keyword, subject, your HC course name (C-ID), CSU GE-Breadth, IGETC. Filter by Instant Enrollment, Available Seats, Online Format, ZTC, transferability.',
+    tags:['search filter','find a class','filter','search by','c-id','c id','csu breadth','igetc','transferability','transfer credit','transfer to uc','transfer to csu','transfer to university','transfers to ucla','transfers to uc','transfers to csu','ge breadth','general education','zero textbook cost','ztc','no textbook','free textbook','asynchronous','synchronous','online format','self paced','available seats','live seats','live seat count'] },
   { id:'t-register', cat:'task', section:'§vi. Step-by-step guides',
     title:'Register for a class',
     preview:'5 steps: search, log in via HC, sign consent, fill AER + upload prereqs, submit + pay (Always click Confirm Payment).',
@@ -4333,17 +4478,17 @@ const CORPUS = [
     preview:'Log in to CVC dashboard, Class Schedule, click course link → opens HC\'s Canvas. View All Courses if not on dashboard. 24-48h after register.',
     tags:['canvas access','login canvas','find class in canvas','course link','view course','canvas instructions','how to use canvas','class link missing','find canvas'] },
   { id:'t-aid', cat:'task', section:'§vi. Step-by-step guides',
-    title:'Use financial aid (CCPG, FAFSA, Pell)',
-    preview:'You pay TC upfront; HC reimburses per your aid package. CCPG needs SSN on file at TC. Pell can\'t disburse at TC.',
-    tags:['financial aid','fafsa','ccpg','pell','promise grant','aid','reimburse','free tuition','grant','financial help','need money','cant afford','ssn','ssn match','aid not working'] },
+    title:'Use financial aid (CCPG, FAFSA, Pell, Veterans)',
+    preview:'You pay TC upfront; HC reimburses per your aid package. 6-unit minimum at HC for federal aid. CCPG application is at the TC. Veterans use Parent School Authorization Letter.',
+    tags:['financial aid','fafsa','ccpg','pell','promise grant','aid','reimburse','free tuition','grant','financial help','need money','cant afford','ssn','ssn match','aid not working','veterans','va benefits','gi bill','veteran','parent school authorization','vrc','six units','6 units','minimum units'] },
   { id:'t-transcript', cat:'task', section:'§vi. Step-by-step guides',
     title:'Get a transcript',
     preview:'Grades flow back to HC automatically (4-6 weeks). External transcripts: order from the TC that taught the course, not CVC.',
     tags:['transcript','grades','records','official transcript','send transcript','my grades','grade report','final grade','order transcript','get records','for transfer','transcripts each college'] },
   { id:'t-eligibility', cat:'task', section:'§vi. Step-by-step guides',
-    title:'Eligibility — special cases',
-    preview:'Basic requirements: 18+, currently enrolled at HC, 2.0 GPA (or none yet), no fees, CA address. Special cases: HS dual, F-1, AB540, Adult Ed.',
-    tags:['eligible','eligibility','can i enroll','high school','dual enrollment','f1 visa','international','ab540','adult ed','adult education','dso','restricted','underage','17 years old','before 18'] },
+    title:'Eligibility — basic requirements + special populations',
+    preview:'Basic: 18+, currently enrolled at HC, 2.0 GPA or none, no fees, CA address. NOT eligible: HS dual-enrollment, F-1, Adult Ed (per cvc.edu). AB540 and Veterans ARE eligible with extra steps.',
+    tags:['eligible','eligibility','can i enroll','high school','dual enrollment','f1 visa','international student','ab540','dream act','adult ed','adult education','dso','restricted','underage','17 years old','before 18','veterans','va','gi bill','non-traditional','returning adult'] },
 
   // ────────────────────── §ix. DESIGNED LIMITS ──────────────────────
   { id:'lim-hc-locked', cat:'limit', section:'§ix. Designed limits',
@@ -4489,6 +4634,8 @@ function scoreItem(query, item, intents) {
   }
 
   // ───── Tier 3: per-token matches with stemming ─────
+  // Only score word-boundary matches or stem matches. Arbitrary substring
+  // matching ("count" inside "accounts") creates noise — disabled.
   let tokensThatHit = 0;
   for (const token of tokens) {
     const stemTok = stem(token);
@@ -4498,12 +4645,13 @@ function scoreItem(query, item, intents) {
     if (titleWords.includes(token) || titleStems.includes(stemTok)) {
       score += 25;
       tokenHit = true;
-    } else if (titleLower.includes(token)) {
-      score += 12;
+    } else if (token.length >= 5 && titleLower.includes(' ' + token) || titleLower.startsWith(token)) {
+      // word-boundary substring: only if token starts or follows a space
+      score += 10;
       tokenHit = true;
     }
 
-    // b) Tag matches
+    // b) Tag matches — exact tag, then word-in-tag, no arbitrary substring
     for (const tag of tagsLower) {
       const tagWords = tag.split(/\s+/);
       const tagStems = tagWords.map(stem);
@@ -4517,11 +4665,8 @@ function scoreItem(query, item, intents) {
         score += 14;
         tokenHit = true;
         if (!hits.includes(tag)) hits.push(tag);
-      } else if (tag.includes(token)) {
-        score += 5;
-        tokenHit = true;
-        if (!hits.includes(tag)) hits.push(tag);
       }
+      // dropped arbitrary substring match — was matching "count" in "accounts"
     }
 
     if (tokenHit) tokensThatHit++;
