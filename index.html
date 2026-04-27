@@ -2862,6 +2862,44 @@ section.section#limits .entries {
   padding-top: 4px;
 }
 
+/* Inline quick-action chips inside the top result */
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 4px;
+}
+.qa-chip {
+  appearance: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  background: var(--paper);
+  border: 1px solid var(--claret);
+  border-radius: 999px;
+  font-family: var(--serif-body);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--claret);
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+.qa-chip:hover,
+.qa-chip:focus-visible {
+  background: var(--claret);
+  color: var(--paper);
+  outline: none;
+}
+.qa-chip-icon {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
 /* Highlighted match terms */
 .find-result-title mark,
 .find-result-preview mark {
@@ -3573,6 +3611,12 @@ article.mistake .copy-link {
     <button class="find-example" type="button" data-q="how do I change the email on my CVC account">
       <span data-en>"Change my email"</span><span data-es>"Cambiar mi email"</span>
     </button>
+    <button class="find-example" type="button" data-q="I used my personal email instead of my school email and CVC cant verify my community college account">
+      <span data-en>"Used personal email — can't verify"</span><span data-es>"Usé email personal — no verifica"</span>
+    </button>
+    <button class="find-example" type="button" data-q="Im new to CVC how do I set up my account">
+      <span data-en>"First time — how do I start?"</span><span data-es>"Primera vez — ¿cómo empiezo?"</span>
+    </button>
   </div>
 
   <div class="find-recent" id="find-recent" hidden>
@@ -4244,6 +4288,36 @@ article.mistake .copy-link {
           <div class="entry-cell-lbl">When to email</div>
           <div class="entry-cell-v">After 3 business days, or within 24 hours of class start.</div>
         </div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-verify-account">
+      <summary>
+        <div class="entry-msg">"System can't verify my community college account" — wrong email at signup</div>
+        <div class="entry-tag act icon-plus">3 accounts, align them</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What this looks like</div>
+          <div class="entry-cell-v">You're trying to set up CVC for the first time, you entered a personal email (Gmail, Yahoo, iCloud) on your profile, and CVC says it can't verify your community college enrollment. Or your school issued you a <strong>.edu</strong> address but you signed up at OpenCCC with a non-edu address and now the SSO bridge isn't connecting the two records.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">First — are you actually enrolled at a CCC?</div>
+          <div class="entry-cell-v">CVC isn't a college you apply to. It routes between CCCs you're already enrolled at. If you've never applied to a community college, apply first via <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a>. Once you're admitted and registered for at least one class at your Home College, return to CVC. See <a href="#t-account-setup">the first-time setup guide</a> for the full picture.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If you ARE enrolled but verification fails</div>
+          <div class="entry-cell-v">The fix is almost always at OpenCCC, not CVC. Go to <a href="https://www.opencccapply.net" target="_blank">opencccapply.net</a> → My Account → Personal Information. Update your email to match what your Home College has on file (typically your school's .edu address, but check your HC's portal to confirm). Save. Allow <strong>24–48 hours</strong> to resync; CVC pulls from OpenCCC at every login, so the next attempt should succeed.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Why the email matters</div>
+          <div class="entry-cell-v">Many HCs use single sign-on (SSO) for CVC, which authenticates against your school-issued email. When the email on OpenCCC and the email at your HC don't match, the SSO bridge can't link the two records, and CVC has nothing to verify against. The system then reports "no community college enrollment found" — even though you ARE enrolled. The mismatch is the bug, not your enrollment.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Edge cases</div>
+          <div class="entry-cell-v"><strong>Multiple OpenCCC accounts —</strong> if you've created OpenCCC profiles under different emails over the years, the system has multiple CCCIDs for you and can't pick which is real. See <a href="#err-duplicate-login">duplicate-login</a>. <strong>Just admitted, no class yet —</strong> admission alone isn't enough; you need to be currently enrolled in (or have completed) a class. <strong>HC isn't on CVC —</strong> not every CCC is live. Check the <a href="https://www.cvc.edu/colleges/" target="_blank">colleges list</a>.</div>
+        </div>
+        <div class="entry-action"><strong>Don't keep retrying.</strong> Repeated sign-in attempts with the wrong email don't help and can trigger temporary account locks. Update OpenCCC, wait 24–48 hours, then retry. If still failing, email CVC support with your CCCID, name, HC, and the exact error text — we can verify what the SSO bridge is seeing.</div>
       </div>
     </details>
 
@@ -4990,6 +5064,59 @@ article.mistake .copy-link {
 
     </div>
   </div>
+
+  <details id="t-account-setup">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">First time using CVC? <em>Here's what each account does</em></div>
+          <span class="task-sub">Three accounts work together — get them aligned, or verification fails</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+
+      <aside class="aside"><strong>If verification is failing right now —</strong> see <a href="#err-verify-account">"System can't verify my community college account"</a>. This guide is the foundational explainer.</aside>
+
+      <p>The most common confusion at first sign-up is thinking CVC Exchange is itself a college you apply to. It's not. <strong>CVC routes you between CCCs you're already enrolled at</strong>, which means three separate accounts have to line up before CVC can verify you. When a student tells us "the system can't find my college account," it's almost always because one of these three is missing or out of sync with the others.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">The three accounts</p>
+      <ol>
+        <li><strong>OpenCCC account</strong> — your statewide California Community Colleges identity. This is where your <strong>CCCID</strong> (the 7-character ID like CAF3028) lives. One per person, ever. If you've ever applied to any CCC, you have one. Found at <a href="https://www.opencccapply.net" target="_blank">opencccapply.net</a>.</li>
+        <li><strong>Home College student account</strong> — your record at the CCC you primarily attend. This is where you log in to your HC's portal, where your transcripts live, where your degree is issued, where financial aid disburses. Created when you applied via CCCApply and were admitted to that college. Your HC almost always assigns you a school-issued email (typically a <strong>.edu</strong> address) when you enroll.</li>
+        <li><strong>CVC Exchange profile</strong> — your account on cvc.edu. <strong>It doesn't exist independently</strong> — it pulls from OpenCCC at every login and looks up your enrollment at the HC. If your OpenCCC record doesn't match your HC's record, CVC has nothing to verify against and shows you as not enrolled.</li>
+      </ol>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Why the three have to align</p>
+      <p>CVC's verification step asks: "Does this OpenCCC profile (with this CCCID) have an active enrollment at one of our partner CCCs?" To answer "yes," the data has to be:</p>
+      <ul>
+        <li><strong>Same person</strong> — your name, DOB, and SSN (last 4) on OpenCCC must match the same fields on your HC student record.</li>
+        <li><strong>Same CCCID</strong> — your HC ties their internal student record to your CCCID. Common breakage: students create a <em>second</em> OpenCCC account under a different email (different CCCID) and try to log in with that one.</li>
+        <li><strong>Active enrollment</strong> — admission alone isn't enough. You have to be currently enrolled in a class at your HC (or have completed one).</li>
+      </ul>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Email mismatches — the most common cause</p>
+      <p>Your <strong>OpenCCC email</strong> and your <strong>HC student email</strong> can be different — that's allowed. But:</p>
+      <ul>
+        <li>Many HCs use <strong>SSO (single sign-on)</strong> for CVC login, which authenticates against your school-issued <strong>.edu email</strong>. If you signed up at OpenCCC with your personal email (Gmail, Yahoo) and try to log into CVC via your HC's SSO, the system may not bridge the two records correctly.</li>
+        <li>If you used a <strong>personal (non-edu) email</strong> at OpenCCC, CVC may default to "I can't verify your community college enrollment" because the SSO bridge from your HC didn't recognize the email.</li>
+        <li><strong>Fix:</strong> update your OpenCCC email to match what your HC has on file (typically your school's .edu address). Update at <a href="https://www.opencccapply.net" target="_blank">opencccapply.net</a> → My Account → Personal Information. Allow 24–48 hours for CVC to resync.</li>
+      </ul>
+      <p>If you don't know what email your HC has on file, log into your HC's student portal — your profile page typically shows the email of record. Or contact your HC's A&amp;R office.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">If you've never applied to a CCC before</p>
+      <p>You can't use CVC Exchange. <strong>Apply to a community college first</strong> via <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a> (the CCCApply portal). Once admitted and enrolled in at least one class, your HC's record will be in the system — then return to CVC and your verification will succeed.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">Quick checklist before you panic</p>
+      <ol>
+        <li>Are you currently <strong>enrolled in a class</strong> at a California Community College? (Admission alone isn't enough.)</li>
+        <li>Is the email on your <strong>OpenCCC profile</strong> the same one your HC has? (If unsure: HC portal → Profile.)</li>
+        <li>Do you have <strong>only one OpenCCC account</strong>? (Multiple = multiple CCCIDs = login chaos.)</li>
+        <li>Is your HC <strong>active on CVC Exchange</strong> (not just listed)? See the <a href="https://www.cvc.edu/colleges/" target="_blank">colleges list</a> on cvc.edu.</li>
+      </ol>
+      <p>If all four are yes and CVC still can't verify, see <a href="#err-verify-account">err-verify-account</a> for the diagnostic and fix path.</p>
+    </div>
+  </details>
 
   <details id="t-primer">
     <summary>
@@ -6452,6 +6579,55 @@ const PHRASE_EXPAND = [
   ['canvas login', 'canvas access trust'],
   ['canvas access', 'canvas trust login'],
   ['expired', 'past deadline late'],
+  // ── Account verification / first-time-setup phrasings (Ava-pattern) ──
+  ['cant verify', 'verify-account verification email-mismatch'],
+  ['cannot verify', 'verify-account verification email-mismatch'],
+  ['it cant verify', 'verify-account verification'],
+  ['cant verify my community college', 'verify-account verification email'],
+  ['cannot verify my community college', 'verify-account verification email'],
+  ['verify my community college', 'verify-account verification email'],
+  ['verify my account', 'verify-account verification email'],
+  ['verify my college', 'verify-account verification email'],
+  ['system cant find', 'verify-account verification not-found'],
+  ['system cannot find', 'verify-account verification not-found'],
+  ['doesnt recognize', 'verify-account verification not-found'],
+  ['does not recognize', 'verify-account verification not-found'],
+  ['no community college', 'verify-account verification email'],
+  ['school email', 'edu-email college-email .edu'],
+  ['my school email', 'edu-email college-email'],
+  ['edu email', '.edu school-email college-email'],
+  ['.edu', 'school-email edu-email college-email'],
+  ['non edu email', 'personal-email gmail non.edu non-college'],
+  ['non-edu email', 'personal-email gmail non.edu non-college'],
+  ['non.edu', 'personal-email gmail non-edu'],
+  ['personal email', 'gmail yahoo non-edu non-school'],
+  ['my personal email', 'gmail non-edu non-school'],
+  ['gmail account', 'personal-email non-edu'],
+  ['yahoo account', 'personal-email non-edu'],
+  ['wrong email', 'change-email update-email email-change wrong-email-at-signup'],
+  ['entered wrong email', 'wrong-email change-email signup-error'],
+  ['put wrong email', 'wrong-email change-email signup-error'],
+  ['i used my personal', 'wrong-email change-email signup-error edu'],
+  ['used the wrong', 'wrong-information change-email signup-error'],
+  ['change this information', 'change-email update-profile change-account-info'],
+  ['change information', 'change-email update-profile'],
+  ['update this information', 'change-email update-profile'],
+  ['next steps', 'how to fix what to do'],
+  ['what are the next steps', 'how to fix what to do'],
+  ['set up cvc', 'first-time-setup new account-setup'],
+  ['setup cvc', 'first-time-setup new account-setup'],
+  ['create cvc account', 'first-time-setup new account-setup'],
+  ['apply to cvc', 'first-time-setup primer'],
+  ['apply for cvc', 'first-time-setup primer'],
+  ['applying to cvc', 'first-time-setup primer'],
+  ['register for cvc', 'first-time-setup primer'],
+  ['cvc account', 'profile cvc-profile'],
+  ['my profile', 'profile cvc-profile account'],
+  ['on the profile', 'profile cvc-profile account'],
+  ['on my profile', 'profile cvc-profile account'],
+  ['first time', 'new beginner first-time-setup primer'],
+  ['new student', 'first-time-setup primer'],
+  ['new to cvc', 'first-time-setup primer'],
 ];
 
 // Single-token synonyms — applied during expandTokens() so each query
@@ -6531,6 +6707,22 @@ const SYNONYMS = {
   'csm':       ['college-of-san-mateo'],
   'rcc':       ['riverside','riverside-city'],
   'ivc':       ['irvine-valley'],
+  // verification & account terminology
+  'verify':    ['verification','authenticate','confirm','validate','check'],
+  'verification':['verify','authenticate','confirm'],
+  'authenticate':['verify','login','sso'],
+  'recognize': ['find','identify','match'],
+  'profile':   ['account','login','identity'],
+  'account':   ['profile','login','identity'],
+  'apply':     ['signup','register','setup','create'],
+  'setup':     ['set-up','create','register','configure'],
+  'signup':    ['sign-up','register','enroll','apply'],
+  'edu':       ['.edu','school-email','college-email'],
+  'gmail':     ['personal-email','non-edu','yahoo'],
+  'personal':  ['non-edu','non-school','gmail'],
+  'school':    ['edu','college','academic'],
+  'community': ['college','ccc'],
+  'college':   ['community','ccc','school'],
 };
 
 // Common typos and misspellings that appear in tickets.
@@ -6848,6 +7040,14 @@ const CORPUS = [
     title:'Eligibility — basic requirements + special populations',
     preview:'Basic: 18+, currently enrolled at HC, 2.0 GPA or none, no fees, CA address. NOT eligible: HS dual-enrollment, F-1, Adult Ed (per cvc.edu). AB540, Veterans, and Calbright students ARE eligible with extra steps.',
     tags:['eligible','eligibility','can i enroll','high school','dual enrollment','f1 visa','international student','ab540','dream act','adult ed','adult education','dso','restricted','underage','17 years old','before 18','veterans','va','gi bill','non-traditional','returning adult','calbright','calbright college','online only college','116th college','hiset','ged','high school equivalency','minor','full time student under 18','out of state student','live out of state','foreign student','i live in another state','can students from other states use cvc'] },
+  { id:'t-account-setup', cat:'task', section:'§vi. Step-by-step guides',
+    title:'First time using CVC? Here\'s what each account does',
+    preview:'CVC isn\'t a college you apply to — it routes between CCCs you\'re already enrolled at. Three accounts have to align: OpenCCC (your CCCID), your HC student record, and CVC profile (which pulls from OpenCCC). Email mismatches between OpenCCC and HC are the #1 cause of "system can\'t verify" failures.',
+    tags:['first time','first time user','new to cvc','new student','set up account','setup account','create account','create profile','apply for cvc','sign up for cvc','starting','starting cvc','three accounts','what accounts do i need','how does cvc work','cvc isnt a college','cvc is not a college','am i in the right place','do i apply to cvc','register for cvc','make a cvc account','first steps','before i can register','what is openccc','what does openccc do','three logins','do i need three accounts','primer','beginner','getting started'] },
+  { id:'err-verify-account', cat:'error-act', section:'§iii. Error decoder',
+    title:'"System can\'t verify my community college account" — wrong email at signup',
+    preview:'Update OpenCCC email to match your HC\'s record (typically your school .edu address). 24-48 hours to resync. If you\'ve never applied to a CCC, apply at icangotocollege.com first.',
+    tags:['cant verify','cannot verify','system cant verify','verify account','verify community college','verify enrollment','verification failed','verification failing','wrong email at signup','wrong email at sign up','entered wrong email','used personal email','used my personal email','personal email instead','school email','edu email','non-edu email','non edu email','non.edu email','no edu','non-college email','not a school email','dot edu','my .edu','no school email','college email','community college email','cant find my college','doesnt recognize me','doesnt recognize my college','no community college account','college not found','no record','no record of me','says i\'m not enrolled','system says i\'m not enrolled','says no enrollment','wrong info','wrong information','change this information','change my information','update my profile','update profile','wrong email on profile','put wrong email','typed wrong email','i entered the wrong email','it cant verify','signup verification','registration verification','first time setup failure','tried to apply','apply through cvc','applying to cvc','set up profile failed','profile not verified','my account isnt verified','account not verified'] },
   { id:'t-1098t', cat:'task', section:'§vi. Step-by-step guides',
     title:'Get a 1098-T tax form for a CVC class',
     preview:'The Teaching College that taught the class issues the 1098-T — not CVC, not your HC. Each TC = a separate form. Contact each TC\'s Bursar / Student Accounts directly.',
@@ -6863,7 +7063,7 @@ const CORPUS = [
   { id:'t-email-change', cat:'task', section:'§vi. Step-by-step guides',
     title:'Change the email on your CVC account',
     preview:'CVC pulls from OpenCCC. Update at opencccapply.net → My Account → Personal Information. Allow 24-48 hours to sync.',
-    tags:['change email','change my email','update email','update my email','email change','new email','email update','old email','wrong email','change address','update address','email is wrong','want to change email','change account email','email on file','wrong email on cvc','my email','openccc email','open ccc email','recover email','lost email access','email migration','college changed email'] },
+    tags:['change email','change my email','update email','update my email','email change','new email','email update','old email','wrong email','change address','update address','email is wrong','want to change email','change account email','email on file','wrong email on cvc','my email','openccc email','open ccc email','recover email','lost email access','email migration','college changed email','wrong email at signup','entered wrong email','typed wrong email','put wrong email','use a different email','switch email','school email','personal email','edu email','non edu email','non-edu email','use my edu email','change to school email','change to edu','add edu email','remove personal email','i used my personal email','update profile email','change information','change this information','update profile'] },
   { id:'t-class-cancelled', cat:'task', section:'§vi. Step-by-step guides',
     title:'My class was cancelled by the Teaching College',
     preview:'Confirm cancellation in writing from TC\'s A&R, then contact TC\'s Bursar/Student Accounts for refund. Email CVC to update batch app status. CVC can\'t issue refunds — only the TC can.',
@@ -7188,6 +7388,75 @@ function confidenceLabel(score) {
   return { dots:'●○○', label:'possible', cls:'conf-low' };
 }
 
+// ─────────────────────────────────────────────────────────────────────
+// QUICK ACTIONS — per-entry inline action chips shown in the top
+// result card. Routes students to the most useful next step without
+// requiring them to open the full entry first.
+// ─────────────────────────────────────────────────────────────────────
+const QUICK_ACTIONS = {
+  'err-verify-account': [
+    { label: 'Update OpenCCC email', href: 'https://www.opencccapply.net', external: true },
+    { label: 'Read setup primer', href: '#t-account-setup' }
+  ],
+  't-account-setup': [
+    { label: 'OpenCCC sign-in', href: 'https://www.opencccapply.net', external: true },
+    { label: 'Apply to a CCC', href: 'https://icangotocollege.com', external: true }
+  ],
+  't-email-change': [
+    { label: 'OpenCCC profile', href: 'https://www.opencccapply.net', external: true }
+  ],
+  'err-cccid': [
+    { label: 'Recover OpenCCC', href: 'https://www.opencccapply.net', external: true }
+  ],
+  'err-duplicate-login': [
+    { label: 'OpenCCC account help', href: 'https://www.opencccapply.net', external: true }
+  ],
+  'sym-tuition': [
+    { label: 'Open the residency 2-step', href: '#t-residency' }
+  ],
+  'err-residency-not-synced': [
+    { label: 'Email template', href: '#t-residency' }
+  ],
+  'sym-paid': [
+    { label: 'Use the email builder', href: '#email' }
+  ],
+  'err-dropfail': [
+    { label: 'Check the date tool', href: '#dater' }
+  ],
+  't-1098t': [
+    { label: 'Refunds & contacts', href: 'https://www.cvc.edu/students/refunds/', external: true }
+  ],
+  't-residency': [
+    { label: 'CVC residency page', href: 'https://www.cvc.edu/students/student-residency/', external: true }
+  ],
+  't-aid': [
+    { label: 'CVC financial aid page', href: 'https://www.cvc.edu/students/financial-aid/', external: true }
+  ],
+  't-transcript': [
+    { label: 'CVC transcripts page', href: 'https://www.cvc.edu/students/transcripts-students/', external: true }
+  ],
+  'sym-failed': [
+    { label: 'Retry on cvc.edu', href: 'https://search.cvc.edu', external: true }
+  ],
+  't-paid-school-directly': [
+    { label: 'Email builder', href: '#email' }
+  ],
+  't-class-cancelled': [
+    { label: 'Email builder', href: '#email' }
+  ],
+};
+
+function quickActionsFor(item) {
+  const actions = QUICK_ACTIONS[item.id];
+  if (!actions || !actions.length) return '';
+  const chips = actions.map(a => {
+    const target = a.external ? 'target="_blank" rel="noopener"' : '';
+    const icon = a.external ? '↗' : '→';
+    return `<a class="qa-chip" href="${a.href}" ${target} data-qa-id="${item.id}" data-qa-label="${escapeHtml(a.label)}" onclick="event.stopPropagation();">${escapeHtml(a.label)} <span class="qa-chip-icon">${icon}</span></a>`;
+  }).join('');
+  return `<div class="quick-actions">${chips}</div>`;
+}
+
 function renderResults(results, query) {
   const wrap = document.getElementById('find-results');
   const qTrim = query.trim();
@@ -7259,6 +7528,7 @@ function renderResults(results, query) {
     <div class="find-result-body">
       <div class="find-result-title">${highlightTerms(top.item.title, stemmedTokens)}</div>
       ${top.item.preview ? `<div class="find-result-preview">${highlightTerms(top.item.preview, stemmedTokens)}</div>` : ''}
+      ${quickActionsFor(top.item)}
       <div class="find-result-meta">
         <span class="find-result-section">${escapeHtml(top.item.section)}</span>
         ${top.hits.length ? `<span class="find-result-tags">· matched <em>${top.hits.map(h => '"' + escapeHtml(h) + '"').join(', ')}</em></span>` : ''}
@@ -7294,8 +7564,8 @@ findInput.addEventListener('input', (e) => {
   const q = e.target.value;
   findTimer = setTimeout(() => {
     renderResults(findMatches(q), q);
-    if (q.trim().length >= 4) saveRecentSearch(q.trim());
-  }, 220);
+    if (q.trim().length >= 8) saveRecentSearch(q.trim());
+  }, 140);
 });
 
 // Example chips — click to fill input + run search immediately
