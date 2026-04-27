@@ -2630,18 +2630,22 @@ article.mistake .copy-link {
       </summary>
       <div class="entry-body">
         <div class="entry-cell">
-          <div class="entry-cell-lbl">What it means</div>
-          <div class="entry-cell-v">The drop didn't process. Possible reasons: a hold on your account, a passed deadline, or a system error on our side.</div>
+          <div class="entry-cell-lbl">Most likely cause</div>
+          <div class="entry-cell-v"><strong>A hold on your Teaching College account.</strong> By far the most common reason — the TC's SIS refuses to drop a student with an active hold (often financial, sometimes registration). Banner-based colleges (Saddleback, College of the Mountains/CMC, others) hit this pattern frequently.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Other causes</div>
+          <div class="entry-cell-v">Drop-without-W deadline already passed at the TC, OR a real system / middleware error. Each has a different fix path.</div>
         </div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">Don't retry</div>
-          <div class="entry-cell-v">Repeat attempts won't fix it and create duplicate records that slow resolution.</div>
+          <div class="entry-cell-v">Repeated attempts create duplicate records that slow resolution. One careful try, then stop.</div>
         </div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">Time pressure</div>
-          <div class="entry-cell-v">If your drop deadline is within 72 hours, mark the email URGENT.</div>
+          <div class="entry-cell-v">If your drop-without-W deadline is within 72 hours, mark the email URGENT and follow the parallel-path advice.</div>
         </div>
-        <div class="entry-action"><strong>Email once —</strong> with CCCID, course/CRN, screenshot of the error, and your drop deadline date. Use the <a href="#email">ticket builder</a>.</div>
+        <div class="entry-action"><strong>What works fastest —</strong> (i) check your Teaching College account for any hold (financial, registration, or other) and clear it directly with the TC's A&amp;R office; (ii) email CVC support <em>once</em> with your CCCID, course/CRN, an error screenshot, and the deadline date — the team can request a manual drop on the back end if needed; (iii) email the TC's A&amp;R in parallel for documented timely intent. Use the <a href="#email">ticket builder</a>.</div>
       </div>
     </details>
 
@@ -2754,6 +2758,140 @@ article.mistake .copy-link {
           <div class="entry-cell-lbl">When to email</div>
           <div class="entry-cell-v">After 3 business days, or within 24 hours of class start.</div>
         </div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-corequisite">
+      <summary>
+        <div class="entry-msg">Co-requisite lab error: "prerequisite not met"</div>
+        <div class="entry-tag act icon-plus">contact TC A&amp;R</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What it means</div>
+          <div class="entry-cell-v">You're enrolled in the lecture (e.g., ANTH 101), but the system blocks the companion lab (ANTH 101L) saying you don't meet the prerequisite — even though the lab is a <em>co-requisite,</em> not a prerequisite. The check fires before recognizing your concurrent enrollment.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Why it happens</div>
+          <div class="entry-cell-v">The Teaching College's SIS evaluates the lab as a standalone course, not as paired with the lecture. The instructor and TC A&amp;R can manually clear it.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">First step</div>
+          <div class="entry-cell-v">Email the lab instructor explaining you're already in the lecture. Loop in the Teaching College's A&amp;R office. They typically clear the override within 1–2 business days.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">CVC support's role</div>
+          <div class="entry-cell-v">Limited — this is a TC-side override. CVC can escalate but the actual unlock happens at the TC.</div>
+        </div>
+        <div class="entry-action"><strong>Action —</strong> email the TC instructor + A&amp;R first. CVC support second if no response within 2 business days.</div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-duplicate-login">
+      <summary>
+        <div class="entry-msg">Login error: "duplicate account" or password reset loop</div>
+        <div class="entry-tag act icon-plus">try logout + cookies</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What it means</div>
+          <div class="entry-cell-v">You have multiple OpenCCC profiles (often from old applications under different emails or schools), and the SSO sees them as duplicates — blocks login or sends you in a password-reset loop.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Try this first (90 seconds)</div>
+          <div class="entry-cell-v">
+            (i) Log out of all OpenCCC sessions globally — there's a "log out everywhere" link on OpenCCC.<br>
+            (ii) Clear browser cookies for openccc.net and your CCC's SSO domain.<br>
+            (iii) Try a different browser, or incognito/private mode.<br>
+            (iv) Confirm your CCCID is correctly linked at your Home College's portal.
+          </div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If still broken</div>
+          <div class="entry-cell-v">This is a CCC Tech Center issue, not a CVC issue. Email <a href="mailto:cccsupport@openccc.net">cccsupport@openccc.net</a> with: your full name, both emails involved (if known), date of birth, and a screenshot. They can merge or retire the duplicate profile.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Why CVC can't fix it</div>
+          <div class="entry-cell-v">CVC doesn't have admin access to OpenCCC profiles. The CCC Tech Center owns the identity layer.</div>
+        </div>
+        <div class="entry-action"><strong>Don't email CVC first</strong> — try the 4-step browser fix, then go to CCC Tech Center if it persists. CVC routes you to them anyway.</div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-records-research">
+      <summary>
+        <div class="entry-msg">Transcript on hold for "Records Research"</div>
+        <div class="entry-tag act icon-plus">verify name spelling</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What it means</div>
+          <div class="entry-cell-v">Parchment received your transcript request but couldn't match it to a record at the Teaching College. Almost always a <strong>name mismatch</strong> — the name you used when ordering doesn't exactly match what the TC has on file.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Common cases</div>
+          <div class="entry-cell-v">Last name with two parts (e.g., "Pereyra Palacio" vs "Pereyra"); preferred vs legal name; hyphenated names; accents/diacritics omitted; first/middle initial added or dropped.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">First step</div>
+          <div class="entry-cell-v">Look up exactly what name the Teaching College has on file (usually visible in their student portal or on a prior transcript). Re-submit the Parchment order with that exact name spelling.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If still stuck</div>
+          <div class="entry-cell-v">Email Parchment's CVC support (cvc.customersupport@parchment.com) with your order confirmation number, the email used, your CCCID, and the exact name as it appears at the Teaching College.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-old-payment">
+      <summary>
+        <div class="entry-msg">A past payment was declined and I just found out</div>
+        <div class="entry-tag act icon-plus">documentation request</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What this is</div>
+          <div class="entry-cell-v">A scenario that surfaces months later: the Teaching College contacts you to say they didn't receive payment, and CVC's records show the original payment was declined — but you weren't notified at the time. Rare but real.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What CVC can provide</div>
+          <div class="entry-cell-v">Documentation of the declined transaction: timestamp, last-4 of the card, amount. Useful for verifying with your bank and for re-submitting payment if needed.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Email what you have</div>
+          <div class="entry-cell-v">CCCID, the term/course in question, what the Teaching College told you, and the approximate date of the original attempt. CVC can pull the transaction record from their side.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Realistic outcome</div>
+          <div class="entry-cell-v">If the decline is documented, you can resubmit the payment — sometimes with help from the TC if the term is closed.</div>
+        </div>
+        <div class="entry-action"><strong>Email support</strong> with your transaction details — they'll provide documentation you can use with the TC and your bank.</div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-prereq-after-start">
+      <summary>
+        <div class="entry-msg">Prereq still pending and class has already started</div>
+        <div class="entry-tag stop icon-plus">act now — escalate to TC</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What it means</div>
+          <div class="entry-cell-v">You submitted prerequisite docs in advance, but the Teaching College's A&amp;R hasn't reviewed them yet — and your class has now started. Different from "Prerequisite Pending Review" alone (which is normal); the urgency comes from the class actually being in session.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Why this happens</div>
+          <div class="entry-cell-v">Non-CCC prereqs (private, 4-year, out-of-state) need manual review; some TCs are slower than others, especially smaller or rural colleges. Once class starts, every day you wait you fall further behind.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">First step (today)</div>
+          <div class="entry-cell-v">Email the Teaching College's A&amp;R office <strong>directly</strong> — don't wait on CVC. Subject: "URGENT — class started [date], prereq pending review for [course] / CCCID [yours]." Attach the same prereq docs you submitted to CVC.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">CVC's role here</div>
+          <div class="entry-cell-v">Can also escalate, but the TC's A&amp;R is the one who actually approves. Going directly cuts a step.</div>
+        </div>
+        <div class="entry-action"><strong>Don't passively wait</strong> — once class is in session, reach out to the TC every business day until resolved. Your tone can be polite + persistent. Document each contact.</div>
       </div>
     </details>
 
@@ -3131,6 +3269,7 @@ article.mistake .copy-link {
         <div class="step"><div class="step-num">ii.</div><div class="step-text">Class Schedule → click <strong>Drop Course</strong> on the class.</div></div>
         <div class="step"><div class="step-num">iii.</div><div class="step-text">Confirm. <strong>Don't repeat-click</strong> if the page seems slow.</div></div>
       </div>
+      <aside class="aside"><strong>If you get "Drop Failed" —</strong> the most common cause is an account hold at the Teaching College (often financial). Check the TC's student portal for any holds, clear them with the TC's A&amp;R or cashier, then try the drop again. See <a href="#err-dropfail">§iii. Drop Failed</a> for the full diagnosis.</aside>
 
       <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 4px;">Switching classes</p>
       <div class="flow">
@@ -3307,6 +3446,8 @@ article.mistake .copy-link {
   <div class="builder-intro">What to expect after you send.</div>
   <p class="builder-hint">A realistic look at the response side, so you know what's normal and what's not.</p>
 
+  <aside class="aside calm"><strong>Who actually replies —</strong> when you email <em>cvc.customersupport@parchment.com</em>, the first reply comes from <strong>Parchment's support team</strong> (you'll see names like Mikayla, Courtney, etc.) — they front the email queue and resolve most issues directly. For things that need back-end action (manual drops, transcript holds, payment reconciliation, system bugs), they escalate to <strong>CVC staff</strong> (Donna, Logan, others). You may see replies from both — same case, different roles.</aside>
+
   <div class="dual">
     <div class="dual-card yes">
       <h4>What support CAN do</h4>
@@ -3432,6 +3573,10 @@ article.mistake .copy-link {
     <div class="gloss"><dt class="gloss-term">DSO</dt><dd class="gloss-def">Designated School Official. The official at your sponsoring school who handles F-1 visa paperwork. They authorize concurrent enrollment.</dd></div>
     <div class="gloss"><dt class="gloss-term">CCCApply</dt><dd class="gloss-def">The system you use to apply to a California Community College. Find it at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a>. <strong>Different from</strong> the CVC Exchange — CCCApply admits you to a college; CVC Exchange routes you between colleges after admission.</dd></div>
     <div class="gloss"><dt class="gloss-term">No-notation drop</dt><dd class="gloss-def">A drop early enough in the term that nothing appears on your transcript. <em>Usually</em> the first 2–3 weeks of a 16-week semester (the per-section date is what counts; check the Teaching College's deadline tool).</dd></div>
+    <div class="gloss"><dt class="gloss-term">Course Eligibility Review</dt><dd class="gloss-def">When you cross-enroll into a CVC course, your <strong>Home College</strong> automatically receives a request to review whether the course fits your degree program — for financial aid packaging. This is a routine workflow, not something you need to act on. Your HC handles it on their side.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Records Research (Parchment hold)</dt><dd class="gloss-def">When a transcript request can't be matched to a record at the Teaching College — almost always a name spelling mismatch. Order will sit in "Records Research" until you re-submit with the exact name on file at the TC.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Hold (Teaching College)</dt><dd class="gloss-def">An account flag on the TC's side that blocks registration changes (most often blocks <em>drops</em>). Often financial (unpaid fees), sometimes registration-related. Banner-based colleges hit this pattern most. Clear with the TC's A&amp;R office or cashier.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Parchment</dt><dd class="gloss-def">The vendor that runs the CVC Exchange's student-facing UI <em>and</em> the front-line support email queue. When you email <a href="mailto:cvc.customersupport@parchment.com">cvc.customersupport@parchment.com</a>, Parchment's team replies first. They escalate to CVC staff for back-end actions.</dd></div>
   </dl>
 </section>
 
