@@ -900,6 +900,115 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   }
 }
 
+/* ─────────────────────────── AT A GLANCE GALLERY ─────────────────────────── */
+/* Surfaces all five diagrams above the collapsed task guides so visual
+   learners see them on first load instead of having to expand every section. */
+.visual-gallery {
+  margin: 28px 0 44px;
+  padding: 28px clamp(16px, 3vw, 32px) 32px;
+  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-deep) 100%);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  position: relative;
+}
+.visual-gallery::before {
+  content: "Visual guides";
+  position: absolute;
+  top: -10px;
+  left: 28px;
+  background: var(--paper);
+  padding: 0 12px;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "SOFT" 80;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.visual-gallery-title {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36, "SOFT" 80;
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--ink);
+  margin: 4px 0 4px;
+  letter-spacing: -0.01em;
+}
+.visual-gallery-title em {
+  font-style: italic;
+  color: var(--claret);
+}
+.visual-gallery-dek {
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  margin: 0 0 22px;
+  max-width: 560px;
+  line-height: 1.55;
+}
+.visual-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.visual-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 18px 18px 14px;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.visual-card:hover,
+.visual-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--claret-pale);
+  box-shadow: 0 10px 28px -12px rgba(50, 30, 20, 0.18);
+  outline: none;
+}
+.visual-card .diagram {
+  margin: 0;
+  padding: 14px 12px 10px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule-soft);
+}
+.visual-card .diagram-caption {
+  font-size: 12px;
+  margin-top: 8px;
+}
+.visual-card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-family: var(--serif-body);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--claret);
+  letter-spacing: 0.01em;
+}
+.visual-card-cta::after {
+  content: "→";
+  transition: transform 0.18s ease;
+}
+.visual-card:hover .visual-card-cta::after,
+.visual-card:focus-visible .visual-card-cta::after {
+  transform: translateX(3px);
+}
+.visual-card.span-2 {
+  grid-column: 1 / -1;
+}
+.visual-card.span-2 .diagram {
+  overflow-x: auto;
+}
+@media (max-width: 720px) {
+  .visual-grid { grid-template-columns: 1fr; }
+}
+
 /* §ix Designed Limits — visually distinct as a reference section */
 section.section#limits {
   background: var(--paper-deep);
@@ -3653,6 +3762,134 @@ article.mistake .copy-link {
     </div>
   </div>
 
+  <div class="visual-gallery" aria-labelledby="visuals-heading">
+    <h3 class="visual-gallery-title" id="visuals-heading">The five things to see <em>before you scroll</em></h3>
+    <p class="visual-gallery-dek">Skim these first. Each diagram opens the full guide if you want the prose. Built for the three pages the official CVC site puts front and center: eligibility, financial aid, and transcripts — plus orientation and the registration journey.</p>
+    <div class="visual-grid">
+
+      <a class="visual-card" href="#t-primer" data-open-target="t-primer" aria-label="Open the 60-second primer guide">
+        <figure class="diagram dia-two-college" aria-label="How CVC Exchange connects your Home College and the Teaching College">
+          <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <defs>
+              <marker id="arr-claret-g1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+            </defs>
+            <circle class="col-circle" cx="100" cy="100" r="60"/>
+            <text class="col-label-major" x="100" y="92">Home</text>
+            <text class="col-label-major" x="100" y="116">College</text>
+            <text class="col-label-minor" x="100" y="178">where you log in,</text>
+            <text class="col-label-minor" x="100" y="192">where aid lives</text>
+            <circle class="col-circle" cx="500" cy="100" r="60"/>
+            <text class="col-label-major" x="500" y="92">Teaching</text>
+            <text class="col-label-major" x="500" y="116">College</text>
+            <text class="col-label-minor" x="500" y="178">where the class</text>
+            <text class="col-label-minor" x="500" y="192">actually meets</text>
+            <rect class="center-pill" x="240" y="85" width="120" height="30" rx="15"/>
+            <text class="center-text" x="300" y="105">CVC Exchange</text>
+            <path class="flow-line draw-animate" d="M 165 80 C 215 60, 260 60, 240 92" style="color:var(--claret)" marker-end="url(#arr-claret-g1)"/>
+            <text class="flow-label fade-in" x="200" y="55">enrollment · payment</text>
+            <path class="flow-line draw-animate" d="M 360 108 C 380 145, 420 145, 435 122" style="color:var(--claret)" marker-end="url(#arr-claret-g1)"/>
+            <text class="flow-label fade-in" x="400" y="160">grades · transcripts</text>
+          </svg>
+          <figcaption class="diagram-caption"><strong>Two colleges, one routing layer.</strong> CVC sits between them; enrollment and payment flow to the Teaching College, grades and transcripts flow back to your Home College.</figcaption>
+        </figure>
+        <span class="visual-card-cta">Read the 60-second primer</span>
+      </a>
+
+      <a class="visual-card" href="#t-eligibility" data-open-target="t-eligibility" aria-label="Open the eligibility guide">
+        <figure class="diagram dia-eligibility" aria-label="At-a-glance eligibility checklist">
+          <div style="font-family: var(--serif-display); font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 80; font-size: 12px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 8px;">Need ALL of these</div>
+          <div class="checklist-row yes"><span class="checklist-icon yes">✓</span><span class="checklist-text"><strong>18 years or older</strong></span></div>
+          <div class="checklist-row yes"><span class="checklist-icon yes">✓</span><span class="checklist-text"><strong>Enrolled at a CCC Home College</strong></span></div>
+          <div class="checklist-row yes"><span class="checklist-icon yes">✓</span><span class="checklist-text"><strong>2.0 GPA</strong> (or none yet)</span></div>
+          <div class="checklist-row yes"><span class="checklist-icon yes">✓</span><span class="checklist-text"><strong>No outstanding fees</strong></span></div>
+          <div class="checklist-row yes"><span class="checklist-icon yes">✓</span><span class="checklist-text"><strong>California address on file</strong></span></div>
+          <div style="font-family: var(--serif-display); font-style: italic; font-variation-settings: 'opsz' 14, 'SOFT' 80; font-size: 12px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.16em; margin: 14px 0 8px;">NOT eligible via CVC</div>
+          <div class="checklist-row no"><span class="checklist-icon no">×</span><span class="checklist-text"><strong>Dual-enrolled HS students</strong></span></div>
+          <div class="checklist-row no"><span class="checklist-icon no">×</span><span class="checklist-text"><strong>F-1 visa students</strong></span></div>
+          <div class="checklist-row no"><span class="checklist-icon no">×</span><span class="checklist-text"><strong>Adult Education students</strong></span></div>
+          <figcaption class="diagram-caption" style="margin-top: 10px;">Source: cvc.edu/students/student-eligibility</figcaption>
+        </figure>
+        <span class="visual-card-cta">Special cases &amp; exceptions</span>
+      </a>
+
+      <a class="visual-card" href="#t-aid" data-open-target="t-aid" aria-label="Open the financial aid guide">
+        <figure class="diagram dia-money" aria-label="How money flows for a CVC course">
+          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <defs>
+              <marker id="arr-claret-g2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
+              <marker id="arr-moss-g2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
+            </defs>
+            <rect class="actor" x="240" y="20" width="120" height="50" rx="6"/>
+            <text class="actor-label" x="300" y="42">You</text>
+            <text class="actor-sub" x="300" y="58">(student)</text>
+            <rect class="actor" x="40" y="155" width="170" height="50" rx="6"/>
+            <text class="actor-label" x="125" y="177">Home College</text>
+            <text class="actor-sub" x="125" y="193">where aid lives</text>
+            <rect class="actor" x="390" y="155" width="170" height="50" rx="6"/>
+            <text class="actor-label" x="475" y="177">Teaching College</text>
+            <text class="actor-sub" x="475" y="193">where you pay first</text>
+            <path class="arrow-up draw-animate" d="M 360 60 C 460 80, 480 110, 475 150" marker-end="url(#arr-claret-g2)"/>
+            <text class="arrow-label-up fade-in" x="450" y="105">① pay upfront</text>
+            <text class="arrow-label-up fade-in" x="450" y="120">(card)</text>
+            <path class="arrow-down draw-animate" d="M 125 150 C 135 110, 175 80, 240 60" marker-end="url(#arr-moss-g2)"/>
+            <text class="arrow-label-down fade-in" x="155" y="105">② aid reimburses</text>
+            <text class="arrow-label-down fade-in" x="155" y="120">(if approved)</text>
+          </svg>
+          <figcaption class="diagram-caption"><strong>Money flows two ways.</strong> Pay the Teaching College upfront. Your Home College reimburses you per your aid package. Federal aid never disburses at the TC.</figcaption>
+        </figure>
+        <span class="visual-card-cta">CCPG, Pell, FAFSA, VA</span>
+      </a>
+
+      <a class="visual-card" href="#t-transcript" data-open-target="t-transcript" aria-label="Open the transcripts guide">
+        <figure class="diagram dia-transcript" aria-label="The two paths your transcripts can take after a CVC class">
+          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <defs>
+              <marker id="arr-moss-g3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
+              <marker id="arr-claret-g3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
+            </defs>
+            <rect class="endpoint" x="20" y="85" width="150" height="50" rx="6"/>
+            <text class="endpoint-label" x="95" y="106">Teaching</text>
+            <text class="endpoint-label" x="95" y="124">College</text>
+            <path d="M 170 100 C 280 80, 360 80, 425 95" stroke="var(--moss)" stroke-width="2" fill="none" marker-end="url(#arr-moss-g3)" class="draw-animate"/>
+            <rect class="endpoint" x="425" y="75" width="155" height="50" rx="6"/>
+            <text class="endpoint-label" x="502" y="96">Home College</text>
+            <text class="endpoint-label" x="502" y="114" style="font-size:11px;font-style:italic;">automatic</text>
+            <text class="path-label auto fade-in" x="298" y="68">automatic — around 3 weeks</text>
+            <path d="M 170 120 C 280 160, 360 160, 425 145" stroke="var(--claret)" stroke-width="2" stroke-dasharray="5,4" fill="none" marker-end="url(#arr-claret-g3)" class="draw-animate"/>
+            <rect class="endpoint" x="425" y="135" width="155" height="50" rx="6"/>
+            <text class="endpoint-label" x="502" y="156">4-year college</text>
+            <text class="endpoint-label" x="502" y="174" style="font-size:11px;font-style:italic;">or employer</text>
+            <text class="path-label manual fade-in" x="298" y="200">you order it — TC's request process</text>
+          </svg>
+          <figcaption class="diagram-caption"><strong>Two transcript paths.</strong> Grades flow back to your Home College automatically. To send a transcript to a 4-year or employer, order it from the Teaching College.</figcaption>
+        </figure>
+        <span class="visual-card-cta">Order &amp; transfer process</span>
+      </a>
+
+      <a class="visual-card span-2" href="#t-happy-path" data-open-target="t-happy-path" aria-label="Open the registration journey guide">
+        <figure class="diagram dia-journey" aria-label="The registration journey from start to taking your class">
+          <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <line class="journey-rule" x1="40" y1="60" x2="720" y2="60"/>
+            <g><circle class="step-circle done" cx="55" cy="60" r="14"/><text class="step-num done" x="55" y="64">1</text><text class="step-label" x="55" y="92">Created</text><text class="step-sub" x="55" y="106">you started</text></g>
+            <g><circle class="step-circle done" cx="140" cy="60" r="14"/><text class="step-num done" x="140" y="64">2</text><text class="step-label" x="140" y="92">Consent</text><text class="step-sub" x="140" y="106">signed form</text></g>
+            <g><circle class="step-circle done" cx="225" cy="60" r="14"/><text class="step-num done" x="225" y="64">3</text><text class="step-label" x="225" y="92">AER Submitted</text><text class="step-sub" x="225" y="106">enrollment form</text></g>
+            <g><circle class="step-circle cvc" cx="310" cy="60" r="14"/><text class="step-num" x="310" y="64">4</text><text class="step-label" x="310" y="92">Eligible &amp;</text><text class="step-label" x="310" y="105">Approved</text><text class="step-sub" x="310" y="119">~minutes</text></g>
+            <g><circle class="step-circle tc" cx="395" cy="60" r="14"/><text class="step-num" x="395" y="64">5</text><text class="step-label" x="395" y="92">Pending</text><text class="step-label" x="395" y="105">Validation</text><text class="step-sub" x="395" y="119">~1–2 biz days</text></g>
+            <g><circle class="step-circle tc" cx="480" cy="60" r="14"/><text class="step-num" x="480" y="64">6</text><text class="step-label" x="480" y="92">Validated &amp;</text><text class="step-label" x="480" y="105">Registered</text><text class="step-sub" x="480" y="119">you're in</text></g>
+            <g><circle class="step-circle cvc" cx="565" cy="60" r="14"/><text class="step-num" x="565" y="64">7</text><text class="step-label" x="565" y="92">Enrolled</text><text class="step-label" x="565" y="105">&amp; Paid</text><text class="step-sub" x="565" y="119">click Confirm!</text></g>
+            <g><circle class="step-circle tc" cx="650" cy="60" r="14"/><text class="step-num" x="650" y="64">8</text><text class="step-label" x="650" y="92">Canvas</text><text class="step-label" x="650" y="105">access</text><text class="step-sub" x="650" y="119">~24–48h</text></g>
+            <text class="phase-label" x="140" y="36">— You —</text>
+            <text class="phase-label" x="395" y="36">— System review —</text>
+            <text class="phase-label" x="650" y="36">— Take the class —</text>
+          </svg>
+          <figcaption class="diagram-caption"><strong>The full registration journey.</strong> Steps 1–3 are you. Steps 4–6 are CVC and the Teaching College reviewing. Step 7 is paying. Step 8 is Canvas opening up. Times are typical, but each Teaching College sets its own pace.</figcaption>
+        </figure>
+        <span class="visual-card-cta">What success looks like at each step</span>
+      </a>
+
+    </div>
+  </div>
+
   <details id="t-primer">
     <summary>
       <div class="task-summary">
@@ -5440,6 +5677,30 @@ document.querySelectorAll('details[id]').forEach(el => {
   el.addEventListener('toggle', () => {
     if (el.open) track('entry_open', { id: el.id });
   });
+});
+
+// ════════════════════════════════════════════════════════════════════
+// VISUAL GALLERY — clicking a card opens the matching <details>
+// ════════════════════════════════════════════════════════════════════
+
+document.querySelectorAll('.visual-card[data-open-target]').forEach(card => {
+  card.addEventListener('click', (e) => {
+    const targetId = card.getAttribute('data-open-target');
+    const target = document.getElementById(targetId);
+    if (target && target.tagName === 'DETAILS') {
+      target.open = true;
+      track('visual_card_click', { id: targetId });
+    }
+  });
+});
+
+// If user lands on a #t-* anchor directly, open that details on load
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (hash && hash.startsWith('#t-')) {
+    const target = document.getElementById(hash.slice(1));
+    if (target && target.tagName === 'DETAILS') target.open = true;
+  }
 });
 
 // ════════════════════════════════════════════════════════════════════
