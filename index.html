@@ -1050,6 +1050,708 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   .visual-grid { grid-template-columns: 1fr; }
 }
 
+/* ─────────────────────────── INTERACTIVE DIAGNOSE TOOLS ─────────────────────────── */
+/* Quick Diagnose section: quiz + tuition calculator + eligibility self-check.
+   The quiz branches across 2-3 questions to land on the exact entry. */
+
+.diagnose {
+  margin: 36px 0 28px;
+  padding: 32px clamp(20px, 4vw, 44px);
+  background:
+    radial-gradient(ellipse at top right, rgba(207, 46, 46, 0.04), transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(94, 122, 78, 0.04), transparent 50%),
+    var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+.diagnose::before {
+  content: "Interactive";
+  position: absolute;
+  top: -1.5px;
+  right: 36px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 4px 14px 4px 14px;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "SOFT" 80;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-radius: 0 0 4px 4px;
+}
+.diagnose-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 14, "SOFT" 80;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--claret);
+  margin: 0 0 6px;
+}
+.diagnose-title {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 48, "SOFT" 80;
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+}
+.diagnose-title em {
+  font-style: italic;
+  color: var(--claret);
+}
+.diagnose-dek {
+  font-family: var(--serif-body);
+  font-size: 15.5px;
+  color: var(--ink-soft);
+  max-width: 620px;
+  margin: 0 0 26px;
+  line-height: 1.55;
+}
+.diagnose-tabs {
+  display: flex;
+  gap: 2px;
+  margin: 0 0 22px;
+  border-bottom: 1px solid var(--rule);
+  flex-wrap: wrap;
+}
+.diagnose-tab {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 10px 16px 12px;
+  font-family: var(--serif-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color 0.18s ease, border-color 0.18s ease;
+  letter-spacing: 0.01em;
+}
+.diagnose-tab:hover { color: var(--ink); }
+.diagnose-tab[aria-selected="true"] {
+  color: var(--ink);
+  border-bottom-color: var(--claret);
+  font-weight: 600;
+}
+.diagnose-tab .tab-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  margin-right: 6px;
+  color: var(--claret);
+}
+.diagnose-pane[hidden] { display: none; }
+
+/* Quiz */
+.quiz-stage {
+  position: relative;
+  min-height: 280px;
+}
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.quiz-progress-track {
+  flex: 1;
+  height: 3px;
+  background: var(--paper-deep);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--claret), var(--claret-deep));
+  width: 33%;
+  transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.quiz-progress-label {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.quiz-card {
+  animation: quiz-fade 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.quiz-card[hidden] { display: none; }
+@keyframes quiz-fade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.quiz-question {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36, "SOFT" 80;
+  font-size: clamp(20px, 2.6vw, 26px);
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0 0 18px;
+  letter-spacing: -0.01em;
+}
+.quiz-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+}
+.quiz-option {
+  appearance: none;
+  text-align: left;
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+  position: relative;
+  line-height: 1.4;
+}
+.quiz-option:hover,
+.quiz-option:focus-visible {
+  border-color: var(--ink);
+  background: var(--paper-deep);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -8px rgba(50, 30, 20, 0.18);
+  outline: none;
+}
+.quiz-option .quiz-letter {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin-right: 10px;
+  border-radius: 50%;
+  background: var(--paper-deep);
+  color: var(--claret);
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  text-align: center;
+  line-height: 22px;
+  vertical-align: middle;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+.quiz-option:hover .quiz-letter,
+.quiz-option:focus-visible .quiz-letter {
+  background: var(--claret);
+  color: var(--paper);
+}
+.quiz-back {
+  appearance: none;
+  background: transparent;
+  border: none;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  padding: 6px 0;
+  margin-bottom: 14px;
+}
+.quiz-back:hover { color: var(--claret); }
+.quiz-back::before { content: "← "; }
+.quiz-result {
+  background: var(--paper-deep);
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  padding: 22px 24px;
+}
+.quiz-result-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--moss);
+  margin-bottom: 6px;
+}
+.quiz-result-title {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36, "SOFT" 80;
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0 0 10px;
+  font-weight: 400;
+}
+.quiz-result-body {
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink);
+  line-height: 1.55;
+  margin: 0 0 16px;
+}
+.quiz-result-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.quiz-result-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background: var(--claret);
+  color: var(--paper);
+  text-decoration: none;
+  border-radius: 6px;
+  font-family: var(--serif-body);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.16s ease, transform 0.16s ease;
+}
+.quiz-result-cta:hover { background: var(--claret-deep); transform: translateY(-1px); }
+.quiz-result-cta::after { content: "→"; transition: transform 0.16s ease; }
+.quiz-result-cta:hover::after { transform: translateX(3px); }
+.quiz-result-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  background: transparent;
+  border: 1.5px solid var(--rule);
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 6px;
+  font-family: var(--serif-body);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Tuition Calculator */
+.calc {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: start;
+}
+.calc-form {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 20px 22px;
+}
+.calc-row {
+  margin-bottom: 16px;
+}
+.calc-label {
+  display: block;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.calc-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--serif-body);
+  font-size: 18px;
+  color: var(--ink);
+  background: var(--paper-deep);
+  border: 1.5px solid var(--rule);
+  border-radius: 6px;
+  transition: border-color 0.16s ease, background 0.16s ease;
+  box-sizing: border-box;
+}
+.calc-input:focus {
+  border-color: var(--claret);
+  background: var(--paper);
+  outline: none;
+}
+.calc-input-prefix {
+  position: relative;
+}
+.calc-input-prefix::before {
+  content: "$";
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--serif-body);
+  font-size: 18px;
+  color: var(--ink-faint);
+  pointer-events: none;
+}
+.calc-input-prefix .calc-input { padding-left: 30px; }
+.calc-result {
+  background: var(--paper-deep);
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 20px 22px;
+  min-height: 200px;
+}
+.calc-result.calc-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: var(--serif-display);
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 14px;
+}
+.calc-verdict-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.calc-verdict-tag.ok { background: #ecf2e9; color: var(--moss); }
+.calc-verdict-tag.warn { background: #fdebcc; color: #946400; }
+.calc-verdict-tag.bad { background: #fde4e4; color: var(--claret); }
+.calc-verdict-headline {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36, "SOFT" 80;
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0 0 8px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.calc-verdict-body {
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink);
+  line-height: 1.55;
+  margin: 0 0 12px;
+}
+.calc-verdict-numbers {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--rule);
+  padding-top: 10px;
+  margin-top: 10px;
+}
+.calc-verdict-cta {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: var(--serif-body);
+  font-size: 13px;
+  color: var(--claret);
+  font-weight: 500;
+}
+@media (max-width: 720px) {
+  .calc { grid-template-columns: 1fr; }
+}
+
+/* Eligibility self-check */
+.eligibility-checker {
+  background: var(--paper);
+  border: 1.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 22px 24px;
+}
+.eligibility-checker-title {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 16px;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+.eligibility-checker-dek {
+  font-family: var(--serif-body);
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+.elig-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  cursor: pointer;
+  transition: opacity 0.16s ease;
+}
+.elig-item:last-child { border-bottom: none; }
+.elig-checkbox {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--rule);
+  border-radius: 4px;
+  background: var(--paper);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: border-color 0.16s ease, background 0.16s ease;
+}
+.elig-checkbox:checked {
+  background: var(--moss);
+  border-color: var(--moss);
+}
+.elig-checkbox:checked::after {
+  content: "✓";
+  color: var(--paper);
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  font-weight: 700;
+}
+.elig-text {
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink);
+  line-height: 1.45;
+}
+.elig-text small {
+  display: block;
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+}
+.elig-verdict {
+  margin-top: 18px;
+  padding: 14px 18px;
+  border-radius: 6px;
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 15px;
+  font-variation-settings: "opsz" 16, "SOFT" 80;
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+  border-left: 3px solid var(--rule);
+  transition: all 0.24s ease;
+}
+.elig-verdict.complete {
+  background: #ecf2e9;
+  color: var(--moss);
+  border-left-color: var(--moss);
+}
+.elig-verdict.partial {
+  background: #fdebcc;
+  color: #946400;
+  border-left-color: #946400;
+}
+
+/* Reading progress badge */
+.progress-badge {
+  position: fixed;
+  bottom: 92px;
+  right: 16px;
+  z-index: 80;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 9px 14px;
+  border-radius: 999px;
+  font-family: var(--serif-body);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.progress-badge.show { display: inline-flex; }
+.progress-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px -6px rgba(0, 0, 0, 0.28);
+}
+.progress-badge .progress-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--moss);
+  display: inline-block;
+}
+.progress-badge .progress-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  color: var(--paper);
+}
+
+/* Per-entry helpful feedback */
+.helpful {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--rule);
+}
+.helpful-q {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12.5px;
+  color: var(--ink-faint);
+  letter-spacing: 0.02em;
+}
+.helpful-btn {
+  appearance: none;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: var(--serif-body);
+  font-size: 12px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.16s ease;
+}
+.helpful-btn:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.helpful-btn.active {
+  border-color: var(--claret);
+  background: var(--claret);
+  color: var(--paper);
+}
+.helpful-btn[data-vote="up"]::before { content: "↑"; font-weight: 700; }
+.helpful-btn[data-vote="down"]::before { content: "↓"; font-weight: 700; }
+.helpful-thanks {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--moss);
+  margin-left: 4px;
+}
+
+/* Myth vs Fact band */
+.myths {
+  margin: 32px 0;
+  padding: 28px clamp(20px, 3vw, 36px);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--paper) 0,
+      var(--paper) 80px,
+      var(--paper-deep) 80px,
+      var(--paper-deep) 81px
+    );
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+.myths-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 4px;
+}
+.myths-title {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 48, "SOFT" 80;
+  font-size: clamp(24px, 3vw, 32px);
+  color: var(--ink);
+  margin: 0 0 22px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+.myths-title em { color: var(--claret); }
+.myths-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+.myth-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 18px 20px;
+  position: relative;
+}
+.myth-card-myth {
+  font-family: var(--serif-body);
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  text-decoration-color: var(--claret);
+  text-decoration-thickness: 1.5px;
+  margin-bottom: 8px;
+}
+.myth-card-myth::before {
+  content: "MYTH ";
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--claret);
+  text-decoration: none;
+  margin-right: 6px;
+}
+.myth-card-fact {
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink);
+  line-height: 1.5;
+}
+.myth-card-fact::before {
+  content: "FACT ";
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--moss);
+  margin-right: 6px;
+}
+.myth-card-fact strong { font-weight: 600; }
+
+/* Improved residency diagram with documents */
+.dia-residency .doc-icon {
+  fill: var(--paper);
+  stroke: var(--ink-soft);
+  stroke-width: 1.2;
+}
+.dia-residency .doc-line {
+  stroke: var(--ink-soft);
+  stroke-width: 0.8;
+  fill: none;
+}
+.dia-residency .student-icon {
+  fill: var(--ink);
+}
+.dia-residency .step-number-bg {
+  fill: var(--claret);
+}
+.dia-residency .step-number-bg.complete { fill: var(--moss); }
+.dia-residency .step-number-text {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--paper);
+  text-anchor: middle;
+}
+.dia-residency .check-mark {
+  stroke: var(--paper);
+  stroke-width: 2;
+  fill: none;
+}
+
 /* §ix Designed Limits — visually distinct as a reference section */
 section.section#limits {
   background: var(--paper-deep);
@@ -2715,6 +3417,7 @@ article.mistake .copy-link {
   <span class="outline-label"><span data-en>Outline</span><span data-es>Esquema</span></span>
   <ol class="outline-list">
     <li><a href="#find" data-watch="find"><span class="outline-num">→</span><span><span data-en>Search</span><span data-es>Búsqueda</span></span></a></li>
+    <li><a href="#diagnose" data-watch="diagnose"><span class="outline-num">⌘</span><span><span data-en>Tools</span><span data-es>Herramientas</span></span></a></li>
     <li><a href="#urgent" data-watch="urgent"><span class="outline-num">i.</span><span><span data-en>Urgent</span><span data-es>Urgente</span></span></a></li>
     <li><a href="#symptoms" data-watch="symptoms"><span class="outline-num">ii.</span><span><span data-en>Symptoms</span><span data-es>Síntomas</span></span></a></li>
     <li><a href="#errors" data-watch="errors"><span class="outline-num">iii.</span><span><span data-en>Error decoder</span><span data-es>Errores</span></span></a></li>
@@ -2826,6 +3529,7 @@ article.mistake .copy-link {
     <span data-es>— o salta directo a una sección —</span>
   </span>
   <ol class="toc-list">
+    <li><a href="#diagnose"><span class="toc-num">⌘</span><span class="toc-name">Interactive tools — quiz, calculator, eligibility</span><span class="toc-arrow">→</span></a></li>
     <li><a href="#urgent"><span class="toc-num">i.</span><span class="toc-name">Urgent matters</span><span class="toc-arrow">→</span></a></li>
     <li><a href="#symptoms"><span class="toc-num">ii.</span><span class="toc-name">What's on your screen</span><span class="toc-arrow">→</span></a></li>
     <li><a href="#errors"><span class="toc-num">iii.</span><span class="toc-name">Decoding error messages</span><span class="toc-arrow">→</span></a></li>
@@ -2837,6 +3541,127 @@ article.mistake .copy-link {
     <li><a href="#limits"><span class="toc-num">ix.</span><span class="toc-name">Designed limits</span><span class="toc-arrow">→</span></a></li>
   </ol>
 </nav>
+
+<!-- ═══════════════════════════════ DIAGNOSE — INTERACTIVE TOOLS ═══════════════════════════════ -->
+
+<section class="diagnose" id="diagnose" aria-labelledby="diagnose-title">
+  <div class="diagnose-eyebrow">Tools</div>
+  <h2 class="diagnose-title" id="diagnose-title">Don't know where to start? <em>Try a tool.</em></h2>
+  <p class="diagnose-dek">Three small interactive tools, no email needed. <strong>Quiz</strong> walks you through a 2–3-question flow to your exact answer. <strong>Tuition checker</strong> tells you if your bill is the right number. <strong>Eligibility</strong> tap-checks whether you can cross-enroll at all.</p>
+
+  <div class="diagnose-tabs" role="tablist">
+    <button class="diagnose-tab" role="tab" aria-selected="true" aria-controls="pane-quiz" id="tab-quiz" type="button"><span class="tab-num">①</span>Self-diagnosis quiz</button>
+    <button class="diagnose-tab" role="tab" aria-selected="false" aria-controls="pane-calc" id="tab-calc" type="button"><span class="tab-num">②</span>Tuition checker</button>
+    <button class="diagnose-tab" role="tab" aria-selected="false" aria-controls="pane-elig" id="tab-elig" type="button"><span class="tab-num">③</span>Am I eligible?</button>
+  </div>
+
+  <!-- ── PANE 1: QUIZ ── -->
+  <div class="diagnose-pane" role="tabpanel" id="pane-quiz" aria-labelledby="tab-quiz">
+    <div class="quiz-progress">
+      <span class="quiz-progress-label" id="quiz-step-label">Question 1</span>
+      <div class="quiz-progress-track"><div class="quiz-progress-fill" id="quiz-progress-fill"></div></div>
+    </div>
+    <div class="quiz-stage" id="quiz-stage">
+      <!-- populated by JS -->
+    </div>
+  </div>
+
+  <!-- ── PANE 2: TUITION CALCULATOR ── -->
+  <div class="diagnose-pane" role="tabpanel" id="pane-calc" aria-labelledby="tab-calc" hidden>
+    <div class="calc">
+      <div class="calc-form">
+        <div class="calc-row">
+          <label class="calc-label" for="calc-units">How many units is the class?</label>
+          <input class="calc-input" type="number" id="calc-units" min="0" step="0.5" placeholder="e.g. 3" inputmode="decimal">
+        </div>
+        <div class="calc-row">
+          <label class="calc-label" for="calc-amount">What is the dashboard charging you?</label>
+          <div class="calc-input-prefix">
+            <input class="calc-input" type="number" id="calc-amount" min="0" step="0.01" placeholder="e.g. 1400" inputmode="decimal">
+          </div>
+        </div>
+        <p style="font-family: var(--serif-display); font-style: italic; font-size: 12px; color: var(--ink-faint); margin: 8px 0 0;">In-state rate is $46/unit. Verdict updates as you type.</p>
+      </div>
+      <div class="calc-result calc-empty" id="calc-result">
+        <span>Enter your numbers to see if your tuition is correct.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PANE 3: ELIGIBILITY SELF-CHECK ── -->
+  <div class="diagnose-pane" role="tabpanel" id="pane-elig" aria-labelledby="tab-elig" hidden>
+    <div class="eligibility-checker">
+      <h3 class="eligibility-checker-title">Tick the boxes that are true for you.</h3>
+      <p class="eligibility-checker-dek">All five must apply. Verdict updates as you tick.</p>
+      <label class="elig-item">
+        <input type="checkbox" class="elig-checkbox" data-need="1">
+        <span class="elig-text">I'm <strong>18 years or older</strong>.<small>Per cvc.edu — under-18s apply directly to the TC via CCCApply.</small></span>
+      </label>
+      <label class="elig-item">
+        <input type="checkbox" class="elig-checkbox" data-need="1">
+        <span class="elig-text">I'm <strong>currently enrolled at a CCC</strong> (my Home College) — or actively taking a class there if it's my first term.<small>"Just admitted" alone isn't enough. You need to be in a class.</small></span>
+      </label>
+      <label class="elig-item">
+        <input type="checkbox" class="elig-checkbox" data-need="1">
+        <span class="elig-text">My <strong>GPA is at least 2.0</strong>, or I haven't established one yet.<small>First-term students with no completed courses qualify under "no GPA yet."</small></span>
+      </label>
+      <label class="elig-item">
+        <input type="checkbox" class="elig-checkbox" data-need="1">
+        <span class="elig-text">I have <strong>no outstanding fees</strong> at my Home College.<small>Library fines, parking tickets, unpaid tuition all count as holds.</small></span>
+      </label>
+      <label class="elig-item">
+        <input type="checkbox" class="elig-checkbox" data-need="1">
+        <span class="elig-text">I have a <strong>California address</strong> on file at my Home College.<small>The AER form requires a CA address — out-of-state addresses block enrollment.</small></span>
+      </label>
+      <label class="elig-item">
+        <input type="checkbox" class="elig-checkbox" data-need="0" data-block="1">
+        <span class="elig-text">I'm a <strong>dual-enrolled high school student</strong>.<small>If checked, you're NOT eligible via CVC — apply directly to the TC.</small></span>
+      </label>
+      <label class="elig-item">
+        <input type="checkbox" class="elig-checkbox" data-need="0" data-block="1">
+        <span class="elig-text">I'm an <strong>F-1 visa student</strong>.<small>If checked, you're NOT eligible via CVC — talk to your DSO.</small></span>
+      </label>
+      <label class="elig-item">
+        <input type="checkbox" class="elig-checkbox" data-need="0" data-block="1">
+        <span class="elig-text">I'm an <strong>Adult Education student</strong>.<small>If checked, typically NOT permitted via CVC — check with your AE program.</small></span>
+      </label>
+      <div class="elig-verdict" id="elig-verdict">Tick boxes above to see your status.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ MYTH vs FACT ═══════════════════════════════ -->
+
+<section class="myths" id="myths" aria-labelledby="myths-title">
+  <div class="myths-eyebrow">Quick clarifications</div>
+  <h2 class="myths-title" id="myths-title">Myths students keep <em>almost-believing</em></h2>
+  <div class="myths-grid">
+    <div class="myth-card">
+      <div class="myth-card-myth">CVC charges a fee for using the Exchange.</div>
+      <div class="myth-card-fact"><strong>CVC charges nothing.</strong> You pay only the Teaching College's per-unit tuition ($46/unit if in-state) plus any local fees that college sets.</div>
+    </div>
+    <div class="myth-card">
+      <div class="myth-card-myth">Financial aid will pay the Teaching College for me.</div>
+      <div class="myth-card-fact"><strong>You pay upfront.</strong> Aid disburses through your <em>Home</em> College only, then reimburses you. Federal aid never disburses at the TC.</div>
+    </div>
+    <div class="myth-card">
+      <div class="myth-card-myth">My Home College's residency status applies everywhere.</div>
+      <div class="myth-card-fact"><strong>Each college keeps its own record.</strong> Title 5 requires every CCC to make its own residency determination. HC fix doesn't sync to TC.</div>
+    </div>
+    <div class="myth-card">
+      <div class="myth-card-myth">If support is closed, the deadline gets extended.</div>
+      <div class="myth-card-fact"><strong>It doesn't.</strong> Document your attempt with a timestamped screenshot + email. That paper trail supports a retroactive exception, not an automatic one.</div>
+    </div>
+    <div class="myth-card">
+      <div class="myth-card-myth">"Status Update Failed" means my drop didn't go through.</div>
+      <div class="myth-card-fact"><strong>Usually a display issue.</strong> Banner colleges hit this when the drop succeeded but the dashboard doesn't refresh. Don't re-attempt.</div>
+    </div>
+    <div class="myth-card">
+      <div class="myth-card-myth">My class will appear in the Teaching College's Canvas.</div>
+      <div class="myth-card-fact"><strong>Use your Home College's Canvas.</strong> The trust relationship makes the TC course appear in your HC's Canvas dashboard. The TC's Canvas won't show it.</div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════════════════ I. URGENT ═══════════════════════════════ -->
 
@@ -3953,25 +4778,73 @@ article.mistake .copy-link {
 
       <a class="visual-card" href="#t-residency" data-open-target="t-residency" aria-label="Open the residency fix guide">
         <figure class="diagram dia-residency" aria-label="The two-step residency fix: Home College then Teaching College">
-          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
             <defs>
               <marker id="arr-ink-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker>
             </defs>
-            <rect class="res-step fixed" x="30" y="60" width="220" height="100" rx="8"/>
-            <text class="res-num" x="140" y="92">①</text>
-            <text class="res-label" x="140" y="118">Home College</text>
-            <text class="res-sub" x="140" y="134">A&amp;R updates your</text>
-            <text class="res-sub" x="140" y="148">residency record</text>
-            <path class="res-arrow draw-animate" d="M 250 110 L 350 110" marker-end="url(#arr-ink-r)"/>
-            <text class="res-tag" x="300" y="98">push proof →</text>
-            <text class="res-tag" x="300" y="128" style="font-size:10px;">screenshot · letter</text>
-            <rect class="res-step" x="350" y="60" width="220" height="100" rx="8"/>
-            <text class="res-num" x="460" y="92">②</text>
-            <text class="res-label" x="460" y="118">Teaching College</text>
-            <text class="res-sub" x="460" y="134">A&amp;R updates THEIR</text>
-            <text class="res-sub" x="460" y="148">residency record</text>
-            <text class="res-tag" x="300" y="40">No auto-sync between colleges</text>
-            <text class="res-tag" x="300" y="200">tuition recalculates after step ②</text>
+            <text class="res-tag" x="300" y="20">Each college keeps its own residency record · Title 5 §54000+</text>
+
+            <!-- Step 1: Home College — completed -->
+            <rect class="res-step fixed" x="20" y="48" width="240" height="130" rx="10"/>
+            <circle class="step-number-bg complete" cx="44" cy="72" r="14"/>
+            <text class="step-number-text" x="44" y="77">1</text>
+            <path class="check-mark" d="M 38 72 L 42 76 L 50 68"/>
+            <text class="res-label" x="140" y="76">Home College</text>
+            <text class="res-sub" x="140" y="92">A&amp;R confirms your CA</text>
+            <text class="res-sub" x="140" y="106">resident classification</text>
+            <!-- HC paper/document icon -->
+            <g transform="translate(90 118)">
+              <rect class="doc-icon" x="0" y="0" width="34" height="42" rx="2"/>
+              <line class="doc-line" x1="6" y1="9" x2="28" y2="9"/>
+              <line class="doc-line" x1="6" y1="15" x2="28" y2="15"/>
+              <line class="doc-line" x1="6" y1="21" x2="28" y2="21"/>
+              <line class="doc-line" x1="6" y1="27" x2="22" y2="27"/>
+              <text x="17" y="37" style="font-family: var(--serif-display); font-style: italic; font-size: 9px; fill: var(--moss); text-anchor: middle;">✓</text>
+            </g>
+            <g transform="translate(140 118)">
+              <rect class="doc-icon" x="0" y="0" width="34" height="42" rx="2"/>
+              <line class="doc-line" x1="6" y1="9" x2="28" y2="9"/>
+              <line class="doc-line" x1="6" y1="15" x2="28" y2="15"/>
+              <line class="doc-line" x1="6" y1="21" x2="28" y2="21"/>
+            </g>
+
+            <!-- Connector arrow -->
+            <path class="res-arrow draw-animate" d="M 270 113 C 290 113, 290 113, 330 113" marker-end="url(#arr-ink-r)"/>
+            <text class="res-tag" x="300" y="95">push proof</text>
+            <text class="res-tag" x="300" y="135" style="font-size:9px;">screenshot · A&amp;R letter</text>
+
+            <!-- Floating papers in transit -->
+            <g transform="translate(285 100) rotate(8)">
+              <rect class="doc-icon" x="0" y="0" width="22" height="28" rx="1.5" style="fill: var(--paper-deep);"/>
+              <line class="doc-line" x1="4" y1="6" x2="18" y2="6"/>
+              <line class="doc-line" x1="4" y1="11" x2="18" y2="11"/>
+              <line class="doc-line" x1="4" y1="16" x2="18" y2="16"/>
+            </g>
+
+            <!-- Step 2: Teaching College — pending -->
+            <rect class="res-step" x="340" y="48" width="240" height="130" rx="10"/>
+            <circle class="step-number-bg" cx="364" cy="72" r="14"/>
+            <text class="step-number-text" x="364" y="77">2</text>
+            <text class="res-label" x="460" y="76">Teaching College</text>
+            <text class="res-sub" x="460" y="92">YOU email their A&amp;R</text>
+            <text class="res-sub" x="460" y="106">to update THEIR record</text>
+            <!-- TC document with question mark / pending -->
+            <g transform="translate(420 118)">
+              <rect class="doc-icon" x="0" y="0" width="34" height="42" rx="2"/>
+              <line class="doc-line" x1="6" y1="9" x2="28" y2="9"/>
+              <line class="doc-line" x1="6" y1="15" x2="28" y2="15"/>
+              <line class="doc-line" x1="6" y1="21" x2="28" y2="21"/>
+              <line class="doc-line" x1="6" y1="27" x2="22" y2="27"/>
+              <text x="17" y="37" style="font-family: var(--serif-display); font-style: italic; font-size: 9px; fill: var(--claret); text-anchor: middle;">?</text>
+            </g>
+            <g transform="translate(470 118)">
+              <rect class="doc-icon" x="0" y="0" width="34" height="42" rx="2"/>
+              <line class="doc-line" x1="6" y1="9" x2="28" y2="9"/>
+              <line class="doc-line" x1="6" y1="15" x2="28" y2="15"/>
+            </g>
+
+            <!-- Bottom note -->
+            <text class="res-tag" x="300" y="216" style="font-style: italic; font-weight: 500;">Tuition recalculates after step 2 — never before.</text>
           </svg>
           <figcaption class="diagram-caption"><strong>Residency: a 2-step fix.</strong> Each college keeps its own record under California Title 5. Your HC's reclassification doesn't auto-propagate — push proof to the TC's A&amp;R yourself.</figcaption>
         </figure>
@@ -6150,6 +7023,533 @@ document.getElementById('find-results').addEventListener('click', (e) => {
   track('result_click', { id: a.dataset.resultId });
   setTimeout(openIfAnchored, 50);
 });
+
+// ════════════════════════════════════════════════════════════════════
+// DIAGNOSE TOOLS — tab switching
+// ════════════════════════════════════════════════════════════════════
+
+(function initDiagnoseTabs() {
+  const tabs = document.querySelectorAll('.diagnose-tab');
+  const panes = {
+    'tab-quiz': document.getElementById('pane-quiz'),
+    'tab-calc': document.getElementById('pane-calc'),
+    'tab-elig': document.getElementById('pane-elig')
+  };
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+      Object.values(panes).forEach(p => p.hidden = true);
+      panes[tab.id].hidden = false;
+      track('diagnose_tab', { tab: tab.id });
+    });
+  });
+})();
+
+// ════════════════════════════════════════════════════════════════════
+// SELF-DIAGNOSIS QUIZ — branching tree, lands on a specific entry
+// ════════════════════════════════════════════════════════════════════
+
+(function initQuiz() {
+  const stage = document.getElementById('quiz-stage');
+  const stepLabel = document.getElementById('quiz-step-label');
+  const progressFill = document.getElementById('quiz-progress-fill');
+  if (!stage) return;
+
+  const tree = {
+    'start': {
+      step: 1, total: 3,
+      q: "What's happening right now?",
+      options: [
+        { label: 'My tuition is way too high', next: 'tuition-q2' },
+        { label: 'I paid but it says I haven\'t paid', next: 'paid-q2' },
+        { label: 'A status has been "Pending" too long', next: 'pending-q2' },
+        { label: 'I can\'t drop a class', next: 'drop-q2' },
+        { label: 'My class isn\'t in Canvas', next: 'canvas-q2' },
+        { label: 'I selected the wrong Home College', next: 'wrong-hc-result' },
+        { label: 'My residency is wrong', next: 'residency-q2' },
+        { label: 'Something else — show me everything', next: 'other-result' }
+      ]
+    },
+    // — TUITION PATH —
+    'tuition-q2': {
+      step: 2, total: 3,
+      q: "Have you paid yet?",
+      options: [
+        { label: "No — I haven't clicked Pay", next: 'tuition-q3-not-paid' },
+        { label: "Yes — I already paid the high amount", next: 'tuition-q3-paid' }
+      ]
+    },
+    'tuition-q3-not-paid': {
+      step: 3, total: 3,
+      q: "Are you a California resident at your Home College?",
+      options: [
+        { label: 'Yes — my HC has me as CA resident', next: 'result-residency' },
+        { label: 'No — I live out of state', next: 'result-genuine-oos' },
+        { label: 'I think so but I\'m not sure', next: 'result-residency' }
+      ]
+    },
+    'tuition-q3-paid': {
+      step: 3, total: 3,
+      q: "Did you know it was non-resident pricing when you paid?",
+      options: [
+        { label: "No — I thought it was correct", next: 'result-paid-oos' },
+        { label: "I paid then got reclassified later", next: 'result-paid-then-fixed' }
+      ]
+    },
+    // — PAID PATH —
+    'paid-q2': {
+      step: 2, total: 2,
+      q: "After your bank confirmed the charge, did you click \"Confirm Payment\" on the CVC page?",
+      options: [
+        { label: "No — I closed the tab/browser", next: 'result-paid-confirm' },
+        { label: "Yes — I clicked Confirm", next: 'result-paid-wait' },
+        { label: "I'm not sure", next: 'result-paid-confirm' }
+      ]
+    },
+    // — PENDING PATH —
+    'pending-q2': {
+      step: 2, total: 2,
+      q: "How many business days has it been pending?",
+      options: [
+        { label: 'Less than 3 days', next: 'result-pending-wait' },
+        { label: '3 to 5 days', next: 'result-pending-soon' },
+        { label: 'More than 5 business days', next: 'result-pending-long' }
+      ]
+    },
+    // — DROP PATH —
+    'drop-q2': {
+      step: 2, total: 2,
+      q: "Do you have any unpaid fees, parking tickets, or holds at the Teaching College?",
+      options: [
+        { label: 'Yes (or I\'m not sure)', next: 'result-drop-hold' },
+        { label: 'No — and I\'m before the drop deadline', next: 'result-drop-other' }
+      ]
+    },
+    // — CANVAS PATH —
+    'canvas-q2': {
+      step: 2, total: 2,
+      q: "How long since you registered?",
+      options: [
+        { label: 'Less than 48 hours', next: 'result-canvas-wait' },
+        { label: 'More than 48 hours', next: 'result-canvas-long' }
+      ]
+    },
+    // — RESIDENCY PATH —
+    'residency-q2': {
+      step: 2, total: 3,
+      q: "Where is your residency wrong?",
+      options: [
+        { label: 'My HC has me as non-resident but I am one', next: 'result-residency-hc' },
+        { label: 'My HC fixed it but the TC still charges out-of-state', next: 'result-residency-not-synced' },
+        { label: 'I qualify for AB540 / military exemption', next: 'result-residency-special' }
+      ]
+    },
+    // ─── TERMINAL RESULTS ───
+    'result-residency': {
+      step: 3, total: 3, terminal: true,
+      title: "Push your CA residency to the Teaching College",
+      body: "Each college keeps its own residency record. Your HC's classification doesn't auto-sync. Email the TC's A&R office with proof from your HC (a screenshot of HC portal showing CA Resident, or HC A&R letter). They update their record, your tuition recalculates. Don't pay until the rate is correct.",
+      cta: { label: 'Open the residency 2-step guide', href: '#t-residency' },
+      secondary: { label: 'See the tuition entry', href: '#sym-tuition' }
+    },
+    'result-genuine-oos': {
+      terminal: true,
+      title: "You're paying the correct rate",
+      body: "Out-of-state students pay the non-resident rate. CVC Exchange doesn't waive this. Possible paths if applicable: AB540 (if you attended a CA high school and meet criteria), active-duty military exemption (Cal Ed Code §68075), or wait until you've established CA residency at your HC.",
+      cta: { label: 'See special-case details', href: '#t-residency' }
+    },
+    'result-paid-oos': {
+      terminal: true,
+      title: "You paid the non-resident rate by accident",
+      body: "Once paid, CVC's batch application can't be retroactively updated. Refunds are at the Teaching College's discretion — contact their bursar/student accounts office, not CVC. Allow 4–6 weeks. Going forward: always verify the in-state rate ($46/unit) before paying.",
+      cta: { label: 'Read the full m-paid-oos entry', href: '#m-paid-oos' },
+      secondary: { label: 'Residency 2-step guide', href: '#t-residency' }
+    },
+    'result-paid-then-fixed': {
+      terminal: true,
+      title: "Paid first, then got reclassified",
+      body: "TC bursar decides on rebill or refund — not CVC. Some TCs rebill automatically when their A&R updates the residency flag retroactively; others require a written request to student accounts. Allow 4–6 weeks. CVC can't update the batch application after payment clears.",
+      cta: { label: 'See the full guidance', href: '#m-paid-then-fixed' }
+    },
+    'result-paid-confirm': {
+      terminal: true,
+      title: "You missed the Confirm Payment click",
+      body: "The bank processed your card, but CVC's confirmation page never registered the click. Don't pay again — that creates a refund problem. Email CVC support once with: CCCID, course, payment date/time, last 4 of card, and amount. We can reconcile it within 1–2 business days.",
+      cta: { label: 'See the full fix', href: '#sym-paid' },
+      secondary: { label: 'Use the email builder', href: '#email' }
+    },
+    'result-paid-wait': {
+      terminal: true,
+      title: "Wait 1–2 business days, then check again",
+      body: "If you clicked Confirm Payment, the system has the signal — it just hasn't propagated to the dashboard. Most reconcile within 1–2 business days. If still showing \"Pay Now\" after that, email CVC support.",
+      cta: { label: 'Read the timing details', href: '#sym-paid' }
+    },
+    'result-pending-wait': {
+      terminal: true,
+      title: "Keep waiting — this is normal",
+      body: "\"Pending\" statuses are by design. Pending Person Match (TC matching your CCCID) takes 1–3 business days; Prereq Pending Review takes 3–5 for CCC documents and 5–7 for non-CCC. Don't email yet — you'll just get the same answer (\"still processing\").",
+      cta: { label: 'Use the date checker', href: '#dater' }
+    },
+    'result-pending-soon': {
+      terminal: true,
+      title: "Likely about to resolve",
+      body: "You're in the typical window. If you're past day 4 with no update and class starts within 48 hours, that elevates urgency — see the urgent fast-lane.",
+      cta: { label: 'Check the date tool', href: '#dater' },
+      secondary: { label: 'See urgent paths', href: '#urgent' }
+    },
+    'result-pending-long': {
+      terminal: true,
+      title: "Time to email — but precisely",
+      body: "Past 5 business days for a non-CCC prereq, or past 3 for Pending Person Match, escalate. Email CVC support with CCCID, course, the exact pending status, and how many days. Don't resubmit (creates duplicates).",
+      cta: { label: 'Use the email builder', href: '#email' },
+      secondary: { label: 'See pending entries', href: '#errors' }
+    },
+    'result-drop-hold': {
+      terminal: true,
+      title: "Most likely a hold at the Teaching College",
+      body: "Holds (financial, registration, library) commonly block drops on Banner-based colleges. Log into the TC's own portal and check for any flag. Clear the hold, then retry the drop on CVC. If no hold visible, contact the TC's A&R.",
+      cta: { label: 'Read the drop-failed details', href: '#err-dropfail' }
+    },
+    'result-drop-other': {
+      terminal: true,
+      title: "Try the drop again, then escalate",
+      body: "If no hold and you're before the deadline, attempt the drop once. If it fails with an error, screenshot the error and email CVC support with CCCID, course, and the exact error text. Don't retry repeatedly — duplicate attempts confuse review.",
+      cta: { label: 'See the drop guide', href: '#err-dropfail' }
+    },
+    'result-canvas-wait': {
+      terminal: true,
+      title: "Wait — Canvas access typically takes 24–48 hours",
+      body: "After registration validates, the Teaching College provisions Canvas. Some colleges also wait until closer to class start. If you're under 48 hours, this is normal.",
+      cta: { label: 'See Canvas timing entry', href: '#sym-canvas' }
+    },
+    'result-canvas-long': {
+      terminal: true,
+      title: "Time to investigate",
+      body: "Past 48 hours, check: (1) is your enrollment fully \"Validated & Registered\" on the CVC dashboard? (2) Are you logging into your Home College's Canvas (not the TC's)? (3) Is your HC's Canvas trust to the TC working? If all yes, email CVC support.",
+      cta: { label: 'See Canvas troubleshooting', href: '#m-tc-canvas' }
+    },
+    'result-residency-hc': {
+      terminal: true,
+      title: "Fix at your Home College first",
+      body: "Contact your HC's A&R office with residency proof (CA driver's license, utility bill, lease, voter registration, CA tax return — they'll tell you what they accept). Once HC reclassifies you, push that proof to the TC's A&R. Both colleges must update independently.",
+      cta: { label: 'Open the full residency guide', href: '#t-residency' }
+    },
+    'result-residency-not-synced': {
+      terminal: true,
+      title: "Email the TC's A&R with HC proof",
+      body: "This is the most common ticket pattern. Each college keeps its own residency record under California Title 5. Send the TC's A&R office: a screenshot of your HC portal showing CA Resident, or an HC A&R letter. They update their record, tuition recalculates.",
+      cta: { label: 'Use the email template', href: '#t-residency' },
+      secondary: { label: 'See the error entry', href: '#err-residency-not-synced' }
+    },
+    'result-residency-special': {
+      terminal: true,
+      title: "Different path for AB540 / military",
+      body: "AB540 — file the CNTER form at each college separately (HC AND TC). Active-duty military — your HC's Veterans Resource Center sends a Parent School Authorization Letter to the TC under Cal Ed Code §68075. Talk to the relevant office at your HC before registering.",
+      cta: { label: 'Read the special-case details', href: '#t-residency' }
+    },
+    'result-wrong-hc': {
+      terminal: true,
+      title: "Drop and re-cross-enroll with the right HC",
+      body: "By design, you can't change your Home College after enrolling. The fix: drop the cross-enrollment, then re-cross-enroll selecting the correct HC. There's no manual override — this is a designed limit.",
+      cta: { label: 'See the wrong-HC entry', href: '#err-wrong-hc' }
+    },
+    'wrong-hc-result': { redirect: 'result-wrong-hc' },
+    'other-result': {
+      terminal: true,
+      title: "Browse the full guide",
+      body: "If your issue doesn't fit a quick path, the full FAQ has eight common mistakes, an error decoder, step-by-step task guides, and a glossary. The search bar at the top accepts plain language too.",
+      cta: { label: 'Jump to error decoder', href: '#errors' },
+      secondary: { label: 'Or browse mistakes', href: '#mistakes' }
+    }
+  };
+
+  const history = [];
+
+  function render(nodeId) {
+    let node = tree[nodeId];
+    if (node && node.redirect) node = tree[node.redirect];
+    if (!node) return;
+
+    if (node.step && node.total) {
+      stepLabel.textContent = node.terminal ? 'Result' : `Question ${node.step} of ${node.total}`;
+      progressFill.style.width = `${(node.step / node.total) * 100}%`;
+    } else if (node.terminal) {
+      stepLabel.textContent = 'Result';
+      progressFill.style.width = '100%';
+    }
+
+    let html = '';
+    if (history.length > 0 && !node.terminal) {
+      html += '<button type="button" class="quiz-back" data-action="back">Back</button>';
+    }
+    if (node.terminal) {
+      html += `<div class="quiz-result">`;
+      html += `<div class="quiz-result-eyebrow">Your answer</div>`;
+      html += `<h3 class="quiz-result-title">${node.title}</h3>`;
+      html += `<p class="quiz-result-body">${node.body}</p>`;
+      html += `<div class="quiz-result-actions">`;
+      if (node.cta) {
+        html += `<a class="quiz-result-cta" href="${node.cta.href}" data-quiz-cta="${node.cta.href}">${node.cta.label}</a>`;
+      }
+      if (node.secondary) {
+        html += `<a class="quiz-result-secondary" href="${node.secondary.href}" data-quiz-cta="${node.secondary.href}">${node.secondary.label}</a>`;
+      }
+      html += `<button type="button" class="quiz-result-secondary" data-action="restart">Start over</button>`;
+      html += `</div></div>`;
+    } else {
+      html += `<div class="quiz-card">`;
+      html += `<h3 class="quiz-question">${node.q}</h3>`;
+      html += `<div class="quiz-options">`;
+      const letters = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+      node.options.forEach((opt, i) => {
+        html += `<button type="button" class="quiz-option" data-next="${opt.next}"><span class="quiz-letter">${letters[i]}</span>${opt.label}</button>`;
+      });
+      html += `</div></div>`;
+    }
+    stage.innerHTML = html;
+  }
+
+  stage.addEventListener('click', (e) => {
+    const opt = e.target.closest('[data-next]');
+    if (opt) {
+      history.push(opt.dataset.next);
+      render(opt.dataset.next);
+      track('quiz_advance', { to: opt.dataset.next });
+      return;
+    }
+    const action = e.target.closest('[data-action]');
+    if (!action) return;
+    if (action.dataset.action === 'back') {
+      history.pop();
+      const prev = history.length ? history[history.length - 1] : 'start';
+      if (history.length) history.pop();
+      if (prev === 'start' || history.length === 0) {
+        history.length = 0;
+        render('start');
+      } else {
+        render(prev);
+      }
+    } else if (action.dataset.action === 'restart') {
+      history.length = 0;
+      render('start');
+      track('quiz_restart');
+    }
+  });
+
+  // also auto-open the target details when a quiz CTA is clicked
+  stage.addEventListener('click', (e) => {
+    const cta = e.target.closest('[data-quiz-cta]');
+    if (!cta) return;
+    const href = cta.dataset.quizCta;
+    if (href && href.startsWith('#')) {
+      const target = document.getElementById(href.slice(1));
+      if (target && target.tagName === 'DETAILS') target.open = true;
+      track('quiz_result_click', { href });
+    }
+  });
+
+  render('start');
+})();
+
+// ════════════════════════════════════════════════════════════════════
+// TUITION CALCULATOR — live verdict as user types
+// ════════════════════════════════════════════════════════════════════
+
+(function initCalc() {
+  const unitsEl = document.getElementById('calc-units');
+  const amountEl = document.getElementById('calc-amount');
+  const result = document.getElementById('calc-result');
+  if (!unitsEl) return;
+
+  const IN_STATE = 46;
+  const update = () => {
+    const units = parseFloat(unitsEl.value);
+    const amount = parseFloat(amountEl.value);
+    if (!units || !amount || units <= 0 || amount <= 0) {
+      result.className = 'calc-result calc-empty';
+      result.innerHTML = '<span>Enter your numbers to see if your tuition is correct.</span>';
+      return;
+    }
+    const expected = units * IN_STATE;
+    const ratio = amount / expected;
+    let tag, headline, body, cta;
+
+    if (ratio >= 0.9 && ratio <= 1.3) {
+      tag = '<span class="calc-verdict-tag ok">Looks right</span>';
+      headline = "Your tuition matches the in-state rate.";
+      body = `<strong>$${amount.toFixed(2)}</strong> for <strong>${units} unit${units === 1 ? '' : 's'}</strong> is within range of the in-state rate ($${expected.toFixed(2)} ± local fees). Your residency was confirmed correctly. Some colleges add small per-term fees ($2–$20) on top.`;
+      cta = '<a class="calc-verdict-cta" href="#t-aid">Read about financial aid →</a>';
+    } else if (ratio > 1.3 && ratio < 2.5) {
+      tag = '<span class="calc-verdict-tag warn">Possibly local fees — verify</span>';
+      headline = "A bit higher than expected — could be local fees.";
+      body = `<strong>$${amount.toFixed(2)}</strong> is more than the in-state base ($${expected.toFixed(2)}) but well below typical out-of-state pricing. Most likely: extra local fees the TC charges (health fee, student rep fee, materials). If the gap feels large, contact the TC's A&R to confirm the breakdown.`;
+      cta = '<a class="calc-verdict-cta" href="#sym-tuition">Compare to typical residency error →</a>';
+    } else if (ratio >= 2.5) {
+      tag = '<span class="calc-verdict-tag bad">Out-of-state rate — don\'t pay</span>';
+      headline = "This looks like out-of-state pricing.";
+      body = `<strong>$${amount.toFixed(2)}</strong> is roughly <strong>${ratio.toFixed(1)}×</strong> the in-state rate ($${expected.toFixed(2)}). The Teaching College has you classified as non-resident. Don't pay yet — fix your residency at the TC first.`;
+      cta = '<a class="calc-verdict-cta" href="#t-residency">Open the 2-step residency fix →</a>';
+    } else {
+      tag = '<span class="calc-verdict-tag warn">Lower than expected</span>';
+      headline = "Lower than the in-state rate — likely a fee waiver.";
+      body = `<strong>$${amount.toFixed(2)}</strong> is below the standard in-state cost ($${expected.toFixed(2)}). Possible reasons: CCPG covering per-unit fees, AB540 + Dream Act funding, or partial waivers from the TC. If you didn't expect the discount, verify with the TC.`;
+      cta = '<a class="calc-verdict-cta" href="#t-aid">See aid programs →</a>';
+    }
+    result.className = 'calc-result';
+    result.innerHTML = `${tag}<h4 class="calc-verdict-headline">${headline}</h4><p class="calc-verdict-body">${body}</p><div class="calc-verdict-numbers">In-state expected: $${expected.toFixed(2)} ($46/unit × ${units}) · You're being charged: $${amount.toFixed(2)} · Ratio: ${ratio.toFixed(2)}×</div>${cta}`;
+  };
+  unitsEl.addEventListener('input', update);
+  amountEl.addEventListener('input', update);
+})();
+
+// ════════════════════════════════════════════════════════════════════
+// ELIGIBILITY SELF-CHECK — live verdict as user ticks
+// ════════════════════════════════════════════════════════════════════
+
+(function initElig() {
+  const checks = document.querySelectorAll('.elig-checkbox');
+  const verdict = document.getElementById('elig-verdict');
+  if (!checks.length || !verdict) return;
+
+  const update = () => {
+    let needTotal = 0, needMet = 0, blocked = false, blockedReason = '';
+    checks.forEach(c => {
+      if (c.dataset.need === '1') {
+        needTotal++;
+        if (c.checked) needMet++;
+      } else if (c.dataset.block === '1' && c.checked) {
+        blocked = true;
+        blockedReason = c.parentElement.querySelector('strong')?.textContent || 'a special-case category';
+      }
+    });
+
+    if (blocked) {
+      verdict.className = 'elig-verdict partial';
+      verdict.innerHTML = `<strong>You're not eligible to cross-enroll via CVC</strong> because you're a ${blockedReason}. Per cvc.edu's official eligibility page, this population needs a different path — see the <a href="#t-eligibility" style="color:inherit;text-decoration:underline;">special-cases guide</a>.`;
+      return;
+    }
+
+    if (needMet === needTotal && needTotal > 0) {
+      verdict.className = 'elig-verdict complete';
+      verdict.innerHTML = `<strong>You're eligible to cross-enroll via CVC.</strong> All five core requirements met. Open the <a href="#t-primer" style="color:inherit;text-decoration:underline;">60-second primer</a> to get started, or skim <a href="#t-eligibility" style="color:inherit;text-decoration:underline;">special-case rules</a> if you also fit AB540 or veterans.`;
+    } else if (needMet === 0) {
+      verdict.className = 'elig-verdict';
+      verdict.innerHTML = 'Tick boxes above to see your status.';
+    } else {
+      verdict.className = 'elig-verdict partial';
+      verdict.innerHTML = `<strong>${needMet} of ${needTotal} core requirements met.</strong> You need all five. Read the <a href="#t-eligibility" style="color:inherit;text-decoration:underline;">eligibility guide</a> for the missing items.`;
+    }
+  };
+  checks.forEach(c => c.addEventListener('change', update));
+})();
+
+// ════════════════════════════════════════════════════════════════════
+// READING PROGRESS BADGE — counts opened entries via localStorage
+// ════════════════════════════════════════════════════════════════════
+
+(function initProgress() {
+  const STORAGE_KEY = 'cvc-faq-read-entries';
+  const allEntries = document.querySelectorAll('details[id^="t-"], details[id^="sym-"], details[id^="err-"], details[id^="lim-"]');
+  const total = allEntries.length;
+  if (total === 0) return;
+
+  // create floating badge
+  const badge = document.createElement('a');
+  badge.className = 'progress-badge';
+  badge.href = '#diagnose';
+  badge.setAttribute('aria-label', 'Reading progress');
+  badge.innerHTML = '<span class="progress-dot"></span><span class="progress-num"><span id="progress-read">0</span>/' + total + '</span><span style="opacity:0.8;font-size:11px;">read</span>';
+  document.body.appendChild(badge);
+
+  const readSet = new Set();
+  try {
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    stored.forEach(id => readSet.add(id));
+  } catch (e) { /* localStorage may be disabled */ }
+
+  const numEl = document.getElementById('progress-read');
+  const update = () => {
+    if (numEl) numEl.textContent = readSet.size;
+    if (readSet.size > 0) badge.classList.add('show');
+  };
+
+  allEntries.forEach(el => {
+    el.addEventListener('toggle', () => {
+      if (el.open && !readSet.has(el.id)) {
+        readSet.add(el.id);
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...readSet])); } catch (e) {}
+        update();
+      }
+    });
+  });
+
+  update();
+
+  // show after scroll past hero
+  let shown = false;
+  window.addEventListener('scroll', () => {
+    if (!shown && window.scrollY > 600 && readSet.size > 0) {
+      shown = true;
+      badge.classList.add('show');
+    }
+  }, { passive: true });
+})();
+
+// ════════════════════════════════════════════════════════════════════
+// PER-ENTRY "WAS THIS HELPFUL?" FEEDBACK
+// ════════════════════════════════════════════════════════════════════
+
+(function initHelpful() {
+  const STORAGE_KEY = 'cvc-faq-helpful-votes';
+  let votes = {};
+  try { votes = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) {}
+
+  const allEntries = document.querySelectorAll('details[id^="t-"], details[id^="sym-"], details[id^="err-"], details[id^="lim-"], details[id^="m-"]');
+
+  allEntries.forEach(entry => {
+    const body = entry.querySelector('.entry-body, .body, .entry-action');
+    if (!body) return;
+    if (body.querySelector('.helpful')) return; // already added
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'helpful';
+    wrapper.innerHTML = `
+      <span class="helpful-q">Was this helpful?</span>
+      <button type="button" class="helpful-btn" data-vote="up" aria-label="This was helpful">helpful</button>
+      <button type="button" class="helpful-btn" data-vote="down" aria-label="This wasn't helpful">not really</button>
+    `;
+    // append to body — find the deepest natural container
+    const container = entry.querySelector('.entry-body') || entry.querySelector('.body') || body;
+    container.appendChild(wrapper);
+
+    if (votes[entry.id]) {
+      const btn = wrapper.querySelector(`[data-vote="${votes[entry.id]}"]`);
+      if (btn) btn.classList.add('active');
+    }
+
+    wrapper.addEventListener('click', (e) => {
+      const btn = e.target.closest('.helpful-btn');
+      if (!btn) return;
+      const vote = btn.dataset.vote;
+      // toggle
+      wrapper.querySelectorAll('.helpful-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      votes[entry.id] = vote;
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(votes)); } catch (e) {}
+      // append a thank-you (only once)
+      if (!wrapper.querySelector('.helpful-thanks')) {
+        const thanks = document.createElement('span');
+        thanks.className = 'helpful-thanks';
+        thanks.textContent = vote === 'up' ? 'thanks!' : 'noted — what would help?';
+        wrapper.appendChild(thanks);
+      } else {
+        wrapper.querySelector('.helpful-thanks').textContent = vote === 'up' ? 'thanks!' : 'noted — what would help?';
+      }
+      track('helpful_vote', { id: entry.id, vote });
+    });
+  });
+})();
 </script>
 
 </body>
