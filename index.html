@@ -842,6 +842,47 @@ aside.aside.advisory strong { color: var(--claret-deep); }
 .dia-transcript .path-label.auto { fill: var(--moss); }
 .dia-transcript .path-label.manual { fill: var(--claret); }
 
+/* Residency two-step fix */
+.dia-residency {
+  background: var(--paper);
+}
+.dia-residency .res-step {
+  fill: var(--paper-deep);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+}
+.dia-residency .res-step.fixed { fill: #ecf2e9; stroke: var(--moss); }
+.dia-residency .res-num {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 18px;
+  font-variation-settings: "opsz" 22, "SOFT" 80;
+  fill: var(--claret);
+  text-anchor: middle;
+}
+.dia-residency .res-step.fixed .res-num { fill: var(--moss); }
+.dia-residency .res-label {
+  font-family: var(--serif-display);
+  font-size: 13px;
+  font-variation-settings: "opsz" 14, "wght" 500;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.dia-residency .res-sub {
+  font-family: var(--serif-body);
+  font-size: 11px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+.dia-residency .res-arrow { stroke: var(--ink-soft); stroke-width: 1.5; fill: none; }
+.dia-residency .res-tag {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 11px;
+  fill: var(--ink-faint);
+  text-anchor: middle;
+}
+
 /* Eligibility checklist */
 .dia-eligibility {
   background: var(--paper);
@@ -3232,17 +3273,43 @@ article.mistake .copy-link {
       <div class="entry-body">
         <div class="entry-cell">
           <div class="entry-cell-lbl">What it means</div>
-          <div class="entry-cell-v">Your California residency wasn't confirmed at the Teaching College, so the system is charging you out-of-state tuition.</div>
+          <div class="entry-cell-v">Your California residency wasn't confirmed <em>at the Teaching College</em>, so the system is charging you out-of-state tuition. Each college keeps its own residency record — your Home College's record doesn't automatically transfer.</div>
         </div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">In-state rate</div>
-          <div class="entry-cell-v">$46 per unit. $138 for 3 units. $184 for 4. If you see anywhere near 3–9× that, it's a residency issue.</div>
+          <div class="entry-cell-v">$46 per unit. $138 for 3 units. $184 for 4. Real ticket examples we've seen of out-of-state pricing: $1,000 (3 units), $1,400 (3 units), $1,864 (4 units). If your number is anywhere near 3–9× the in-state rate, it's a residency issue — not a bug.</div>
         </div>
         <div class="entry-cell">
-          <div class="entry-cell-lbl">Whose fix</div>
-          <div class="entry-cell-v">The Teaching College's Admissions &amp; Records office. They update the residency flag in their system.</div>
+          <div class="entry-cell-lbl">The 2-step fix</div>
+          <div class="entry-cell-v"><strong>(1)</strong> Confirm your residency is up to date at your Home College's A&amp;R office. <strong>(2)</strong> Send proof of that residency status (a screenshot of your HC portal showing "California Resident," or a letter from HC's A&amp;R) to the Teaching College's A&amp;R office. The TC must update <em>their own</em> residency flag — neither CVC nor your HC can do it for them.</div>
         </div>
-        <div class="entry-action"><strong>Do not pay.</strong> Email the Teaching College's A&amp;R office and ask them to confirm your CA residency on file. Tuition recalculates after they fix it. If you've already paid, email CVC support — refunding overpayments takes weeks.</div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Special cases</div>
+          <div class="entry-cell-v"><strong>AB540</strong> — file with the TC separately (not just HC). <strong>Active-duty military</strong> — your HC's Veterans Resource Center sends a Parent School Authorization Letter to the TC. <strong>Recently reclassified</strong> — see the full <a href="#t-residency">residency guide</a> below.</div>
+        </div>
+        <div class="entry-action"><strong>Do not pay until tuition recalculates.</strong> If you've already paid the out-of-state rate and your residency is later corrected, the Teaching College decides whether to rebill or refund — CVC can't issue refunds. Read the full <a href="#t-residency">§vi residency guide</a> for the email templates and special-population paths.</div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-residency-not-synced">
+      <summary>
+        <div class="entry-msg">My Home College fixed my residency but the Teaching College still charges me out-of-state</div>
+        <div class="entry-tag act icon-plus">two-college fix</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Why this happens</div>
+          <div class="entry-cell-v">Residency lives in <em>each college's own SIS</em> — there is no single statewide residency record. When your HC reclassifies you, that update stays at your HC unless you also push it to the TC. CVC reads what the TC has on file at the moment you registered, which is why your tuition was set then.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If you haven't paid yet</div>
+          <div class="entry-cell-v">Email the Teaching College's A&amp;R office. Subject: "Residency reclassification — please update for CVC enrollment." Include your TC student ID, the course name, the exact rate you're being charged, and proof of your CA residency at your HC (screenshot or HC A&amp;R letter). The TC updates their record; tuition recalculates. Then email CVC support to confirm the batch application reflects the new status before you pay.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If you've already paid the out-of-state rate</div>
+          <div class="entry-cell-v">CVC can't update the batch application's residency flag once payment has cleared — that's a designed limit. Whether you get a refund or rebill is the Teaching College's decision: contact <em>their</em> bursar/student accounts office and request a residency reclassification refund. Allow 4–6 weeks. Some TCs rebill automatically; others require a written request.</div>
+        </div>
+        <div class="entry-action"><strong>What CVC can do —</strong> verify the data flow, confirm what the TC has on file, and (pre-payment only) update the batch application's residency flag once the TC confirms. <strong>What CVC can't do —</strong> override the TC's residency determination, issue refunds, or change a paid batch application. See <a href="#t-residency">§vi residency guide</a> for the full process.</div>
       </div>
     </details>
 
@@ -3661,6 +3728,24 @@ article.mistake .copy-link {
         <p class="mistake-fix"><strong>Fix —</strong> in-state is $46 per unit. If you saw $400 or more for 3 units and paid, email CVC support with payment evidence. Refunds take weeks. <strong>Always verify residency before paying.</strong></p>
       </div>
     </article>
+    <article class="mistake" id="m-residency-hc-only">
+      <div>
+        <h3 class="mistake-title">Updated residency at the Home College, expected the Teaching College to auto-sync</h3>
+        <p class="mistake-fix"><strong>Fix —</strong> each college keeps its own residency record under California Title 5. There is no shared statewide residency database. Your HC's reclassification doesn't propagate. Email the <em>Teaching College's</em> A&amp;R office with proof of HC residency (screenshot of HC portal showing CA Resident status, or HC A&amp;R letter) and ask them to update <em>their</em> record. See <a href="#t-residency">§vi residency guide</a> for the email template.</p>
+      </div>
+    </article>
+    <article class="mistake" id="m-paid-then-fixed">
+      <div>
+        <h3 class="mistake-title">Paid non-resident tuition, then got reclassified, expected an automatic refund</h3>
+        <p class="mistake-fix"><strong>Fix —</strong> CVC's batch application can't be retroactively updated once payment clears (designed limit). Whether you get a rebill or refund is the Teaching College's call — contact <em>their</em> bursar/student accounts office with your updated residency proof and request a residency reclassification refund. Allow 4–6 weeks. CVC can't issue refunds. <strong>Always verify residency before paying — once paid, you're at the TC's discretion.</strong></p>
+      </div>
+    </article>
+    <article class="mistake" id="m-cvc-fix-tc">
+      <div>
+        <h3 class="mistake-title">Asked CVC to fix the Teaching College's residency record</h3>
+        <p class="mistake-fix"><strong>Fix —</strong> CVC has no admin access to any college's SIS — that's the Teaching College's internal system. CVC can verify the data flow and (pre-payment) update the batch application once the TC confirms the change. The actual residency flag is changed only by the TC's A&amp;R. Going to CVC first just adds a redirect step.</p>
+      </div>
+    </article>
     <article class="mistake" id="m-tc-canvas">
       <div>
         <h3 class="mistake-title">Tried to find class in the Teaching College's Canvas</h3>
@@ -3864,6 +3949,33 @@ article.mistake .copy-link {
           <figcaption class="diagram-caption"><strong>Two transcript paths.</strong> Grades flow back to your Home College automatically. To send a transcript to a 4-year or employer, order it from the Teaching College.</figcaption>
         </figure>
         <span class="visual-card-cta">Order &amp; transfer process</span>
+      </a>
+
+      <a class="visual-card" href="#t-residency" data-open-target="t-residency" aria-label="Open the residency fix guide">
+        <figure class="diagram dia-residency" aria-label="The two-step residency fix: Home College then Teaching College">
+          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <defs>
+              <marker id="arr-ink-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker>
+            </defs>
+            <rect class="res-step fixed" x="30" y="60" width="220" height="100" rx="8"/>
+            <text class="res-num" x="140" y="92">①</text>
+            <text class="res-label" x="140" y="118">Home College</text>
+            <text class="res-sub" x="140" y="134">A&amp;R updates your</text>
+            <text class="res-sub" x="140" y="148">residency record</text>
+            <path class="res-arrow draw-animate" d="M 250 110 L 350 110" marker-end="url(#arr-ink-r)"/>
+            <text class="res-tag" x="300" y="98">push proof →</text>
+            <text class="res-tag" x="300" y="128" style="font-size:10px;">screenshot · letter</text>
+            <rect class="res-step" x="350" y="60" width="220" height="100" rx="8"/>
+            <text class="res-num" x="460" y="92">②</text>
+            <text class="res-label" x="460" y="118">Teaching College</text>
+            <text class="res-sub" x="460" y="134">A&amp;R updates THEIR</text>
+            <text class="res-sub" x="460" y="148">residency record</text>
+            <text class="res-tag" x="300" y="40">No auto-sync between colleges</text>
+            <text class="res-tag" x="300" y="200">tuition recalculates after step ②</text>
+          </svg>
+          <figcaption class="diagram-caption"><strong>Residency: a 2-step fix.</strong> Each college keeps its own record under California Title 5. Your HC's reclassification doesn't auto-propagate — push proof to the TC's A&amp;R yourself.</figcaption>
+        </figure>
+        <span class="visual-card-cta">2-step fix · AB540 · military</span>
       </a>
 
       <a class="visual-card span-2" href="#t-happy-path" data-open-target="t-happy-path" aria-label="Open the registration journey guide">
@@ -4383,6 +4495,91 @@ article.mistake .copy-link {
       <p>Full rules: <a href="https://www.cvc.edu/students/student-eligibility/" target="_blank">cvc.edu/students/student-eligibility</a> (the authoritative source)</p>
     </div>
   </details>
+
+  <details id="t-residency">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">Fix California residency for CVC tuition</div>
+          <span class="task-sub">Why your HC's "fix" doesn't sync to the Teaching College — and how to actually correct it</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+
+      <aside class="aside advisory"><strong>Talk to both colleges' A&amp;R offices first.</strong> Residency determinations are made by each college separately under California Title 5 — CVC support can verify the data flow but cannot override either college's determination. The advice below covers the <em>process</em>; whether a specific document satisfies a specific college's residency rules is up to their A&amp;R staff.</aside>
+
+      <p>This is one of the top reasons students email support. The frustration is real: you're a California resident, you've lived here for years, your Home College already has you classified as in-state — and yet your CVC tuition shows out-of-state pricing of $1,000+ for a single class. The reason is structural, not a bug, and the fix is a specific 2-step process.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Why each college has its own residency record</p>
+      <p>Under California Education Code, every community college is required to make its <em>own</em> residency determination for every student it enrolls — including cross-enrollment students. There is no shared statewide residency database. Your Home College's "California Resident" classification lives in their SIS (Banner, Colleague, or PeopleSoft); the Teaching College's classification lives in <em>their</em> SIS. CVC reads what the TC has on file at the moment you submit the AER form, and that becomes the basis for tuition.</p>
+      <p>So when your residency status is wrong on a CVC course, the question isn't "did my HC fix it" — it's "did the <em>Teaching College</em> update <em>their</em> record."</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">The 2-step fix (most students)</p>
+      <ol>
+        <li><strong>Confirm your residency at your Home College.</strong> Log into your HC's portal and verify your residency classification reads "California Resident" (or your HC's equivalent label). If it doesn't, contact your HC's A&amp;R office with proof: utility bill, CA driver's license, lease/mortgage, voter registration, CA tax return — your HC can tell you which documents they need.</li>
+        <li><strong>Push that classification to the Teaching College.</strong> Email the TC's A&amp;R office with: (a) your TC student ID, (b) the CVC course you're enrolled in, (c) the rate you're being charged, and (d) proof of HC residency — a screenshot of your HC portal showing the CA Resident status, or a letter from your HC A&amp;R. Ask them to update your residency classification in their system. <strong>Their A&amp;R is who fixes it</strong> — not their financial aid office, not CVC, not your HC.</li>
+      </ol>
+      <p>Once the TC updates their record, your tuition recalculates to the in-state rate. Email CVC support if you want us to verify the batch application reflects the correct status before you pay.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Special case — AB540 (California Nonresident Tuition Exemption)</p>
+      <p>AB540 grants in-state tuition rates to certain undocumented and other qualifying students who attended a CA high school and meet specific criteria. <strong>AB540 status is determined by each college separately</strong>, just like regular residency. Process:</p>
+      <ol>
+        <li>File the <strong>California Nonresident Tuition Exemption Request (CNTER)</strong> form at your Home College. They review and approve.</li>
+        <li>File the <strong>same CNTER form again at the Teaching College</strong>. Their A&amp;R reviews and approves separately. Some TCs accept a copy of the HC's approval letter as part of the documentation; some require fresh documentation.</li>
+        <li>Once the TC approves AB540, your CVC tuition recalculates to in-state.</li>
+      </ol>
+      <p>For fee waiver coverage: apply for CCPG via <a href="https://dream.csac.ca.gov/landing" target="_blank">California Dream Act Application (CADAA)</a> using the Teaching College's CADAA school code. CCPG funding flows through whichever college you applied at.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Special case — Active-duty military</p>
+      <p>Active-duty service members stationed in California (and their dependents) qualify for in-state tuition under California Education Code §68075 regardless of formal residency. Process:</p>
+      <ol>
+        <li>Provide your military orders or LES (Leave and Earnings Statement) to your Home College's <strong>Veterans Resource Center (VRC)</strong>. They certify your military status.</li>
+        <li>The HC's VRC sends a <strong>Parent School Authorization Letter</strong> to the Teaching College with confirmation of your in-state military status. (You may need to request the PSA explicitly — call the HC's VRC and ask for it by name.)</li>
+        <li>The TC processes the PSA and updates their residency flag to in-state for tuition purposes.</li>
+      </ol>
+      <p>Don't wait until after registration — talk to your HC's VRC <em>before</em> you register through CVC so the PSA is in place when the AER form is submitted.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Special case — Veterans benefits (post-service)</p>
+      <p>If you're using VA benefits (GI Bill, etc.) for a CVC course, your HC's VRC handles benefit certification and sends a Parent School Authorization Letter to the Teaching College. The benefits flow through your HC; the PSA tells the TC you're cleared. Talk to your HC's VRC before registering.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Special case — recently reclassified (HC fixed it after you paid)</p>
+      <p>If you registered while your HC had you classified as non-resident, paid the out-of-state tuition, then later got reclassified to CA resident — refunding the overpayment is the Teaching College's call, not CVC's. Some Teaching Colleges:</p>
+      <ul>
+        <li><strong>Rebill automatically</strong> when their A&amp;R updates the residency flag retroactively (favorable but not universal).</li>
+        <li><strong>Require a written request</strong> to the bursar/student accounts office — usually a one-page form or email referencing the term, course, and updated residency status.</li>
+        <li><strong>Decline retroactive refunds</strong> citing a "frozen at registration" policy. Rare but it happens.</li>
+      </ul>
+      <p>Allow 4–6 weeks for any TC-side refund process. CVC's batch application can't be retroactively updated once payment has cleared — that's a designed limit (see <a href="#lim-residency">§ix lim-residency</a>).</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Special case — you're genuinely an out-of-state resident</p>
+      <p>If you live outside California and are charged the non-resident rate, the system is working as designed. CVC Exchange does not waive non-resident tuition for purely out-of-state students. Possible paths if applicable: (a) AB540 if you meet the high-school-attendance criteria, (b) military exemption if active duty, (c) wait until you've established California residency through your HC (typically a year of physical presence + intent — your HC's A&amp;R will tell you what counts).</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Email template — Teaching College A&amp;R</p>
+      <aside class="aside" style="font-family: var(--serif-body); font-size: 14px;">
+        <p style="margin:0 0 8px;"><strong>Subject:</strong> Residency reclassification request — [your TC student ID]</p>
+        <p style="margin:0 0 8px;">Dear [Teaching College] Admissions &amp; Records,</p>
+        <p style="margin:0 0 8px;">I'm a California resident enrolled at [Home College name] and recently registered for [course name and CRN] at your college through the CVC Exchange. My account is showing the non-resident tuition rate ([dollar amount]), but I am classified as a California Resident at my Home College.</p>
+        <p style="margin:0 0 8px;">Attached: (a) screenshot of my [Home College] portal showing my California Resident classification, (b) a copy of my [CA driver's license / utility bill / lease — whatever your HC accepted].</p>
+        <p style="margin:0 0 8px;">Could you please update my residency classification in your system so the in-state tuition rate ($46/unit) applies? I want to confirm the rate is correct before I pay.</p>
+        <p style="margin:0;">Thank you, [your name] / [your TC student ID] / [CVC Exchange registration date]</p>
+      </aside>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">What CVC support can and can't do</p>
+      <p><strong>Can:</strong> verify what the Teaching College has on file, confirm what your batch application captured at registration, update the batch application's residency flag pre-payment once the TC confirms the change, route you to the right office.</p>
+      <p><strong>Can't:</strong> override the Teaching College's residency determination, change a residency flag after payment has cleared, issue refunds (refunds always come from the Teaching College's bursar, not CVC), influence Title 5 residency policy.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 24px 0 6px;">Common mistakes to avoid</p>
+      <ul>
+        <li><strong>Paying first, fixing later.</strong> Once you've paid the non-resident rate, you're at the TC's discretion for a refund. Always verify the rate is correct before clicking Pay.</li>
+        <li><strong>Assuming the HC fix syncs to the TC.</strong> It doesn't. Each college maintains its own record. The 2-step fix is required.</li>
+        <li><strong>Asking your HC to update the TC's record.</strong> Your HC has no access to the TC's SIS. Only the TC's A&amp;R can change the TC's residency flag.</li>
+        <li><strong>Asking CVC to issue a refund.</strong> CVC routes the data; refunds and rebills are the Teaching College's bursar.</li>
+      </ul>
+
+      <p style="margin-top: 18px;">Source: <a href="https://www.cvc.edu/students/student-residency/" target="_blank">cvc.edu/students/student-residency</a> · CA Education Code §68075 (military residency) · Title 5 §54000+ (residency determination)</p>
+    </div>
+  </details>
 </section>
 
 <!-- ═══════════════════════════════ VII. EMAIL ═══════════════════════════════ -->
@@ -4584,6 +4781,12 @@ article.mistake .copy-link {
     <div class="gloss"><dt class="gloss-term">ZTC (Zero Textbook Cost)</dt><dd class="gloss-def">Courses where students "pay no additional fees for learning materials (books, lab kits, etc.)" — displayed with a special badge in CVC search. Note: ZTC doesn't guarantee <em>all</em> materials are free; some colleges provide access through library databases. Filter for ZTC sections to reduce overall course cost.</dd></div>
     <div class="gloss"><dt class="gloss-term">VRC (Veterans Resource Center)</dt><dd class="gloss-def">The office at your Home College that handles VA benefit certification. For CVC courses, your HC's VRC sends a Parent School Authorization Letter to the Teaching College. Talk to them <em>before</em> registering.</dd></div>
     <div class="gloss"><dt class="gloss-term">EOPS</dt><dd class="gloss-def">Extended Opportunity Programs and Services — a state-funded program at your Home College providing extra academic and financial support for students from disadvantaged backgrounds. EOPS support follows you at the HC; you don't get parallel EOPS at the Teaching College for CVC courses.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Residency (in-state)</dt><dd class="gloss-def">Your classification as a California resident for tuition purposes. <strong>Each college maintains its own residency record</strong> under Title 5 — there is no shared statewide database. Your Home College's classification doesn't auto-sync to the Teaching College. In-state tuition is $46/unit; non-resident is typically $300–$500+/unit. Fixing residency for a CVC course is a <a href="#t-residency">2-step process</a>: HC first, then push to TC's A&amp;R.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Residency reclassification</dt><dd class="gloss-def">When a college updates your residency status mid-term or after registration (e.g., you've now lived in CA for a year, you got AB540 approved, you went on active duty). Each college reclassifies independently. <strong>Reclassifications don't propagate</strong> from one CCC to another — you must request the change at every college that affects your enrollment.</dd></div>
+    <div class="gloss"><dt class="gloss-term">CNTER (AB540 form)</dt><dd class="gloss-def">California Nonresident Tuition Exemption Request — the form you file to claim AB540 status. Must be filed at <em>each</em> college separately (your Home College AND the Teaching College). The HC's approval doesn't transfer; the TC reviews CNTER fresh.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Parent School Authorization Letter (PSA)</dt><dd class="gloss-def">A letter from your Home College's Veterans Resource Center (VRC) that authorizes the Teaching College to extend specific accommodations for a CVC course — most commonly for active-duty military residency exemption (Cal. Ed. Code §68075) or VA benefit certification. <strong>Request the PSA before registering through CVC</strong>; it must be in place when the TC processes your enrollment.</dd></div>
+    <div class="gloss"><dt class="gloss-term">CA Education Code §68075</dt><dd class="gloss-def">The California statute that grants in-state tuition to active-duty military service members stationed in California (and their dependents) regardless of formal residency. Process: HC's VRC certifies status, sends a Parent School Authorization Letter to the TC, TC updates residency flag.</dd></div>
+    <div class="gloss"><dt class="gloss-term">Non-resident tuition</dt><dd class="gloss-def">The rate charged to students who haven't established California residency at a given college. Varies by college; commonly $300–$500/unit. Real ticket examples: $1,000 (3 units), $1,400 (3 units), $1,864 (4 units). If you're seeing this on a CVC course as a CA resident, your residency wasn't confirmed at the Teaching College — see the <a href="#t-residency">§vi residency guide</a>.</dd></div>
   </dl>
 </section>
 
@@ -4680,11 +4883,19 @@ article.mistake .copy-link {
       <div class="entry-body">
         <div class="entry-cell">
           <div class="entry-cell-lbl">The rule</div>
-          <div class="entry-cell-v">When your Home College validates your residency status (CA resident or not), that determination persists in CVC's record for the term. You can't change it through the AER form.</div>
+          <div class="entry-cell-v">When your Home College validates your residency status at the moment of CVC registration (CA resident or not), that determination is captured in your batch application and persists for the term. The AER form cannot change it after submission.</div>
         </div>
         <div class="entry-cell">
-          <div class="entry-cell-lbl">If it was wrong</div>
-          <div class="entry-cell-v">If your HC validated your residency as "no" by mistake and you're actually a CA resident, work with your Home College's A&amp;R to fix it — but the change won't propagate to CVC automatically. The Teaching College's A&amp;R may need to manually update their record too. Both sides require manual coordination.</div>
+          <div class="entry-cell-lbl">Why each college does its own determination</div>
+          <div class="entry-cell-v">California Title 5 requires every CCC to make its own residency determination for every student it enrolls. There is no shared statewide residency database. Your HC's classification doesn't auto-sync to the Teaching College's SIS — they're separate records.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Pre-payment fix</div>
+          <div class="entry-cell-v">If you catch the wrong residency before paying: (1) confirm CA resident status at HC, (2) email TC's A&amp;R with HC proof, (3) once TC updates their record, email CVC support to verify the batch application reflects the new status. Pay only after the rate corrects.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Post-payment fix</div>
+          <div class="entry-cell-v">Once payment has cleared, CVC can't update the batch application's residency flag — a designed limit. Whether you get a refund or rebill is the Teaching College's decision (their bursar/student accounts office). Allow 4–6 weeks. See <a href="#t-residency">§vi residency guide</a> for the full process.</div>
         </div>
       </div>
     </details>
@@ -5006,7 +5217,11 @@ const CORPUS = [
   { id:'sym-tuition', cat:'error-stop', section:'§iii. Error decoder',
     title:'Tuition shows $400+ for 3 units',
     preview:'Your CA residency wasn\'t confirmed at the TC. In-state is $46/unit ($138 for 3 units). Don\'t pay — contact TC\'s A&R to fix residency.',
-    tags:['tuition too high','expensive','too much','high cost','high fees','out of state tuition','not in state','residency','wrong tuition','outrageous price','hundreds of dollars','thousand dollars','too expensive','overcharged','out of state','non-resident','huge tuition','wrong amount','overpriced'] },
+    tags:['tuition too high','expensive','too much','high cost','high fees','out of state tuition','not in state','residency','wrong tuition','outrageous price','hundreds of dollars','thousand dollars','too expensive','overcharged','out of state','non-resident','huge tuition','wrong amount','overpriced','charged 1000','charged 1400','charged 1864','wrong rate','wrong tuition rate','tuition wrong','non resident tuition','being charged out of state','charged non resident'] },
+  { id:'err-residency-not-synced', cat:'error-act', section:'§iii. Error decoder',
+    title:'My HC fixed my residency but the TC still charges out-of-state',
+    preview:'Each college keeps its own residency record under Title 5 — there is no statewide sync. Push HC proof to TC\'s A&R. Pre-payment: CVC can update batch. Post-payment: TC bursar decides on refund.',
+    tags:['residency not syncing','hc fixed residency','home college fixed','still charged out of state','tc still wrong','teaching college residency','residency not updating','reclassified','reclassification','residency reclassification','residency mapping','residency status update','update residency','correct residency','fix residency','residency status','already updated residency','hc updated','hc says resident','home college says i\'m resident','still showing non resident','still nonresident','two college fix','sync between colleges'] },
   { id:'sym-paid', cat:'error-act', section:'§iii. Error decoder',
     title:'Card charged but dashboard says "Pay Now"',
     preview:'Bank processed the charge but you didn\'t click Confirm Payment after. We can reconcile — email once with CCCID, course, payment date, last 4, amount.',
@@ -5070,6 +5285,18 @@ const CORPUS = [
     title:'Paid the out-of-state tuition because it looked correct',
     preview:'In-state is $46/unit. If $400+ for 3 units and you paid, email support with payment evidence. Refunds take weeks.',
     tags:['paid out of state','overpaid','paid too much','high tuition paid','accidentally paid','paid wrong amount','non-resident tuition','paid hundreds','paid thousand'] },
+  { id:'m-residency-hc-only', cat:'mistake', section:'§v. Common mistakes',
+    title:'Updated residency at the Home College, expected the Teaching College to auto-sync',
+    preview:'Each college keeps its own residency record under Title 5. There is no shared statewide database. Email the TC\'s A&R with HC proof to update their record.',
+    tags:['hc fixed but tc didnt','home college fixed','still charged','no propagation','residency not synced','sync','two college residency','expected auto sync','auto-sync','auto update','automatic update','hc updated tc didnt','residency mistake'] },
+  { id:'m-paid-then-fixed', cat:'mistake', section:'§v. Common mistakes',
+    title:'Paid non-resident tuition, then got reclassified, expected an automatic refund',
+    preview:'Batch application can\'t be retroactively updated post-payment (designed limit). TC bursar decides on rebill or refund. CVC can\'t issue refunds. Allow 4-6 weeks for TC processing.',
+    tags:['paid then reclassified','reclassified after paying','already paid then fixed','automatic refund','refund residency','rebill','overpaid residency','retroactive refund','overpayment','tc bursar','student accounts','refund process'] },
+  { id:'m-cvc-fix-tc', cat:'mistake', section:'§v. Common mistakes',
+    title:'Asked CVC to fix the Teaching College\'s residency record',
+    preview:'CVC has no admin access to any college\'s SIS. Only the TC\'s A&R can change their residency flag. CVC verifies data flow only.',
+    tags:['cvc fix residency','cvc cant fix','cvc has no access','wrong office','tc admin access','sis access','who can fix residency','escalate to cvc'] },
   { id:'m-tc-canvas', cat:'mistake', section:'§v. Common mistakes',
     title:'Tried to find class in the Teaching College\'s Canvas',
     preview:'Wrong Canvas. Always use Home College\'s Canvas — the trust relationship makes the TC course appear there.',
@@ -5164,6 +5391,10 @@ const CORPUS = [
     title:'Eligibility — basic requirements + special populations',
     preview:'Basic: 18+, currently enrolled at HC, 2.0 GPA or none, no fees, CA address. NOT eligible: HS dual-enrollment, F-1, Adult Ed (per cvc.edu). AB540 and Veterans ARE eligible with extra steps.',
     tags:['eligible','eligibility','can i enroll','high school','dual enrollment','f1 visa','international student','ab540','dream act','adult ed','adult education','dso','restricted','underage','17 years old','before 18','veterans','va','gi bill','non-traditional','returning adult'] },
+  { id:'t-residency', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Fix California residency for CVC tuition (the 2-step fix)',
+    preview:'Each college keeps its own residency record. HC fix doesn\'t auto-sync to TC. Step 1: confirm residency at HC. Step 2: push proof to TC\'s A&R. Special paths for AB540 (CNTER form), active-duty military (Cal Ed Code §68075 + PSA letter), recently reclassified, and post-payment recourse.',
+    tags:['residency','residency fix','fix residency','california residency','ca residency','in state','in-state','non resident','non-resident','out of state','tuition wrong','wrong tuition','tuition rate','reclassification','reclassified','update residency','correct residency','residency status','residency proof','residency confirmation','residency verification','residency mapping','ab540','ab 540','dream act','cnter','undocumented','military','active duty','active-duty','veterans residency','gi bill','psa letter','parent school authorization','§68075','section 68075','education code','title 5','foothill residency','saddleback residency','pasadena residency','irvine valley','tutition','tuition fee','two college fix','two step fix','hc updated tc didnt','batch application residency','non-resident tuition','out-of-state tuition','charged 1000','charged 1400','charged 1864','charged out of state','reimbursement out of state','overpayment refund residency','rebill residency'] },
 
   // ────────────────────── §ix. DESIGNED LIMITS ──────────────────────
   { id:'lim-hc-locked', cat:'limit', section:'§ix. Designed limits',
@@ -5184,8 +5415,8 @@ const CORPUS = [
     tags:['federal aid','pell at tc','fafsa at teaching college','aid disburse','where does aid come from','title iv','no aid at tc'] },
   { id:'lim-residency', cat:'limit', section:'§ix. Designed limits',
     title:'Once your residency is validated, you can\'t change it for the term',
-    preview:'HC validation persists. If wrong, fix at HC + manually update TC — no automatic propagation.',
-    tags:['residency wrong','residency validation','residency persists','need to fix residency','wrongly classified','non-resident wrongly','residency status'] },
+    preview:'HC validation captured in batch application. Pre-payment: TC fixes their record, CVC verifies batch. Post-payment: TC bursar decides on refund. Title 5 requires each CCC to maintain its own residency record.',
+    tags:['residency wrong','residency validation','residency persists','need to fix residency','wrongly classified','non-resident wrongly','residency status','batch application residency','title 5','locked residency','frozen residency','cant change residency','too late to fix','already paid residency','retroactive residency'] },
   { id:'lim-autodrop', cat:'limit', section:'§ix. Designed limits',
     title:'TCs can auto-drop you for non-payment without telling CVC',
     preview:'Pay on time, every time. If CVC payment failing, pay TC portal directly. If dropped, email both immediately.',
