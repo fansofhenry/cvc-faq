@@ -16,8 +16,8 @@
   --paper-fold: #eef4fb;
   --ink: #141827;
   --ink-soft: #3a3f4e;
-  --ink-faint: #6b7184;
-  --ink-ghost: #b2b6c2;
+  --ink-faint: #525868;          /* WCAG AA: 6.5:1 on white, 4.6:1 on --moss-pale */
+  --ink-ghost: #6b7184;           /* WCAG AA: 4.86:1 on white (was #b2b6c2 / 2.03:1) */
   --rule: #d5d5d5;
   --rule-soft: #e8e8e8;
   --claret: #0066ba;            /* CVC primary blue */
@@ -1009,7 +1009,10 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   transform: translateY(-2px);
   border-color: var(--claret-pale);
   box-shadow: 0 10px 28px -12px rgba(50, 30, 20, 0.18);
-  outline: none;
+}
+.visual-card:focus-visible {
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
 }
 .visual-card .diagram {
   margin: 0;
@@ -1227,7 +1230,10 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   background: var(--paper-deep);
   transform: translateY(-1px);
   box-shadow: 0 6px 16px -8px rgba(50, 30, 20, 0.18);
-  outline: none;
+}
+.quiz-option:focus-visible {
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
 }
 .quiz-option .quiz-letter {
   display: inline-block;
@@ -1372,7 +1378,8 @@ aside.aside.advisory strong { color: var(--claret-deep); }
 .calc-input:focus {
   border-color: var(--claret);
   background: var(--paper);
-  outline: none;
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
 }
 .calc-input-prefix {
   position: relative;
@@ -2067,7 +2074,8 @@ section.section#limits .entries {
   font-variation-settings: "opsz" 17;
 }
 .input-paper:focus {
-  outline: none;
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
   border-bottom-color: var(--claret);
 }
 .input-paper::-webkit-calendar-picker-indicator {
@@ -2408,7 +2416,8 @@ section.section#limits .entries {
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  outline: none;
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
   border-bottom-color: var(--claret);
 }
 
@@ -2680,7 +2689,8 @@ section.section#limits .entries {
   transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 .find-textarea:focus {
-  outline: none;
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
   border-color: var(--claret);
   background: var(--paper);
   box-shadow: 0 0 0 3px var(--claret-pale);
@@ -3084,7 +3094,10 @@ section.section#limits .entries {
   background: var(--claret);
   color: var(--paper);
   transform: translateY(-1px);
-  outline: none;
+}
+.qa-chip:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: -4px;
 }
 .qa-chip-icon {
   font-family: var(--serif-display);
@@ -3669,6 +3682,22 @@ article.mistake .copy-link {
 }
 .skip-link:focus { top: 0; outline: 2px solid var(--paper); outline-offset: -4px; }
 
+/* Visually hidden but available to screen readers (used for heading-order fixes) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* main landmark: ensure skip-link target is focusable but not visually outlined */
+main:focus { outline: none; }
+
 /* —————— print stylesheet —————— */
 
 @media print {
@@ -3691,7 +3720,7 @@ article.mistake .copy-link {
 </head>
 <body>
 
-<a class="skip-link" href="#find"><span data-en>Skip to search</span><span data-es>Ir a búsqueda</span></a>
+<a class="skip-link" href="#main"><span data-en>Skip to main content</span><span data-es>Ir al contenido principal</span></a>
 
 <div class="grain" aria-hidden="true"></div>
 <a class="urgent-marker" href="#urgent">Urgent?</a>
@@ -3699,21 +3728,21 @@ article.mistake .copy-link {
 <nav class="outline" aria-label="Page outline">
   <span class="outline-label"><span data-en>Outline</span><span data-es>Esquema</span></span>
   <ol class="outline-list">
-    <li><a href="#find" data-watch="find"><span class="outline-num">→</span><span><span data-en>Search</span><span data-es>Búsqueda</span></span></a></li>
-    <li><a href="#diagnose" data-watch="diagnose"><span class="outline-num">⌘</span><span><span data-en>Tools</span><span data-es>Herramientas</span></span></a></li>
-    <li><a href="#urgent" data-watch="urgent"><span class="outline-num">i.</span><span><span data-en>Urgent</span><span data-es>Urgente</span></span></a></li>
-    <li><a href="#symptoms" data-watch="symptoms"><span class="outline-num">ii.</span><span><span data-en>Symptoms</span><span data-es>Síntomas</span></span></a></li>
-    <li><a href="#errors" data-watch="errors"><span class="outline-num">iii.</span><span><span data-en>Error decoder</span><span data-es>Errores</span></span></a></li>
-    <li><a href="#dater" data-watch="dater"><span class="outline-num">iv.</span><span><span data-en>Date check</span><span data-es>Plazos</span></span></a></li>
-    <li><a href="#mistakes" data-watch="mistakes"><span class="outline-num">v.</span><span><span data-en>Common mistakes</span><span data-es>Errores comunes</span></span></a></li>
-    <li><a href="#tasks" data-watch="tasks"><span class="outline-num">vi.</span><span><span data-en>How-to guides</span><span data-es>Guías</span></span></a></li>
-    <li><a href="#email" data-watch="email"><span class="outline-num">vii.</span><span><span data-en>Email support?</span><span data-es>¿Email?</span></span></a></li>
-    <li><a href="#glossary" data-watch="glossary"><span class="outline-num">viii.</span><span><span data-en>Glossary</span><span data-es>Glosario</span></span></a></li>
-    <li><a href="#limits" data-watch="limits"><span class="outline-num">ix.</span><span><span data-en>Designed limits</span><span data-es>Límites de diseño</span></span></a></li>
+    <li><a href="#find" data-watch="find"><span class="outline-num" aria-hidden="true">→</span><span><span data-en>Search</span><span data-es>Búsqueda</span></span></a></li>
+    <li><a href="#diagnose" data-watch="diagnose"><span class="outline-num" aria-hidden="true">⌘</span><span><span data-en>Tools</span><span data-es>Herramientas</span></span></a></li>
+    <li><a href="#urgent" data-watch="urgent"><span class="outline-num" aria-hidden="true">i.</span><span><span data-en>Urgent</span><span data-es>Urgente</span></span></a></li>
+    <li><a href="#symptoms" data-watch="symptoms"><span class="outline-num" aria-hidden="true">ii.</span><span><span data-en>Symptoms</span><span data-es>Síntomas</span></span></a></li>
+    <li><a href="#errors" data-watch="errors"><span class="outline-num" aria-hidden="true">iii.</span><span><span data-en>Error decoder</span><span data-es>Errores</span></span></a></li>
+    <li><a href="#dater" data-watch="dater"><span class="outline-num" aria-hidden="true">iv.</span><span><span data-en>Date check</span><span data-es>Plazos</span></span></a></li>
+    <li><a href="#mistakes" data-watch="mistakes"><span class="outline-num" aria-hidden="true">v.</span><span><span data-en>Common mistakes</span><span data-es>Errores comunes</span></span></a></li>
+    <li><a href="#tasks" data-watch="tasks"><span class="outline-num" aria-hidden="true">vi.</span><span><span data-en>How-to guides</span><span data-es>Guías</span></span></a></li>
+    <li><a href="#email" data-watch="email"><span class="outline-num" aria-hidden="true">vii.</span><span><span data-en>Email support?</span><span data-es>¿Email?</span></span></a></li>
+    <li><a href="#glossary" data-watch="glossary"><span class="outline-num" aria-hidden="true">viii.</span><span><span data-en>Glossary</span><span data-es>Glosario</span></span></a></li>
+    <li><a href="#limits" data-watch="limits"><span class="outline-num" aria-hidden="true">ix.</span><span><span data-en>Designed limits</span><span data-es>Límites de diseño</span></span></a></li>
   </ol>
 </nav>
 
-<div class="page">
+<main id="main" tabindex="-1" class="page">
 
 <!-- ═══════════════════════════════ MASTHEAD ═══════════════════════════════ -->
 
@@ -3725,8 +3754,8 @@ article.mistake .copy-link {
     <span class="dot"></span>
     <span>Vol. I — 2026</span>
     <span class="lang-toggle" role="group" aria-label="Language">
-      <button class="lang-btn active" data-lang="en" type="button">EN</button>
-      <button class="lang-btn" data-lang="es" type="button">ES</button>
+      <button class="lang-btn active" data-lang="en" type="button" aria-pressed="true">EN</button>
+      <button class="lang-btn" data-lang="es" type="button" aria-pressed="false">ES</button>
     </span>
   </div>
 
@@ -3965,7 +3994,8 @@ article.mistake .copy-link {
 }
 </style>
 
-<section class="eligibility" id="eligibility" aria-labelledby="eligibility-eyebrow">
+<section class="eligibility" id="eligibility" aria-labelledby="eligibility-heading">
+  <h2 class="sr-only" id="eligibility-heading"><span data-en>Eligibility self-check</span><span data-es>Verificación de elegibilidad</span></h2>
   <div class="eligibility-card" id="eligibility-card" data-state="idle">
 
     <!-- IDLE state: shown to first-timers -->
@@ -4215,7 +4245,7 @@ article.mistake .copy-link {
     <div id="find-recent-list"></div>
   </div>
 
-  <div class="find-results" id="find-results"></div>
+  <div class="find-results" id="find-results" role="region" aria-live="polite" aria-atomic="false" aria-label="Search results"></div>
 </section>
 
 <!-- ═══════════════════════════════ WHO OWNS THIS PROBLEM? ═══════════════════════════════ -->
@@ -4783,7 +4813,7 @@ article.mistake .copy-link {
         </div>
         <p style="font-family: var(--serif-display); font-style: italic; font-size: 12px; color: var(--ink-faint); margin: 8px 0 0;">In-state rate is $46/unit. Verdict updates as you type.</p>
       </div>
-      <div class="calc-result calc-empty" id="calc-result">
+      <div class="calc-result calc-empty" id="calc-result" role="status" aria-live="polite" aria-atomic="true">
         <span>Enter your numbers to see if your tuition is correct.</span>
       </div>
     </div>
@@ -4826,7 +4856,7 @@ article.mistake .copy-link {
         <input type="checkbox" class="elig-checkbox" data-need="0" data-block="1">
         <span class="elig-text">I'm an <strong>Adult Education student</strong>.<small>If checked, typically NOT permitted via CVC — check with your AE program.</small></span>
       </label>
-      <div class="elig-verdict" id="elig-verdict">Tick boxes above to see your status.</div>
+      <div class="elig-verdict" id="elig-verdict" role="status" aria-live="polite" aria-atomic="true">Tick boxes above to see your status.</div>
     </div>
   </div>
 </section>
@@ -4868,7 +4898,7 @@ article.mistake .copy-link {
 
 <section class="section" id="urgent">
   <div class="section-head">
-    <div class="section-num">i.</div>
+    <div class="section-num" aria-hidden="true">i.</div>
     <div>
       <h2 class="section-title">
         <span data-en><em>Urgent</em> matters</span>
@@ -4892,7 +4922,7 @@ article.mistake .copy-link {
         <span data-en>Three steps to escalate before the start date.</span>
         <span data-es>Tres pasos para escalar antes de la fecha de inicio.</span>
       </p>
-      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
+      <span class="lane-arrow" aria-hidden="true"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
     <a class="lane" href="#urgent-drop">
       <div class="lane-marker">B.</div>
@@ -4904,7 +4934,7 @@ article.mistake .copy-link {
         <span data-en>What to do if the system won't let you drop.</span>
         <span data-es>Qué hacer si el sistema no te permite cancelar.</span>
       </p>
-      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
+      <span class="lane-arrow" aria-hidden="true"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
     <a class="lane" href="#urgent-paid">
       <div class="lane-marker">C.</div>
@@ -4916,7 +4946,7 @@ article.mistake .copy-link {
         <span data-en>Recover the payment in four steps.</span>
         <span data-es>Recupera el pago en cuatro pasos.</span>
       </p>
-      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
+      <span class="lane-arrow" aria-hidden="true"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
     <a class="lane" href="#urgent-after-hours">
       <div class="lane-marker">D.</div>
@@ -4928,7 +4958,7 @@ article.mistake .copy-link {
         <span data-en>Plan B when support is closed — protect yourself with documentation.</span>
         <span data-es>Plan B cuando soporte está cerrado — protégete con documentación.</span>
       </p>
-      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
+      <span class="lane-arrow" aria-hidden="true"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
   </div>
 
@@ -5018,7 +5048,7 @@ article.mistake .copy-link {
 
 <section class="section" id="symptoms">
   <div class="section-head">
-    <div class="section-num">ii.</div>
+    <div class="section-num" aria-hidden="true">ii.</div>
     <div>
       <h2 class="section-title">
         <span data-en>What's on your <em>screen</em>?</span>
@@ -5103,7 +5133,7 @@ article.mistake .copy-link {
 
 <section class="section" id="errors">
   <div class="section-head">
-    <div class="section-num">iii.</div>
+    <div class="section-num" aria-hidden="true">iii.</div>
     <div>
       <h2 class="section-title">
         <span data-en>Decoding the <em>error</em> messages</span>
@@ -5907,7 +5937,7 @@ article.mistake .copy-link {
 
 <section class="section" id="dater">
   <div class="section-head">
-    <div class="section-num">iv.</div>
+    <div class="section-num" aria-hidden="true">iv.</div>
     <div>
       <h2 class="section-title">Have I waited <em>long enough</em>?</h2>
       <p class="section-dek">Most "still pending" tickets are sent before the realistic timeline. Enter when your registration was created — receive the earliest reasonable follow-up date.</p>
@@ -5918,7 +5948,7 @@ article.mistake .copy-link {
     <label for="d-date">Date of registration or last status change</label>
     <input class="input-paper" type="date" id="d-date">
     <div id="dater-pending" class="dater-out">
-      <div id="dater-msg"></div>
+      <div id="dater-msg" role="status" aria-live="polite" aria-atomic="true"></div>
     </div>
   </div>
 </section>
@@ -5927,7 +5957,7 @@ article.mistake .copy-link {
 
 <section class="section" id="mistakes">
   <div class="section-head">
-    <div class="section-num">v.</div>
+    <div class="section-num" aria-hidden="true">v.</div>
     <div>
       <h2 class="section-title">Eight common <em>mistakes</em></h2>
       <p class="section-dek">If you recognize one of these in what you did, the fix is in the entry. No ticket needed.</p>
@@ -6077,7 +6107,7 @@ article.mistake .copy-link {
 
 <section class="section" id="tasks">
   <div class="section-head">
-    <div class="section-num">vi.</div>
+    <div class="section-num" aria-hidden="true">vi.</div>
     <div>
       <h2 class="section-title">Step-by-step <em>guides</em></h2>
       <p class="section-dek">Open any chapter. Each one includes the gotchas that send students to support.</p>
@@ -6091,7 +6121,7 @@ article.mistake .copy-link {
 
       <a class="visual-card" href="#t-primer" data-open-target="t-primer" aria-label="Open the 60-second primer guide">
         <figure class="diagram dia-two-college" aria-label="How CVC Exchange connects your Home College and the Teaching College">
-          <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <marker id="arr-claret-g1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
             </defs>
@@ -6136,7 +6166,7 @@ article.mistake .copy-link {
 
       <a class="visual-card" href="#t-aid" data-open-target="t-aid" aria-label="Open the financial aid guide">
         <figure class="diagram dia-money" aria-label="How money flows for a CVC course">
-          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <marker id="arr-claret-g2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
               <marker id="arr-moss-g2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
@@ -6164,7 +6194,7 @@ article.mistake .copy-link {
 
       <a class="visual-card" href="#t-transcript" data-open-target="t-transcript" aria-label="Open the transcripts guide">
         <figure class="diagram dia-transcript" aria-label="The two paths your transcripts can take after a CVC class">
-          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <marker id="arr-moss-g3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
               <marker id="arr-claret-g3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
@@ -6190,7 +6220,7 @@ article.mistake .copy-link {
 
       <a class="visual-card" href="#t-residency" data-open-target="t-residency" aria-label="Open the residency fix guide">
         <figure class="diagram dia-residency" aria-label="The two-step residency fix: Home College then Teaching College">
-          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <marker id="arr-ink-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker>
             </defs>
@@ -6265,7 +6295,7 @@ article.mistake .copy-link {
 
       <a class="visual-card span-2" href="#t-happy-path" data-open-target="t-happy-path" aria-label="Open the registration journey guide">
         <figure class="diagram dia-journey" aria-label="The registration journey from start to taking your class">
-          <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <line class="journey-rule" x1="40" y1="60" x2="720" y2="60"/>
             <g><circle class="step-circle done" cx="55" cy="60" r="14"/><text class="step-num done" x="55" y="64">1</text><text class="step-label" x="55" y="92">Created</text><text class="step-sub" x="55" y="106">you started</text></g>
             <g><circle class="step-circle done" cx="140" cy="60" r="14"/><text class="step-num done" x="140" y="64">2</text><text class="step-label" x="140" y="92">Consent</text><text class="step-sub" x="140" y="106">signed form</text></g>
@@ -6306,7 +6336,7 @@ article.mistake .copy-link {
             .dia-statemap .sm-tag { font-family: var(--serif-display); font-style: italic; font-variation-settings: 'opsz' 11, 'SOFT' 60; font-size: 10px; fill: var(--ink-faint); text-anchor: middle; }
             .dia-statemap .sm-tag-stop { fill: var(--alert); }
           </style>
-          <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <marker id="sm-arr-claret" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
                 <path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/>
@@ -6584,7 +6614,7 @@ article.mistake .copy-link {
     </summary>
     <div class="body">
       <figure class="diagram dia-two-college" aria-label="How CVC Exchange connects your Home College and the Teaching College">
-        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <marker id="arr-claret" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
           </defs>
@@ -6647,7 +6677,7 @@ article.mistake .copy-link {
     </summary>
     <div class="body">
       <figure class="diagram dia-journey" aria-label="The registration journey from start to taking your class">
-        <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <!-- horizontal rule -->
           <line class="journey-rule" x1="40" y1="60" x2="720" y2="60"/>
           <!-- 8 step circles -->
@@ -6906,7 +6936,7 @@ article.mistake .copy-link {
     </summary>
     <div class="body">
       <figure class="diagram dia-money" aria-label="How money flows for a CVC course">
-        <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <marker id="arr-claret" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
             <marker id="arr-moss" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
@@ -6974,7 +7004,7 @@ article.mistake .copy-link {
     </summary>
     <div class="body">
       <figure class="diagram dia-transcript" aria-label="The two paths your transcripts can take after a CVC class">
-        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <marker id="arr-moss-t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
             <marker id="arr-claret-t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
@@ -7373,7 +7403,7 @@ article.mistake .copy-link {
 
 <section class="section" id="email">
   <div class="section-head">
-    <div class="section-num">vii.</div>
+    <div class="section-num" aria-hidden="true">vii.</div>
     <div>
       <h2 class="section-title">Should I <em>email</em> support?</h2>
       <p class="section-dek">Most issues fix themselves with time or a quick check. Save email for things that genuinely need a human.</p>
@@ -7503,7 +7533,7 @@ article.mistake .copy-link {
       <textarea id="b-detail" class="input-paper" placeholder="My drop deadline is April 28. I tried twice and got the same error each time."></textarea>
     </div>
 
-    <div class="builder-out" id="b-out">Fill in the fields above to generate your email.</div>
+    <div class="builder-out" id="b-out" role="status" aria-live="polite" aria-atomic="true">Fill in the fields above to generate your email.</div>
     <div class="btn-row">
       <button class="btn btn-primary" id="b-copy">Copy email</button>
       <a class="btn" id="b-mail" href="mailto:cvc.customersupport@parchment.com">Open email client</a>
@@ -7516,7 +7546,7 @@ article.mistake .copy-link {
 
 <section class="section" id="glossary">
   <div class="section-head">
-    <div class="section-num">viii.</div>
+    <div class="section-num" aria-hidden="true">viii.</div>
     <div>
       <h2 class="section-title">A small <em>glossary</em></h2>
       <p class="section-dek">Common terms in the dashboard and on this page, in plain English.</p>
@@ -7585,7 +7615,7 @@ article.mistake .copy-link {
 
 <section class="section" id="limits">
   <div class="section-head">
-    <div class="section-num">ix.</div>
+    <div class="section-num" aria-hidden="true">ix.</div>
     <div>
       <h2 class="section-title"><em>Designed</em> limits — what the system can't do, by design</h2>
       <p class="section-dek">Some things that look like bugs are actually intentional limits. Knowing the difference saves you from filing tickets that have no fix — and helps you plan around the real boundaries instead of fighting them.</p>
@@ -7912,6 +7942,8 @@ article.mistake .copy-link {
   </div>
 </section>
 
+</main>
+
 <!-- ═══════════════════════════════ COLOPHON ═══════════════════════════════ -->
 
 <footer class="colophon">
@@ -7924,8 +7956,6 @@ article.mistake .copy-link {
     Set in Fraunces &amp; Newsreader.
   </div>
 </footer>
-
-</div>
 
 <button class="float-help" id="float-help" type="button" aria-label="Back to search">?</button>
 
@@ -9683,8 +9713,10 @@ window.addEventListener('DOMContentLoaded', () => {
 // ════════════════════════════════════════════════════════════════════
 
 document.addEventListener('keydown', (e) => {
-  const tag = (document.activeElement.tagName || '').toLowerCase();
-  const isFormField = tag === 'input' || tag === 'textarea' || tag === 'select';
+  const ae = document.activeElement;
+  const tag = (ae?.tagName || '').toLowerCase();
+  const isFormField = tag === 'input' || tag === 'textarea' || tag === 'select'
+    || ae?.isContentEditable;
   if (e.key === '/' && !isFormField) {
     e.preventDefault();
     findInput.focus();
@@ -9846,7 +9878,9 @@ if ('IntersectionObserver' in window) {
 function applyLang() {
   const lang = document.documentElement.lang || 'en';
   document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
+    const isActive = btn.dataset.lang === lang;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   });
   // Swap textarea placeholder
   if (findInput) {
@@ -9917,19 +9951,44 @@ document.getElementById('find-results').addEventListener('click', (e) => {
 // ════════════════════════════════════════════════════════════════════
 
 (function initDiagnoseTabs() {
-  const tabs = document.querySelectorAll('.diagnose-tab');
+  const tabs = Array.from(document.querySelectorAll('.diagnose-tab'));
   const panes = {
     'tab-quiz': document.getElementById('pane-quiz'),
     'tab-calc': document.getElementById('pane-calc'),
     'tab-elig': document.getElementById('pane-elig')
   };
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-      tab.setAttribute('aria-selected', 'true');
-      Object.values(panes).forEach(p => p.hidden = true);
-      panes[tab.id].hidden = false;
-      track('diagnose_tab', { tab: tab.id });
+  if (!tabs.length) return;
+
+  // Initialize roving tabindex: selected tab = 0, others = -1
+  tabs.forEach(t => {
+    t.setAttribute('tabindex', t.getAttribute('aria-selected') === 'true' ? '0' : '-1');
+  });
+
+  function activate(tab, focus) {
+    tabs.forEach(t => {
+      const isActive = t === tab;
+      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      t.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
+    Object.values(panes).forEach(p => { if (p) p.hidden = true; });
+    if (panes[tab.id]) panes[tab.id].hidden = false;
+    if (focus) tab.focus();
+    track('diagnose_tab', { tab: tab.id });
+  }
+
+  tabs.forEach((tab, idx) => {
+    tab.addEventListener('click', () => activate(tab, false));
+    tab.addEventListener('keydown', (e) => {
+      let nextIdx = null;
+      switch (e.key) {
+        case 'ArrowRight': nextIdx = (idx + 1) % tabs.length; break;
+        case 'ArrowLeft':  nextIdx = (idx - 1 + tabs.length) % tabs.length; break;
+        case 'Home':       nextIdx = 0; break;
+        case 'End':        nextIdx = tabs.length - 1; break;
+        default: return;
+      }
+      e.preventDefault();
+      activate(tabs[nextIdx], true);
     });
   });
 })();
