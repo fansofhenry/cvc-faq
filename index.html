@@ -5294,8 +5294,241 @@ article.mistake .copy-link {
         <span class="visual-card-cta">What success looks like at each step</span>
       </a>
 
+      <a class="visual-card span-2" href="#t-where-am-i" data-open-target="t-where-am-i" aria-label="Open the state map — where am I, and what does it mean">
+        <figure class="diagram dia-statemap" aria-label="State map of all CVC application states with off-ramps">
+          <style>
+            .dia-statemap svg { display: block; }
+            .dia-statemap .sm-track { stroke: var(--rule); stroke-width: 1.5; fill: none; }
+            .dia-statemap .sm-flow { stroke: var(--claret); stroke-width: 2; fill: none; }
+            .dia-statemap .sm-flow-soft { stroke: var(--claret); stroke-width: 1.5; fill: none; opacity: 0.6; }
+            .dia-statemap .sm-flow-stop { stroke: var(--alert); stroke-width: 2; stroke-dasharray: 4 3; fill: none; opacity: 0.85; }
+            .dia-statemap .sm-flow-drop { stroke: var(--ink-soft); stroke-width: 1.5; fill: none; }
+            .dia-statemap .sm-node-go { fill: var(--paper-deep); stroke: var(--claret); stroke-width: 1.6; }
+            .dia-statemap .sm-node-tc { fill: var(--moss-wash); stroke: var(--moss); stroke-width: 1.6; }
+            .dia-statemap .sm-node-end { fill: var(--paper); stroke: var(--ink); stroke-width: 2; }
+            .dia-statemap .sm-node-stop { fill: #fff5f5; stroke: var(--alert); stroke-width: 1.6; }
+            .dia-statemap .sm-num { font-family: var(--serif-display); font-style: italic; font-variation-settings: 'opsz' 12, 'SOFT' 60; font-weight: 600; font-size: 12px; fill: var(--ink); text-anchor: middle; }
+            .dia-statemap .sm-num-stop { fill: var(--alert); }
+            .dia-statemap .sm-name { font-family: var(--serif-body); font-size: 11px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
+            .dia-statemap .sm-name-stop { fill: var(--alert); }
+            .dia-statemap .sm-sub { font-family: var(--serif-display); font-style: italic; font-variation-settings: 'opsz' 11, 'SOFT' 70; font-size: 10px; fill: var(--ink-faint); text-anchor: middle; }
+            .dia-statemap .sm-phase { font-family: var(--serif-display); font-style: italic; font-variation-settings: 'opsz' 12, 'SOFT' 80; font-size: 11px; fill: var(--ink-ghost); text-anchor: middle; letter-spacing: 0.04em; text-transform: uppercase; }
+            .dia-statemap .sm-tag { font-family: var(--serif-display); font-style: italic; font-variation-settings: 'opsz' 11, 'SOFT' 60; font-size: 10px; fill: var(--ink-faint); text-anchor: middle; }
+            .dia-statemap .sm-tag-stop { fill: var(--alert); }
+          </style>
+          <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <defs>
+              <marker id="sm-arr-claret" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/>
+              </marker>
+              <marker id="sm-arr-alert" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--alert)"/>
+              </marker>
+              <marker id="sm-arr-ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/>
+              </marker>
+            </defs>
+
+            <!-- Phase labels -->
+            <text class="sm-phase" x="80" y="22">— You start —</text>
+            <text class="sm-phase" x="240" y="22">— System checks —</text>
+            <text class="sm-phase" x="450" y="22">— Teaching College —</text>
+            <text class="sm-phase" x="660" y="22">— Terminal —</text>
+
+            <!-- Track behind the main happy path -->
+            <line class="sm-track" x1="55" y1="120" x2="700" y2="120"/>
+
+            <!-- Main happy-path nodes (top row) -->
+            <!-- 1. Created -->
+            <g>
+              <circle class="sm-node-go" cx="80" cy="120" r="20"/>
+              <text class="sm-num" x="80" y="124">1</text>
+              <text class="sm-name" x="80" y="158">Created</text>
+              <text class="sm-sub" x="80" y="173">you start</text>
+            </g>
+
+            <!-- 2. Eligible & Approved -->
+            <g>
+              <circle class="sm-node-go" cx="200" cy="120" r="20"/>
+              <text class="sm-num" x="200" y="124">2</text>
+              <text class="sm-name" x="200" y="158">Eligible &amp;</text>
+              <text class="sm-name" x="200" y="172">Approved</text>
+              <text class="sm-sub" x="200" y="187">~minutes</text>
+            </g>
+
+            <!-- 3. Enrolled at TC SIS -->
+            <g>
+              <circle class="sm-node-tc" cx="320" cy="120" r="20"/>
+              <text class="sm-num" x="320" y="124">3</text>
+              <text class="sm-name" x="320" y="158">Enrolled</text>
+              <text class="sm-sub" x="320" y="173">at TC SIS</text>
+            </g>
+
+            <!-- 4. Pending TC Review -->
+            <g>
+              <circle class="sm-node-tc" cx="450" cy="120" r="22"/>
+              <text class="sm-num" x="450" y="124">4</text>
+              <text class="sm-name" x="450" y="158">Pending</text>
+              <text class="sm-name" x="450" y="172">TC Review</text>
+              <text class="sm-sub" x="450" y="187">1–5 biz days</text>
+            </g>
+
+            <!-- 5. Validated & Registered (terminal happy) -->
+            <g>
+              <circle class="sm-node-end" cx="600" cy="120" r="22"/>
+              <text class="sm-num" x="600" y="124">5</text>
+              <text class="sm-name" x="600" y="158">Validated &amp;</text>
+              <text class="sm-name" x="600" y="172">Registered</text>
+              <text class="sm-sub" x="600" y="187">you're in ✓</text>
+            </g>
+
+            <!-- 6. Optional drop terminal -->
+            <g>
+              <circle class="sm-node-go" cx="700" cy="120" r="14"/>
+              <text class="sm-num" x="700" y="124">6</text>
+              <text class="sm-sub" x="700" y="146">dropped</text>
+              <text class="sm-sub" x="700" y="158">(optional)</text>
+            </g>
+
+            <!-- Main flow arrows on top track -->
+            <path class="sm-flow draw-animate" d="M 100 120 L 178 120" marker-end="url(#sm-arr-claret)"/>
+            <path class="sm-flow draw-animate" d="M 220 120 L 298 120" marker-end="url(#sm-arr-claret)"/>
+            <path class="sm-flow draw-animate" d="M 340 120 L 426 120" marker-end="url(#sm-arr-claret)"/>
+            <path class="sm-flow draw-animate" d="M 472 120 L 576 120" marker-end="url(#sm-arr-claret)"/>
+            <path class="sm-flow-drop draw-animate" d="M 622 120 L 684 120" marker-end="url(#sm-arr-ink)"/>
+
+            <!-- Sub-state callouts inside step 4 (the 3 flavors of pending) -->
+            <text class="sm-tag" x="450" y="222">includes one of —</text>
+            <text class="sm-tag" x="450" y="237">Person Match</text>
+            <text class="sm-tag" x="450" y="251">Validation</text>
+            <text class="sm-tag" x="450" y="265">Prereq Review</text>
+
+            <!-- Off-ramp branches (bottom row) -->
+            <!-- Off-ramp from 2: Ineligible -->
+            <path class="sm-flow-stop draw-animate" d="M 200 142 L 200 245 L 130 245" marker-end="url(#sm-arr-alert)"/>
+            <g>
+              <rect class="sm-node-stop" x="40" y="232" width="80" height="32" rx="6"/>
+              <text class="sm-name sm-name-stop" x="80" y="252">Ineligible</text>
+              <text class="sm-tag sm-tag-stop" x="80" y="278">Canvas / new student / GPA / hold</text>
+            </g>
+
+            <!-- Off-ramp from 4: Failed -->
+            <path class="sm-flow-stop draw-animate" d="M 450 290 L 450 305 L 340 305" marker-end="url(#sm-arr-alert)"/>
+            <g>
+              <rect class="sm-node-stop" x="250" y="290" width="100" height="32" rx="6"/>
+              <text class="sm-name sm-name-stop" x="300" y="310">Registration Failed</text>
+              <text class="sm-tag sm-tag-stop" x="300" y="336">section full · prereq not met · record locked</text>
+            </g>
+
+            <!-- Off-ramp from 5/6: Drop Failed -->
+            <path class="sm-flow-stop draw-animate" d="M 700 134 L 700 245 L 650 245" marker-end="url(#sm-arr-alert)"/>
+            <g>
+              <rect class="sm-node-stop" x="555" y="232" width="100" height="32" rx="6"/>
+              <text class="sm-name sm-name-stop" x="605" y="252">Drop Failed</text>
+              <text class="sm-tag sm-tag-stop" x="605" y="278">hold on TC · past deadline</text>
+            </g>
+          </svg>
+          <figcaption class="diagram-caption"><strong>Every state, on one map.</strong> The top track is the happy path: Created → Eligible → Enrolled → Pending TC Review → Validated &amp; Registered. The red boxes are off-ramps — the three places things can go wrong (Ineligible, Registration Failed, Drop Failed). Match the state on your dashboard to one of these eight, then the guide tells you what to do next.</figcaption>
+        </figure>
+        <span class="visual-card-cta">Where am I — and what does it mean?</span>
+      </a>
+
     </div>
   </div>
+
+  <details id="t-where-am-i">
+    <summary>
+      <div class="task-summary">
+        <div>
+          <div class="task-title">Where am I in the process? <em>Match your dashboard state.</em></div>
+          <span class="task-sub">Eight possible states. Find yours below — and exactly what to do next.</span>
+        </div>
+      </div>
+    </summary>
+    <div class="body">
+
+      <p>Open <a href="https://search.cvc.edu" target="_blank">search.cvc.edu</a>, log in, and look at the <strong>Status</strong> on your Class Schedule (or Application Details). Match what you see to one of the eight below. The state name on your dashboard tells you exactly which step the system is on — and which one (if any) needs your action.</p>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 18px 0 6px;">The 5 happy-path states (top track in the diagram)</p>
+
+      <div class="entry" style="margin-top: 12px;">
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--rule-soft);">
+          <div style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: var(--paper-deep); border: 1.6px solid var(--claret); display: flex; align-items: center; justify-content: center; font-family: var(--serif-display); font-style: italic; font-weight: 600;">1</div>
+          <div>
+            <div style="font-weight: 600;">Created</div>
+            <div style="font-size: 14px; color: var(--ink-soft);">You started the AER form. Nothing automated yet — the system just opened a record. <strong>What to do:</strong> finish the AER. If you abandoned it, go back and complete it.</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--rule-soft);">
+          <div style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: var(--paper-deep); border: 1.6px solid var(--claret); display: flex; align-items: center; justify-content: center; font-family: var(--serif-display); font-style: italic; font-weight: 600;">2</div>
+          <div>
+            <div style="font-weight: 600;">Eligible &amp; Approved</div>
+            <div style="font-size: 14px; color: var(--ink-soft);">CVC's automated checks passed (you're enrolled at your HC, GPA is fine, no holds, etc.). The system is now handing the registration to the Teaching College. <strong>What to do:</strong> nothing — wait. This usually advances within minutes. <a href="#state-eligible">Full description.</a></div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--rule-soft);">
+          <div style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: var(--moss-wash); border: 1.6px solid var(--moss); display: flex; align-items: center; justify-content: center; font-family: var(--serif-display); font-style: italic; font-weight: 600;">3</div>
+          <div>
+            <div style="font-weight: 600;">Enrolled (at TC SIS)</div>
+            <div style="font-size: 14px; color: var(--ink-soft);">The Teaching College has written your record into their system. The class registration step is next. <strong>What to do:</strong> nothing — usually advances within hours, sometimes a day. If stuck more than 2 days, see step 4 (likely a Pending state).</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--rule-soft);">
+          <div style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: var(--moss-wash); border: 1.6px solid var(--moss); display: flex; align-items: center; justify-content: center; font-family: var(--serif-display); font-style: italic; font-weight: 600;">4</div>
+          <div>
+            <div style="font-weight: 600;">Pending TC Review (one of three flavors)</div>
+            <div style="font-size: 14px; color: var(--ink-soft);">The TC needs to do one more thing before registration finalizes. The state name on your dashboard tells you which:
+              <ul style="margin: 6px 0 0 18px;">
+                <li><strong>Pending Person Match</strong> — the TC needs to confirm your CCCID maps to a record on their side. Common at PeopleSoft colleges. <a href="#sym-pending">Full description.</a></li>
+                <li><strong>Registered &amp; Pending Validation</strong> — registration is in their SIS, awaiting one final validation step (often residency confirmation). <a href="#state-pending-validation">Full description.</a></li>
+                <li><strong>Prerequisite Pending Review</strong> — the TC's A&amp;R is reviewing your transcript. 3–5 business days for CCC prereqs. <a href="#err-prereq">Full description.</a></li>
+              </ul>
+              <strong>What to do:</strong> wait. Use the <a href="#dater">date checker</a> to see when to follow up. Identify a backup section in case the class fills during your wait — see <a href="#err-prereq-section-filled">the seat-reservation gap entry</a>.
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0;">
+          <div style="flex: 0 0 32px; height: 32px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); display: flex; align-items: center; justify-content: center; font-family: var(--serif-display); font-style: italic; font-weight: 600;">5</div>
+          <div>
+            <div style="font-weight: 600;">Validated &amp; Registered ✓</div>
+            <div style="font-size: 14px; color: var(--ink-soft);">You're in. The TC has confirmed your registration on their side. <strong>What to do:</strong> pay any fees through the dashboard, then check your Home College's Canvas in 24–48 hours for the class to appear. <a href="#state-validated">Full description.</a></div>
+          </div>
+        </div>
+      </div>
+
+      <p style="font-family: var(--serif-display); font-style: italic; font-size: 18px; color: var(--ink); margin: 28px 0 6px;">The 3 off-ramp states (red boxes in the diagram)</p>
+      <p style="margin-bottom: 12px;">If your dashboard shows one of these, the registration didn't complete. The off-ramp tells you why.</p>
+
+      <div class="entry">
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--rule-soft);">
+          <div style="flex: 0 0 32px; height: 32px; border-radius: 6px; background: #fff5f5; border: 1.6px solid var(--alert); display: flex; align-items: center; justify-content: center; font-family: var(--serif-display); font-style: italic; font-weight: 600; color: var(--alert);">↓</div>
+          <div>
+            <div style="font-weight: 600; color: var(--alert);">Ineligible</div>
+            <div style="font-size: 14px; color: var(--ink-soft);">The system stopped the registration before reaching the TC because of a CVC-side check. Four common causes: (a) you're a new student at your HC who hasn't registered for any HC class yet — see <a href="#sym-new-student">"I'm a new student"</a>; (b) Canvas at your HC doesn't show you as currently provisioned (often Merced-specific); (c) your HC GPA is below 2.0; (d) holds at your HC. <strong>Click "Details" on the failed row</strong> to see the specific reason.</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--rule-soft);">
+          <div style="flex: 0 0 32px; height: 32px; border-radius: 6px; background: #fff5f5; border: 1.6px solid var(--alert); display: flex; align-items: center; justify-content: center; font-family: var(--serif-display); font-style: italic; font-weight: 600; color: var(--alert);">↓</div>
+          <div>
+            <div style="font-weight: 600; color: var(--alert);">Registration Failed</div>
+            <div style="font-size: 14px; color: var(--ink-soft);">The TC accepted your application but couldn't complete the class registration. Most common cause: <a href="#sym-failed">section filled</a> while you were in the queue. Other causes: prereq decision was "not met," unit overload (<a href="#err-unit-overload">"Petition is required"</a>), or a TC-side record lock. The Details panel names the reason verbatim.</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: flex-start; padding: 10px 0;">
+          <div style="flex: 0 0 32px; height: 32px; border-radius: 6px; background: #fff5f5; border: 1.6px solid var(--alert); display: flex; align-items: center; justify-content: center; font-family: var(--serif-display); font-style: italic; font-weight: 600; color: var(--alert);">↓</div>
+          <div>
+            <div style="font-weight: 600; color: var(--alert);">Drop Failed</div>
+            <div style="font-size: 14px; color: var(--ink-soft);">A drop attempt didn't complete. Most common cause: a hold on your TC account (financial). Less commonly: past the drop deadline. <a href="#err-dropfail">Full description.</a></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="aside calm" style="margin-top: 22px;"><strong>One state worth a separate flag —</strong> if your dashboard says "Pending" but you got a confirmation email saying you're registered, you ARE registered. The dashboard sometimes lags by hours. Trust the email. <a href="#q-display-vs-email">Full description.</a></aside>
+
+      <p style="margin-top: 22px;"><strong>Don't see your state listed above?</strong> The Status field uses these exact names. If yours is different, take a screenshot and use the <a href="#email">ticket builder</a> to email support — that lets us look at the underlying record directly.</p>
+
+    </div>
+  </details>
 
   <details id="t-account-setup">
     <summary>
@@ -7418,6 +7651,12 @@ const CORPUS = [
     title:'I don\'t know what I\'m looking at',
     preview:'Walk-through to identify your status. Open search.cvc.edu, log in, look at Class Schedule. Match what you see against the labeled list.',
     tags:['confused','lost','help','dont know','no idea','not sure','what is this','what does this mean','overwhelmed','first time','cant figure out','what should i do'] },
+
+  // ────────────────────── §vi. STEP-BY-STEP GUIDES (long-form) ──────────────────────
+  { id:'t-where-am-i', cat:'task', section:'§vi. Step-by-step guides',
+    title:'Where am I in the process? Match your dashboard state',
+    preview:'Eight possible states across the registration journey. Find your status — Created, Eligible & Approved, Enrolled, Pending TC Review, Validated & Registered, or one of three off-ramps (Ineligible, Registration Failed, Drop Failed) — and the guide tells you what each means + what to do next.',
+    tags:['where am i','what state','what does my status mean','what does pending mean','where in the process','status meaning','dashboard status','application status','what is happening','state machine','registration status','am i registered','still pending','where in workflow','what step','step in process','match my status','dashboard says','status says','validated and registered','enrolled at tc sis','pending tc review','registration failed','drop failed','ineligible','what does ineligible mean'] },
 
   // ────────────────────── NEW PATTERNS — added 2026-04-27 ──────────────────────
   { id:'sym-new-student', cat:'error-stop', section:'§iii. Error decoder',
