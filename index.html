@@ -1550,43 +1550,6 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   border-left-color: #946400;
 }
 
-/* Reading progress badge */
-.progress-badge {
-  position: fixed;
-  bottom: 92px;
-  right: 16px;
-  z-index: 80;
-  background: var(--ink);
-  color: var(--paper);
-  padding: 9px 14px;
-  border-radius: 999px;
-  font-family: var(--serif-body);
-  font-size: 12.5px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  display: none;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
-}
-.progress-badge.show { display: inline-flex; }
-.progress-badge:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 22px -6px rgba(0, 0, 0, 0.28);
-}
-.progress-badge .progress-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--moss);
-  display: inline-block;
-}
-.progress-badge .progress-num {
-  font-family: var(--serif-display);
-  font-style: italic;
-  color: var(--paper);
-}
-
 /* Per-entry helpful feedback */
 .helpful {
   display: flex;
@@ -10286,58 +10249,6 @@ document.getElementById('find-results').addEventListener('click', (e) => {
     }
   };
   checks.forEach(c => c.addEventListener('change', update));
-})();
-
-// ════════════════════════════════════════════════════════════════════
-// READING PROGRESS BADGE — counts opened entries via localStorage
-// ════════════════════════════════════════════════════════════════════
-
-(function initProgress() {
-  const STORAGE_KEY = 'cvc-faq-read-entries';
-  const allEntries = document.querySelectorAll('details[id^="t-"], details[id^="sym-"], details[id^="err-"], details[id^="lim-"]');
-  const total = allEntries.length;
-  if (total === 0) return;
-
-  // create floating badge
-  const badge = document.createElement('a');
-  badge.className = 'progress-badge';
-  badge.href = '#diagnose';
-  badge.setAttribute('aria-label', 'Reading progress');
-  badge.innerHTML = '<span class="progress-dot"></span><span class="progress-num"><span id="progress-read">0</span>/' + total + '</span><span style="opacity:0.8;font-size:11px;">read</span>';
-  document.body.appendChild(badge);
-
-  const readSet = new Set();
-  try {
-    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    stored.forEach(id => readSet.add(id));
-  } catch (e) { /* localStorage may be disabled */ }
-
-  const numEl = document.getElementById('progress-read');
-  const update = () => {
-    if (numEl) numEl.textContent = readSet.size;
-    if (readSet.size > 0) badge.classList.add('show');
-  };
-
-  allEntries.forEach(el => {
-    el.addEventListener('toggle', () => {
-      if (el.open && !readSet.has(el.id)) {
-        readSet.add(el.id);
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...readSet])); } catch (e) {}
-        update();
-      }
-    });
-  });
-
-  update();
-
-  // show after scroll past hero
-  let shown = false;
-  window.addEventListener('scroll', () => {
-    if (!shown && window.scrollY > 600 && readSet.size > 0) {
-      shown = true;
-      badge.classList.add('show');
-    }
-  }, { passive: true });
 })();
 
 // ════════════════════════════════════════════════════════════════════
