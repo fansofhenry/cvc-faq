@@ -16,8 +16,8 @@
   --paper-fold: #eef4fb;
   --ink: #141827;
   --ink-soft: #3a3f4e;
-  --ink-faint: #6b7184;
-  --ink-ghost: #b2b6c2;
+  --ink-faint: #525868;          /* WCAG AA: 6.5:1 on white, 4.6:1 on --moss-pale */
+  --ink-ghost: #6b7184;           /* WCAG AA: 4.86:1 on white (was #b2b6c2 / 2.03:1) */
   --rule: #d5d5d5;
   --rule-soft: #e8e8e8;
   --claret: #0066ba;            /* CVC primary blue */
@@ -1009,7 +1009,10 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   transform: translateY(-2px);
   border-color: var(--claret-pale);
   box-shadow: 0 10px 28px -12px rgba(50, 30, 20, 0.18);
-  outline: none;
+}
+.visual-card:focus-visible {
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
 }
 .visual-card .diagram {
   margin: 0;
@@ -1227,7 +1230,10 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   background: var(--paper-deep);
   transform: translateY(-1px);
   box-shadow: 0 6px 16px -8px rgba(50, 30, 20, 0.18);
-  outline: none;
+}
+.quiz-option:focus-visible {
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
 }
 .quiz-option .quiz-letter {
   display: inline-block;
@@ -1372,7 +1378,8 @@ aside.aside.advisory strong { color: var(--claret-deep); }
 .calc-input:focus {
   border-color: var(--claret);
   background: var(--paper);
-  outline: none;
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
 }
 .calc-input-prefix {
   position: relative;
@@ -1550,43 +1557,6 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   border-left-color: #946400;
 }
 
-/* Reading progress badge */
-.progress-badge {
-  position: fixed;
-  bottom: 92px;
-  right: 16px;
-  z-index: 80;
-  background: var(--ink);
-  color: var(--paper);
-  padding: 9px 14px;
-  border-radius: 999px;
-  font-family: var(--serif-body);
-  font-size: 12.5px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-  display: none;
-  align-items: center;
-  gap: 8px;
-  box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.2);
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
-}
-.progress-badge.show { display: inline-flex; }
-.progress-badge:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 22px -6px rgba(0, 0, 0, 0.28);
-}
-.progress-badge .progress-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--moss);
-  display: inline-block;
-}
-.progress-badge .progress-num {
-  font-family: var(--serif-display);
-  font-style: italic;
-  color: var(--paper);
-}
-
 /* Per-entry helpful feedback */
 .helpful {
   display: flex;
@@ -1595,6 +1565,41 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px dashed var(--rule);
+  flex-wrap: wrap;
+}
+.helpful-followup {
+  flex-basis: 100%;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.helpful-followup-label {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+.helpful-followup-label em {
+  color: var(--ink-ghost);
+  font-style: italic;
+}
+.helpful-followup-input {
+  width: 100%;
+  font-family: var(--serif-body);
+  font-size: 13px;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 7px 10px;
+  background: var(--paper);
+  resize: vertical;
+  line-height: 1.45;
+}
+.helpful-followup-input:focus {
+  outline: none;
+  border-color: var(--claret);
+  box-shadow: 0 0 0 2px var(--claret-wash);
 }
 .helpful-q {
   font-family: var(--serif-display);
@@ -1636,6 +1641,71 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   color: var(--moss);
   margin-left: 4px;
 }
+
+/* "Still stuck?" rescue card — bottom of error/symptom entries */
+.stuck {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--paper-deep);
+  border: 1px dashed var(--ink-ghost);
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+}
+.stuck-text { flex: 1; min-width: 220px; }
+.stuck-q {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 18, 'SOFT' 70;
+  font-size: 16px;
+  color: var(--ink);
+  margin: 0 0 2px;
+  font-weight: 500;
+}
+.stuck-body {
+  font-family: var(--serif-body);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.5;
+}
+.stuck-btn {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 120ms ease;
+}
+.stuck-btn:hover { background: var(--claret); }
+.stuck-btn:focus-visible { outline: 2px solid var(--claret); outline-offset: 2px; }
+
+/* Highlight pulse when chip deep-link lands on an entry */
+@keyframes chip-pulse-anim {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 102, 186, 0); }
+  30%      { box-shadow: 0 0 0 6px rgba(0, 102, 186, 0.18); }
+}
+.chip-pulse {
+  animation: chip-pulse-anim 1.6s ease-out;
+  border-radius: 8px;
+}
+
+/* Brief "field flash" highlight after rescue-card pre-fill */
+@keyframes field-flash {
+  0%   { background: var(--moss-wash); }
+  100% { background: var(--paper); }
+}
+.field-flash input,
+.field-flash textarea,
+.field-flash select { animation: field-flash 1.4s ease-out; }
 
 /* Myth vs Fact band */
 .myths {
@@ -2004,7 +2074,8 @@ section.section#limits .entries {
   font-variation-settings: "opsz" 17;
 }
 .input-paper:focus {
-  outline: none;
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
   border-bottom-color: var(--claret);
 }
 .input-paper::-webkit-calendar-picker-indicator {
@@ -2345,7 +2416,8 @@ section.section#limits .entries {
 .field input:focus,
 .field select:focus,
 .field textarea:focus {
-  outline: none;
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
   border-bottom-color: var(--claret);
 }
 
@@ -2617,7 +2689,8 @@ section.section#limits .entries {
   transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 .find-textarea:focus {
-  outline: none;
+  outline: 2px solid var(--claret);
+  outline-offset: 2px;
   border-color: var(--claret);
   background: var(--paper);
   box-shadow: 0 0 0 3px var(--claret-pale);
@@ -3021,7 +3094,10 @@ section.section#limits .entries {
   background: var(--claret);
   color: var(--paper);
   transform: translateY(-1px);
-  outline: none;
+}
+.qa-chip:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: -4px;
 }
 .qa-chip-icon {
   font-family: var(--serif-display);
@@ -3606,6 +3682,22 @@ article.mistake .copy-link {
 }
 .skip-link:focus { top: 0; outline: 2px solid var(--paper); outline-offset: -4px; }
 
+/* Visually hidden but available to screen readers (used for heading-order fixes) */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* main landmark: ensure skip-link target is focusable but not visually outlined */
+main:focus { outline: none; }
+
 /* —————— print stylesheet —————— */
 
 @media print {
@@ -3628,7 +3720,7 @@ article.mistake .copy-link {
 </head>
 <body>
 
-<a class="skip-link" href="#find"><span data-en>Skip to search</span><span data-es>Ir a búsqueda</span></a>
+<a class="skip-link" href="#main"><span data-en>Skip to main content</span><span data-es>Ir al contenido principal</span></a>
 
 <div class="grain" aria-hidden="true"></div>
 <a class="urgent-marker" href="#urgent">Urgent?</a>
@@ -3636,21 +3728,21 @@ article.mistake .copy-link {
 <nav class="outline" aria-label="Page outline">
   <span class="outline-label"><span data-en>Outline</span><span data-es>Esquema</span></span>
   <ol class="outline-list">
-    <li><a href="#find" data-watch="find"><span class="outline-num">→</span><span><span data-en>Search</span><span data-es>Búsqueda</span></span></a></li>
-    <li><a href="#diagnose" data-watch="diagnose"><span class="outline-num">⌘</span><span><span data-en>Tools</span><span data-es>Herramientas</span></span></a></li>
-    <li><a href="#urgent" data-watch="urgent"><span class="outline-num">i.</span><span><span data-en>Urgent</span><span data-es>Urgente</span></span></a></li>
-    <li><a href="#symptoms" data-watch="symptoms"><span class="outline-num">ii.</span><span><span data-en>Symptoms</span><span data-es>Síntomas</span></span></a></li>
-    <li><a href="#errors" data-watch="errors"><span class="outline-num">iii.</span><span><span data-en>Error decoder</span><span data-es>Errores</span></span></a></li>
-    <li><a href="#dater" data-watch="dater"><span class="outline-num">iv.</span><span><span data-en>Date check</span><span data-es>Plazos</span></span></a></li>
-    <li><a href="#mistakes" data-watch="mistakes"><span class="outline-num">v.</span><span><span data-en>Common mistakes</span><span data-es>Errores comunes</span></span></a></li>
-    <li><a href="#tasks" data-watch="tasks"><span class="outline-num">vi.</span><span><span data-en>How-to guides</span><span data-es>Guías</span></span></a></li>
-    <li><a href="#email" data-watch="email"><span class="outline-num">vii.</span><span><span data-en>Email support?</span><span data-es>¿Email?</span></span></a></li>
-    <li><a href="#glossary" data-watch="glossary"><span class="outline-num">viii.</span><span><span data-en>Glossary</span><span data-es>Glosario</span></span></a></li>
-    <li><a href="#limits" data-watch="limits"><span class="outline-num">ix.</span><span><span data-en>Designed limits</span><span data-es>Límites de diseño</span></span></a></li>
+    <li><a href="#find" data-watch="find"><span class="outline-num" aria-hidden="true">→</span><span><span data-en>Search</span><span data-es>Búsqueda</span></span></a></li>
+    <li><a href="#diagnose" data-watch="diagnose"><span class="outline-num" aria-hidden="true">⌘</span><span><span data-en>Tools</span><span data-es>Herramientas</span></span></a></li>
+    <li><a href="#urgent" data-watch="urgent"><span class="outline-num" aria-hidden="true">i.</span><span><span data-en>Urgent</span><span data-es>Urgente</span></span></a></li>
+    <li><a href="#symptoms" data-watch="symptoms"><span class="outline-num" aria-hidden="true">ii.</span><span><span data-en>Symptoms</span><span data-es>Síntomas</span></span></a></li>
+    <li><a href="#errors" data-watch="errors"><span class="outline-num" aria-hidden="true">iii.</span><span><span data-en>Error decoder</span><span data-es>Errores</span></span></a></li>
+    <li><a href="#dater" data-watch="dater"><span class="outline-num" aria-hidden="true">iv.</span><span><span data-en>Date check</span><span data-es>Plazos</span></span></a></li>
+    <li><a href="#mistakes" data-watch="mistakes"><span class="outline-num" aria-hidden="true">v.</span><span><span data-en>Common mistakes</span><span data-es>Errores comunes</span></span></a></li>
+    <li><a href="#tasks" data-watch="tasks"><span class="outline-num" aria-hidden="true">vi.</span><span><span data-en>How-to guides</span><span data-es>Guías</span></span></a></li>
+    <li><a href="#email" data-watch="email"><span class="outline-num" aria-hidden="true">vii.</span><span><span data-en>Email support?</span><span data-es>¿Email?</span></span></a></li>
+    <li><a href="#glossary" data-watch="glossary"><span class="outline-num" aria-hidden="true">viii.</span><span><span data-en>Glossary</span><span data-es>Glosario</span></span></a></li>
+    <li><a href="#limits" data-watch="limits"><span class="outline-num" aria-hidden="true">ix.</span><span><span data-en>Designed limits</span><span data-es>Límites de diseño</span></span></a></li>
   </ol>
 </nav>
 
-<div class="page">
+<main id="main" tabindex="-1" class="page">
 
 <!-- ═══════════════════════════════ MASTHEAD ═══════════════════════════════ -->
 
@@ -3662,8 +3754,8 @@ article.mistake .copy-link {
     <span class="dot"></span>
     <span>Vol. I — 2026</span>
     <span class="lang-toggle" role="group" aria-label="Language">
-      <button class="lang-btn active" data-lang="en" type="button">EN</button>
-      <button class="lang-btn" data-lang="es" type="button">ES</button>
+      <button class="lang-btn active" data-lang="en" type="button" aria-pressed="true">EN</button>
+      <button class="lang-btn" data-lang="es" type="button" aria-pressed="false">ES</button>
     </span>
   </div>
 
@@ -3677,6 +3769,410 @@ article.mistake .copy-link {
     <span data-es>Una guía para estudiantes de inscripción cruzada. La mayoría de los problemas se resuelven aquí en menos de dos minutos — sin necesidad de enviar un correo.</span>
   </p>
 </header>
+
+<!-- ═══════════════════════════════ ELIGIBILITY SELF-CHECK ═══════════════════════════════ -->
+
+<style>
+.eligibility {
+  margin: 32px auto 0;
+  max-width: 1080px;
+  padding: 0 clamp(20px, 5vw, 56px);
+}
+.eligibility-card {
+  border: 1px solid var(--claret-pale);
+  border-left: 4px solid var(--claret);
+  background: var(--claret-wash);
+  border-radius: 8px;
+  padding: 18px 22px;
+  position: relative;
+}
+.eligibility-card[data-state="passed"] {
+  border-left-color: #2e7d32;
+  background: #f1f8f4;
+  border-color: #c5e1c8;
+  padding: 12px 18px;
+}
+.eligibility-card[data-state="passed"] .eligibility-body { display: none; }
+.eligibility-card[data-state="active"] .eligibility-summary,
+.eligibility-card[data-state="result"] .eligibility-summary {
+  display: none;
+}
+.eligibility-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.eligibility-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 13, 'SOFT' 70;
+  font-size: 13px;
+  color: var(--claret-deep);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.eligibility-headline {
+  font-family: var(--serif-body);
+  font-size: 16px;
+  color: var(--ink);
+  font-weight: 500;
+  margin: 0;
+  flex: 1;
+  min-width: 240px;
+}
+.eligibility-headline strong { color: var(--claret-deep); font-weight: 600; }
+.eligibility-start {
+  background: var(--claret);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 120ms ease;
+}
+.eligibility-start:hover { background: var(--claret-deep); }
+.eligibility-passed-text {
+  font-family: var(--serif-body);
+  font-size: 14px;
+  color: var(--ink);
+  margin: 0;
+  flex: 1;
+}
+.eligibility-passed-text strong { color: #2e7d32; }
+.eligibility-retake {
+  background: transparent;
+  border: 1px solid #c5e1c8;
+  color: var(--ink-soft);
+  border-radius: 5px;
+  padding: 5px 12px;
+  font-family: var(--sans);
+  font-size: 12px;
+  cursor: pointer;
+}
+.eligibility-retake:hover { border-color: #2e7d32; color: #2e7d32; }
+.eligibility-body { margin-top: 4px; }
+.eligibility-progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.eligibility-progress-pip {
+  height: 4px;
+  flex: 1;
+  background: var(--claret-pale);
+  border-radius: 2px;
+  transition: background 200ms ease;
+}
+.eligibility-progress-pip.active { background: var(--claret); }
+.eligibility-progress-pip.done { background: var(--claret-deep); }
+.eligibility-question {
+  display: none;
+}
+.eligibility-question.active { display: block; }
+.eligibility-q-number {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.eligibility-q-text {
+  font-family: var(--serif-display);
+  font-variation-settings: 'opsz' 22, 'SOFT' 60;
+  font-size: clamp(18px, 2.4vw, 22px);
+  color: var(--ink);
+  line-height: 1.3;
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+.eligibility-q-hint {
+  font-family: var(--serif-body);
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+.eligibility-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.eligibility-option {
+  background: white;
+  border: 1px solid var(--claret-pale);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+.eligibility-option:hover {
+  border-color: var(--claret);
+  background: var(--paper-deep);
+}
+.eligibility-option.option-yes { border-color: var(--claret); }
+.eligibility-option.option-no { border-color: #cf2e2e44; color: var(--ink-soft); }
+.eligibility-option.option-unsure {
+  background: transparent;
+  border-color: var(--ink-ghost);
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+.eligibility-result {
+  display: none;
+  border-top: 1px solid var(--claret-pale);
+  margin-top: 16px;
+  padding-top: 16px;
+}
+.eligibility-result.active { display: block; }
+.eligibility-result h3 {
+  font-family: var(--serif-display);
+  font-variation-settings: 'opsz' 22, 'SOFT' 60;
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+.eligibility-result h3 em { font-style: italic; color: var(--claret); }
+.eligibility-result.is-fail h3 em { color: var(--alert); }
+.eligibility-result p {
+  font-family: var(--serif-body);
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+.eligibility-result a.eligibility-link {
+  display: inline-block;
+  background: var(--claret);
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+.eligibility-result a.eligibility-link:hover { background: var(--claret-deep); }
+.eligibility-result .eligibility-secondary {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--ink-ghost);
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--sans);
+}
+.eligibility-result .eligibility-secondary:hover { border-color: var(--ink); color: var(--ink); }
+.eligibility-back {
+  background: none;
+  border: none;
+  color: var(--ink-faint);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 12px;
+  padding: 6px 0 0;
+  margin-top: 10px;
+  text-decoration: underline;
+}
+.eligibility-back:hover { color: var(--ink); }
+@media (max-width: 640px) {
+  .eligibility-summary { flex-direction: column; align-items: flex-start; }
+  .eligibility-start { width: 100%; }
+}
+</style>
+
+<section class="eligibility" id="eligibility" aria-labelledby="eligibility-heading">
+  <h2 class="sr-only" id="eligibility-heading"><span data-en>Eligibility self-check</span><span data-es>Verificación de elegibilidad</span></h2>
+  <div class="eligibility-card" id="eligibility-card" data-state="idle">
+
+    <!-- IDLE state: shown to first-timers -->
+    <div class="eligibility-summary">
+      <div style="flex:1; min-width:240px;">
+        <div class="eligibility-eyebrow" id="eligibility-eyebrow">
+          <span data-en>Start here, 30 seconds</span><span data-es>Empieza aquí, 30 segundos</span>
+        </div>
+        <p class="eligibility-headline">
+          <span data-en>Not sure if you can use CVC yet? <strong>Three quick questions</strong> tell you if you're eligible — before you waste time chasing an error message.</span>
+          <span data-es>¿No estás segura/o si puedes usar CVC todavía? <strong>Tres preguntas rápidas</strong> te dirán si eres elegible — antes de perseguir un mensaje de error.</span>
+        </p>
+      </div>
+      <button class="eligibility-start" id="eligibility-start" type="button">
+        <span data-en>Start check →</span><span data-es>Empezar →</span>
+      </button>
+    </div>
+
+    <!-- ACTIVE state: 3 questions -->
+    <div class="eligibility-body">
+      <div class="eligibility-progress" aria-hidden="true">
+        <div class="eligibility-progress-pip" data-pip="1"></div>
+        <div class="eligibility-progress-pip" data-pip="2"></div>
+        <div class="eligibility-progress-pip" data-pip="3"></div>
+      </div>
+
+      <!-- Q1: CCCApply -->
+      <div class="eligibility-question" data-q="1">
+        <div class="eligibility-q-number">
+          <span data-en>Question 1 of 3</span><span data-es>Pregunta 1 de 3</span>
+        </div>
+        <h3 class="eligibility-q-text">
+          <span data-en>Have you applied to a California Community College through CCCApply?</span>
+          <span data-es>¿Has aplicado a un colegio comunitario de California por CCCApply?</span>
+        </h3>
+        <p class="eligibility-q-hint">
+          <span data-en>If yes, you have a <strong>CCCID</strong> — a 7-character ID like ABC1234. CVC only works for students who already have one.</span>
+          <span data-es>Si sí, tienes un <strong>CCCID</strong> — un ID de 7 caracteres como ABC1234. CVC solo funciona si ya tienes uno.</span>
+        </p>
+        <div class="eligibility-options">
+          <button class="eligibility-option option-yes" data-answer="yes" data-next="2" type="button">
+            <span data-en>Yes, I have a CCCID</span><span data-es>Sí, tengo un CCCID</span>
+          </button>
+          <button class="eligibility-option option-no" data-answer="no" data-result="A1" type="button">
+            <span data-en>No, or not sure I have one</span><span data-es>No, o no estoy segura/o</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Q2: HS / 18+ -->
+      <div class="eligibility-question" data-q="2">
+        <div class="eligibility-q-number">
+          <span data-en>Question 2 of 3</span><span data-es>Pregunta 2 de 3</span>
+        </div>
+        <h3 class="eligibility-q-text">
+          <span data-en>Do you have a high school diploma or GED, or are you 18 or older?</span>
+          <span data-es>¿Tienes diploma de preparatoria o GED, o tienes 18 años o más?</span>
+        </h3>
+        <p class="eligibility-q-hint">
+          <span data-en>Still in high school? You can take community college classes — but you'd apply to your Teaching College directly as a special-admit student, not through CVC.</span>
+          <span data-es>¿Todavía en la prepa? Puedes tomar clases de colegio comunitario — pero aplicarías directamente al Teaching College como estudiante de admisión especial, no por CVC.</span>
+        </p>
+        <div class="eligibility-options">
+          <button class="eligibility-option option-yes" data-answer="yes" data-next="3" type="button">
+            <span data-en>Yes</span><span data-es>Sí</span>
+          </button>
+          <button class="eligibility-option option-no" data-answer="no" data-result="A4" type="button">
+            <span data-en>No, I'm still in high school</span><span data-es>No, aún estoy en la prepa</span>
+          </button>
+          <button class="eligibility-back" data-back="1" type="button">
+            <span data-en>← Back</span><span data-es>← Atrás</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Q3: HC class history -->
+      <div class="eligibility-question" data-q="3">
+        <div class="eligibility-q-number">
+          <span data-en>Question 3 of 3</span><span data-es>Pregunta 3 de 3</span>
+        </div>
+        <h3 class="eligibility-q-text">
+          <span data-en>At your Home College: have you completed at least one class — or are you in a class right now?</span>
+          <span data-es>En tu Home College: ¿has terminado al menos una clase — o estás en una clase ahora mismo?</span>
+        </h3>
+        <p class="eligibility-q-hint">
+          <span data-en>This is the rule that catches most new students. CVC's eligibility page says it directly: <em>"If this is your first term or you were recently admitted at your Home College, you must have completed a class or be taking a class that is currently in progress in order to use the Exchange."</em></span>
+          <span data-es>Esta es la regla que atrapa a la mayoría. La página de elegibilidad lo dice directamente: <em>"Si es tu primer término o fuiste admitido recientemente, debes haber completado una clase o estar tomando una clase actualmente en progreso para usar el Exchange."</em></span>
+        </p>
+        <div class="eligibility-options">
+          <button class="eligibility-option option-yes" data-answer="yes" data-result="pass" type="button">
+            <span data-en>Yes, finished one or in one now</span><span data-es>Sí, terminé una o estoy en una ahora</span>
+          </button>
+          <button class="eligibility-option option-no" data-answer="no" data-result="A7" type="button">
+            <span data-en>No, I haven't started classes yet</span><span data-es>No, aún no he empezado clases</span>
+          </button>
+          <button class="eligibility-back" data-back="2" type="button">
+            <span data-en>← Back</span><span data-es>← Atrás</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Result: PASS -->
+      <div class="eligibility-result" data-result="pass">
+        <h3><span data-en>You're eligible — <em>keep going.</em></span><span data-es>Eres elegible — <em>continúa.</em></span></h3>
+        <p>
+          <span data-en>You meet all three eligibility checks. If you're hitting an error, it's a fixable one — not a "you can't use CVC yet" block. Use the search bar below to describe what's happening.</span>
+          <span data-es>Cumples los tres requisitos. Si te aparece un error, es uno que se puede arreglar — no es un bloqueo de "aún no puedes usar CVC". Usa la barra de búsqueda abajo para describir el problema.</span>
+        </p>
+        <a href="#find" class="eligibility-link" data-collapse="1">
+          <span data-en>Search for my issue ↓</span><span data-es>Buscar mi problema ↓</span>
+        </a>
+      </div>
+
+      <!-- Result: A1 (no CCCID) -->
+      <div class="eligibility-result is-fail" data-result="A1">
+        <h3><span data-en>You'll need to <em>apply through CCCApply first.</em></span><span data-es>Necesitas <em>aplicar por CCCApply primero.</em></span></h3>
+        <p>
+          <span data-en>CVC is built for students who are already enrolled at a California Community College. The first step is applying through CCCApply (free) — once you have a CCCID, come back here.</span>
+          <span data-es>CVC es para estudiantes que ya están inscritos en un colegio comunitario de California. El primer paso es aplicar por CCCApply (gratis) — cuando tengas un CCCID, vuelve aquí.</span>
+        </p>
+        <a href="https://www.cccapply.org/" target="_blank" rel="noopener" class="eligibility-link">
+          <span data-en>Apply at CCCApply →</span><span data-es>Aplicar en CCCApply →</span>
+        </a>
+        <button class="eligibility-secondary" data-restart="1" type="button">
+          <span data-en>Restart check</span><span data-es>Empezar de nuevo</span>
+        </button>
+      </div>
+
+      <!-- Result: A4 (under 18) -->
+      <div class="eligibility-result is-fail" data-result="A4">
+        <h3><span data-en>CVC isn't the path — <em>but community college is.</em></span><span data-es>CVC no es la ruta — <em>pero el colegio comunitario sí.</em></span></h3>
+        <p>
+          <span data-en>If you're still in high school and want to take a college class, you'd apply to that college directly as a "special-admit" or "dual-enrollment" student. Each college has its own form. CVC doesn't handle this enrollment type.</span>
+          <span data-es>Si todavía estás en la prepa y quieres tomar una clase universitaria, aplicarías directamente a ese colegio como estudiante de "admisión especial" o "inscripción dual". Cada colegio tiene su propio formulario. CVC no maneja este tipo de inscripción.</span>
+        </p>
+        <p>
+          <span data-en>Search "<strong>special admit dual enrollment</strong>" + the college name. Your high school counselor can also help.</span>
+          <span data-es>Busca "<strong>special admit dual enrollment</strong>" + el nombre del colegio. Tu consejero de la prepa también te puede ayudar.</span>
+        </p>
+        <button class="eligibility-secondary" data-restart="1" type="button">
+          <span data-en>Restart check</span><span data-es>Empezar de nuevo</span>
+        </button>
+      </div>
+
+      <!-- Result: A7 (matriculation gate) -->
+      <div class="eligibility-result is-fail" data-result="A7">
+        <h3><span data-en>You're <em>almost</em> there — but not yet.</span><span data-es>Estás <em>casi</em> ahí — pero todavía no.</span></h3>
+        <p>
+          <span data-en>This is the most common eligibility miss. Your Home College needs to see you in a class first — even one in progress counts. Once you're registered for any class at your HC, the Exchange will let you in.</span>
+          <span data-es>Este es el bloqueo más común. Tu Home College necesita verte en una clase primero — incluso una en progreso cuenta. Una vez que estés inscrita/o en cualquier clase en tu HC, el Exchange te dejará entrar.</span>
+        </p>
+        <p>
+          <span data-en><strong>What to do now:</strong> register for a class at your Home College through their normal student portal. Then come back to CVC to cross-enroll elsewhere. If your HC isn't open for registration yet, wait until it is.</span>
+          <span data-es><strong>Qué hacer ahora:</strong> inscríbete en una clase en tu Home College por su portal estudiantil normal. Después vuelve a CVC para inscribirte en otro colegio. Si tu HC aún no abre inscripciones, espera hasta que abra.</span>
+        </p>
+        <a href="#sym-new-student" class="eligibility-link">
+          <span data-en>Read the full explanation →</span><span data-es>Leer la explicación completa →</span>
+        </a>
+        <button class="eligibility-secondary" data-restart="1" type="button">
+          <span data-en>Restart check</span><span data-es>Empezar de nuevo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PASSED state: shown to returning students who already passed -->
+    <div class="eligibility-summary eligibility-passed-summary" style="display:none;">
+      <p class="eligibility-passed-text">
+        <strong><span data-en>✓ Eligibility confirmed</span><span data-es>✓ Elegibilidad confirmada</span></strong>
+        <span class="eligibility-passed-when" id="eligibility-passed-when"></span>
+      </p>
+      <button class="eligibility-retake" id="eligibility-retake" type="button">
+        <span data-en>Retake</span><span data-es>Repetir</span>
+      </button>
+    </div>
+
+  </div>
+</section>
 
 <!-- ═══════════════════════════════ FIND / SMART SEARCH ═══════════════════════════════ -->
 
@@ -3724,22 +4220,22 @@ article.mistake .copy-link {
     <span class="find-examples-label">
       <span data-en>The 6 most-asked student questions:</span><span data-es>Las 6 preguntas más frecuentes:</span>
     </span>
-    <button class="find-example" type="button" data-q="My class is full and I cannot register">
+    <button class="find-example" type="button" data-target="err-prereq-section-filled" data-q="My class is full and I cannot register">
       <span data-en>"Class is full / can't register"</span><span data-es>"Clase llena / no me deja inscribir"</span>
     </button>
-    <button class="find-example" type="button" data-q="I am a new student at my home college can I use CVC to take classes elsewhere">
+    <button class="find-example" type="button" data-target="sym-new-student" data-q="I am a new student at my home college can I use CVC to take classes elsewhere">
       <span data-en>"I'm new — am I eligible?"</span><span data-es>"Soy nuevo — ¿soy elegible?"</span>
     </button>
-    <button class="find-example" type="button" data-q="I paid for my class but the system says I haven't paid">
+    <button class="find-example" type="button" data-target="urgent-paid" data-q="I paid for my class but the system says I haven't paid">
       <span data-en>"I paid but I'm not enrolled"</span><span data-es>"Pagué pero no estoy inscrita/o"</span>
     </button>
-    <button class="find-example" type="button" data-q="I can't drop my class — drop failed">
+    <button class="find-example" type="button" data-target="urgent-drop" data-q="I can't drop my class — drop failed">
       <span data-en>"Drop failed / can't drop"</span><span data-es>"No puedo cancelar mi clase"</span>
     </button>
-    <button class="find-example" type="button" data-q="my class is not showing up in Canvas">
+    <button class="find-example" type="button" data-target="sym-canvas" data-q="my class is not showing up in Canvas">
       <span data-en>"Class not showing in Canvas"</span><span data-es>"Mi clase no aparece en Canvas"</span>
     </button>
-    <button class="find-example" type="button" data-q="my tuition shows $1864 but I'm a CA resident">
+    <button class="find-example" type="button" data-target="sym-tuition" data-q="my tuition shows $1864 but I'm a CA resident">
       <span data-en>"Tuition way too high"</span><span data-es>"Matrícula muy alta"</span>
     </button>
   </div>
@@ -3749,7 +4245,7 @@ article.mistake .copy-link {
     <div id="find-recent-list"></div>
   </div>
 
-  <div class="find-results" id="find-results"></div>
+  <div class="find-results" id="find-results" role="region" aria-live="polite" aria-atomic="false" aria-label="Search results"></div>
 </section>
 
 <!-- ═══════════════════════════════ WHO OWNS THIS PROBLEM? ═══════════════════════════════ -->
@@ -4032,33 +4528,33 @@ article.mistake .copy-link {
 
 <section class="router" id="router" aria-labelledby="router-title">
   <div class="router-eyebrow">— Step zero —</div>
-  <h2 class="router-title" id="router-title">Whose problem is this, <em>actually?</em></h2>
-  <p class="router-dek">Most students who email CVC support are emailing the right place. <strong>Some aren't</strong> — refunds belong to the Teaching College, financial aid belongs to your Home College, and if you've never applied to a CCC, the door isn't through CVC at all. Tap the card that matches your situation, save yourself a wait.</p>
+  <h2 class="router-title" id="router-title">Who can actually <em>help with this?</em></h2>
+  <p class="router-dek">Not every problem is a CVC problem. Refunds are handled by the Teaching College. Financial aid is handled by your Home College. And if you haven't applied to a community college yet, you'll need to start there. <strong>Pick the card that matches your situation</strong> — it'll save you waiting on the wrong inbox.</p>
 
   <div class="router-grid">
     <a class="router-card cvc" href="#find" aria-label="My problem looks like a CVC issue — search the FAQ">
       <span class="router-badge">CVC issue</span>
-      <span class="router-card-title">Something on the CVC dashboard or registration is wrong</span>
-      <span class="router-card-test"><strong>Quick test:</strong> the error message references your CVC dashboard, your registration status (Pending / Failed / Ineligible / Validated), or you came here from search.cvc.edu and something didn't work.</span>
-      <span class="router-card-action">Search the FAQ above, or jump to "What's on your screen"</span>
+      <span class="router-card-title">Something on the CVC site or my registration looks wrong</span>
+      <span class="router-card-test"><strong>This is you if:</strong> the error mentions your CVC dashboard, your status says Pending / Failed / Ineligible / Validated, or you tried to register at search.cvc.edu and something broke.</span>
+      <span class="router-card-action">Search above, or jump to "What's on your screen"</span>
     </a>
     <a class="router-card hc" href="#hc-issue-guide" aria-label="My problem is at my Home College">
       <span class="router-badge">Home College issue</span>
-      <span class="router-card-title">My Home College itself isn't letting me do something</span>
-      <span class="router-card-test"><strong>Quick test:</strong> you hit a hold at your HC, your HC says you're "inactive," your HC's portal won't log you in, you need a fee waiver / financial aid / SSN update, you need a transcript from your HC, or your HC wants documentation from you. <strong>CVC routes between colleges; it doesn't run them.</strong></span>
-      <span class="router-card-action">Contact your HC's Admissions &amp; Records office</span>
+      <span class="router-card-title">My own college isn't letting me do something</span>
+      <span class="router-card-test"><strong>This is you if:</strong> you have a hold at your college, your college says you're "inactive," you can't log into your college's portal, you need to update your SSN or financial aid, or you need a transcript from your college. <strong>CVC connects colleges. We don't run them — your Home College does.</strong></span>
+      <span class="router-card-action">Email your Home College's Admissions &amp; Records</span>
     </a>
     <a class="router-card tc" href="#tc-issue-guide" aria-label="My problem is at the Teaching College">
       <span class="router-badge">Teaching College issue</span>
-      <span class="router-card-title">The TC's portal, refund, or class is the problem</span>
-      <span class="router-card-test"><strong>Quick test:</strong> you need a refund (always TC's policy), you need a textbook / materials decision, you have a question for the instructor, you want an add code or seat override, you need to verify your CCPG / financial aid is on file at the TC, or you got a TC-specific email that confused you.</span>
-      <span class="router-card-action">Contact the Teaching College directly</span>
+      <span class="router-card-title">The college teaching the class is where I need help</span>
+      <span class="router-card-test"><strong>This is you if:</strong> you need a refund (always the TC's call), you have a textbook or instructor question, you want an add code or seat override, you need to confirm your CCPG fee waiver is on file, or you got an email from the Teaching College that confused you.</span>
+      <span class="router-card-action">Email the Teaching College directly</span>
     </a>
     <a class="router-card applycc" href="https://icangotocollege.com" target="_blank" aria-label="I'm not at any CCC yet — apply via CCCApply">
       <span class="router-badge">Not yet a CCC student</span>
       <span class="router-card-title">I haven't applied to any community college yet</span>
-      <span class="router-card-test"><strong>Quick test:</strong> you haven't applied to any California Community College through CCCApply, OR you applied but haven't enrolled in any classes there yet. <strong>CVC is for students already at a CCC</strong> — to take a class, your first step is to apply somewhere.</span>
-      <span class="router-card-action">Apply via CCCApply at icangotocollege.com</span>
+      <span class="router-card-test"><strong>This is you if:</strong> you haven't applied to any California community college, or you applied but haven't enrolled in any classes there yet. <strong>CVC is for students who are already at a CCC</strong> — start by applying to one.</span>
+      <span class="router-card-action">Apply through CCCApply at icangotocollege.com</span>
     </a>
   </div>
 </section>
@@ -4151,37 +4647,37 @@ article.mistake .copy-link {
 <section class="router-landing" aria-label="When CVC isn't the right place — landing guides">
   <div class="router-landing-card hc" id="hc-issue-guide">
     <div class="router-landing-eyebrow">— Home College issue —</div>
-    <h3>When the answer lives at your Home College, not CVC</h3>
-    <p>Your Home College — the CCC where you're enrolled — runs the parts of your record that determine whether CVC even works for you. <strong>CVC routes between colleges; it doesn't run them.</strong> If your problem is one of these, your fastest path is to email or visit your HC's Admissions &amp; Records (A&amp;R) office directly.</p>
+    <h3>When the fix is at your Home College, not CVC</h3>
+    <p>Your Home College is the community college where you're enrolled. They control the records that determine whether CVC will work for you — your account standing, your financial aid, your residency, your transcripts. <strong>CVC connects colleges. We don't run them.</strong> If your problem is one of these, the fastest path is to email or visit your Home College's Admissions &amp; Records office directly.</p>
     <ul>
-      <li><strong>Holds on your account</strong> — financial holds, disciplinary holds, library fines, parking tickets. Until A&amp;R clears them, registration anywhere will fail.</li>
-      <li><strong>You're "inactive" at your HC</strong> — you applied but never enrolled, or you skipped two consecutive non-summer terms. CCC eligibility for cross-enrollment requires concurrent or recent enrollment.</li>
-      <li><strong>SSN not on file</strong> — needed for <a href="#q-pell-at-tc">CCPG matching at the TC</a>. The AER form doesn't collect it; only your HC's Financial Aid office can update.</li>
-      <li><strong>Wrong CCCID at your HC</strong> — your OpenCCC profile has one CCCID; your HC's record has a different one (or none). A&amp;R can re-link.</li>
-      <li><strong>Residency reclassification</strong> — your HC is the "primary" residency record. Until they reclassify you, the TC charges out-of-state.</li>
-      <li><strong>Federal financial aid (Pell, FAFSA loans, work-study)</strong> — disburses only at your HC. The TC is a "shell program" — not Title IV eligible.</li>
-      <li><strong>Transcripts of work you did at your HC</strong> — your HC's transcript office issues these, not CVC.</li>
+      <li><strong>Holds on your account</strong> — money you owe, library fines, parking tickets, or anything else flagged. Holds block registration anywhere until your college clears them.</li>
+      <li><strong>Your college says you're "inactive"</strong> — you applied but never registered for a class, or you've been gone for too long. CVC requires you to be currently in a class at your Home College (or to have just finished one).</li>
+      <li><strong>Your SSN isn't on file</strong> — needed for the Teaching College to match your <a href="#q-pell-at-tc">CCPG fee waiver</a>. The CVC enrollment form doesn't collect it; only your college's Financial Aid office can add it.</li>
+      <li><strong>The wrong CCCID is on your record</strong> — your OpenCCC account has one ID, your college's record has a different one (or none). Your college's A&amp;R can fix the mismatch.</li>
+      <li><strong>Residency reclassification</strong> — your Home College is the official residency record. Until they reclassify you as a California resident, the Teaching College will keep charging out-of-state rates.</li>
+      <li><strong>Federal financial aid</strong> — Pell, FAFSA loans, and work-study only pay out at your Home College. The Teaching College isn't set up to handle federal aid.</li>
+      <li><strong>Transcripts of classes you took at your Home College</strong> — that's your college's transcript office, not CVC.</li>
     </ul>
-    <div class="router-landing-script">Hi [HC name] Admissions &amp; Records — I'm a current student (CCCID: ___) trying to use the CVC Exchange to take a course at another college. I'm running into [specific issue]. Could you confirm/update [the specific record element]? Happy to provide any documentation you need.</div>
-    <p>Don't know your HC's A&amp;R email? Look on your HC's website. If you can't find it, email <a href="mailto:support@cvc.edu">support@cvc.edu</a> and we'll help you locate the right contact — but the actual fix has to happen at the HC.</p>
+    <div class="router-landing-script">Hi [Home College] Admissions &amp; Records — I'm a current student (CCCID: ___) using CVC to take a class at another college. I'm running into [specific issue]. Could you [update / confirm / fix] [the specific thing]? I can send any documentation you need.</div>
+    <p>Don't know your college's A&amp;R email? Check your college's website. If you can't find it, email <a href="mailto:support@cvc.edu">support@cvc.edu</a> and we'll point you at the right person — but the actual change has to happen on your college's side.</p>
   </div>
 
   <div class="router-landing-card tc" id="tc-issue-guide">
     <div class="router-landing-eyebrow">— Teaching College issue —</div>
-    <h3>When the answer lives at the Teaching College, not CVC</h3>
-    <p>The Teaching College — the CCC offering the class — runs everything from the moment your registration writes into their system. <strong>CVC delivers the registration; the TC owns the class.</strong> If your problem is one of these, contact the TC directly.</p>
+    <h3>When the fix is at the Teaching College, not CVC</h3>
+    <p>The Teaching College is the college offering the class you're taking. Once your registration goes through, they control everything about that class — the seats, the textbooks, the refund policy, the instructor. <strong>CVC delivers the registration; the Teaching College owns the class.</strong> Contact the Teaching College directly for any of these:</p>
     <ul>
-      <li><strong>Refunds</strong> — always the TC's policy and the TC's process. CVC has no refund authority. Their bursar / cashier office decides eligibility, timeline, and amount. Refund policies vary widely; some are 100% in the first week, some are tiered, some require a withdrawal form.</li>
-      <li><strong>Add codes / waitlist for a full section</strong> — the TC's registrar decides. CVC has no waitlist mechanism. Some TCs run an internal waitlist via email; others require an instructor signature; many simply don't allow it.</li>
-      <li><strong>Unit overload petitions</strong> — see <a href="#err-unit-overload">"Petition is required."</a> The TC's counseling office reviews and decides.</li>
-      <li><strong>Prerequisite override / late-add permission</strong> — only the TC's department or registrar can grant this once class has started or filled.</li>
-      <li><strong>Textbook / course materials questions</strong> — the TC's bookstore or instructor.</li>
-      <li><strong>Instructor-specific questions</strong> — assignment deadlines, course shell access, grade disputes — all the TC.</li>
-      <li><strong>CCPG fee waiver verification</strong> — the TC's Financial Aid office needs to confirm your <a href="#q-pell-at-tc">SSN is on file</a> for the match. CVC can't do this for you.</li>
-      <li><strong>1098-T tax forms</strong> — see <a href="#q-1098t">"Where do I get my 1098-T?"</a> — issued by the college's financial services office, not CVC.</li>
+      <li><strong>Refunds</strong> — always the Teaching College's policy, always their process. CVC can't issue refunds. Their bursar (or cashier) office decides if you qualify, when you'll see the money, and how much. Policies vary a lot — some give 100% back in the first week, some require a form, some are tiered.</li>
+      <li><strong>Add codes or waitlists for a full class</strong> — the Teaching College's registrar decides. CVC doesn't have a waitlist. Some colleges run a waitlist by email; some require an instructor signature; some don't offer one at all.</li>
+      <li><strong>Unit overload petitions</strong> — see <a href="#err-unit-overload">"Petition is required."</a> The Teaching College's counseling office reviews and decides.</li>
+      <li><strong>Late-add permission after the class is full or has started</strong> — only the Teaching College's department or registrar can grant it.</li>
+      <li><strong>Textbook or course materials</strong> — the Teaching College's bookstore or your instructor.</li>
+      <li><strong>Anything specific to your instructor</strong> — assignments, deadlines, grade questions, course shell access. All the Teaching College.</li>
+      <li><strong>Confirming your CCPG fee waiver is on file</strong> — the Teaching College's Financial Aid office needs your <a href="#q-pell-at-tc">SSN</a> to match your award. CVC can't add it for you.</li>
+      <li><strong>1098-T tax forms</strong> — see <a href="#q-1098t">"Where do I get my 1098-T?"</a> — issued by the college's financial services office, not by CVC.</li>
     </ul>
-    <div class="router-landing-script">Hi [TC name] [Admissions &amp; Records / Bursar / Counseling] — I'm a CVC Exchange student enrolled at [TC name] in [CRN, course title, term]. CCCID: ___. TC student ID: ___. I need help with [specific issue]. [Attach screenshot if relevant.] Thank you.</div>
-    <p>The TC's contact info is usually on your registration confirmation email, on the TC's website, or — if you're stuck — email <a href="mailto:support@cvc.edu">support@cvc.edu</a> with your TC name and we'll point you at the right office.</p>
+    <div class="router-landing-script">Hi [Teaching College] [Admissions &amp; Records / Bursar / Counseling] — I'm a CVC student enrolled at [Teaching College] in [CRN, course title, term]. My CCCID is ___ and my Teaching College student ID is ___. I need help with [specific issue]. [Attach a screenshot if it helps.] Thank you.</div>
+    <p>Find the Teaching College's contact info on your registration confirmation email or on their website. If you're stuck, email <a href="mailto:support@cvc.edu">support@cvc.edu</a> with the Teaching College's name and we'll point you to the right office.</p>
   </div>
 </section>
 
@@ -4192,15 +4688,15 @@ article.mistake .copy-link {
     <div class="calmer-eyebrow">Before you panic — three things</div>
     <div class="calmer-item">
       <h4>Your money isn't lost.</h4>
-      <p>If your card was charged but the dashboard says "Pay Now," you almost certainly missed the <strong>Confirm Payment</strong> click. Don't pay again. <a href="#urgent-paid">Reconciliation is a fast email</a>.</p>
+      <p>If your card was charged but the dashboard still says "Pay Now," you probably missed the <strong>Confirm Payment</strong> button on the page that came back. Don't pay again. <a href="#urgent-paid">One short email and we'll fix it</a>.</p>
     </div>
     <div class="calmer-item">
-      <h4>Your spot is held longer than you think.</h4>
-      <p>"Pending Person Match" / "Pending Validation" / "Pending Prereq Review" mean the TC has your application — they're processing, not denying. <a href="#dater">Use the date checker</a> to see when to follow up.</p>
+      <h4>Your spot is held while you wait.</h4>
+      <p>"Pending Person Match," "Pending Validation," and "Pending Prereq Review" all mean the Teaching College is still working on your registration. They're not denying you — they're processing. <a href="#dater">The date checker tells you when to actually follow up</a>.</p>
     </div>
     <div class="calmer-item">
-      <h4>Most things resolve in 1–5 business days.</h4>
-      <p>If you registered today and the dashboard says Pending tomorrow, that's normal. Email volume during week-1 of a term is highest — patience often beats a follow-up ticket. <a href="#dater">When to follow up</a>.</p>
+      <h4>Most issues fix themselves in 1–5 business days.</h4>
+      <p>If you registered today and the dashboard says "Pending" tomorrow, that's normal. The first week of a new term is the busiest for support — waiting it out is often faster than emailing. <a href="#dater">When to wait, when to email</a>.</p>
     </div>
   </div>
 </section>
@@ -4209,48 +4705,48 @@ article.mistake .copy-link {
 
 <section class="misdiag" id="misdiag" aria-labelledby="misdiag-title">
   <div class="misdiag-eyebrow">— Often misread —</div>
-  <h2 class="misdiag-title" id="misdiag-title">What students often think the problem is, <em>vs. what's actually happening</em></h2>
-  <p class="misdiag-dek">From real ticket patterns. The error message + your gut interpretation often disagree — and the gut is wrong more often than the data. Skim this before you commit to a fix.</p>
+  <h2 class="misdiag-title" id="misdiag-title">What students <em>think</em> is wrong, vs. what's actually wrong</h2>
+  <p class="misdiag-dek">Pulled from real student tickets. The thing that <em>looks</em> like the problem usually isn't — the actual cause is often something else entirely. Read these before you spend an hour trying to fix the wrong thing.</p>
 
   <div class="misdiag-table" role="table" aria-label="Common misdiagnosis patterns">
     <div class="misdiag-head" role="row">
       <div role="columnheader">What you might say</div>
-      <div role="columnheader">What's likely actually happening</div>
+      <div role="columnheader">What's actually going on</div>
       <div role="columnheader">Read</div>
     </div>
     <div class="misdiag-row" role="row">
       <div class="misdiag-said" role="cell">My class is full and I can't register</div>
-      <div class="misdiag-actual" role="cell">If you went through prereq review and the section filled during the wait, that's a <strong>known platform gap, not your fault</strong>. CVC doesn't reserve seats during prereq review. Time to find an alternative — there are usually open sections at other TCs.</div>
+      <div class="misdiag-actual" role="cell">If your prerequisite was being reviewed and the class filled while you waited, that's a <strong>known gap in the platform — not your fault</strong>. CVC doesn't hold a seat for you during prereq review. Look for an open section of the same class at a different Teaching College — there's almost always one.</div>
       <div class="misdiag-link" role="cell"><a href="#err-prereq-section-filled">read</a></div>
     </div>
     <div class="misdiag-row" role="row">
       <div class="misdiag-said" role="cell">I paid but I'm not enrolled</div>
-      <div class="misdiag-actual" role="cell">Your card was almost certainly charged but you <strong>missed the Confirm Payment click</strong> on the return page. Don't pay again. Reconciliation is fast — one email with CCCID, course, last 4 of card, payment date.</div>
+      <div class="misdiag-actual" role="cell">Your card was charged, but you probably <strong>missed the "Confirm Payment" button</strong> on the page that came back after paying. Don't pay again. We can reconcile it from one email — CCCID, course, last 4 of your card, and the date you paid.</div>
       <div class="misdiag-link" role="cell"><a href="#urgent-paid">read</a></div>
     </div>
     <div class="misdiag-row" role="row">
       <div class="misdiag-said" role="cell">My prerequisite isn't being approved</div>
-      <div class="misdiag-actual" role="cell">If the error mentions <em>"overload"</em> or <em>"petition required,"</em> the prereq is fine — you've hit the per-term <strong>unit cap</strong> at the TC. Different problem, different fix (drop a class OR petition the TC's counseling office).</div>
+      <div class="misdiag-actual" role="cell">If the error mentions <em>"overload"</em> or <em>"petition required,"</em> your prereq is fine — you've hit the <strong>unit cap</strong> for the term at that college. That's a different problem with a different fix: drop a class, or ask the Teaching College's counseling office for a unit-overload petition.</div>
       <div class="misdiag-link" role="cell"><a href="#err-unit-overload">read</a></div>
     </div>
     <div class="misdiag-row" role="row">
       <div class="misdiag-said" role="cell">CVC can't verify my community college account</div>
-      <div class="misdiag-actual" role="cell">If you're a <strong>new student</strong> at your HC who hasn't registered for any HC class yet, you're <strong>not yet eligible</strong> to use CVC — by California law (AB-637). You need to register at your HC first; the AB-637 gate is the system working correctly, not a verification bug.</div>
+      <div class="misdiag-actual" role="cell">If you just applied to your Home College and haven't taken a class there yet, you're <strong>not yet eligible</strong> for CVC. California law (AB-637) requires you to be currently in a class at your Home College. The system is doing what it's supposed to — register at your Home College first, then come back.</div>
       <div class="misdiag-link" role="cell"><a href="#sym-new-student">read</a></div>
     </div>
     <div class="misdiag-row" role="row">
       <div class="misdiag-said" role="cell">My registration has been Pending forever</div>
-      <div class="misdiag-actual" role="cell">For first-time CVC students, <strong>1–5 business days is normal</strong>, depending on whether your registration needed prereq review. Use the date checker to see if you've actually waited too long, or if you're inside the normal window.</div>
+      <div class="misdiag-actual" role="cell">For most students, <strong>1–5 business days is normal</strong> — longer if your registration needed prerequisite review. Use the date checker below to see if you've really been waiting too long or if you're still inside the normal window.</div>
       <div class="misdiag-link" role="cell"><a href="#dater">read</a></div>
     </div>
     <div class="misdiag-row" role="row">
       <div class="misdiag-said" role="cell">My dashboard says Pending but I got a confirmation email</div>
-      <div class="misdiag-actual" role="cell">Trust the email. The dashboard occasionally <strong>lags by hours</strong> — it'll catch up. If the email confirmed registration, you're registered. Check Canvas in 24–48 hours; if the class is there, you're definitely in.</div>
+      <div class="misdiag-actual" role="cell">Trust the email. The dashboard <strong>sometimes lags by a few hours</strong> — it'll catch up on its own. If the email said you're registered, you're registered. Check your Canvas in a day or two; if the class is there, you're definitely in.</div>
       <div class="misdiag-link" role="cell"><a href="#q-display-vs-email">read</a></div>
     </div>
     <div class="misdiag-row" role="row">
-      <div class="misdiag-said" role="cell">I see two errors stacked, am I in big trouble?</div>
-      <div class="misdiag-actual" role="cell">Probably not. When you retry registration quickly, the system can throw a <strong>"session in progress"</strong> error on top of the real one — that's a side effect of the retry, not a separate problem. Decode each error separately; usually only one is real.</div>
+      <div class="misdiag-said" role="cell">I see two errors stacked — am I in big trouble?</div>
+      <div class="misdiag-actual" role="cell">Probably not. If you retried quickly, the system can show a <strong>"session in progress"</strong> error on top of the original one — that's just a leftover from your retry, not a real second problem. Read the first error you saw; that's the one that matters.</div>
       <div class="misdiag-link" role="cell"><a href="#err-stacked-errors">read</a></div>
     </div>
   </div>
@@ -4317,7 +4813,7 @@ article.mistake .copy-link {
         </div>
         <p style="font-family: var(--serif-display); font-style: italic; font-size: 12px; color: var(--ink-faint); margin: 8px 0 0;">In-state rate is $46/unit. Verdict updates as you type.</p>
       </div>
-      <div class="calc-result calc-empty" id="calc-result">
+      <div class="calc-result calc-empty" id="calc-result" role="status" aria-live="polite" aria-atomic="true">
         <span>Enter your numbers to see if your tuition is correct.</span>
       </div>
     </div>
@@ -4360,7 +4856,7 @@ article.mistake .copy-link {
         <input type="checkbox" class="elig-checkbox" data-need="0" data-block="1">
         <span class="elig-text">I'm an <strong>Adult Education student</strong>.<small>If checked, typically NOT permitted via CVC — check with your AE program.</small></span>
       </label>
-      <div class="elig-verdict" id="elig-verdict">Tick boxes above to see your status.</div>
+      <div class="elig-verdict" id="elig-verdict" role="status" aria-live="polite" aria-atomic="true">Tick boxes above to see your status.</div>
     </div>
   </div>
 </section>
@@ -4402,7 +4898,7 @@ article.mistake .copy-link {
 
 <section class="section" id="urgent">
   <div class="section-head">
-    <div class="section-num">i.</div>
+    <div class="section-num" aria-hidden="true">i.</div>
     <div>
       <h2 class="section-title">
         <span data-en><em>Urgent</em> matters</span>
@@ -4426,7 +4922,7 @@ article.mistake .copy-link {
         <span data-en>Three steps to escalate before the start date.</span>
         <span data-es>Tres pasos para escalar antes de la fecha de inicio.</span>
       </p>
-      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
+      <span class="lane-arrow" aria-hidden="true"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
     <a class="lane" href="#urgent-drop">
       <div class="lane-marker">B.</div>
@@ -4438,7 +4934,7 @@ article.mistake .copy-link {
         <span data-en>What to do if the system won't let you drop.</span>
         <span data-es>Qué hacer si el sistema no te permite cancelar.</span>
       </p>
-      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
+      <span class="lane-arrow" aria-hidden="true"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
     <a class="lane" href="#urgent-paid">
       <div class="lane-marker">C.</div>
@@ -4450,7 +4946,7 @@ article.mistake .copy-link {
         <span data-en>Recover the payment in four steps.</span>
         <span data-es>Recupera el pago en cuatro pasos.</span>
       </p>
-      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
+      <span class="lane-arrow" aria-hidden="true"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
     <a class="lane" href="#urgent-after-hours">
       <div class="lane-marker">D.</div>
@@ -4462,7 +4958,7 @@ article.mistake .copy-link {
         <span data-en>Plan B when support is closed — protect yourself with documentation.</span>
         <span data-es>Plan B cuando soporte está cerrado — protégete con documentación.</span>
       </p>
-      <span class="lane-arrow"><span data-en>Read →</span><span data-es>Leer →</span></span>
+      <span class="lane-arrow" aria-hidden="true"><span data-en>Read →</span><span data-es>Leer →</span></span>
     </a>
   </div>
 
@@ -4552,7 +5048,7 @@ article.mistake .copy-link {
 
 <section class="section" id="symptoms">
   <div class="section-head">
-    <div class="section-num">ii.</div>
+    <div class="section-num" aria-hidden="true">ii.</div>
     <div>
       <h2 class="section-title">
         <span data-en>What's on your <em>screen</em>?</span>
@@ -4637,7 +5133,7 @@ article.mistake .copy-link {
 
 <section class="section" id="errors">
   <div class="section-head">
-    <div class="section-num">iii.</div>
+    <div class="section-num" aria-hidden="true">iii.</div>
     <div>
       <h2 class="section-title">
         <span data-en>Decoding the <em>error</em> messages</span>
@@ -5330,14 +5826,14 @@ article.mistake .copy-link {
       </summary>
       <div class="body">
         <p><strong>Short answer:</strong> not until you've registered for at least one class at your Home College.</p>
-        <p>Per California state law (AB-637), to use the CVC Exchange you must have <em>"completed a class or be taking a class that is currently in progress"</em> at your Home College. New applicants who haven't enrolled in any HC class yet are <strong>not yet eligible</strong> — and the system enforces this automatically.</p>
+        <p>California law (AB-637) says you can only use CVC if you've <em>"completed a class or are currently taking a class"</em> at your Home College. If you just applied and haven't enrolled in anything yet, you're not eligible yet — the system blocks you on purpose.</p>
         <p style="font-family: var(--serif-display); font-style: italic; font-size: 17px; color: var(--ink); margin: 16px 0 6px;">What you'll see if you try anyway</p>
         <ul>
-          <li><strong>"Canvas account not found with your email"</strong> — this is the system's safety net. Your HC's Canvas hasn't provisioned an account because you're not enrolled in any HC class yet.</li>
+          <li><strong>"Canvas account not found with your email"</strong> — this is the system catching it. Your Home College's Canvas hasn't created an account for you because you're not in any classes there yet.</li>
           <li><strong>"Ineligible" status</strong> on your CVC dashboard.</li>
-          <li>Your HC tells you they "can't give you a Canvas account" — that's normal; Canvas is created when you register for a class, not when you apply.</li>
+          <li>Your Home College telling you they "can't give you a Canvas account" — that's normal. Canvas is created when you register for a class, not when you apply.</li>
         </ul>
-        <div class="entry-action"><strong>Path forward:</strong> Register for one class at your HC for the current term through your HC's regular enrollment process (CCCApply at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a> if you haven't applied yet, or your HC's student portal if you have). Once you're registered at the HC and your Canvas account is active there, come back to CVC and the cross-enrollment should work.</div>
+        <div class="entry-action"><strong>What to do:</strong> Register for one class at your Home College for the current term. If you haven't applied yet, do that first at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a>. If you've already applied, log into your Home College's student portal and register for a class. Once you're enrolled there and Canvas has set up your account, come back to CVC — it'll work.</div>
       </div>
     </details>
 
@@ -5348,16 +5844,16 @@ article.mistake .copy-link {
         <span class="entry-arrow">→</span>
       </summary>
       <div class="body">
-        <p><strong>What happened:</strong> CVC does not reserve seats for students while their prerequisite is being reviewed by the Teaching College. If the class fills during the wait, registration fails when the prereq is finally approved.</p>
-        <p>This is a known gap in the platform — your prereq <em>was</em> approved, but the seat you wanted was claimed by someone else during the review window. There is no waitlist on the Exchange.</p>
-        <div class="entry-action"><strong>Three options, in priority order:</strong>
+        <p><strong>What happened:</strong> while the Teaching College was reviewing your prerequisite, the class filled. CVC doesn't hold a seat for you during prereq review — so when your prereq finally got approved, there was no seat left, and the registration failed.</p>
+        <p>This is a known gap in the platform. Your prereq <em>was</em> approved — someone else just got the seat first. There's no waitlist on the Exchange.</p>
+        <div class="entry-action"><strong>What to do, in order of how quickly each works:</strong>
           <ol style="margin: 8px 0 0 18px;">
-            <li><strong>Find another open section</strong> at any Teaching College via <a href="https://search.cvc.edu" target="_blank">search.cvc.edu</a>. Other CCCs may have the same course with seats.</li>
-            <li><strong>Apply directly to the Teaching College</strong> outside CVC at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a> — they may have their own waitlist or late-add process.</li>
-            <li><strong>Take it next term.</strong></li>
+            <li><strong>Find another open section</strong> of the same class at a different Teaching College — go to <a href="https://search.cvc.edu" target="_blank">search.cvc.edu</a> and search again. Other colleges often have seats.</li>
+            <li><strong>Apply directly to the Teaching College</strong> outside CVC, at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a>. They may have their own waitlist or late-add process.</li>
+            <li><strong>Take the class next term.</strong></li>
           </ol>
         </div>
-        <aside class="aside" style="margin-top: 12px;"><strong>Going forward:</strong> when you submit a prereq for a popular course, identify a backup section <em>at the same time</em>. If the original fills during review, you'll already have a fallback ready.</aside>
+        <aside class="aside" style="margin-top: 12px;"><strong>Tip for next time:</strong> when you submit a prereq for a class that fills fast, find a backup section right away. If the first one fills while you wait, you can register the backup without losing days.</aside>
       </div>
     </details>
 
@@ -5368,10 +5864,10 @@ article.mistake .copy-link {
         <span class="entry-arrow">→</span>
       </summary>
       <div class="body">
-        <p><strong>The specific case:</strong> your CCCID was generated when you applied to your Home College via a paper application (or some other non-standard path), but it was never linked to your student record in your HC's main student information system.</p>
-        <p>You may have successfully cross-enrolled in the past — the rules changed when your HC went live on automatic record-matching. Now the check fails because your CCCID isn't recognized.</p>
-        <div class="entry-action"><strong>Resolution:</strong> contact your HC's Admissions & Records office and ask them to link your CCCID to your existing student record. The fix is on their side — once they connect the two, your cross-enrollment will work normally without affecting your existing standing at the HC.</div>
-        <aside class="aside" style="margin-top: 12px;">If your HC says they can't help, email CVC support — we can reach out to your HC's A&R office on your behalf with the technical details.</aside>
+        <p><strong>What's happening:</strong> your CCCID was created when you applied to your Home College using a paper application (or another non-standard path), but it never got connected to your actual student record at the college.</p>
+        <p>You may have used CVC before without trouble — but recently your Home College switched on a system that automatically checks records. Now the check fails because the system can't find your CCCID linked to your file.</p>
+        <div class="entry-action"><strong>How to fix it:</strong> email your Home College's Admissions &amp; Records office and ask them to link your CCCID to your existing student record. The fix has to happen on their side. Once they do it, your cross-enrollment will work normally — no impact on your standing at the college.</div>
+        <aside class="aside" style="margin-top: 12px;">If your Home College says they can't help, email CVC support. We can reach out to them on your behalf with the technical details.</aside>
       </div>
     </details>
 
@@ -5382,17 +5878,17 @@ article.mistake .copy-link {
         <span class="entry-arrow">→</span>
       </summary>
       <div class="body">
-        <p><strong>What happened:</strong> your registered + attempted units exceed the Teaching College's per-term unit cap. Common caps:</p>
+        <p><strong>What's happening:</strong> the Teaching College has a limit on how many units you can take in one term, and adding this class would put you over the limit. Common limits:</p>
         <ul>
-          <li><strong>Summer:</strong> often 7 units max</li>
-          <li><strong>Fall / Spring:</strong> often 18 units max</li>
-          <li><strong>Winter intersession:</strong> often 6 units max</li>
+          <li><strong>Summer:</strong> usually 7 units max</li>
+          <li><strong>Fall / Spring:</strong> usually 18 units max</li>
+          <li><strong>Winter intersession:</strong> usually 6 units max</li>
         </ul>
-        <p>CVC cannot override the cap. Two options:</p>
+        <p>CVC can't raise the limit. You have two options:</p>
         <div class="entry-action">
           <ol style="margin: 8px 0 0 18px;">
-            <li><strong>Drop one of your registered classes</strong> to bring your unit total under the cap, then register for the new one.</li>
-            <li><strong>Petition the Teaching College</strong> for a unit-overload exception. The petition goes through the TC's counseling or A&R office — that's their decision, not CVC's. Petitions can take days; if the section you want is filling fast, weigh the timing.</li>
+            <li><strong>Drop one of your other classes</strong> so your total fits under the cap, then register for the new one.</li>
+            <li><strong>Ask the Teaching College for a unit-overload petition.</strong> Their counseling office or A&amp;R reviews these and decides. Petitions can take days, so if the seat is filling fast, weigh the timing.</li>
           </ol>
         </div>
       </div>
@@ -5405,14 +5901,14 @@ article.mistake .copy-link {
         <span class="entry-arrow">→</span>
       </summary>
       <div class="body">
-        <div class="dont-retry"><strong>Don't keep clicking submit.</strong> Each rapid retry creates phantom errors on top of the real one and confuses the diagnosis. Wait at least 5–10 minutes between attempts, or stop entirely and read this entry first.</div>
-        <p>When you retry a registration quickly (especially a couple times within a minute), the system often throws a second error on top of your first one. The most common pair:</p>
+        <div class="dont-retry"><strong>Don't keep clicking submit.</strong> Each rapid retry creates extra error messages on top of the real one — that makes it harder to figure out what's actually wrong. Wait at least 5–10 minutes between tries, or stop and read this entry first.</div>
+        <p>When you click "register" several times in a row, the system often shows two errors instead of one. Here's how they usually work:</p>
         <ul>
-          <li><strong>Real error</strong>: a specific reason the registration failed — prereq, section full, unit overload, hold, etc. <em>This is the one that matters.</em></li>
-          <li><strong>Phantom error</strong>: <em>"Another registration session is in progress for this student ID and term. Please try again later."</em> <em>This is a side effect of your retry, not a separate problem.</em></li>
+          <li><strong>The real error</strong> — the actual reason your registration failed (prereq, section full, unit overload, hold, etc.). <em>This is the one that matters.</em></li>
+          <li><strong>The leftover error</strong> — usually says <em>"Another registration session is in progress for this student ID and term. Please try again later."</em> <em>This isn't a second problem; it's just a side effect of clicking too fast.</em></li>
         </ul>
-        <p><strong>How to tell which is which:</strong> the real error names something specific (a course code, a unit count, a hold reason). The phantom error is generic and mentions "session in progress." Decode each separately. Fix the real one; the phantom one disappears as soon as the underlying lock releases (typically 5–10 minutes).</p>
-        <div class="entry-action"><strong>Recovery:</strong> wait 10 minutes for any pending session lock to release, then look at the <em>first</em> registration error you saw — not the most recent one. That first one tells you the real cause. If you can't see the original error anymore, the dashboard's Application Errors field for that registration record preserves it.</div>
+        <p><strong>How to tell them apart:</strong> the real error names something specific (a course code, a unit count, a hold reason). The leftover error is generic and mentions "session in progress." Fix the real one — the leftover disappears on its own once the system releases its lock (usually 5–10 minutes).</p>
+        <div class="entry-action"><strong>What to do:</strong> wait 10 minutes for the lock to clear. Then look at the <em>first</em> registration error you saw — not the most recent one. That first one tells you what's actually wrong. If you can't find it anymore, check the Application Errors field on the failed registration in your dashboard — it's saved there.</div>
       </div>
     </details>
 
@@ -5423,12 +5919,12 @@ article.mistake .copy-link {
         <span class="entry-arrow">→</span>
       </summary>
       <div class="body">
-        <p><strong>What happened:</strong> some Teaching Colleges automatically drop registrations within 3–5 days if fees haven't cleared. The drop code "DB" (Drop Before Class Begins) is system-initiated — you didn't drop yourself, the TC's system did.</p>
-        <p>Most common cause: your <strong>California Promise Grant (CCPG)</strong> fee waiver wasn't processed at the Teaching College in time. The TC needs your <strong>Social Security Number</strong> on file to match your CCPG award to your enrollment, but the AER form doesn't collect SSN — so the match has to happen on the TC's side, manually.</p>
-        <div class="entry-action"><strong>Resolution:</strong>
+        <p><strong>What happened:</strong> some Teaching Colleges automatically drop registrations within 3–5 days if your fees haven't cleared. The "DB" code (Drop Before Class Begins) means the system did this — not you.</p>
+        <p>The most common reason: your <strong>California Promise Grant (CCPG)</strong> fee waiver hadn't been processed at the Teaching College yet. To match your CCPG to your registration, the Teaching College needs your <strong>Social Security Number</strong> on file. The CVC enrollment form doesn't collect SSN, so the match has to happen on the Teaching College's side — manually.</p>
+        <div class="entry-action"><strong>How to fix it:</strong>
           <ol style="margin: 8px 0 0 18px;">
-            <li><strong>Contact the Teaching College's bursar or financial aid office</strong> directly. Confirm your SSN is on file at that college so they can process your CCPG.</li>
-            <li><strong>Once the fee waiver is in place</strong>, re-register through CVC if seats are still open. If the section filled, search for another open section at any TC offering the same course.</li>
+            <li><strong>Email the Teaching College's bursar or financial aid office.</strong> Ask them to confirm your SSN is on file so they can process your CCPG.</li>
+            <li><strong>Once that's done</strong>, register again through CVC if seats are still open. If the class filled, look for the same course at another Teaching College.</li>
           </ol>
         </div>
       </div>
@@ -5441,7 +5937,7 @@ article.mistake .copy-link {
 
 <section class="section" id="dater">
   <div class="section-head">
-    <div class="section-num">iv.</div>
+    <div class="section-num" aria-hidden="true">iv.</div>
     <div>
       <h2 class="section-title">Have I waited <em>long enough</em>?</h2>
       <p class="section-dek">Most "still pending" tickets are sent before the realistic timeline. Enter when your registration was created — receive the earliest reasonable follow-up date.</p>
@@ -5452,7 +5948,7 @@ article.mistake .copy-link {
     <label for="d-date">Date of registration or last status change</label>
     <input class="input-paper" type="date" id="d-date">
     <div id="dater-pending" class="dater-out">
-      <div id="dater-msg"></div>
+      <div id="dater-msg" role="status" aria-live="polite" aria-atomic="true"></div>
     </div>
   </div>
 </section>
@@ -5461,7 +5957,7 @@ article.mistake .copy-link {
 
 <section class="section" id="mistakes">
   <div class="section-head">
-    <div class="section-num">v.</div>
+    <div class="section-num" aria-hidden="true">v.</div>
     <div>
       <h2 class="section-title">Eight common <em>mistakes</em></h2>
       <p class="section-dek">If you recognize one of these in what you did, the fix is in the entry. No ticket needed.</p>
@@ -5611,7 +6107,7 @@ article.mistake .copy-link {
 
 <section class="section" id="tasks">
   <div class="section-head">
-    <div class="section-num">vi.</div>
+    <div class="section-num" aria-hidden="true">vi.</div>
     <div>
       <h2 class="section-title">Step-by-step <em>guides</em></h2>
       <p class="section-dek">Open any chapter. Each one includes the gotchas that send students to support.</p>
@@ -5625,7 +6121,7 @@ article.mistake .copy-link {
 
       <a class="visual-card" href="#t-primer" data-open-target="t-primer" aria-label="Open the 60-second primer guide">
         <figure class="diagram dia-two-college" aria-label="How CVC Exchange connects your Home College and the Teaching College">
-          <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <marker id="arr-claret-g1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
             </defs>
@@ -5670,7 +6166,7 @@ article.mistake .copy-link {
 
       <a class="visual-card" href="#t-aid" data-open-target="t-aid" aria-label="Open the financial aid guide">
         <figure class="diagram dia-money" aria-label="How money flows for a CVC course">
-          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <marker id="arr-claret-g2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
               <marker id="arr-moss-g2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
@@ -5698,7 +6194,7 @@ article.mistake .copy-link {
 
       <a class="visual-card" href="#t-transcript" data-open-target="t-transcript" aria-label="Open the transcripts guide">
         <figure class="diagram dia-transcript" aria-label="The two paths your transcripts can take after a CVC class">
-          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <marker id="arr-moss-g3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
               <marker id="arr-claret-g3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
@@ -5724,7 +6220,7 @@ article.mistake .copy-link {
 
       <a class="visual-card" href="#t-residency" data-open-target="t-residency" aria-label="Open the residency fix guide">
         <figure class="diagram dia-residency" aria-label="The two-step residency fix: Home College then Teaching College">
-          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <marker id="arr-ink-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink-soft)"/></marker>
             </defs>
@@ -5799,7 +6295,7 @@ article.mistake .copy-link {
 
       <a class="visual-card span-2" href="#t-happy-path" data-open-target="t-happy-path" aria-label="Open the registration journey guide">
         <figure class="diagram dia-journey" aria-label="The registration journey from start to taking your class">
-          <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <line class="journey-rule" x1="40" y1="60" x2="720" y2="60"/>
             <g><circle class="step-circle done" cx="55" cy="60" r="14"/><text class="step-num done" x="55" y="64">1</text><text class="step-label" x="55" y="92">Created</text><text class="step-sub" x="55" y="106">you started</text></g>
             <g><circle class="step-circle done" cx="140" cy="60" r="14"/><text class="step-num done" x="140" y="64">2</text><text class="step-label" x="140" y="92">Consent</text><text class="step-sub" x="140" y="106">signed form</text></g>
@@ -5840,7 +6336,7 @@ article.mistake .copy-link {
             .dia-statemap .sm-tag { font-family: var(--serif-display); font-style: italic; font-variation-settings: 'opsz' 11, 'SOFT' 60; font-size: 10px; fill: var(--ink-faint); text-anchor: middle; }
             .dia-statemap .sm-tag-stop { fill: var(--alert); }
           </style>
-          <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+          <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <marker id="sm-arr-claret" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
                 <path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/>
@@ -6118,7 +6614,7 @@ article.mistake .copy-link {
     </summary>
     <div class="body">
       <figure class="diagram dia-two-college" aria-label="How CVC Exchange connects your Home College and the Teaching College">
-        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <marker id="arr-claret" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
           </defs>
@@ -6181,7 +6677,7 @@ article.mistake .copy-link {
     </summary>
     <div class="body">
       <figure class="diagram dia-journey" aria-label="The registration journey from start to taking your class">
-        <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <svg viewBox="0 0 760 130" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <!-- horizontal rule -->
           <line class="journey-rule" x1="40" y1="60" x2="720" y2="60"/>
           <!-- 8 step circles -->
@@ -6440,7 +6936,7 @@ article.mistake .copy-link {
     </summary>
     <div class="body">
       <figure class="diagram dia-money" aria-label="How money flows for a CVC course">
-        <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <marker id="arr-claret" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
             <marker id="arr-moss" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
@@ -6508,7 +7004,7 @@ article.mistake .copy-link {
     </summary>
     <div class="body">
       <figure class="diagram dia-transcript" aria-label="The two paths your transcripts can take after a CVC class">
-        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <defs>
             <marker id="arr-moss-t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--moss)"/></marker>
             <marker id="arr-claret-t" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--claret)"/></marker>
@@ -6907,7 +7403,7 @@ article.mistake .copy-link {
 
 <section class="section" id="email">
   <div class="section-head">
-    <div class="section-num">vii.</div>
+    <div class="section-num" aria-hidden="true">vii.</div>
     <div>
       <h2 class="section-title">Should I <em>email</em> support?</h2>
       <p class="section-dek">Most issues fix themselves with time or a quick check. Save email for things that genuinely need a human.</p>
@@ -7037,7 +7533,7 @@ article.mistake .copy-link {
       <textarea id="b-detail" class="input-paper" placeholder="My drop deadline is April 28. I tried twice and got the same error each time."></textarea>
     </div>
 
-    <div class="builder-out" id="b-out">Fill in the fields above to generate your email.</div>
+    <div class="builder-out" id="b-out" role="status" aria-live="polite" aria-atomic="true">Fill in the fields above to generate your email.</div>
     <div class="btn-row">
       <button class="btn btn-primary" id="b-copy">Copy email</button>
       <a class="btn" id="b-mail" href="mailto:cvc.customersupport@parchment.com">Open email client</a>
@@ -7050,7 +7546,7 @@ article.mistake .copy-link {
 
 <section class="section" id="glossary">
   <div class="section-head">
-    <div class="section-num">viii.</div>
+    <div class="section-num" aria-hidden="true">viii.</div>
     <div>
       <h2 class="section-title">A small <em>glossary</em></h2>
       <p class="section-dek">Common terms in the dashboard and on this page, in plain English.</p>
@@ -7119,7 +7615,7 @@ article.mistake .copy-link {
 
 <section class="section" id="limits">
   <div class="section-head">
-    <div class="section-num">ix.</div>
+    <div class="section-num" aria-hidden="true">ix.</div>
     <div>
       <h2 class="section-title"><em>Designed</em> limits — what the system can't do, by design</h2>
       <p class="section-dek">Some things that look like bugs are actually intentional limits. Knowing the difference saves you from filing tickets that have no fix — and helps you plan around the real boundaries instead of fighting them.</p>
@@ -7324,24 +7820,24 @@ article.mistake .copy-link {
     <details class="entry" id="q-pell-at-tc">
       <summary>
         <div class="entry-msg">Can I use my Pell Grant at the Teaching College?</div>
-        <div class="entry-tag normal icon-plus">no — structural rule</div>
+        <div class="entry-tag normal icon-plus">no — by design</div>
       </summary>
       <div class="entry-body">
         <div class="entry-cell">
           <div class="entry-cell-lbl">Short answer</div>
-          <div class="entry-cell-v"><strong>No.</strong> The Teaching College places you in a "shell" program that is <strong>not Title IV eligible</strong>. Pell does not disburse at the TC.</div>
+          <div class="entry-cell-v"><strong>No.</strong> The Teaching College isn't set up to handle federal aid (the technical term is "not Title IV eligible"). Your Pell stays at your Home College.</div>
         </div>
         <div class="entry-cell">
-          <div class="entry-cell-lbl">What this means for your aid calculation</div>
-          <div class="entry-cell-v">Your Home College determines Pell eligibility based on <strong>HC units only</strong>. CVC does not currently have a consortium agreement that combines TC units with HC units for federal aid. So a 3-unit HC class + 3-unit CVC class does <strong>not</strong> make you a 6-unit half-time student for Pell — your HC sees 3 units.</div>
+          <div class="entry-cell-lbl">What this means for your Pell amount</div>
+          <div class="entry-cell-v">Your Home College figures out your Pell based on the units you take <strong>at the Home College only</strong>. They don't add your CVC units to the total. So if you're taking 3 units at your Home College and 3 units through CVC, your Pell is calculated on 3 units — not 6. CVC doesn't combine units across colleges for federal aid.</div>
         </div>
         <div class="entry-cell">
-          <div class="entry-cell-lbl">If you were counting on this</div>
-          <div class="entry-cell-v">Confirm your aid plan with your <strong>HC's financial aid office</strong> before the term begins. Don't assume cross-enrolled units bump your tier or count toward SAP / full-time status.</div>
+          <div class="entry-cell-lbl">If you were counting on a higher Pell amount</div>
+          <div class="entry-cell-v">Talk to your Home College's financial aid office <strong>before the term starts</strong>. Don't assume your CVC units will bump up your tier or count toward full-time status. Better to know now than be surprised later.</div>
         </div>
         <div class="entry-cell">
-          <div class="entry-cell-lbl">What about CCPG (fee waiver) at the TC?</div>
-          <div class="entry-cell-v">Different from Pell. CCPG <em>can</em> apply at the TC, but the TC needs your <strong>Social Security Number</strong> on file to match your CCPG award to your enrollment. The AER form does not collect SSN. Resolution: contact the TC directly (Admissions & Records or Financial Aid) to confirm your SSN is on file.</div>
+          <div class="entry-cell-lbl">What about my CCPG fee waiver?</div>
+          <div class="entry-cell-v">CCPG is different from Pell — it <em>can</em> apply at the Teaching College. But for the match to work, the Teaching College needs your <strong>Social Security Number</strong> on file. CVC's enrollment form doesn't collect SSN, so the Teaching College has to add it manually. Email their Admissions &amp; Records or Financial Aid office and ask them to confirm your SSN is on file.</div>
         </div>
       </div>
     </details>
@@ -7349,71 +7845,71 @@ article.mistake .copy-link {
     <details class="entry" id="q-1098t">
       <summary>
         <div class="entry-msg">Where do I get my 1098-T tax form?</div>
-        <div class="entry-tag normal icon-plus">handoff to HC</div>
+        <div class="entry-tag normal icon-plus">ask your Home College</div>
       </summary>
       <div class="entry-body">
         <div class="entry-cell">
           <div class="entry-cell-lbl">Short answer</div>
-          <div class="entry-cell-v"><strong>Not from CVC.</strong> 1098-T tax forms are issued by your <strong>Home College's financial services office</strong> (typically the bursar or student accounts office). CVC has no visibility into tax-document issuance.</div>
+          <div class="entry-cell-v"><strong>Not from CVC.</strong> 1098-T forms are issued by your <strong>Home College's bursar or student accounts office</strong>. CVC doesn't have access to your tax records.</div>
         </div>
         <div class="entry-cell">
-          <div class="entry-cell-lbl">Who to contact</div>
-          <div class="entry-cell-v">Your HC's bursar or student accounts office. They handle 1098-T issuance, timing, and any correction requests.</div>
+          <div class="entry-cell-lbl">Who to ask</div>
+          <div class="entry-cell-v">Your Home College's bursar or student accounts office. They handle 1098-Ts — when they go out, how to request a copy, how to fix anything that's wrong.</div>
         </div>
       </div>
     </details>
 
     <details class="entry" id="q-when-summer-fall-available">
       <summary>
-        <div class="entry-msg">When will Summer / Fall courses be available?</div>
-        <div class="entry-tag normal icon-plus">depends on the TC</div>
+        <div class="entry-msg">When will Summer / Fall classes show up on CVC?</div>
+        <div class="entry-tag normal icon-plus">it varies</div>
       </summary>
       <div class="entry-body">
         <div class="entry-cell">
-          <div class="entry-cell-lbl">It varies per Teaching College</div>
-          <div class="entry-cell-v">Each TC sets its own catalog publish date and open-registration date. Typically <strong>60–90 days before the term starts</strong>, but each TC chooses. Some publish all at once; some roll out by department.</div>
+          <div class="entry-cell-lbl">It depends on the Teaching College</div>
+          <div class="entry-cell-v">Every Teaching College picks their own date for publishing their class schedule and opening registration. Most do it <strong>60–90 days before the term starts</strong>, but each one decides for themselves. Some publish everything at once; others roll out by department.</div>
         </div>
         <div class="entry-cell">
-          <div class="entry-cell-lbl">CVC can't accelerate it</div>
-          <div class="entry-cell-v">CVC support cannot speed up a TC's catalog publish. Bookmark <a href="https://search.cvc.edu" target="_blank">cvc.edu</a> and check periodically. Some browsers can watch a specific search URL for changes.</div>
+          <div class="entry-cell-lbl">CVC can't speed it up</div>
+          <div class="entry-cell-v">CVC support can't make a Teaching College publish their schedule faster. Bookmark <a href="https://search.cvc.edu" target="_blank">cvc.edu</a> and check back. Some browsers can watch a search URL and tell you when something changes.</div>
         </div>
       </div>
     </details>
 
     <details class="entry" id="q-display-vs-email">
       <summary>
-        <div class="entry-msg">Dashboard says "Pending" but I got an email saying I'm registered</div>
+        <div class="entry-msg">My dashboard says "Pending" but I got an email saying I'm registered</div>
         <div class="entry-tag normal icon-plus">trust the email</div>
       </summary>
       <div class="entry-body">
         <div class="entry-cell">
-          <div class="entry-cell-lbl">What's happening</div>
-          <div class="entry-cell-v">The student-facing dashboard sometimes lags behind your actual registration state by hours or up to a day. The confirmation email is sent when the Teaching College successfully writes your registration to their SIS — that's the <strong>truth source</strong>.</div>
+          <div class="entry-cell-lbl">What's going on</div>
+          <div class="entry-cell-v">The dashboard sometimes lags behind your real registration status by a few hours, sometimes up to a day. The confirmation email is sent the moment the Teaching College actually adds you to their records — that's the source of truth.</div>
         </div>
         <div class="entry-cell">
-          <div class="entry-cell-lbl">If you have an email saying you're registered</div>
-          <div class="entry-cell-v">You ARE registered, even if the dashboard hasn't caught up. Check Canvas in 24–48 hours. If the class appears there, the registration is real and the dashboard will catch up.</div>
+          <div class="entry-cell-lbl">If your email says you're in</div>
+          <div class="entry-cell-v">You're in, even if the dashboard doesn't show it yet. Check Canvas in a day or two — if the class is there, you're definitely registered, and the dashboard will catch up on its own.</div>
         </div>
       </div>
     </details>
 
     <details class="entry" id="q-fulltime-status">
       <summary>
-        <div class="entry-msg">Will my CVC class count for full-time status / SAP?</div>
-        <div class="entry-tag normal icon-plus">no — verify with HC</div>
+        <div class="entry-msg">Will my CVC class count for full-time status or financial aid?</div>
+        <div class="entry-tag normal icon-plus">no — talk to your Home College</div>
       </summary>
       <div class="entry-body">
         <div class="entry-cell">
           <div class="entry-cell-lbl">Short answer</div>
-          <div class="entry-cell-v"><strong>No</strong>, not at the federal aid level. Your Home College counts only HC-enrolled units toward your federal financial aid (Pell) calculation. CVC cross-enrolled units do <strong>not</strong> aggregate with HC units for Title IV purposes — there is no consortium agreement in place.</div>
+          <div class="entry-cell-v"><strong>No</strong>, not for federal aid purposes. Your Home College only counts the units you're taking at the Home College when figuring out your Pell. CVC units don't add to that total — there's no agreement in place that combines them.</div>
         </div>
         <div class="entry-cell">
-          <div class="entry-cell-lbl">What this means in practice</div>
-          <div class="entry-cell-v">A 3-unit HC class + 3-unit CVC class does NOT make you a 6-unit half-time student for Pell. The HC sees 3 units toward your enrollment status. SAP (Satisfactory Academic Progress) is calculated by your HC the same way.</div>
+          <div class="entry-cell-lbl">In practice</div>
+          <div class="entry-cell-v">If you're taking 3 units at your Home College and 3 units through CVC, your Home College sees 3 units — not 6. That's the same way they calculate full-time status and SAP (the rules about staying on track for aid).</div>
         </div>
         <div class="entry-cell">
-          <div class="entry-cell-lbl">Critical step</div>
-          <div class="entry-cell-v">Confirm with your HC's financial aid office <strong>before the term begins</strong> if you were counting on aggregated enrollment for an aid disbursement, an enrollment status, or SAP calculation. Don't be surprised in December.</div>
+          <div class="entry-cell-lbl">Important step before the term starts</div>
+          <div class="entry-cell-v">If you were counting on your CVC class to get you to a higher tier of Pell, full-time status, or to keep your SAP on track — <strong>check with your Home College's financial aid office now</strong>. Don't wait until you've already started the term.</div>
         </div>
       </div>
     </details>
@@ -7446,6 +7942,8 @@ article.mistake .copy-link {
   </div>
 </section>
 
+</main>
+
 <!-- ═══════════════════════════════ COLOPHON ═══════════════════════════════ -->
 
 <footer class="colophon">
@@ -7458,8 +7956,6 @@ article.mistake .copy-link {
     Set in Fraunces &amp; Newsreader.
   </div>
 </footer>
-
-</div>
 
 <button class="float-help" id="float-help" type="button" aria-label="Back to search">?</button>
 
@@ -8936,10 +9432,26 @@ findInput.addEventListener('input', (e) => {
   }, 140);
 });
 
-// Example chips — click to fill input + run search immediately
+// Example chips — fast-lane: direct deep-link to the answer if mapped,
+// otherwise fall back to filling the search.
 document.querySelectorAll('.find-example').forEach(btn => {
   btn.addEventListener('click', () => {
     const q = btn.dataset.q || btn.textContent.replace(/^["']|["']$/g, '').trim();
+    const targetId = btn.dataset.target;
+    if (targetId) {
+      const target = document.getElementById(targetId);
+      if (target) {
+        if (target.tagName === 'DETAILS') target.open = true;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Brief highlight pulse so the student knows where they landed
+        target.classList.add('chip-pulse');
+        setTimeout(() => target.classList.remove('chip-pulse'), 1800);
+        saveRecentSearch(q);
+        track('chip_click_direct', { q, id: targetId });
+        return;
+      }
+    }
+    // Fallback: traditional search
     findInput.value = q;
     findInput.focus();
     renderResults(findMatches(q), q);
@@ -9201,8 +9713,10 @@ window.addEventListener('DOMContentLoaded', () => {
 // ════════════════════════════════════════════════════════════════════
 
 document.addEventListener('keydown', (e) => {
-  const tag = (document.activeElement.tagName || '').toLowerCase();
-  const isFormField = tag === 'input' || tag === 'textarea' || tag === 'select';
+  const ae = document.activeElement;
+  const tag = (ae?.tagName || '').toLowerCase();
+  const isFormField = tag === 'input' || tag === 'textarea' || tag === 'select'
+    || ae?.isContentEditable;
   if (e.key === '/' && !isFormField) {
     e.preventDefault();
     findInput.focus();
@@ -9364,7 +9878,9 @@ if ('IntersectionObserver' in window) {
 function applyLang() {
   const lang = document.documentElement.lang || 'en';
   document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.lang === lang);
+    const isActive = btn.dataset.lang === lang;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   });
   // Swap textarea placeholder
   if (findInput) {
@@ -9435,19 +9951,44 @@ document.getElementById('find-results').addEventListener('click', (e) => {
 // ════════════════════════════════════════════════════════════════════
 
 (function initDiagnoseTabs() {
-  const tabs = document.querySelectorAll('.diagnose-tab');
+  const tabs = Array.from(document.querySelectorAll('.diagnose-tab'));
   const panes = {
     'tab-quiz': document.getElementById('pane-quiz'),
     'tab-calc': document.getElementById('pane-calc'),
     'tab-elig': document.getElementById('pane-elig')
   };
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.setAttribute('aria-selected', 'false'));
-      tab.setAttribute('aria-selected', 'true');
-      Object.values(panes).forEach(p => p.hidden = true);
-      panes[tab.id].hidden = false;
-      track('diagnose_tab', { tab: tab.id });
+  if (!tabs.length) return;
+
+  // Initialize roving tabindex: selected tab = 0, others = -1
+  tabs.forEach(t => {
+    t.setAttribute('tabindex', t.getAttribute('aria-selected') === 'true' ? '0' : '-1');
+  });
+
+  function activate(tab, focus) {
+    tabs.forEach(t => {
+      const isActive = t === tab;
+      t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      t.setAttribute('tabindex', isActive ? '0' : '-1');
+    });
+    Object.values(panes).forEach(p => { if (p) p.hidden = true; });
+    if (panes[tab.id]) panes[tab.id].hidden = false;
+    if (focus) tab.focus();
+    track('diagnose_tab', { tab: tab.id });
+  }
+
+  tabs.forEach((tab, idx) => {
+    tab.addEventListener('click', () => activate(tab, false));
+    tab.addEventListener('keydown', (e) => {
+      let nextIdx = null;
+      switch (e.key) {
+        case 'ArrowRight': nextIdx = (idx + 1) % tabs.length; break;
+        case 'ArrowLeft':  nextIdx = (idx - 1 + tabs.length) % tabs.length; break;
+        case 'Home':       nextIdx = 0; break;
+        case 'End':        nextIdx = tabs.length - 1; break;
+        default: return;
+      }
+      e.preventDefault();
+      activate(tabs[nextIdx], true);
     });
   });
 })();
@@ -9851,55 +10392,242 @@ document.getElementById('find-results').addEventListener('click', (e) => {
 })();
 
 // ════════════════════════════════════════════════════════════════════
-// READING PROGRESS BADGE — counts opened entries via localStorage
+// "STILL STUCK?" RESCUE CARD — bottom of err/sym/urgent entries,
+// pre-fills the email builder with what we already know
 // ════════════════════════════════════════════════════════════════════
 
-(function initProgress() {
-  const STORAGE_KEY = 'cvc-faq-read-entries';
-  const allEntries = document.querySelectorAll('details[id^="t-"], details[id^="sym-"], details[id^="err-"], details[id^="lim-"]');
-  const total = allEntries.length;
-  if (total === 0) return;
-
-  // create floating badge
-  const badge = document.createElement('a');
-  badge.className = 'progress-badge';
-  badge.href = '#diagnose';
-  badge.setAttribute('aria-label', 'Reading progress');
-  badge.innerHTML = '<span class="progress-dot"></span><span class="progress-num"><span id="progress-read">0</span>/' + total + '</span><span style="opacity:0.8;font-size:11px;">read</span>';
-  document.body.appendChild(badge);
-
-  const readSet = new Set();
-  try {
-    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    stored.forEach(id => readSet.add(id));
-  } catch (e) { /* localStorage may be disabled */ }
-
-  const numEl = document.getElementById('progress-read');
-  const update = () => {
-    if (numEl) numEl.textContent = readSet.size;
-    if (readSet.size > 0) badge.classList.add('show');
+(function initRescue() {
+  // Map entry id → builder pre-fill (issue dropdown match + error string)
+  // 'Other (describe in details)' is the safe fallback.
+  const RESCUE_MAP = {
+    'urgent-paid':              { issue: 'Charged but not enrolled', error: '' },
+    'urgent-drop':              { issue: 'Drop Failed', error: 'Drop Failed' },
+    'urgent-pending':           { issue: 'Pending more than 5 business days', error: '' },
+    'urgent-after-hours':       { issue: 'Other (describe in details)', error: '' },
+    'err-dropfail':             { issue: 'Drop Failed', error: 'Drop Failed' },
+    'err-residency-not-synced': { issue: 'Out-of-state tuition for a CA resident', error: '' },
+    'err-cccid':                { issue: 'Other (describe in details)', error: 'CCCID mismatch' },
+    'err-cccid-not-on-record':  { issue: 'Other (describe in details)', error: 'CCCID not on record at TC' },
+    'err-prereq':               { issue: 'Other (describe in details)', error: 'Prerequisite Pending Review' },
+    'err-prereq-after-start':   { issue: 'Other (describe in details)', error: 'Prereq held past start' },
+    'err-prereq-section-filled':{ issue: 'Other (describe in details)', error: 'Section filled while prereq under review' },
+    'err-corequisite':          { issue: 'Other (describe in details)', error: 'Corequisite required' },
+    'err-denied-rereview':      { issue: 'Application Denied — no reason given', error: 'Application Denied' },
+    'err-duplicate-login':      { issue: 'Other (describe in details)', error: 'Duplicate login / SSO' },
+    'err-old-payment':          { issue: 'Charged but not enrolled', error: 'Old payment not reconciled' },
+    'err-records-research':     { issue: 'Pending more than 5 business days', error: 'Records under research' },
+    'err-regfail':              { issue: 'Other (describe in details)', error: 'Registration Failed' },
+    'err-seat-count':           { issue: 'Other (describe in details)', error: 'Seat count discrepancy' },
+    'err-stacked-errors':       { issue: 'Other (describe in details)', error: '' },
+    'err-unit-overload':        { issue: 'Other (describe in details)', error: 'Unit overload block' },
+    'err-verify-account':       { issue: 'Other (describe in details)', error: 'Verify Account error' },
+    'err-window':               { issue: 'Other (describe in details)', error: 'Registration window closed' },
+    'err-wrong-hc':             { issue: 'Other (describe in details)', error: 'Wrong Home College selected' },
+    'err-auto-dropped-payment': { issue: 'Charged but not enrolled', error: 'Auto-dropped — payment timing' },
+    'sym-canvas':               { issue: 'Other (describe in details)', error: 'Class not in Canvas' },
+    'sym-denied':               { issue: 'Application Denied — no reason given', error: '' },
+    'sym-failed':               { issue: 'Other (describe in details)', error: '' },
+    'sym-new-student':          { issue: 'Other (describe in details)', error: 'New student / eligibility' },
+    'sym-paid':                 { issue: 'Charged but not enrolled', error: '' },
+    'sym-pending':              { issue: 'Pending more than 5 business days', error: '' },
+    'sym-tuition':              { issue: 'Out-of-state tuition for a CA resident', error: '' },
+    'sym-unknown':              { issue: 'Other (describe in details)', error: '' },
+    'sym-update-failed':        { issue: '"Status Update Failed" on a dropped class', error: 'Status Update Failed' },
   };
 
-  allEntries.forEach(el => {
-    el.addEventListener('toggle', () => {
-      if (el.open && !readSet.has(el.id)) {
-        readSet.add(el.id);
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...readSet])); } catch (e) {}
-        update();
-      }
-    });
+  const TARGETS = 'details[id^="err-"], details[id^="sym-"], details[id^="urgent-"]';
+  document.querySelectorAll(TARGETS).forEach(entry => {
+    const body = entry.querySelector('.entry-body, .body');
+    if (!body) return;
+    if (body.querySelector('.stuck')) return; // idempotent
+
+    const wrap = document.createElement('div');
+    wrap.className = 'stuck';
+    wrap.innerHTML = `
+      <div class="stuck-text">
+        <p class="stuck-q"><span data-en>Still stuck?</span><span data-es>¿Todavía atascada/o?</span></p>
+        <p class="stuck-body"><span data-en>Take this to the email builder — we'll pre-fill what we know. You add your CCCID and a screenshot.</span><span data-es>Llévalo al generador de correos — pre-llenaremos lo que sabemos. Tú agregas tu CCCID y una captura.</span></p>
+      </div>
+      <button type="button" class="stuck-btn" data-rescue-id="${entry.id}">
+        <span data-en>Pre-fill email →</span><span data-es>Pre-llenar correo →</span>
+      </button>
+    `;
+    body.appendChild(wrap);
   });
 
-  update();
+  // Click handler — pre-fill the builder, scroll, focus the first empty required field
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.stuck-btn[data-rescue-id]');
+    if (!btn) return;
+    const id = btn.dataset.rescueId;
+    const map = RESCUE_MAP[id] || { issue: 'Other (describe in details)', error: '' };
+    const issueSel = document.getElementById('b-issue');
+    const errInp = document.getElementById('b-error');
+    const detailInp = document.getElementById('b-detail');
+    const cccidInp = document.getElementById('b-cccid');
+    const builder = document.querySelector('.builder');
 
-  // show after scroll past hero
-  let shown = false;
-  window.addEventListener('scroll', () => {
-    if (!shown && window.scrollY > 600 && readSet.size > 0) {
-      shown = true;
-      badge.classList.add('show');
+    if (issueSel) {
+      const opt = Array.from(issueSel.options).find(o => o.value === map.issue || o.textContent.trim() === map.issue);
+      if (opt) issueSel.value = opt.value || opt.textContent;
+      else issueSel.value = 'Other (describe in details)';
+      issueSel.dispatchEvent(new Event('change', { bubbles: true }));
     }
-  }, { passive: true });
+    if (errInp && map.error) errInp.value = map.error;
+    // Append a "Came from: <entry title>" line to the detail field
+    if (detailInp) {
+      const entry = document.getElementById(id);
+      const summary = entry?.querySelector('summary')?.textContent.trim().replace(/\s+/g, ' ').slice(0, 120) || id;
+      const stamp = `(Looked up on the FAQ — entry: "${summary}")`;
+      if (!detailInp.value.includes(stamp)) {
+        detailInp.value = detailInp.value
+          ? detailInp.value.trimEnd() + '\n\n' + stamp
+          : stamp;
+      }
+    }
+    // Trigger any existing builder-update listener
+    [issueSel, errInp, detailInp].forEach(el => {
+      if (el) el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    // Scroll + focus
+    const emailSection = document.getElementById('email');
+    if (emailSection) emailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => {
+      if (cccidInp && !cccidInp.value) cccidInp.focus();
+      if (builder) {
+        builder.classList.add('field-flash');
+        setTimeout(() => builder.classList.remove('field-flash'), 1500);
+      }
+    }, 600);
+
+    if (typeof track === 'function') track('rescue_click', { id, issue: map.issue });
+  });
+})();
+
+// ════════════════════════════════════════════════════════════════════
+// ELIGIBILITY SELF-CHECK — 3-question gate at top of page
+// ════════════════════════════════════════════════════════════════════
+
+(function initEligibility() {
+  const card = document.getElementById('eligibility-card');
+  if (!card) return;
+
+  const STORAGE_KEY = 'cvc-eligibility-check';
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (e) {}
+
+  const startBtn = document.getElementById('eligibility-start');
+  const retakeBtn = document.getElementById('eligibility-retake');
+  const passedSummary = card.querySelector('.eligibility-passed-summary');
+  const idleSummary = card.querySelector('.eligibility-summary:not(.eligibility-passed-summary)');
+  const passedWhen = document.getElementById('eligibility-passed-when');
+  const pips = card.querySelectorAll('.eligibility-progress-pip');
+  const questions = card.querySelectorAll('.eligibility-question');
+  const results = card.querySelectorAll('.eligibility-result');
+
+  function setState(state) {
+    card.dataset.state = state;
+  }
+
+  function showQuestion(qNum) {
+    questions.forEach(q => q.classList.toggle('active', q.dataset.q === String(qNum)));
+    results.forEach(r => r.classList.remove('active'));
+    pips.forEach((pip, idx) => {
+      pip.classList.toggle('active', idx + 1 === qNum);
+      pip.classList.toggle('done', idx + 1 < qNum);
+    });
+    setState('active');
+  }
+
+  function showResult(resultKey) {
+    questions.forEach(q => q.classList.remove('active'));
+    results.forEach(r => r.classList.toggle('active', r.dataset.result === resultKey));
+    pips.forEach(pip => pip.classList.add('done'));
+    setState('result');
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        result: resultKey,
+        when: Date.now()
+      }));
+    } catch (e) {}
+
+    if (typeof track === 'function') track('eligibility_result', { result: resultKey });
+
+    if (resultKey === 'pass') {
+      setTimeout(() => {
+        if (card.dataset.state === 'result') showPassed(Date.now());
+      }, 4500);
+    }
+  }
+
+  function showPassed(when) {
+    idleSummary.style.display = 'none';
+    passedSummary.style.display = 'flex';
+    questions.forEach(q => q.classList.remove('active'));
+    results.forEach(r => r.classList.remove('active'));
+    setState('passed');
+    if (passedWhen) {
+      const d = new Date(when);
+      const dateStr = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      passedWhen.textContent = ' · ' + dateStr;
+    }
+  }
+
+  function reset() {
+    idleSummary.style.display = 'flex';
+    passedSummary.style.display = 'none';
+    questions.forEach(q => q.classList.remove('active'));
+    results.forEach(r => r.classList.remove('active'));
+    pips.forEach(pip => { pip.classList.remove('active'); pip.classList.remove('done'); });
+    setState('idle');
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  }
+
+  // Restore prior state
+  if (saved && saved.result === 'pass') {
+    showPassed(saved.when);
+  }
+
+  if (startBtn) startBtn.addEventListener('click', () => {
+    showQuestion(1);
+    if (typeof track === 'function') track('eligibility_start');
+  });
+
+  if (retakeBtn) retakeBtn.addEventListener('click', () => {
+    reset();
+    showQuestion(1);
+  });
+
+  // Question button delegation
+  card.addEventListener('click', (e) => {
+    const opt = e.target.closest('.eligibility-option');
+    if (opt) {
+      const next = opt.dataset.next;
+      const result = opt.dataset.result;
+      if (next) showQuestion(Number(next));
+      else if (result) showResult(result);
+      return;
+    }
+    const back = e.target.closest('.eligibility-back');
+    if (back) {
+      showQuestion(Number(back.dataset.back));
+      return;
+    }
+    const restart = e.target.closest('[data-restart]');
+    if (restart) {
+      reset();
+      showQuestion(1);
+      return;
+    }
+    const collapse = e.target.closest('[data-collapse]');
+    if (collapse) {
+      // smooth-scroll handled by anchor; just collapse to passed
+      setTimeout(() => showPassed(Date.now()), 400);
+      return;
+    }
+  });
 })();
 
 // ════════════════════════════════════════════════════════════════════
@@ -9908,10 +10636,13 @@ document.getElementById('find-results').addEventListener('click', (e) => {
 
 (function initHelpful() {
   const STORAGE_KEY = 'cvc-faq-helpful-votes';
+  const REASONS_KEY = 'cvc-faq-helpful-reasons';
   let votes = {};
+  let reasons = {};
   try { votes = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) {}
+  try { reasons = JSON.parse(localStorage.getItem(REASONS_KEY) || '{}'); } catch (e) {}
 
-  const allEntries = document.querySelectorAll('details[id^="t-"], details[id^="sym-"], details[id^="err-"], details[id^="lim-"], details[id^="m-"]');
+  const allEntries = document.querySelectorAll('details[id^="t-"], details[id^="sym-"], details[id^="err-"], details[id^="lim-"], details[id^="m-"], details[id^="urgent-"], details[id^="q-"], details[id^="state-"]');
 
   allEntries.forEach(entry => {
     const body = entry.querySelector('.entry-body, .body, .entry-action');
@@ -9921,9 +10652,10 @@ document.getElementById('find-results').addEventListener('click', (e) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'helpful';
     wrapper.innerHTML = `
-      <span class="helpful-q">Was this helpful?</span>
-      <button type="button" class="helpful-btn" data-vote="up" aria-label="This was helpful">helpful</button>
-      <button type="button" class="helpful-btn" data-vote="down" aria-label="This wasn't helpful">not really</button>
+      <span class="helpful-q"><span data-en>Was this helpful?</span><span data-es>¿Te sirvió?</span></span>
+      <button type="button" class="helpful-btn" data-vote="up" aria-label="This was helpful"><span data-en>yes</span><span data-es>sí</span></button>
+      <button type="button" class="helpful-btn" data-vote="down" aria-label="This wasn't helpful"><span data-en>not really</span><span data-es>no del todo</span></button>
+      <span class="helpful-thanks" hidden></span>
     `;
     // append to body — find the deepest natural container
     const container = entry.querySelector('.entry-body') || entry.querySelector('.body') || body;
@@ -9932,6 +10664,36 @@ document.getElementById('find-results').addEventListener('click', (e) => {
     if (votes[entry.id]) {
       const btn = wrapper.querySelector(`[data-vote="${votes[entry.id]}"]`);
       if (btn) btn.classList.add('active');
+      if (votes[entry.id] === 'down') injectFollowup(wrapper, entry.id);
+    }
+
+    function injectFollowup(wrap, id) {
+      if (wrap.querySelector('.helpful-followup')) return;
+      const f = document.createElement('div');
+      f.className = 'helpful-followup';
+      f.innerHTML = `
+        <label class="helpful-followup-label">
+          <span data-en>What would have helped? <em>(optional — stays in your browser)</em></span>
+          <span data-es>¿Qué te habría ayudado? <em>(opcional — se queda en tu navegador)</em></span>
+        </label>
+        <textarea class="helpful-followup-input" rows="2" maxlength="280"
+          placeholder="e.g., I needed the exact form name, or this didn't match my situation"
+          data-placeholder-en="e.g., I needed the exact form name, or this didn't match my situation"
+          data-placeholder-es="ej., necesitaba el nombre exacto del formulario, o no era mi caso"></textarea>
+      `;
+      wrap.appendChild(f);
+      const ta = f.querySelector('textarea');
+      if (reasons[id]) ta.value = reasons[id];
+      let saveTimer;
+      ta.addEventListener('input', () => {
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => {
+          reasons[id] = ta.value.slice(0, 280);
+          try { localStorage.setItem(REASONS_KEY, JSON.stringify(reasons)); } catch (e) {}
+          track('helpful_reason', { id, len: ta.value.length });
+        }, 600);
+      });
+      if (typeof applyLang === 'function') applyLang();
     }
 
     wrapper.addEventListener('click', (e) => {
@@ -9943,15 +10705,18 @@ document.getElementById('find-results').addEventListener('click', (e) => {
       btn.classList.add('active');
       votes[entry.id] = vote;
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(votes)); } catch (e) {}
-      // append a thank-you (only once)
-      if (!wrapper.querySelector('.helpful-thanks')) {
-        const thanks = document.createElement('span');
-        thanks.className = 'helpful-thanks';
-        thanks.textContent = vote === 'up' ? 'thanks!' : 'noted — what would help?';
-        wrapper.appendChild(thanks);
+      const thanks = wrapper.querySelector('.helpful-thanks');
+      thanks.hidden = false;
+      thanks.innerHTML = vote === 'up'
+        ? '<span data-en>thanks!</span><span data-es>¡gracias!</span>'
+        : '<span data-en>noted — tell us more below if you want</span><span data-es>anotado — cuéntanos abajo si quieres</span>';
+      if (vote === 'down') {
+        injectFollowup(wrapper, entry.id);
       } else {
-        wrapper.querySelector('.helpful-thanks').textContent = vote === 'up' ? 'thanks!' : 'noted — what would help?';
+        const f = wrapper.querySelector('.helpful-followup');
+        if (f) f.remove();
       }
+      if (typeof applyLang === 'function') applyLang();
       track('helpful_vote', { id: entry.id, vote });
     });
   });
