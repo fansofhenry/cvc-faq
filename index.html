@@ -1635,6 +1635,71 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   margin-left: 4px;
 }
 
+/* "Still stuck?" rescue card — bottom of error/symptom entries */
+.stuck {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--paper-deep);
+  border: 1px dashed var(--ink-ghost);
+  border-radius: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+}
+.stuck-text { flex: 1; min-width: 220px; }
+.stuck-q {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 18, 'SOFT' 70;
+  font-size: 16px;
+  color: var(--ink);
+  margin: 0 0 2px;
+  font-weight: 500;
+}
+.stuck-body {
+  font-family: var(--serif-body);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.5;
+}
+.stuck-btn {
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 6px;
+  padding: 9px 16px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 120ms ease;
+}
+.stuck-btn:hover { background: var(--claret); }
+.stuck-btn:focus-visible { outline: 2px solid var(--claret); outline-offset: 2px; }
+
+/* Highlight pulse when chip deep-link lands on an entry */
+@keyframes chip-pulse-anim {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 102, 186, 0); }
+  30%      { box-shadow: 0 0 0 6px rgba(0, 102, 186, 0.18); }
+}
+.chip-pulse {
+  animation: chip-pulse-anim 1.6s ease-out;
+  border-radius: 8px;
+}
+
+/* Brief "field flash" highlight after rescue-card pre-fill */
+@keyframes field-flash {
+  0%   { background: var(--moss-wash); }
+  100% { background: var(--paper); }
+}
+.field-flash input,
+.field-flash textarea,
+.field-flash select { animation: field-flash 1.4s ease-out; }
+
 /* Myth vs Fact band */
 .myths {
   margin: 32px 0;
@@ -4125,22 +4190,22 @@ article.mistake .copy-link {
     <span class="find-examples-label">
       <span data-en>The 6 most-asked student questions:</span><span data-es>Las 6 preguntas más frecuentes:</span>
     </span>
-    <button class="find-example" type="button" data-q="My class is full and I cannot register">
+    <button class="find-example" type="button" data-target="err-prereq-section-filled" data-q="My class is full and I cannot register">
       <span data-en>"Class is full / can't register"</span><span data-es>"Clase llena / no me deja inscribir"</span>
     </button>
-    <button class="find-example" type="button" data-q="I am a new student at my home college can I use CVC to take classes elsewhere">
+    <button class="find-example" type="button" data-target="sym-new-student" data-q="I am a new student at my home college can I use CVC to take classes elsewhere">
       <span data-en>"I'm new — am I eligible?"</span><span data-es>"Soy nuevo — ¿soy elegible?"</span>
     </button>
-    <button class="find-example" type="button" data-q="I paid for my class but the system says I haven't paid">
+    <button class="find-example" type="button" data-target="urgent-paid" data-q="I paid for my class but the system says I haven't paid">
       <span data-en>"I paid but I'm not enrolled"</span><span data-es>"Pagué pero no estoy inscrita/o"</span>
     </button>
-    <button class="find-example" type="button" data-q="I can't drop my class — drop failed">
+    <button class="find-example" type="button" data-target="urgent-drop" data-q="I can't drop my class — drop failed">
       <span data-en>"Drop failed / can't drop"</span><span data-es>"No puedo cancelar mi clase"</span>
     </button>
-    <button class="find-example" type="button" data-q="my class is not showing up in Canvas">
+    <button class="find-example" type="button" data-target="sym-canvas" data-q="my class is not showing up in Canvas">
       <span data-en>"Class not showing in Canvas"</span><span data-es>"Mi clase no aparece en Canvas"</span>
     </button>
-    <button class="find-example" type="button" data-q="my tuition shows $1864 but I'm a CA resident">
+    <button class="find-example" type="button" data-target="sym-tuition" data-q="my tuition shows $1864 but I'm a CA resident">
       <span data-en>"Tuition way too high"</span><span data-es>"Matrícula muy alta"</span>
     </button>
   </div>
@@ -9337,10 +9402,26 @@ findInput.addEventListener('input', (e) => {
   }, 140);
 });
 
-// Example chips — click to fill input + run search immediately
+// Example chips — fast-lane: direct deep-link to the answer if mapped,
+// otherwise fall back to filling the search.
 document.querySelectorAll('.find-example').forEach(btn => {
   btn.addEventListener('click', () => {
     const q = btn.dataset.q || btn.textContent.replace(/^["']|["']$/g, '').trim();
+    const targetId = btn.dataset.target;
+    if (targetId) {
+      const target = document.getElementById(targetId);
+      if (target) {
+        if (target.tagName === 'DETAILS') target.open = true;
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // Brief highlight pulse so the student knows where they landed
+        target.classList.add('chip-pulse');
+        setTimeout(() => target.classList.remove('chip-pulse'), 1800);
+        saveRecentSearch(q);
+        track('chip_click_direct', { q, id: targetId });
+        return;
+      }
+    }
+    // Fallback: traditional search
     findInput.value = q;
     findInput.focus();
     renderResults(findMatches(q), q);
@@ -10249,6 +10330,120 @@ document.getElementById('find-results').addEventListener('click', (e) => {
     }
   };
   checks.forEach(c => c.addEventListener('change', update));
+})();
+
+// ════════════════════════════════════════════════════════════════════
+// "STILL STUCK?" RESCUE CARD — bottom of err/sym/urgent entries,
+// pre-fills the email builder with what we already know
+// ════════════════════════════════════════════════════════════════════
+
+(function initRescue() {
+  // Map entry id → builder pre-fill (issue dropdown match + error string)
+  // 'Other (describe in details)' is the safe fallback.
+  const RESCUE_MAP = {
+    'urgent-paid':              { issue: 'Charged but not enrolled', error: '' },
+    'urgent-drop':              { issue: 'Drop Failed', error: 'Drop Failed' },
+    'urgent-pending':           { issue: 'Pending more than 5 business days', error: '' },
+    'urgent-after-hours':       { issue: 'Other (describe in details)', error: '' },
+    'err-dropfail':             { issue: 'Drop Failed', error: 'Drop Failed' },
+    'err-residency-not-synced': { issue: 'Out-of-state tuition for a CA resident', error: '' },
+    'err-cccid':                { issue: 'Other (describe in details)', error: 'CCCID mismatch' },
+    'err-cccid-not-on-record':  { issue: 'Other (describe in details)', error: 'CCCID not on record at TC' },
+    'err-prereq':               { issue: 'Other (describe in details)', error: 'Prerequisite Pending Review' },
+    'err-prereq-after-start':   { issue: 'Other (describe in details)', error: 'Prereq held past start' },
+    'err-prereq-section-filled':{ issue: 'Other (describe in details)', error: 'Section filled while prereq under review' },
+    'err-corequisite':          { issue: 'Other (describe in details)', error: 'Corequisite required' },
+    'err-denied-rereview':      { issue: 'Application Denied — no reason given', error: 'Application Denied' },
+    'err-duplicate-login':      { issue: 'Other (describe in details)', error: 'Duplicate login / SSO' },
+    'err-old-payment':          { issue: 'Charged but not enrolled', error: 'Old payment not reconciled' },
+    'err-records-research':     { issue: 'Pending more than 5 business days', error: 'Records under research' },
+    'err-regfail':              { issue: 'Other (describe in details)', error: 'Registration Failed' },
+    'err-seat-count':           { issue: 'Other (describe in details)', error: 'Seat count discrepancy' },
+    'err-stacked-errors':       { issue: 'Other (describe in details)', error: '' },
+    'err-unit-overload':        { issue: 'Other (describe in details)', error: 'Unit overload block' },
+    'err-verify-account':       { issue: 'Other (describe in details)', error: 'Verify Account error' },
+    'err-window':               { issue: 'Other (describe in details)', error: 'Registration window closed' },
+    'err-wrong-hc':             { issue: 'Other (describe in details)', error: 'Wrong Home College selected' },
+    'err-auto-dropped-payment': { issue: 'Charged but not enrolled', error: 'Auto-dropped — payment timing' },
+    'sym-canvas':               { issue: 'Other (describe in details)', error: 'Class not in Canvas' },
+    'sym-denied':               { issue: 'Application Denied — no reason given', error: '' },
+    'sym-failed':               { issue: 'Other (describe in details)', error: '' },
+    'sym-new-student':          { issue: 'Other (describe in details)', error: 'New student / eligibility' },
+    'sym-paid':                 { issue: 'Charged but not enrolled', error: '' },
+    'sym-pending':              { issue: 'Pending more than 5 business days', error: '' },
+    'sym-tuition':              { issue: 'Out-of-state tuition for a CA resident', error: '' },
+    'sym-unknown':              { issue: 'Other (describe in details)', error: '' },
+    'sym-update-failed':        { issue: '"Status Update Failed" on a dropped class', error: 'Status Update Failed' },
+  };
+
+  const TARGETS = 'details[id^="err-"], details[id^="sym-"], details[id^="urgent-"]';
+  document.querySelectorAll(TARGETS).forEach(entry => {
+    const body = entry.querySelector('.entry-body, .body');
+    if (!body) return;
+    if (body.querySelector('.stuck')) return; // idempotent
+
+    const wrap = document.createElement('div');
+    wrap.className = 'stuck';
+    wrap.innerHTML = `
+      <div class="stuck-text">
+        <p class="stuck-q"><span data-en>Still stuck?</span><span data-es>¿Todavía atascada/o?</span></p>
+        <p class="stuck-body"><span data-en>Take this to the email builder — we'll pre-fill what we know. You add your CCCID and a screenshot.</span><span data-es>Llévalo al generador de correos — pre-llenaremos lo que sabemos. Tú agregas tu CCCID y una captura.</span></p>
+      </div>
+      <button type="button" class="stuck-btn" data-rescue-id="${entry.id}">
+        <span data-en>Pre-fill email →</span><span data-es>Pre-llenar correo →</span>
+      </button>
+    `;
+    body.appendChild(wrap);
+  });
+
+  // Click handler — pre-fill the builder, scroll, focus the first empty required field
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.stuck-btn[data-rescue-id]');
+    if (!btn) return;
+    const id = btn.dataset.rescueId;
+    const map = RESCUE_MAP[id] || { issue: 'Other (describe in details)', error: '' };
+    const issueSel = document.getElementById('b-issue');
+    const errInp = document.getElementById('b-error');
+    const detailInp = document.getElementById('b-detail');
+    const cccidInp = document.getElementById('b-cccid');
+    const builder = document.querySelector('.builder');
+
+    if (issueSel) {
+      const opt = Array.from(issueSel.options).find(o => o.value === map.issue || o.textContent.trim() === map.issue);
+      if (opt) issueSel.value = opt.value || opt.textContent;
+      else issueSel.value = 'Other (describe in details)';
+      issueSel.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    if (errInp && map.error) errInp.value = map.error;
+    // Append a "Came from: <entry title>" line to the detail field
+    if (detailInp) {
+      const entry = document.getElementById(id);
+      const summary = entry?.querySelector('summary')?.textContent.trim().replace(/\s+/g, ' ').slice(0, 120) || id;
+      const stamp = `(Looked up on the FAQ — entry: "${summary}")`;
+      if (!detailInp.value.includes(stamp)) {
+        detailInp.value = detailInp.value
+          ? detailInp.value.trimEnd() + '\n\n' + stamp
+          : stamp;
+      }
+    }
+    // Trigger any existing builder-update listener
+    [issueSel, errInp, detailInp].forEach(el => {
+      if (el) el.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+
+    // Scroll + focus
+    const emailSection = document.getElementById('email');
+    if (emailSection) emailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => {
+      if (cccidInp && !cccidInp.value) cccidInp.focus();
+      if (builder) {
+        builder.classList.add('field-flash');
+        setTimeout(() => builder.classList.remove('field-flash'), 1500);
+      }
+    }, 600);
+
+    if (typeof track === 'function') track('rescue_click', { id, issue: map.issue });
+  });
 })();
 
 // ════════════════════════════════════════════════════════════════════
