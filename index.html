@@ -3722,40 +3722,25 @@ article.mistake .copy-link {
 
   <div class="find-examples">
     <span class="find-examples-label">
-      <span data-en>Or tap a real student question:</span><span data-es>O toca una pregunta real:</span>
+      <span data-en>The 6 most-asked student questions:</span><span data-es>Las 6 preguntas más frecuentes:</span>
     </span>
+    <button class="find-example" type="button" data-q="My class is full and I cannot register">
+      <span data-en>"Class is full / can't register"</span><span data-es>"Clase llena / no me deja inscribir"</span>
+    </button>
+    <button class="find-example" type="button" data-q="I am a new student at my home college can I use CVC to take classes elsewhere">
+      <span data-en>"I'm new — am I eligible?"</span><span data-es>"Soy nuevo — ¿soy elegible?"</span>
+    </button>
     <button class="find-example" type="button" data-q="I paid for my class but the system says I haven't paid">
       <span data-en>"I paid but I'm not enrolled"</span><span data-es>"Pagué pero no estoy inscrita/o"</span>
     </button>
+    <button class="find-example" type="button" data-q="I can't drop my class — drop failed">
+      <span data-en>"Drop failed / can't drop"</span><span data-es>"No puedo cancelar mi clase"</span>
+    </button>
+    <button class="find-example" type="button" data-q="my class is not showing up in Canvas">
+      <span data-en>"Class not showing in Canvas"</span><span data-es>"Mi clase no aparece en Canvas"</span>
+    </button>
     <button class="find-example" type="button" data-q="my tuition shows $1864 but I'm a CA resident">
       <span data-en>"Tuition way too high"</span><span data-es>"Matrícula muy alta"</span>
-    </button>
-    <button class="find-example" type="button" data-q="I can't drop my class — drop failed">
-      <span data-en>"Drop failed"</span><span data-es>"No puedo cancelar mi clase"</span>
-    </button>
-    <button class="find-example" type="button" data-q="when does the summer 2026 schedule come out">
-      <span data-en>"When does summer schedule appear?"</span><span data-es>"¿Cuándo sale el horario de verano?"</span>
-    </button>
-    <button class="find-example" type="button" data-q="how do I get a 1098-T tax form">
-      <span data-en>"Where's my 1098-T?"</span><span data-es>"¿Dónde está mi 1098-T?"</span>
-    </button>
-    <button class="find-example" type="button" data-q="my home college fixed residency but TC still charges out of state">
-      <span data-en>"HC fixed residency, TC didn't"</span><span data-es>"HC arregló residencia, TC no"</span>
-    </button>
-    <button class="find-example" type="button" data-q="I can't find my past classes from CCC Online">
-      <span data-en>"Lost past CCC Online classes"</span><span data-es>"Clases pasadas perdidas"</span>
-    </button>
-    <button class="find-example" type="button" data-q="how do I change the email on my CVC account">
-      <span data-en>"Change my email"</span><span data-es>"Cambiar mi email"</span>
-    </button>
-    <button class="find-example" type="button" data-q="I used my personal email instead of my school email and CVC cant verify my community college account">
-      <span data-en>"Used personal email — can't verify"</span><span data-es>"Usé email personal — no verifica"</span>
-    </button>
-    <button class="find-example" type="button" data-q="Im new to CVC how do I set up my account">
-      <span data-en>"First time — how do I start?"</span><span data-es>"Primera vez — ¿cómo empiezo?"</span>
-    </button>
-    <button class="find-example" type="button" data-q="how do I get a refund from Foothill College">
-      <span data-en>"Refund from a specific college"</span><span data-es>"Reembolso de una universidad"</span>
     </button>
   </div>
 
@@ -4825,6 +4810,102 @@ article.mistake .copy-link {
             <li style="padding: 6px 0 6px 20px; position: relative; line-height: 1.6;"><span style="position: absolute; left: 0; font-style: italic; color: var(--claret); font-family: var(--serif-display);">—</span><strong>Pending</strong> anything — system is still working. <a href="#dater">Check the date tool</a>.</li>
             <li style="padding: 6px 0 6px 20px; position: relative; line-height: 1.6;"><span style="position: absolute; left: 0; font-style: italic; color: var(--claret); font-family: var(--serif-display);">—</span><strong>Failed / Denied</strong> — see the error decoder above.</li>
           </ul>
+        </div>
+      </div>
+    </details>
+
+    <!-- ═════════════ NEW PATTERNS — added 2026-04-27 ═════════════ -->
+
+    <details class="entry" id="sym-new-student">
+      <summary>
+        <span class="entry-tag-pill stop">stop / eligibility</span>
+        <div class="entry-msg">"I'm a new student at my Home College — can I use CVC yet?"</div>
+        <span class="entry-arrow">→</span>
+      </summary>
+      <div class="body">
+        <p><strong>Short answer:</strong> not until you've registered for at least one class at your Home College.</p>
+        <p>Per California state law (AB-637), to use the CVC Exchange you must have <em>"completed a class or be taking a class that is currently in progress"</em> at your Home College. New applicants who haven't enrolled in any HC class yet are <strong>not yet eligible</strong> — and the system enforces this automatically.</p>
+        <p style="font-family: var(--serif-display); font-style: italic; font-size: 17px; color: var(--ink); margin: 16px 0 6px;">What you'll see if you try anyway</p>
+        <ul>
+          <li><strong>"Canvas account not found with your email"</strong> — this is the system's safety net. Your HC's Canvas hasn't provisioned an account because you're not enrolled in any HC class yet.</li>
+          <li><strong>"Ineligible" status</strong> on your CVC dashboard.</li>
+          <li>Your HC tells you they "can't give you a Canvas account" — that's normal; Canvas is created when you register for a class, not when you apply.</li>
+        </ul>
+        <div class="entry-action"><strong>Path forward:</strong> Register for one class at your HC for the current term through your HC's regular enrollment process (CCCApply at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a> if you haven't applied yet, or your HC's student portal if you have). Once you're registered at the HC and your Canvas account is active there, come back to CVC and the cross-enrollment should work.</div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-prereq-section-filled">
+      <summary>
+        <span class="entry-tag-pill stop">stop / known gap</span>
+        <div class="entry-msg">"My prereq was approved but the class is now full"</div>
+        <span class="entry-arrow">→</span>
+      </summary>
+      <div class="body">
+        <p><strong>What happened:</strong> CVC does not reserve seats for students while their prerequisite is being reviewed by the Teaching College. If the class fills during the wait, registration fails when the prereq is finally approved.</p>
+        <p>This is a known gap in the platform — your prereq <em>was</em> approved, but the seat you wanted was claimed by someone else during the review window. There is no waitlist on the Exchange.</p>
+        <div class="entry-action"><strong>Three options, in priority order:</strong>
+          <ol style="margin: 8px 0 0 18px;">
+            <li><strong>Find another open section</strong> at any Teaching College via <a href="https://search.cvc.edu" target="_blank">search.cvc.edu</a>. Other CCCs may have the same course with seats.</li>
+            <li><strong>Apply directly to the Teaching College</strong> outside CVC at <a href="https://icangotocollege.com" target="_blank">icangotocollege.com</a> — they may have their own waitlist or late-add process.</li>
+            <li><strong>Take it next term.</strong></li>
+          </ol>
+        </div>
+        <aside class="aside" style="margin-top: 12px;"><strong>Going forward:</strong> when you submit a prereq for a popular course, identify a backup section <em>at the same time</em>. If the original fills during review, you'll already have a fallback ready.</aside>
+      </div>
+    </details>
+
+    <details class="entry" id="err-cccid-not-on-record">
+      <summary>
+        <span class="entry-tag-pill act">act / record fix</span>
+        <div class="entry-msg">"Could not find the student records at Home College"</div>
+        <span class="entry-arrow">→</span>
+      </summary>
+      <div class="body">
+        <p><strong>The specific case:</strong> your CCCID was generated when you applied to your Home College via a paper application (or some other non-standard path), but it was never linked to your student record in your HC's main student information system.</p>
+        <p>You may have successfully cross-enrolled in the past — the rules changed when your HC went live on automatic record-matching. Now the check fails because your CCCID isn't recognized.</p>
+        <div class="entry-action"><strong>Resolution:</strong> contact your HC's Admissions & Records office and ask them to link your CCCID to your existing student record. The fix is on their side — once they connect the two, your cross-enrollment will work normally without affecting your existing standing at the HC.</div>
+        <aside class="aside" style="margin-top: 12px;">If your HC says they can't help, email CVC support — we can reach out to your HC's A&R office on your behalf with the technical details.</aside>
+      </div>
+    </details>
+
+    <details class="entry" id="err-unit-overload">
+      <summary>
+        <span class="entry-tag-pill stop">stop / TC decision</span>
+        <div class="entry-msg">"Petition is required" / "puts student in overload"</div>
+        <span class="entry-arrow">→</span>
+      </summary>
+      <div class="body">
+        <p><strong>What happened:</strong> your registered + attempted units exceed the Teaching College's per-term unit cap. Common caps:</p>
+        <ul>
+          <li><strong>Summer:</strong> often 7 units max</li>
+          <li><strong>Fall / Spring:</strong> often 18 units max</li>
+          <li><strong>Winter intersession:</strong> often 6 units max</li>
+        </ul>
+        <p>CVC cannot override the cap. Two options:</p>
+        <div class="entry-action">
+          <ol style="margin: 8px 0 0 18px;">
+            <li><strong>Drop one of your registered classes</strong> to bring your unit total under the cap, then register for the new one.</li>
+            <li><strong>Petition the Teaching College</strong> for a unit-overload exception. The petition goes through the TC's counseling or A&R office — that's their decision, not CVC's. Petitions can take days; if the section you want is filling fast, weigh the timing.</li>
+          </ol>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-auto-dropped-payment">
+      <summary>
+        <span class="entry-tag-pill stop">stop / fee/CCPG</span>
+        <div class="entry-msg">"I was registered then suddenly dropped — Drop Before Class Begins"</div>
+        <span class="entry-arrow">→</span>
+      </summary>
+      <div class="body">
+        <p><strong>What happened:</strong> some Teaching Colleges automatically drop registrations within 3–5 days if fees haven't cleared. The drop code "DB" (Drop Before Class Begins) is system-initiated — you didn't drop yourself, the TC's system did.</p>
+        <p>Most common cause: your <strong>California Promise Grant (CCPG)</strong> fee waiver wasn't processed at the Teaching College in time. The TC needs your <strong>Social Security Number</strong> on file to match your CCPG award to your enrollment, but the AER form doesn't collect SSN — so the match has to happen on the TC's side, manually.</p>
+        <div class="entry-action"><strong>Resolution:</strong>
+          <ol style="margin: 8px 0 0 18px;">
+            <li><strong>Contact the Teaching College's bursar or financial aid office</strong> directly. Confirm your SSN is on file at that college so they can process your CCPG.</li>
+            <li><strong>Once the fee waiver is in place</strong>, re-register through CVC if seats are still open. If the section filled, search for another open section at any TC offering the same course.</li>
+          </ol>
         </div>
       </div>
     </details>
@@ -6481,6 +6562,105 @@ article.mistake .copy-link {
       </div>
     </details>
 
+    <!-- ═════════════ NEW LIMITS — added 2026-04-27 ═════════════ -->
+
+    <details class="entry" id="q-pell-at-tc">
+      <summary>
+        <div class="entry-msg">Can I use my Pell Grant at the Teaching College?</div>
+        <div class="entry-tag normal icon-plus">no — structural rule</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Short answer</div>
+          <div class="entry-cell-v"><strong>No.</strong> The Teaching College places you in a "shell" program that is <strong>not Title IV eligible</strong>. Pell does not disburse at the TC.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What this means for your aid calculation</div>
+          <div class="entry-cell-v">Your Home College determines Pell eligibility based on <strong>HC units only</strong>. CVC does not currently have a consortium agreement that combines TC units with HC units for federal aid. So a 3-unit HC class + 3-unit CVC class does <strong>not</strong> make you a 6-unit half-time student for Pell — your HC sees 3 units.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If you were counting on this</div>
+          <div class="entry-cell-v">Confirm your aid plan with your <strong>HC's financial aid office</strong> before the term begins. Don't assume cross-enrolled units bump your tier or count toward SAP / full-time status.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What about CCPG (fee waiver) at the TC?</div>
+          <div class="entry-cell-v">Different from Pell. CCPG <em>can</em> apply at the TC, but the TC needs your <strong>Social Security Number</strong> on file to match your CCPG award to your enrollment. The AER form does not collect SSN. Resolution: contact the TC directly (Admissions & Records or Financial Aid) to confirm your SSN is on file.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry" id="q-1098t">
+      <summary>
+        <div class="entry-msg">Where do I get my 1098-T tax form?</div>
+        <div class="entry-tag normal icon-plus">handoff to HC</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Short answer</div>
+          <div class="entry-cell-v"><strong>Not from CVC.</strong> 1098-T tax forms are issued by your <strong>Home College's financial services office</strong> (typically the bursar or student accounts office). CVC has no visibility into tax-document issuance.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Who to contact</div>
+          <div class="entry-cell-v">Your HC's bursar or student accounts office. They handle 1098-T issuance, timing, and any correction requests.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry" id="q-when-summer-fall-available">
+      <summary>
+        <div class="entry-msg">When will Summer / Fall courses be available?</div>
+        <div class="entry-tag normal icon-plus">depends on the TC</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">It varies per Teaching College</div>
+          <div class="entry-cell-v">Each TC sets its own catalog publish date and open-registration date. Typically <strong>60–90 days before the term starts</strong>, but each TC chooses. Some publish all at once; some roll out by department.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">CVC can't accelerate it</div>
+          <div class="entry-cell-v">CVC support cannot speed up a TC's catalog publish. Bookmark <a href="https://search.cvc.edu" target="_blank">cvc.edu</a> and check periodically. Some browsers can watch a specific search URL for changes.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry" id="q-display-vs-email">
+      <summary>
+        <div class="entry-msg">Dashboard says "Pending" but I got an email saying I'm registered</div>
+        <div class="entry-tag normal icon-plus">trust the email</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What's happening</div>
+          <div class="entry-cell-v">The student-facing dashboard sometimes lags behind your actual registration state by hours or up to a day. The confirmation email is sent when the Teaching College successfully writes your registration to their SIS — that's the <strong>truth source</strong>.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">If you have an email saying you're registered</div>
+          <div class="entry-cell-v">You ARE registered, even if the dashboard hasn't caught up. Check Canvas in 24–48 hours. If the class appears there, the registration is real and the dashboard will catch up.</div>
+        </div>
+      </div>
+    </details>
+
+    <details class="entry" id="q-fulltime-status">
+      <summary>
+        <div class="entry-msg">Will my CVC class count for full-time status / SAP?</div>
+        <div class="entry-tag normal icon-plus">no — verify with HC</div>
+      </summary>
+      <div class="entry-body">
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Short answer</div>
+          <div class="entry-cell-v"><strong>No</strong>, not at the federal aid level. Your Home College counts only HC-enrolled units toward your federal financial aid (Pell) calculation. CVC cross-enrolled units do <strong>not</strong> aggregate with HC units for Title IV purposes — there is no consortium agreement in place.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">What this means in practice</div>
+          <div class="entry-cell-v">A 3-unit HC class + 3-unit CVC class does NOT make you a 6-unit half-time student for Pell. The HC sees 3 units toward your enrollment status. SAP (Satisfactory Academic Progress) is calculated by your HC the same way.</div>
+        </div>
+        <div class="entry-cell">
+          <div class="entry-cell-lbl">Critical step</div>
+          <div class="entry-cell-v">Confirm with your HC's financial aid office <strong>before the term begins</strong> if you were counting on aggregated enrollment for an aid disbursement, an enrollment status, or SAP calculation. Don't be surprised in December.</div>
+        </div>
+      </div>
+    </details>
+
   </div>
 
   <aside class="aside calm" style="margin-top: 28px;"><strong>Why this section exists —</strong> students lose hours to tickets that have no resolution because they're hitting an intentional design boundary, not a bug. Naming the boundary — "this is a designed limit, not broken" — saves the time and points at the real workaround.</aside>
@@ -7238,6 +7418,48 @@ const CORPUS = [
     title:'I don\'t know what I\'m looking at',
     preview:'Walk-through to identify your status. Open search.cvc.edu, log in, look at Class Schedule. Match what you see against the labeled list.',
     tags:['confused','lost','help','dont know','no idea','not sure','what is this','what does this mean','overwhelmed','first time','cant figure out','what should i do'] },
+
+  // ────────────────────── NEW PATTERNS — added 2026-04-27 ──────────────────────
+  { id:'sym-new-student', cat:'error-stop', section:'§iii. Error decoder',
+    title:'I\'m a new student at my Home College — can I use CVC yet?',
+    preview:'Not until you\'ve registered for at least one class at your Home College. Per AB-637, you must have completed a class or be currently in a class at your HC to use the Exchange. New applicants who haven\'t enrolled yet will see "Canvas account not found" or "Ineligible" — that\'s the system enforcing the rule, not a bug. Register at your HC first, then come back.',
+    tags:['new student','first term','just admitted','recently admitted','first time','no canvas account','canvas not found','ineligible new student','havent started','havent registered','need to register first','first semester','first quarter','brand new','just enrolled at hc','enrolled at home college','do i need to take a class first','am i eligible','newly admitted','i havent taken classes','no classes yet','am i eligible to cross enroll','first time using cvc','can i use cvc to take classes elsewhere','am i a new student'] },
+  { id:'err-prereq-section-filled', cat:'error-stop', section:'§iii. Error decoder',
+    title:'My prereq was approved but the class is now full',
+    preview:'Known gap in CVC: seats are not reserved while your prerequisite is being reviewed. If the class fills during the wait, registration fails when the prereq is approved. There is no waitlist on the Exchange. Three options: another open section at any TC via search.cvc.edu, apply directly to the TC outside CVC, or take it next term. Going forward, identify a backup section as soon as you submit a prereq.',
+    tags:['prereq approved class full','prerequisite approved class full','class full after prereq','seat gone','filled during review','class is full prereq','approved but full','registration failed after prereq','section filled prereq','race condition prereq','prereq cleared but class full','no seats after prereq','class filled while waiting','was waiting for prereq','prereq taking forever','prereq finally cleared but no seats','seat reservation','seats not reserved'] },
+  { id:'err-cccid-not-on-record', cat:'error-act', section:'§iii. Error decoder',
+    title:'"Could not find the student records at Home College"',
+    preview:'Specific case: your CCCID was generated when you applied via paper application at your HC, but it was never linked to your student record at the HC\'s SIS. You may have cross-enrolled successfully in the past — the rules changed when your HC went live on automatic record-matching. Resolution: contact your HC\'s Admissions & Records and ask them to link your CCCID to your existing student record. CVC support can email them on your behalf if you ask.',
+    tags:['could not find student records at home college','no record at home college','hc cant find me','paper application cccid','cccid not on sis','napa pattern','home college doesnt recognize','hc says no record','hc record mismatch','went live on contact info','always worked before','crossenrolled before but not now','i used to be able to register','old paper application','my hc had to look me up','my application was on paper'] },
+  { id:'err-unit-overload', cat:'error-stop', section:'§iii. Error decoder',
+    title:'"Petition is required" / "puts student in overload"',
+    preview:'Your registered + attempted units exceed the Teaching College\'s per-term unit cap (often 7 units in Summer, 18 in Fall/Spring). CVC cannot override the cap. Two options: drop one of your registered classes to fit under the cap, OR petition the TC\'s counseling/A&R office for a unit-overload exception. The petition is the TC\'s decision — petitions can take days, so weigh against seat availability.',
+    tags:['overload','unit overload','petition required','puts student in overload','too many units','exceeds unit limit','unit cap','registration in overload','too many courses','unit max','registration limit','cant register that many','unit petition','overload petition','summer unit cap','7 unit cap','fall unit cap','cant take more units','exceeds cap','course units','stack courses','add more units'] },
+  { id:'err-auto-dropped-payment', cat:'error-stop', section:'§iii. Error decoder',
+    title:'I was registered then suddenly dropped — "Drop Before Class Begins"',
+    preview:'Some Teaching Colleges auto-drop registrations within 3-5 days if fees haven\'t cleared. The drop code "DB" (Drop Before Class Begins) is system-initiated, not student-initiated. Most common cause: your California Promise Grant (CCPG) fee waiver wasn\'t processed at the TC in time. Resolution: contact the TC\'s bursar or financial aid office to verify CCPG status (they need your SSN on file to match), then re-register if seats are still open.',
+    tags:['drop before class begins','db code','auto dropped','dropped automatically','dropped without dropping','i didnt drop','suddenly dropped','dropped for non payment','registered then dropped','drop code db','fee waiver pending','ccpg not processed','manual fee waiver','was enrolled now im not','enrolled then unenrolled','status changed to dropped','dropped without warning','dropped for fees','non payment drop','tc dropped me'] },
+  { id:'q-pell-at-tc', cat:'limit', section:'§ix. Designed limits',
+    title:'Can I use my Pell Grant at the Teaching College?',
+    preview:'No. The TC is a "shell program" — not Title IV eligible. Pell stays at your Home College. Your HC determines Pell eligibility based on HC units only. CVC does not have a consortium agreement that combines TC units with HC units for federal aid. If you were counting on cross-enrolled units to bump your Pell tier or count toward full-time status, confirm with your HC FA office before the term starts. For California Promise Grant (CCPG) fee waivers at the TC: contact the TC directly to confirm your SSN is on file (the AER form does not collect SSN).',
+    tags:['pell at tc','pell teaching college','federal aid tc','financial aid teaching college','pell grant cross enroll','title iv','consortium agreement','aid bundling','full time status','enrollment status pell','sap teaching college','satisfactory academic progress','pell calculation','ccpg at tc','ccpg fee waiver','bog waiver tc','fafsa tc','school code tc','can i get pell','will my hc count cvc units','full time enrollment status'] },
+  { id:'q-1098t', cat:'limit', section:'§ix. Designed limits',
+    title:'Where do I get my 1098-T tax form?',
+    preview:'Not from CVC. 1098-T tax forms are issued by your Home College\'s financial services office (typically the bursar or student accounts office). CVC has no visibility into tax-document issuance. Contact your HC\'s financial services directly for timing and questions about the form itself.',
+    tags:['1098t','1098 t','1098-t','tax form','tax document','tuition tax','irs form','tax year','student tax','tuition statement','education credit','aotc','american opportunity credit','lifetime learning credit','tax forms ccc','wheres my 1098','tax season','file taxes'] },
+  { id:'q-when-summer-fall-available', cat:'limit', section:'§ix. Designed limits',
+    title:'When will Summer 2026 / Fall 2026 courses be available?',
+    preview:'Each Teaching College sets its own catalog publish + open-registration date. Typically 60–90 days before the term starts, but it varies. Some colleges publish all at once; others roll out by department. CVC cannot accelerate a TC\'s publish date. Bookmark cvc.edu and check periodically; some browsers can watch a specific search URL for changes.',
+    tags:['when is summer available','when does summer open','when can i register summer','summer 2026','fall 2026','when fall classes','course catalog publish','registration opens','open registration','term start','class start','summer term open','fall term open','schedule release','catalog published','classes appear','tc publish','catalog timing','no classes showing','course not yet available','schedule not out','term not loaded'] },
+  { id:'q-display-vs-email', cat:'limit', section:'§ix. Designed limits',
+    title:'My dashboard says "Pending" but I got an email saying I\'m registered',
+    preview:'The student-facing dashboard sometimes lags behind your actual registration state by hours or even a day. The confirmation email is sent when the TC successfully writes your registration to their SIS — that\'s the truth source. If you have an email saying you\'re registered, you ARE registered, even if the dashboard hasn\'t caught up. Check Canvas in 24–48 hours; if the class appears there, the registration is real and the dashboard will catch up.',
+    tags:['dashboard says pending','email says registered','dashboard says one thing email says another','status mismatch','dashboard lag','am i actually registered','confirmation email but dashboard pending','says pending in dashboard','still showing pending after registration','status not updating','dashboard not refreshing','confirmation says yes but dashboard no'] },
+  { id:'q-fulltime-status', cat:'limit', section:'§ix. Designed limits',
+    title:'Will my CVC class count for full-time status / financial aid?',
+    preview:'Your Home College counts only HC-enrolled units toward your federal financial aid (Pell) calculation. CVC cross-enrolled units do NOT aggregate with HC units for Title IV purposes — there is no consortium agreement in place. So a 3-unit HC class + 3-unit CVC class does NOT make you a 6-unit half-time student for Pell. The HC sees 3 units. Confirm with your HC FA office BEFORE the term begins if you were counting on this for an aid disbursement, an enrollment status, or SAP.',
+    tags:['full time','part time','enrollment status','satisfactory academic progress','sap','will my hc count cvc units','will units transfer','consortium agreement','aid status','enrollment level','full time enrollment','half time','do cvc units count','combined units','total units','hc fa office','hc plus cvc units','aggregate enrollment','aid impact'] },
 
   // ────────────────────── §v. COMMON MISTAKES ──────────────────────
   { id:'m-browser-closed', cat:'mistake', section:'§v. Common mistakes',
