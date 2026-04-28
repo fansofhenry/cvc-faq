@@ -1693,9 +1693,16 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   0%, 100% { box-shadow: 0 0 0 0 rgba(0, 102, 186, 0); }
   30%      { box-shadow: 0 0 0 6px rgba(0, 102, 186, 0.18); }
 }
-.chip-pulse {
-  animation: chip-pulse-anim 1.6s ease-out;
-  border-radius: 8px;
+.chip-pulse { border-radius: 8px; }
+@media (prefers-reduced-motion: no-preference) {
+  .chip-pulse { animation: chip-pulse-anim 1.6s ease-out; }
+}
+/* Reduced-motion fallback: a static border tint instead of pulse */
+@media (prefers-reduced-motion: reduce) {
+  .chip-pulse {
+    box-shadow: 0 0 0 3px rgba(0, 102, 186, 0.18);
+    transition: box-shadow 0.2s ease;
+  }
 }
 
 /* Brief "field flash" highlight after rescue-card pre-fill */
@@ -1703,9 +1710,16 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   0%   { background: var(--moss-wash); }
   100% { background: var(--paper); }
 }
-.field-flash input,
-.field-flash textarea,
-.field-flash select { animation: field-flash 1.4s ease-out; }
+@media (prefers-reduced-motion: no-preference) {
+  .field-flash input,
+  .field-flash textarea,
+  .field-flash select { animation: field-flash 1.4s ease-out; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .field-flash input,
+  .field-flash textarea,
+  .field-flash select { background: var(--moss-wash); transition: background 0.6s ease; }
+}
 
 /* Myth vs Fact band */
 .myths {
@@ -3354,6 +3368,21 @@ html[lang="es"] div[data-es] { display: block; }
   .find-mic.listening { animation: none; }
 }
 
+/* ——————————————————————————————————————————
+   Global reduced-motion safety net: WCAG 2.3.3
+   Caps every animation/transition at near-instant for users
+   with vestibular sensitivity. Specific replacements above
+   override this when a static fallback is more useful than none.
+   —————————————————————————————————————————— */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* —————— urgency prompt under search —————— */
 
 .urgency-prompt {
@@ -4245,7 +4274,8 @@ main:focus { outline: none; }
     <div id="find-recent-list"></div>
   </div>
 
-  <div class="find-results" id="find-results" role="region" aria-live="polite" aria-atomic="false" aria-label="Search results"></div>
+  <div class="find-results" id="find-results" role="region" aria-label="Search results"></div>
+  <div class="sr-only" id="find-results-announcer" role="status" aria-live="polite" aria-atomic="true"></div>
 </section>
 
 <!-- ═══════════════════════════════ WHO OWNS THIS PROBLEM? ═══════════════════════════════ -->
@@ -9423,12 +9453,33 @@ function renderResults(results, query) {
 
 const findInput = document.getElementById('find-input');
 let findTimer;
+let findAnnounceTimer = null;
 findInput.addEventListener('input', (e) => {
   clearTimeout(findTimer);
   const q = e.target.value;
   findTimer = setTimeout(() => {
-    renderResults(findMatches(q), q);
+    const matches = findMatches(q);
+    renderResults(matches, q);
     if (q.trim().length >= 8) saveRecentSearch(q.trim());
+    // Debounced screen-reader announcement (count only, not full HTML)
+    clearTimeout(findAnnounceTimer);
+    findAnnounceTimer = setTimeout(() => {
+      const announcer = document.getElementById('find-results-announcer');
+      if (!announcer) return;
+      const lang = document.documentElement.lang || 'en';
+      const trimmed = q.trim();
+      let msg = '';
+      if (trimmed.length === 0) msg = '';
+      else if (trimmed.length < 3) msg = lang === 'es' ? 'Sigue escribiendo.' : 'Keep typing.';
+      else if (matches.length === 0) msg = lang === 'es'
+        ? 'Sin coincidencias. Prueba un término más corto o las preguntas comunes.'
+        : 'No matches. Try a shorter term or the common questions.';
+      else if (matches.length === 1) msg = lang === 'es' ? '1 resultado.' : '1 result.';
+      else msg = lang === 'es' ? `${matches.length} resultados.` : `${matches.length} results.`;
+      // Clear-then-set so identical messages still re-announce
+      announcer.textContent = '';
+      setTimeout(() => { announcer.textContent = msg; }, 50);
+    }, 600);
   }, 140);
 });
 
@@ -10449,7 +10500,7 @@ document.getElementById('find-results').addEventListener('click', (e) => {
         <p class="stuck-body"><span data-en>Take this to the email builder — we'll pre-fill what we know. You add your CCCID and a screenshot.</span><span data-es>Llévalo al generador de correos — pre-llenaremos lo que sabemos. Tú agregas tu CCCID y una captura.</span></p>
       </div>
       <button type="button" class="stuck-btn" data-rescue-id="${entry.id}">
-        <span data-en>Pre-fill email →</span><span data-es>Pre-llenar correo →</span>
+        <span data-en>Pre-fill email</span><span data-es>Pre-llenar correo</span><span aria-hidden="true"> →</span>
       </button>
     `;
     body.appendChild(wrap);
@@ -10490,19 +10541,43 @@ document.getElementById('find-results').addEventListener('click', (e) => {
       if (el) el.dispatchEvent(new Event('input', { bubbles: true }));
     });
 
-    // Scroll + focus
+    // Scroll respecting reduced-motion preference
     const emailSection = document.getElementById('email');
-    if (emailSection) emailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (emailSection) {
+      emailSection.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    }
+    // Announce to AT before focus arrives
+    announce(document.documentElement.lang === 'es'
+      ? 'Correo pre-llenado. Agrega tu CCCID y captura para continuar.'
+      : 'Email pre-filled. Add your CCCID and a screenshot to continue.');
+    // Focus + flash — shorter delay if reduced-motion (instant scroll)
     setTimeout(() => {
       if (cccidInp && !cccidInp.value) cccidInp.focus();
       if (builder) {
         builder.classList.add('field-flash');
         setTimeout(() => builder.classList.remove('field-flash'), 1500);
       }
-    }, 600);
+    }, reduceMotion ? 100 : 600);
 
     if (typeof track === 'function') track('rescue_click', { id, issue: map.issue });
   });
+
+  // Screen-reader announcer (off-screen polite live region, single instance)
+  let announcer = null;
+  function announce(msg) {
+    if (!announcer) {
+      announcer = document.createElement('div');
+      announcer.className = 'sr-only';
+      announcer.setAttribute('role', 'status');
+      announcer.setAttribute('aria-live', 'polite');
+      announcer.setAttribute('aria-atomic', 'true');
+      document.body.appendChild(announcer);
+    }
+    // Clear then set, so identical sequential messages still announce
+    announcer.textContent = '';
+    setTimeout(() => { announcer.textContent = msg; }, 50);
+  }
 })();
 
 // ════════════════════════════════════════════════════════════════════
@@ -10538,6 +10613,17 @@ document.getElementById('find-results').addEventListener('click', (e) => {
       pip.classList.toggle('done', idx + 1 < qNum);
     });
     setState('active');
+    // Move focus to the active question's heading so keyboard users
+    // and screen readers land on the new question, not still on the
+    // just-clicked button.
+    const activeQ = card.querySelector(`.eligibility-question[data-q="${qNum}"]`);
+    if (activeQ) {
+      const heading = activeQ.querySelector('.eligibility-q-text');
+      if (heading) {
+        heading.setAttribute('tabindex', '-1');
+        heading.focus({ preventScroll: false });
+      }
+    }
   }
 
   function showResult(resultKey) {
@@ -10545,6 +10631,15 @@ document.getElementById('find-results').addEventListener('click', (e) => {
     results.forEach(r => r.classList.toggle('active', r.dataset.result === resultKey));
     pips.forEach(pip => pip.classList.add('done'));
     setState('result');
+    // Move focus to the result heading so its content is read by AT
+    const activeR = card.querySelector(`.eligibility-result[data-result="${resultKey}"]`);
+    if (activeR) {
+      const h = activeR.querySelector('h3');
+      if (h) {
+        h.setAttribute('tabindex', '-1');
+        h.focus({ preventScroll: false });
+      }
+    }
 
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({
