@@ -2564,6 +2564,78 @@ section.section#limits .entries {
 }
 .resource:hover::after { color: var(--claret); }
 
+/* —————— pre-email "before you send" check —————— */
+.pre-email-check {
+  margin: 14px 0 22px;
+  background: var(--moss-wash);
+  border: 1px solid var(--moss-pale);
+  border-left: 4px solid var(--moss);
+  border-radius: 8px;
+  padding: 0;
+}
+.pre-email-check summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 14px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: var(--serif-body);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.pre-email-check summary::-webkit-details-marker { display: none; }
+.pre-email-check summary::after {
+  content: '+';
+  margin-left: auto;
+  margin-top: -2px;
+  font-family: var(--sans);
+  font-size: 22px;
+  color: var(--moss);
+  font-weight: 400;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.pre-email-check[open] summary::after { content: '–'; }
+.pre-email-icon {
+  font-size: 20px;
+  color: var(--moss);
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+.pre-email-summary-text strong { color: var(--ink); font-weight: 600; }
+.pre-email-summary-text { flex: 1; }
+.pre-email-list {
+  margin: 0 18px 8px 44px;
+  padding: 0 0 6px;
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.pre-email-list li { margin-bottom: 10px; padding-left: 4px; }
+.pre-email-list li strong { color: var(--ink); font-weight: 600; }
+.pre-email-list a {
+  color: var(--claret);
+  border-bottom: 1px solid var(--claret-pale);
+  font-style: italic;
+}
+.pre-email-list a:hover { color: var(--claret-deep); border-bottom-color: var(--claret-deep); }
+.pre-email-foot {
+  margin: 8px 18px 16px 44px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--moss-pale);
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 13.5px;
+  color: var(--ink-faint);
+}
+@media (max-width: 600px) {
+  .pre-email-list { margin-left: 24px; }
+  .pre-email-foot { margin-left: 24px; }
+}
+
 /* —————— colophon (footer) —————— */
 
 .colophon {
@@ -2575,7 +2647,7 @@ section.section#limits .entries {
   gap: 12px;
 }
 @media (min-width: 720px) {
-  .colophon { grid-template-columns: 1fr 1fr; }
+  .colophon { grid-template-columns: 1fr 1fr 1fr; }
 }
 .colophon-block {
   font-family: var(--serif-display);
@@ -3414,7 +3486,75 @@ html[lang="es"] div[data-es] { display: block; }
   color: var(--claret-deep);
 }
 
-/* —————— after-hours contextual banner —————— */
+/* —————— support hours / SLA component (always visible) —————— */
+.svc-hours {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin: 16px 0 8px;
+  padding: 10px 14px;
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  font-family: var(--serif-body);
+  font-size: 13.5px;
+  color: var(--ink-soft);
+}
+.svc-hours-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.svc-hours-status .svc-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.svc-hours-status[data-state="open"] {
+  background: #ecf6ec; color: #1d6c1d;
+  border: 1px solid #c5e1c8;
+}
+.svc-hours-status[data-state="open"] .svc-dot { background: #2e7d32; }
+.svc-hours-status[data-state="closed"] {
+  background: var(--moss-wash); color: var(--moss);
+  border: 1px solid var(--moss-pale);
+}
+.svc-hours-status[data-state="closed"] .svc-dot { background: var(--moss); }
+.svc-hours-fact {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+.svc-hours-fact strong {
+  color: var(--ink);
+  font-weight: 600;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.svc-hours-link {
+  margin-left: auto;
+  color: var(--claret);
+  text-decoration: underline;
+  font-size: 13px;
+}
+.svc-hours-link:hover { color: var(--claret-deep); }
+.svc-hours[data-state="open"] .svc-hours-link { display: none; }
+@media (max-width: 600px) {
+  .svc-hours { font-size: 12.5px; }
+  .svc-hours-link { margin-left: 0; flex-basis: 100%; }
+}
+
+/* —————— after-hours contextual banner (legacy, kept for fallback) —————— */
 
 .after-hours-banner {
   display: none;
@@ -4236,14 +4376,23 @@ main:focus { outline: none; }
     </a>
   </p>
 
-  <p class="after-hours-banner" id="after-hours-banner">
-    <strong><span data-en>Heads up —</span><span data-es>Aviso —</span></strong>
-    <span data-en>support is closed right now (Mon–Fri, 8 AM–5 PM PT). If a deadline is approaching,</span>
-    <span data-es>soporte está cerrado ahora (Lun–Vie, 8 AM–5 PM PT). Si un plazo se acerca,</span>
-    <a href="#urgent-after-hours">
-      <span data-en>see the after-hours plan →</span><span data-es>consulta el plan fuera de horario →</span>
+  <div class="svc-hours" id="svc-hours" data-state="closed" role="region" aria-label="Support hours and response time">
+    <span class="svc-hours-status" id="svc-hours-status" data-state="closed">
+      <span class="svc-dot" aria-hidden="true"></span>
+      <span id="svc-hours-status-text"><span data-en>Closed now</span><span data-es>Cerrado ahora</span></span>
+    </span>
+    <span class="svc-hours-fact">
+      <strong><span data-en>Hours</span><span data-es>Horario</span></strong>
+      <span data-en>Mon–Fri, 8 AM–5 PM PT</span><span data-es>Lun–Vie, 8 AM–5 PM PT</span>
+    </span>
+    <span class="svc-hours-fact">
+      <strong><span data-en>Reply</span><span data-es>Respuesta</span></strong>
+      <span data-en>1 business day · same-day for urgent</span><span data-es>1 día hábil · mismo día si es urgente</span>
+    </span>
+    <a class="svc-hours-link" href="#urgent-after-hours">
+      <span data-en>After-hours plan →</span><span data-es>Plan fuera de horario →</span>
     </a>
-  </p>
+  </div>
 
   <div class="find-examples">
     <span class="find-examples-label">
@@ -7522,6 +7671,47 @@ main:focus { outline: none; }
   <div class="builder-intro" style="margin-top: 36px;">A ticket builder, in case you need it.</div>
   <p class="builder-hint">Fill these fields. We generate a properly-formatted email you can copy and paste.</p>
 
+  <details class="pre-email-check" id="pre-email-check">
+    <summary>
+      <span class="pre-email-icon" aria-hidden="true">⚠</span>
+      <span class="pre-email-summary-text">
+        <span data-en><strong>Before you send —</strong> 60 seconds, three quick checks. Most "I emailed and the answer was just to wait" tickets fall into one of these.</span>
+        <span data-es><strong>Antes de enviar —</strong> 60 segundos, tres revisiones rápidas. La mayoría de los tickets "esperé por nada" caen en uno de estos.</span>
+      </span>
+    </summary>
+    <ol class="pre-email-list">
+      <li>
+        <strong><span data-en>"Class is full"</span><span data-es>"Clase llena"</span></strong>
+        <span data-en> — there's no waitlist. Support can't open a seat. <a href="#err-prereq-section-filled">Read why →</a></span>
+        <span data-es> — no hay lista de espera. Soporte no puede abrir un cupo. <a href="#err-prereq-section-filled">Por qué →</a></span>
+      </li>
+      <li>
+        <strong><span data-en>"Paid but not enrolled"</span><span data-es>"Pagué pero no estoy inscrita/o"</span></strong>
+        <span data-en> — the most common cause is skipping the <em>Confirm Payment</em> button after your bank's redirect. Email helps, but try the retry flow first. <a href="#urgent-paid">Steps →</a></span>
+        <span data-es> — la causa más común es saltarse el botón <em>Confirm Payment</em> tras volver del banco. El correo ayuda, pero intenta primero el flujo de reintento. <a href="#urgent-paid">Pasos →</a></span>
+      </li>
+      <li>
+        <strong><span data-en>"Pending" status</span><span data-es>"Pending"</span></strong>
+        <span data-en> — under 5 business days is normal. Wait first; email if it's been longer. <a href="#dater">Check your timeline →</a></span>
+        <span data-es> — menos de 5 días hábiles es normal. Espera primero; manda correo si ha sido más. <a href="#dater">Revisa tu plazo →</a></span>
+      </li>
+      <li>
+        <strong><span data-en>Tax form (1098-T) or refund</span><span data-es>Formulario 1098-T o reembolso</span></strong>
+        <span data-en> — these are <strong>not</strong> CVC. 1098-T → your Home College's financial services. Refunds → the Teaching College's cashier office. We'd just bounce the ticket back. <a href="#lim-1098t">More →</a></span>
+        <span data-es> — <strong>no</strong> son de CVC. 1098-T → servicios financieros de tu Home College. Reembolsos → caja del Teaching College. Aquí lo rebotaríamos. <a href="#lim-1098t">Más →</a></span>
+      </li>
+      <li>
+        <strong><span data-en>Need a class drop today?</span><span data-es>¿Necesitas cancelar hoy?</span></strong>
+        <span data-en> — email <em>both</em> CVC support and your Teaching College's A&amp;R office in parallel, with screenshots. The timestamp on your email is your evidence for a retroactive drop. <a href="#urgent-drop">Steps →</a></span>
+        <span data-es> — escribe <em>a la vez</em> a CVC y a A&amp;R del Teaching College, con capturas. La hora del correo es tu evidencia para una cancelación retroactiva. <a href="#urgent-drop">Pasos →</a></span>
+      </li>
+    </ol>
+    <p class="pre-email-foot">
+      <span data-en>None of these match? Keep going below — fill the form and we'll write back within 1 business day.</span>
+      <span data-es>¿Ninguno coincide? Sigue abajo — llena el formulario y respondemos en 1 día hábil.</span>
+    </p>
+  </details>
+
   <div class="builder">
     <div class="field">
       <label class="field-lbl" for="b-issue">What's wrong?</label>
@@ -7978,7 +8168,18 @@ main:focus { outline: none; }
 
 <footer class="colophon">
   <div class="colophon-block">
-    <strong>Still stuck</strong> after working through this page? Use the <a href="#email">ticket builder</a> to format your email, then send it to <a href="mailto:cvc.customersupport@parchment.com">cvc.customersupport@parchment.com</a>. Replies typically within one business day; same-day for urgent (deadline-related) tickets.
+    <strong><span data-en>Still stuck</span><span data-es>¿Sigues atascada/o</span></strong>
+    <span data-en> after working through this page? Use the <a href="#email">ticket builder</a> to format your email, then send it to <a href="mailto:cvc.customersupport@parchment.com">cvc.customersupport@parchment.com</a>. Replies typically within one business day; same-day for urgent (deadline-related) tickets.</span>
+    <span data-es> después de revisar esta página? Usa el <a href="#email">generador de tickets</a> para dar formato a tu correo y mándalo a <a href="mailto:cvc.customersupport@parchment.com">cvc.customersupport@parchment.com</a>. Respuesta típica en un día hábil; el mismo día si es urgente (con plazo).</span>
+  </div>
+  <div class="colophon-block">
+    <strong><span data-en>Accessibility &amp; Relay</span><span data-es>Accesibilidad y Retransmisión</span></strong><br>
+    <span data-en>This page targets <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">WCAG 2.1 Level AA</a>. If you hit an accessibility barrier, email <a href="mailto:cvc.customersupport@parchment.com?subject=Accessibility%20Barrier%20Report">cvc.customersupport@parchment.com</a> with subject "Accessibility Barrier" — we treat these as priority.</span>
+    <span data-es>Esta página busca cumplir con <a href="https://www.w3.org/TR/WCAG21/" target="_blank" rel="noopener">WCAG 2.1 Nivel AA</a>. Si encuentras una barrera de accesibilidad, escribe a <a href="mailto:cvc.customersupport@parchment.com?subject=Accessibility%20Barrier%20Report">cvc.customersupport@parchment.com</a> con asunto "Accessibility Barrier" — estos casos son prioritarios.</span>
+    <br><br>
+    <strong><span data-en>Phone &amp; Relay</span><span data-es>Teléfono y Relé</span></strong><br>
+    <span data-en>CA Relay: dial <strong>711</strong> (free, voice/TTY). Spanish-language email replies available — write to us in Spanish and we'll reply in Spanish.</span>
+    <span data-es>Relé de California: marca <strong>711</strong> (gratis, voz/TTY). Correos en español: escríbenos en español y te respondemos en español.</span>
   </div>
   <div class="colophon-block" style="text-align: right;">
     <em>The Student Companion,</em> Vol. I, 2026.<br>
@@ -9854,29 +10055,44 @@ if ('IntersectionObserver' in window) {
 // Support hours: Monday–Friday, 8 AM – 5 PM PT (approximate).
 //
 (function checkAfterHours() {
-  const banner = document.getElementById('after-hours-banner');
-  if (!banner) return;
-  try {
-    // Get current PT hour and weekday using Intl
-    const fmt = new Intl.DateTimeFormat('en-US', {
-      timeZone: 'America/Los_Angeles',
-      hour: 'numeric',
-      hour12: false,
-      weekday: 'short'
-    });
-    const parts = fmt.formatToParts(new Date());
-    const hour = parseInt(parts.find(p => p.type === 'hour').value, 10);
-    const weekday = parts.find(p => p.type === 'weekday').value;
-    const isWeekday = ['Mon','Tue','Wed','Thu','Fri'].includes(weekday);
-    const isOpen = isWeekday && hour >= 8 && hour < 17;
-    if (!isOpen) banner.classList.add('show');
-  } catch (e) {
-    // fall back to local time if Intl fails
-    const now = new Date();
-    const day = now.getDay();
-    const hour = now.getHours();
-    if (!(day >= 1 && day <= 5 && hour >= 8 && hour < 17)) banner.classList.add('show');
+  const wrap = document.getElementById('svc-hours');
+  const status = document.getElementById('svc-hours-status');
+  const statusText = document.getElementById('svc-hours-status-text');
+  if (!wrap || !status) return;
+
+  function computeOpen() {
+    try {
+      const fmt = new Intl.DateTimeFormat('en-US', {
+        timeZone: 'America/Los_Angeles',
+        hour: 'numeric', hour12: false, weekday: 'short'
+      });
+      const parts = fmt.formatToParts(new Date());
+      const hour = parseInt(parts.find(p => p.type === 'hour').value, 10);
+      const weekday = parts.find(p => p.type === 'weekday').value;
+      const isWeekday = ['Mon','Tue','Wed','Thu','Fri'].includes(weekday);
+      return isWeekday && hour >= 8 && hour < 17;
+    } catch (e) {
+      const now = new Date();
+      return (now.getDay() >= 1 && now.getDay() <= 5
+              && now.getHours() >= 8 && now.getHours() < 17);
+    }
   }
+
+  function render() {
+    const isOpen = computeOpen();
+    const state = isOpen ? 'open' : 'closed';
+    wrap.dataset.state = state;
+    status.dataset.state = state;
+    if (statusText) {
+      statusText.innerHTML = isOpen
+        ? '<span data-en>Open now</span><span data-es>Abierto ahora</span>'
+        : '<span data-en>Closed now</span><span data-es>Cerrado ahora</span>';
+    }
+    if (typeof applyLang === 'function') applyLang();
+  }
+  render();
+  // Re-render every 5 minutes in case student leaves the tab open across the boundary
+  setInterval(render, 5 * 60 * 1000);
 })();
 
 (function initOutline() {
