@@ -3752,6 +3752,510 @@ article.mistake .copy-link {
   <div class="find-results" id="find-results"></div>
 </section>
 
+<!-- ═══════════════════════════════ WHO OWNS THIS PROBLEM? ═══════════════════════════════ -->
+
+<style>
+.router {
+  margin: 56px auto 0;
+  max-width: 1080px;
+  padding: 0 clamp(20px, 5vw, 56px);
+}
+.router-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 13, 'SOFT' 70;
+  font-size: 13px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.router-title {
+  font-family: var(--serif-display);
+  font-variation-settings: 'opsz' 36, 'SOFT' 50;
+  font-weight: 500;
+  font-size: clamp(26px, 4vw, 38px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.router-title em {
+  font-style: italic;
+  font-variation-settings: 'opsz' 36, 'SOFT' 100;
+  color: var(--claret);
+}
+.router-dek {
+  font-family: var(--serif-body);
+  font-size: 16px;
+  color: var(--ink-soft);
+  max-width: 640px;
+  margin-bottom: 22px;
+  line-height: 1.6;
+}
+.router-dek strong { color: var(--ink); font-weight: 600; }
+.router-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 14px;
+}
+@media (max-width: 720px) {
+  .router-grid { grid-template-columns: 1fr; }
+}
+.router-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 18px 20px 20px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+  position: relative;
+}
+.router-card:hover {
+  border-color: var(--claret);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 47, 109, 0.08);
+}
+.router-card:focus-visible { outline: 2px solid var(--claret); outline-offset: 2px; }
+.router-badge {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 11, 'SOFT' 70;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.router-card-title {
+  font-family: var(--serif-display);
+  font-variation-settings: 'opsz' 19, 'SOFT' 60;
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.router-card-test {
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.router-card-test strong { color: var(--ink); }
+.router-card-action {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 13, 'SOFT' 80;
+  font-size: 13.5px;
+  color: var(--claret);
+  margin-top: auto;
+  padding-top: 6px;
+  border-top: 1px solid var(--rule-soft);
+}
+.router-card-action::after { content: ' →'; }
+
+/* Color-by-quadrant for at-a-glance recognition */
+.router-card.cvc { border-left: 3px solid var(--claret); }
+.router-card.tc  { border-left: 3px solid var(--moss); }
+.router-card.hc  { border-left: 3px solid var(--ink-soft); }
+.router-card.applycc { border-left: 3px solid var(--alert); }
+
+/* Calmer panel — reassurance */
+.calmer {
+  margin: 32px auto 0;
+  max-width: 1080px;
+  padding: 0 clamp(20px, 5vw, 56px);
+}
+.calmer-card {
+  background: var(--moss-wash);
+  border: 1px solid var(--moss-pale);
+  border-radius: 10px;
+  padding: 18px 22px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 720px) { .calmer-card { grid-template-columns: 1fr; } }
+.calmer-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 14, 'SOFT' 80;
+  font-size: 14px;
+  color: var(--moss);
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+  grid-column: 1 / -1;
+}
+.calmer-eyebrow::before { content: '— '; }
+.calmer-eyebrow::after { content: ' —'; }
+.calmer-item h4 {
+  font-family: var(--serif-display);
+  font-variation-settings: 'opsz' 17, 'SOFT' 60;
+  font-weight: 500;
+  font-size: 17px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.calmer-item p {
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.calmer-item p a {
+  color: var(--claret);
+  text-decoration: underline;
+  text-decoration-color: var(--claret-pale);
+  text-underline-offset: 2px;
+}
+
+/* Misdiagnosis reflector */
+.misdiag {
+  margin: 56px auto 0;
+  max-width: 1080px;
+  padding: 0 clamp(20px, 5vw, 56px);
+}
+.misdiag-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 13, 'SOFT' 70;
+  font-size: 13px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.misdiag-title {
+  font-family: var(--serif-display);
+  font-variation-settings: 'opsz' 30, 'SOFT' 50;
+  font-weight: 500;
+  font-size: clamp(22px, 3.4vw, 32px);
+  line-height: 1.18;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.misdiag-title em {
+  font-style: italic;
+  font-variation-settings: 'opsz' 30, 'SOFT' 100;
+  color: var(--claret);
+}
+.misdiag-dek {
+  font-family: var(--serif-body);
+  font-size: 15px;
+  color: var(--ink-soft);
+  max-width: 640px;
+  margin-bottom: 18px;
+  line-height: 1.55;
+}
+.misdiag-table {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 0.5fr;
+  gap: 0;
+  border-top: 1px solid var(--rule);
+}
+@media (max-width: 720px) {
+  .misdiag-table { grid-template-columns: 1fr; }
+  .misdiag-row { grid-template-columns: 1fr !important; }
+}
+.misdiag-head {
+  display: contents;
+}
+.misdiag-head > div {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 12, 'SOFT' 80;
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.misdiag-row {
+  display: contents;
+}
+.misdiag-row > div {
+  padding: 14px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.misdiag-said {
+  font-style: italic;
+  color: var(--ink);
+}
+.misdiag-said::before { content: '"'; color: var(--ink-ghost); }
+.misdiag-said::after { content: '"'; color: var(--ink-ghost); }
+.misdiag-actual { color: var(--ink-soft); }
+.misdiag-actual strong { color: var(--ink); }
+.misdiag-link {
+  font-family: var(--serif-display);
+  font-style: italic;
+  color: var(--claret);
+  font-size: 13px;
+  align-self: center;
+}
+.misdiag-link a { text-decoration: none; }
+.misdiag-link a::after { content: ' →'; }
+.misdiag-link a:hover { color: var(--claret-deep); text-decoration: underline; }
+
+/* Don't retry callout — heightened severity */
+.entry .dont-retry {
+  background: #fff5f5;
+  border: 1px solid var(--alert);
+  border-left: 4px solid var(--alert);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 12px 0 14px;
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink);
+  line-height: 1.55;
+  position: relative;
+}
+.entry .dont-retry::before {
+  content: 'STOP — ';
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 14, 'SOFT' 100;
+  font-weight: 600;
+  color: var(--alert);
+  letter-spacing: 0.04em;
+}
+.entry .dont-retry strong { color: var(--alert); }
+</style>
+
+<section class="router" id="router" aria-labelledby="router-title">
+  <div class="router-eyebrow">— Step zero —</div>
+  <h2 class="router-title" id="router-title">Whose problem is this, <em>actually?</em></h2>
+  <p class="router-dek">Most students who email CVC support are emailing the right place. <strong>Some aren't</strong> — refunds belong to the Teaching College, financial aid belongs to your Home College, and if you've never applied to a CCC, the door isn't through CVC at all. Tap the card that matches your situation, save yourself a wait.</p>
+
+  <div class="router-grid">
+    <a class="router-card cvc" href="#find" aria-label="My problem looks like a CVC issue — search the FAQ">
+      <span class="router-badge">CVC issue</span>
+      <span class="router-card-title">Something on the CVC dashboard or registration is wrong</span>
+      <span class="router-card-test"><strong>Quick test:</strong> the error message references your CVC dashboard, your registration status (Pending / Failed / Ineligible / Validated), or you came here from search.cvc.edu and something didn't work.</span>
+      <span class="router-card-action">Search the FAQ above, or jump to "What's on your screen"</span>
+    </a>
+    <a class="router-card hc" href="#hc-issue-guide" aria-label="My problem is at my Home College">
+      <span class="router-badge">Home College issue</span>
+      <span class="router-card-title">My Home College itself isn't letting me do something</span>
+      <span class="router-card-test"><strong>Quick test:</strong> you hit a hold at your HC, your HC says you're "inactive," your HC's portal won't log you in, you need a fee waiver / financial aid / SSN update, you need a transcript from your HC, or your HC wants documentation from you. <strong>CVC routes between colleges; it doesn't run them.</strong></span>
+      <span class="router-card-action">Contact your HC's Admissions &amp; Records office</span>
+    </a>
+    <a class="router-card tc" href="#tc-issue-guide" aria-label="My problem is at the Teaching College">
+      <span class="router-badge">Teaching College issue</span>
+      <span class="router-card-title">The TC's portal, refund, or class is the problem</span>
+      <span class="router-card-test"><strong>Quick test:</strong> you need a refund (always TC's policy), you need a textbook / materials decision, you have a question for the instructor, you want an add code or seat override, you need to verify your CCPG / financial aid is on file at the TC, or you got a TC-specific email that confused you.</span>
+      <span class="router-card-action">Contact the Teaching College directly</span>
+    </a>
+    <a class="router-card applycc" href="https://icangotocollege.com" target="_blank" aria-label="I'm not at any CCC yet — apply via CCCApply">
+      <span class="router-badge">Not yet a CCC student</span>
+      <span class="router-card-title">I haven't applied to any community college yet</span>
+      <span class="router-card-test"><strong>Quick test:</strong> you haven't applied to any California Community College through CCCApply, OR you applied but haven't enrolled in any classes there yet. <strong>CVC is for students already at a CCC</strong> — to take a class, your first step is to apply somewhere.</span>
+      <span class="router-card-action">Apply via CCCApply at icangotocollege.com</span>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ ROUTER LANDING GUIDES ═══════════════════════════════ -->
+
+<style>
+.router-landing {
+  margin: 24px auto 0;
+  max-width: 1080px;
+  padding: 0 clamp(20px, 5vw, 56px);
+}
+.router-landing-card {
+  background: var(--paper-deep);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  padding: 22px 26px 24px;
+  margin-bottom: 14px;
+  scroll-margin-top: 28px;
+}
+.router-landing-card.hc { border-left: 4px solid var(--ink-soft); }
+.router-landing-card.tc { border-left: 4px solid var(--moss); }
+.router-landing-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 12, 'SOFT' 80;
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.router-landing-card h3 {
+  font-family: var(--serif-display);
+  font-variation-settings: 'opsz' 22, 'SOFT' 60;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+.router-landing-card p {
+  font-family: var(--serif-body);
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.router-landing-card strong { color: var(--ink); }
+.router-landing-card ul { margin: 8px 0 12px 18px; }
+.router-landing-card li {
+  font-family: var(--serif-body);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  margin-bottom: 4px;
+}
+.router-landing-card a {
+  color: var(--claret);
+  text-decoration: underline;
+  text-decoration-color: var(--claret-pale);
+  text-underline-offset: 2px;
+}
+.router-landing-script {
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-family: var(--serif-body);
+  font-size: 14px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  font-style: italic;
+}
+.router-landing-script::before {
+  content: 'What to write — ';
+  font-style: normal;
+  font-family: var(--serif-display);
+  font-variation-settings: 'opsz' 11, 'SOFT' 80;
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+</style>
+
+<section class="router-landing" aria-label="When CVC isn't the right place — landing guides">
+  <div class="router-landing-card hc" id="hc-issue-guide">
+    <div class="router-landing-eyebrow">— Home College issue —</div>
+    <h3>When the answer lives at your Home College, not CVC</h3>
+    <p>Your Home College — the CCC where you're enrolled — runs the parts of your record that determine whether CVC even works for you. <strong>CVC routes between colleges; it doesn't run them.</strong> If your problem is one of these, your fastest path is to email or visit your HC's Admissions &amp; Records (A&amp;R) office directly.</p>
+    <ul>
+      <li><strong>Holds on your account</strong> — financial holds, disciplinary holds, library fines, parking tickets. Until A&amp;R clears them, registration anywhere will fail.</li>
+      <li><strong>You're "inactive" at your HC</strong> — you applied but never enrolled, or you skipped two consecutive non-summer terms. CCC eligibility for cross-enrollment requires concurrent or recent enrollment.</li>
+      <li><strong>SSN not on file</strong> — needed for <a href="#q-pell-at-tc">CCPG matching at the TC</a>. The AER form doesn't collect it; only your HC's Financial Aid office can update.</li>
+      <li><strong>Wrong CCCID at your HC</strong> — your OpenCCC profile has one CCCID; your HC's record has a different one (or none). A&amp;R can re-link.</li>
+      <li><strong>Residency reclassification</strong> — your HC is the "primary" residency record. Until they reclassify you, the TC charges out-of-state.</li>
+      <li><strong>Federal financial aid (Pell, FAFSA loans, work-study)</strong> — disburses only at your HC. The TC is a "shell program" — not Title IV eligible.</li>
+      <li><strong>Transcripts of work you did at your HC</strong> — your HC's transcript office issues these, not CVC.</li>
+    </ul>
+    <div class="router-landing-script">Hi [HC name] Admissions &amp; Records — I'm a current student (CCCID: ___) trying to use the CVC Exchange to take a course at another college. I'm running into [specific issue]. Could you confirm/update [the specific record element]? Happy to provide any documentation you need.</div>
+    <p>Don't know your HC's A&amp;R email? Look on your HC's website. If you can't find it, email <a href="mailto:support@cvc.edu">support@cvc.edu</a> and we'll help you locate the right contact — but the actual fix has to happen at the HC.</p>
+  </div>
+
+  <div class="router-landing-card tc" id="tc-issue-guide">
+    <div class="router-landing-eyebrow">— Teaching College issue —</div>
+    <h3>When the answer lives at the Teaching College, not CVC</h3>
+    <p>The Teaching College — the CCC offering the class — runs everything from the moment your registration writes into their system. <strong>CVC delivers the registration; the TC owns the class.</strong> If your problem is one of these, contact the TC directly.</p>
+    <ul>
+      <li><strong>Refunds</strong> — always the TC's policy and the TC's process. CVC has no refund authority. Their bursar / cashier office decides eligibility, timeline, and amount. Refund policies vary widely; some are 100% in the first week, some are tiered, some require a withdrawal form.</li>
+      <li><strong>Add codes / waitlist for a full section</strong> — the TC's registrar decides. CVC has no waitlist mechanism. Some TCs run an internal waitlist via email; others require an instructor signature; many simply don't allow it.</li>
+      <li><strong>Unit overload petitions</strong> — see <a href="#err-unit-overload">"Petition is required."</a> The TC's counseling office reviews and decides.</li>
+      <li><strong>Prerequisite override / late-add permission</strong> — only the TC's department or registrar can grant this once class has started or filled.</li>
+      <li><strong>Textbook / course materials questions</strong> — the TC's bookstore or instructor.</li>
+      <li><strong>Instructor-specific questions</strong> — assignment deadlines, course shell access, grade disputes — all the TC.</li>
+      <li><strong>CCPG fee waiver verification</strong> — the TC's Financial Aid office needs to confirm your <a href="#q-pell-at-tc">SSN is on file</a> for the match. CVC can't do this for you.</li>
+      <li><strong>1098-T tax forms</strong> — see <a href="#q-1098t">"Where do I get my 1098-T?"</a> — issued by the college's financial services office, not CVC.</li>
+    </ul>
+    <div class="router-landing-script">Hi [TC name] [Admissions &amp; Records / Bursar / Counseling] — I'm a CVC Exchange student enrolled at [TC name] in [CRN, course title, term]. CCCID: ___. TC student ID: ___. I need help with [specific issue]. [Attach screenshot if relevant.] Thank you.</div>
+    <p>The TC's contact info is usually on your registration confirmation email, on the TC's website, or — if you're stuck — email <a href="mailto:support@cvc.edu">support@cvc.edu</a> with your TC name and we'll point you at the right office.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ BEFORE YOU PANIC — REASSURANCE ═══════════════════════════════ -->
+
+<section class="calmer" aria-label="Three things to know before you panic">
+  <div class="calmer-card">
+    <div class="calmer-eyebrow">Before you panic — three things</div>
+    <div class="calmer-item">
+      <h4>Your money isn't lost.</h4>
+      <p>If your card was charged but the dashboard says "Pay Now," you almost certainly missed the <strong>Confirm Payment</strong> click. Don't pay again. <a href="#urgent-paid">Reconciliation is a fast email</a>.</p>
+    </div>
+    <div class="calmer-item">
+      <h4>Your spot is held longer than you think.</h4>
+      <p>"Pending Person Match" / "Pending Validation" / "Pending Prereq Review" mean the TC has your application — they're processing, not denying. <a href="#dater">Use the date checker</a> to see when to follow up.</p>
+    </div>
+    <div class="calmer-item">
+      <h4>Most things resolve in 1–5 business days.</h4>
+      <p>If you registered today and the dashboard says Pending tomorrow, that's normal. Email volume during week-1 of a term is highest — patience often beats a follow-up ticket. <a href="#dater">When to follow up</a>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ MISDIAGNOSIS REFLECTOR ═══════════════════════════════ -->
+
+<section class="misdiag" id="misdiag" aria-labelledby="misdiag-title">
+  <div class="misdiag-eyebrow">— Often misread —</div>
+  <h2 class="misdiag-title" id="misdiag-title">What students often think the problem is, <em>vs. what's actually happening</em></h2>
+  <p class="misdiag-dek">From real ticket patterns. The error message + your gut interpretation often disagree — and the gut is wrong more often than the data. Skim this before you commit to a fix.</p>
+
+  <div class="misdiag-table" role="table" aria-label="Common misdiagnosis patterns">
+    <div class="misdiag-head" role="row">
+      <div role="columnheader">What you might say</div>
+      <div role="columnheader">What's likely actually happening</div>
+      <div role="columnheader">Read</div>
+    </div>
+    <div class="misdiag-row" role="row">
+      <div class="misdiag-said" role="cell">My class is full and I can't register</div>
+      <div class="misdiag-actual" role="cell">If you went through prereq review and the section filled during the wait, that's a <strong>known platform gap, not your fault</strong>. CVC doesn't reserve seats during prereq review. Time to find an alternative — there are usually open sections at other TCs.</div>
+      <div class="misdiag-link" role="cell"><a href="#err-prereq-section-filled">read</a></div>
+    </div>
+    <div class="misdiag-row" role="row">
+      <div class="misdiag-said" role="cell">I paid but I'm not enrolled</div>
+      <div class="misdiag-actual" role="cell">Your card was almost certainly charged but you <strong>missed the Confirm Payment click</strong> on the return page. Don't pay again. Reconciliation is fast — one email with CCCID, course, last 4 of card, payment date.</div>
+      <div class="misdiag-link" role="cell"><a href="#urgent-paid">read</a></div>
+    </div>
+    <div class="misdiag-row" role="row">
+      <div class="misdiag-said" role="cell">My prerequisite isn't being approved</div>
+      <div class="misdiag-actual" role="cell">If the error mentions <em>"overload"</em> or <em>"petition required,"</em> the prereq is fine — you've hit the per-term <strong>unit cap</strong> at the TC. Different problem, different fix (drop a class OR petition the TC's counseling office).</div>
+      <div class="misdiag-link" role="cell"><a href="#err-unit-overload">read</a></div>
+    </div>
+    <div class="misdiag-row" role="row">
+      <div class="misdiag-said" role="cell">CVC can't verify my community college account</div>
+      <div class="misdiag-actual" role="cell">If you're a <strong>new student</strong> at your HC who hasn't registered for any HC class yet, you're <strong>not yet eligible</strong> to use CVC — by California law (AB-637). You need to register at your HC first; the AB-637 gate is the system working correctly, not a verification bug.</div>
+      <div class="misdiag-link" role="cell"><a href="#sym-new-student">read</a></div>
+    </div>
+    <div class="misdiag-row" role="row">
+      <div class="misdiag-said" role="cell">My registration has been Pending forever</div>
+      <div class="misdiag-actual" role="cell">For first-time CVC students, <strong>1–5 business days is normal</strong>, depending on whether your registration needed prereq review. Use the date checker to see if you've actually waited too long, or if you're inside the normal window.</div>
+      <div class="misdiag-link" role="cell"><a href="#dater">read</a></div>
+    </div>
+    <div class="misdiag-row" role="row">
+      <div class="misdiag-said" role="cell">My dashboard says Pending but I got a confirmation email</div>
+      <div class="misdiag-actual" role="cell">Trust the email. The dashboard occasionally <strong>lags by hours</strong> — it'll catch up. If the email confirmed registration, you're registered. Check Canvas in 24–48 hours; if the class is there, you're definitely in.</div>
+      <div class="misdiag-link" role="cell"><a href="#q-display-vs-email">read</a></div>
+    </div>
+    <div class="misdiag-row" role="row">
+      <div class="misdiag-said" role="cell">I see two errors stacked, am I in big trouble?</div>
+      <div class="misdiag-actual" role="cell">Probably not. When you retry registration quickly, the system can throw a <strong>"session in progress"</strong> error on top of the real one — that's a side effect of the retry, not a separate problem. Decode each error separately; usually only one is real.</div>
+      <div class="misdiag-link" role="cell"><a href="#err-stacked-errors">read</a></div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════════════════ TABLE OF CONTENTS ═══════════════════════════════ -->
 
 <nav class="toc-section" aria-label="Table of contents">
@@ -4162,6 +4666,7 @@ article.mistake .copy-link {
         <div class="entry-tag wait icon-plus">wait</div>
       </summary>
       <div class="entry-body">
+        <div class="dont-retry"><strong>Don't resubmit.</strong> Creating a duplicate registration while one is in Pending Person Match doesn't speed it up — it can confuse the TC's review and slow it down. Wait the timeline below; the system is working.</div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">What it means</div>
           <div class="entry-cell-v">The Teaching College needs to match your CCCID to a record in their system. A normal step — not a failure.</div>
@@ -4375,6 +4880,7 @@ article.mistake .copy-link {
         <div class="entry-tag act icon-plus">recoverable</div>
       </summary>
       <div class="entry-body">
+        <div class="dont-retry"><strong>Don't pay again.</strong> A second payment goes to the same place — it doesn't reconcile the first one, it just creates a refund problem. Email support once with the details below; we do the rest.</div>
         <div class="entry-cell">
           <div class="entry-cell-lbl">What happened</div>
           <div class="entry-cell-v">The bank processed the charge, but you didn't click <strong>Confirm Payment</strong> on the CVC page that opened after. The Teaching College never got the "paid" signal.</div>
@@ -4889,6 +5395,24 @@ article.mistake .copy-link {
             <li><strong>Petition the Teaching College</strong> for a unit-overload exception. The petition goes through the TC's counseling or A&R office — that's their decision, not CVC's. Petitions can take days; if the section you want is filling fast, weigh the timing.</li>
           </ol>
         </div>
+      </div>
+    </details>
+
+    <details class="entry" id="err-stacked-errors">
+      <summary>
+        <span class="entry-tag-pill act">act / decode each</span>
+        <div class="entry-msg">"I see two errors stacked — am I in big trouble?"</div>
+        <span class="entry-arrow">→</span>
+      </summary>
+      <div class="body">
+        <div class="dont-retry"><strong>Don't keep clicking submit.</strong> Each rapid retry creates phantom errors on top of the real one and confuses the diagnosis. Wait at least 5–10 minutes between attempts, or stop entirely and read this entry first.</div>
+        <p>When you retry a registration quickly (especially a couple times within a minute), the system often throws a second error on top of your first one. The most common pair:</p>
+        <ul>
+          <li><strong>Real error</strong>: a specific reason the registration failed — prereq, section full, unit overload, hold, etc. <em>This is the one that matters.</em></li>
+          <li><strong>Phantom error</strong>: <em>"Another registration session is in progress for this student ID and term. Please try again later."</em> <em>This is a side effect of your retry, not a separate problem.</em></li>
+        </ul>
+        <p><strong>How to tell which is which:</strong> the real error names something specific (a course code, a unit count, a hold reason). The phantom error is generic and mentions "session in progress." Decode each separately. Fix the real one; the phantom one disappears as soon as the underlying lock releases (typically 5–10 minutes).</p>
+        <div class="entry-action"><strong>Recovery:</strong> wait 10 minutes for any pending session lock to release, then look at the <em>first</em> registration error you saw — not the most recent one. That first one tells you the real cause. If you can't see the original error anymore, the dashboard's Application Errors field for that registration record preserves it.</div>
       </div>
     </details>
 
@@ -7651,6 +8175,12 @@ const CORPUS = [
     title:'I don\'t know what I\'m looking at',
     preview:'Walk-through to identify your status. Open search.cvc.edu, log in, look at Class Schedule. Match what you see against the labeled list.',
     tags:['confused','lost','help','dont know','no idea','not sure','what is this','what does this mean','overwhelmed','first time','cant figure out','what should i do'] },
+
+  // ────────────────────── more error decoder additions ──────────────────────
+  { id:'err-stacked-errors', cat:'error-act', section:'§iii. Error decoder',
+    title:'I see two errors stacked — am I in big trouble?',
+    preview:'When you retry registration quickly, the system often throws a "session in progress" error on top of the real one — that\'s a side effect of the retry, not a separate problem. Decode each error separately. The first error you saw is the real cause; the phantom one disappears within 5–10 minutes.',
+    tags:['two errors','multiple errors','stacked errors','session in progress','another registration session','cant retry','retry blocked','session lock','two error messages','multiple error messages','error on top of error','phantom error','retry too fast','clicking submit too fast','keeps showing errors','many errors at once'] },
 
   // ────────────────────── §vi. STEP-BY-STEP GUIDES (long-form) ──────────────────────
   { id:'t-where-am-i', cat:'task', section:'§vi. Step-by-step guides',
