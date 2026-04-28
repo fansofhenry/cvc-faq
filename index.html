@@ -1595,6 +1595,41 @@ aside.aside.advisory strong { color: var(--claret-deep); }
   margin-top: 14px;
   padding-top: 14px;
   border-top: 1px dashed var(--rule);
+  flex-wrap: wrap;
+}
+.helpful-followup {
+  flex-basis: 100%;
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.helpful-followup-label {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faint);
+}
+.helpful-followup-label em {
+  color: var(--ink-ghost);
+  font-style: italic;
+}
+.helpful-followup-input {
+  width: 100%;
+  font-family: var(--serif-body);
+  font-size: 13px;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 7px 10px;
+  background: var(--paper);
+  resize: vertical;
+  line-height: 1.45;
+}
+.helpful-followup-input:focus {
+  outline: none;
+  border-color: var(--claret);
+  box-shadow: 0 0 0 2px var(--claret-wash);
 }
 .helpful-q {
   font-family: var(--serif-display);
@@ -3677,6 +3712,409 @@ article.mistake .copy-link {
     <span data-es>Una guía para estudiantes de inscripción cruzada. La mayoría de los problemas se resuelven aquí en menos de dos minutos — sin necesidad de enviar un correo.</span>
   </p>
 </header>
+
+<!-- ═══════════════════════════════ ELIGIBILITY SELF-CHECK ═══════════════════════════════ -->
+
+<style>
+.eligibility {
+  margin: 32px auto 0;
+  max-width: 1080px;
+  padding: 0 clamp(20px, 5vw, 56px);
+}
+.eligibility-card {
+  border: 1px solid var(--claret-pale);
+  border-left: 4px solid var(--claret);
+  background: var(--claret-wash);
+  border-radius: 8px;
+  padding: 18px 22px;
+  position: relative;
+}
+.eligibility-card[data-state="passed"] {
+  border-left-color: #2e7d32;
+  background: #f1f8f4;
+  border-color: #c5e1c8;
+  padding: 12px 18px;
+}
+.eligibility-card[data-state="passed"] .eligibility-body { display: none; }
+.eligibility-card[data-state="active"] .eligibility-summary,
+.eligibility-card[data-state="result"] .eligibility-summary {
+  display: none;
+}
+.eligibility-summary {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.eligibility-eyebrow {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 13, 'SOFT' 70;
+  font-size: 13px;
+  color: var(--claret-deep);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.eligibility-headline {
+  font-family: var(--serif-body);
+  font-size: 16px;
+  color: var(--ink);
+  font-weight: 500;
+  margin: 0;
+  flex: 1;
+  min-width: 240px;
+}
+.eligibility-headline strong { color: var(--claret-deep); font-weight: 600; }
+.eligibility-start {
+  background: var(--claret);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 120ms ease;
+}
+.eligibility-start:hover { background: var(--claret-deep); }
+.eligibility-passed-text {
+  font-family: var(--serif-body);
+  font-size: 14px;
+  color: var(--ink);
+  margin: 0;
+  flex: 1;
+}
+.eligibility-passed-text strong { color: #2e7d32; }
+.eligibility-retake {
+  background: transparent;
+  border: 1px solid #c5e1c8;
+  color: var(--ink-soft);
+  border-radius: 5px;
+  padding: 5px 12px;
+  font-family: var(--sans);
+  font-size: 12px;
+  cursor: pointer;
+}
+.eligibility-retake:hover { border-color: #2e7d32; color: #2e7d32; }
+.eligibility-body { margin-top: 4px; }
+.eligibility-progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.eligibility-progress-pip {
+  height: 4px;
+  flex: 1;
+  background: var(--claret-pale);
+  border-radius: 2px;
+  transition: background 200ms ease;
+}
+.eligibility-progress-pip.active { background: var(--claret); }
+.eligibility-progress-pip.done { background: var(--claret-deep); }
+.eligibility-question {
+  display: none;
+}
+.eligibility-question.active { display: block; }
+.eligibility-q-number {
+  font-family: var(--serif-display);
+  font-style: italic;
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.eligibility-q-text {
+  font-family: var(--serif-display);
+  font-variation-settings: 'opsz' 22, 'SOFT' 60;
+  font-size: clamp(18px, 2.4vw, 22px);
+  color: var(--ink);
+  line-height: 1.3;
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+.eligibility-q-hint {
+  font-family: var(--serif-body);
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+.eligibility-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.eligibility-option {
+  background: white;
+  border: 1px solid var(--claret-pale);
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+.eligibility-option:hover {
+  border-color: var(--claret);
+  background: var(--paper-deep);
+}
+.eligibility-option.option-yes { border-color: var(--claret); }
+.eligibility-option.option-no { border-color: #cf2e2e44; color: var(--ink-soft); }
+.eligibility-option.option-unsure {
+  background: transparent;
+  border-color: var(--ink-ghost);
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+.eligibility-result {
+  display: none;
+  border-top: 1px solid var(--claret-pale);
+  margin-top: 16px;
+  padding-top: 16px;
+}
+.eligibility-result.active { display: block; }
+.eligibility-result h3 {
+  font-family: var(--serif-display);
+  font-variation-settings: 'opsz' 22, 'SOFT' 60;
+  font-size: 22px;
+  color: var(--ink);
+  margin: 0 0 6px;
+  font-weight: 500;
+}
+.eligibility-result h3 em { font-style: italic; color: var(--claret); }
+.eligibility-result.is-fail h3 em { color: var(--alert); }
+.eligibility-result p {
+  font-family: var(--serif-body);
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+.eligibility-result a.eligibility-link {
+  display: inline-block;
+  background: var(--claret);
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 600;
+  margin-right: 8px;
+}
+.eligibility-result a.eligibility-link:hover { background: var(--claret-deep); }
+.eligibility-result .eligibility-secondary {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--ink-ghost);
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--sans);
+}
+.eligibility-result .eligibility-secondary:hover { border-color: var(--ink); color: var(--ink); }
+.eligibility-back {
+  background: none;
+  border: none;
+  color: var(--ink-faint);
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 12px;
+  padding: 6px 0 0;
+  margin-top: 10px;
+  text-decoration: underline;
+}
+.eligibility-back:hover { color: var(--ink); }
+@media (max-width: 640px) {
+  .eligibility-summary { flex-direction: column; align-items: flex-start; }
+  .eligibility-start { width: 100%; }
+}
+</style>
+
+<section class="eligibility" id="eligibility" aria-labelledby="eligibility-eyebrow">
+  <div class="eligibility-card" id="eligibility-card" data-state="idle">
+
+    <!-- IDLE state: shown to first-timers -->
+    <div class="eligibility-summary">
+      <div style="flex:1; min-width:240px;">
+        <div class="eligibility-eyebrow" id="eligibility-eyebrow">
+          <span data-en>Start here, 30 seconds</span><span data-es>Empieza aquí, 30 segundos</span>
+        </div>
+        <p class="eligibility-headline">
+          <span data-en>Not sure if you can use CVC yet? <strong>Three quick questions</strong> tell you if you're eligible — before you waste time chasing an error message.</span>
+          <span data-es>¿No estás segura/o si puedes usar CVC todavía? <strong>Tres preguntas rápidas</strong> te dirán si eres elegible — antes de perseguir un mensaje de error.</span>
+        </p>
+      </div>
+      <button class="eligibility-start" id="eligibility-start" type="button">
+        <span data-en>Start check →</span><span data-es>Empezar →</span>
+      </button>
+    </div>
+
+    <!-- ACTIVE state: 3 questions -->
+    <div class="eligibility-body">
+      <div class="eligibility-progress" aria-hidden="true">
+        <div class="eligibility-progress-pip" data-pip="1"></div>
+        <div class="eligibility-progress-pip" data-pip="2"></div>
+        <div class="eligibility-progress-pip" data-pip="3"></div>
+      </div>
+
+      <!-- Q1: CCCApply -->
+      <div class="eligibility-question" data-q="1">
+        <div class="eligibility-q-number">
+          <span data-en>Question 1 of 3</span><span data-es>Pregunta 1 de 3</span>
+        </div>
+        <h3 class="eligibility-q-text">
+          <span data-en>Have you applied to a California Community College through CCCApply?</span>
+          <span data-es>¿Has aplicado a un colegio comunitario de California por CCCApply?</span>
+        </h3>
+        <p class="eligibility-q-hint">
+          <span data-en>If yes, you have a <strong>CCCID</strong> — a 7-character ID like ABC1234. CVC only works for students who already have one.</span>
+          <span data-es>Si sí, tienes un <strong>CCCID</strong> — un ID de 7 caracteres como ABC1234. CVC solo funciona si ya tienes uno.</span>
+        </p>
+        <div class="eligibility-options">
+          <button class="eligibility-option option-yes" data-answer="yes" data-next="2" type="button">
+            <span data-en>Yes, I have a CCCID</span><span data-es>Sí, tengo un CCCID</span>
+          </button>
+          <button class="eligibility-option option-no" data-answer="no" data-result="A1" type="button">
+            <span data-en>No, or not sure I have one</span><span data-es>No, o no estoy segura/o</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Q2: HS / 18+ -->
+      <div class="eligibility-question" data-q="2">
+        <div class="eligibility-q-number">
+          <span data-en>Question 2 of 3</span><span data-es>Pregunta 2 de 3</span>
+        </div>
+        <h3 class="eligibility-q-text">
+          <span data-en>Do you have a high school diploma or GED, or are you 18 or older?</span>
+          <span data-es>¿Tienes diploma de preparatoria o GED, o tienes 18 años o más?</span>
+        </h3>
+        <p class="eligibility-q-hint">
+          <span data-en>Still in high school? You can take community college classes — but you'd apply to your Teaching College directly as a special-admit student, not through CVC.</span>
+          <span data-es>¿Todavía en la prepa? Puedes tomar clases de colegio comunitario — pero aplicarías directamente al Teaching College como estudiante de admisión especial, no por CVC.</span>
+        </p>
+        <div class="eligibility-options">
+          <button class="eligibility-option option-yes" data-answer="yes" data-next="3" type="button">
+            <span data-en>Yes</span><span data-es>Sí</span>
+          </button>
+          <button class="eligibility-option option-no" data-answer="no" data-result="A4" type="button">
+            <span data-en>No, I'm still in high school</span><span data-es>No, aún estoy en la prepa</span>
+          </button>
+          <button class="eligibility-back" data-back="1" type="button">
+            <span data-en>← Back</span><span data-es>← Atrás</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Q3: HC class history -->
+      <div class="eligibility-question" data-q="3">
+        <div class="eligibility-q-number">
+          <span data-en>Question 3 of 3</span><span data-es>Pregunta 3 de 3</span>
+        </div>
+        <h3 class="eligibility-q-text">
+          <span data-en>At your Home College: have you completed at least one class — or are you in a class right now?</span>
+          <span data-es>En tu Home College: ¿has terminado al menos una clase — o estás en una clase ahora mismo?</span>
+        </h3>
+        <p class="eligibility-q-hint">
+          <span data-en>This is the rule that catches most new students. CVC's eligibility page says it directly: <em>"If this is your first term or you were recently admitted at your Home College, you must have completed a class or be taking a class that is currently in progress in order to use the Exchange."</em></span>
+          <span data-es>Esta es la regla que atrapa a la mayoría. La página de elegibilidad lo dice directamente: <em>"Si es tu primer término o fuiste admitido recientemente, debes haber completado una clase o estar tomando una clase actualmente en progreso para usar el Exchange."</em></span>
+        </p>
+        <div class="eligibility-options">
+          <button class="eligibility-option option-yes" data-answer="yes" data-result="pass" type="button">
+            <span data-en>Yes, finished one or in one now</span><span data-es>Sí, terminé una o estoy en una ahora</span>
+          </button>
+          <button class="eligibility-option option-no" data-answer="no" data-result="A7" type="button">
+            <span data-en>No, I haven't started classes yet</span><span data-es>No, aún no he empezado clases</span>
+          </button>
+          <button class="eligibility-back" data-back="2" type="button">
+            <span data-en>← Back</span><span data-es>← Atrás</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Result: PASS -->
+      <div class="eligibility-result" data-result="pass">
+        <h3><span data-en>You're eligible — <em>keep going.</em></span><span data-es>Eres elegible — <em>continúa.</em></span></h3>
+        <p>
+          <span data-en>You meet all three eligibility checks. If you're hitting an error, it's a fixable one — not a "you can't use CVC yet" block. Use the search bar below to describe what's happening.</span>
+          <span data-es>Cumples los tres requisitos. Si te aparece un error, es uno que se puede arreglar — no es un bloqueo de "aún no puedes usar CVC". Usa la barra de búsqueda abajo para describir el problema.</span>
+        </p>
+        <a href="#find" class="eligibility-link" data-collapse="1">
+          <span data-en>Search for my issue ↓</span><span data-es>Buscar mi problema ↓</span>
+        </a>
+      </div>
+
+      <!-- Result: A1 (no CCCID) -->
+      <div class="eligibility-result is-fail" data-result="A1">
+        <h3><span data-en>You'll need to <em>apply through CCCApply first.</em></span><span data-es>Necesitas <em>aplicar por CCCApply primero.</em></span></h3>
+        <p>
+          <span data-en>CVC is built for students who are already enrolled at a California Community College. The first step is applying through CCCApply (free) — once you have a CCCID, come back here.</span>
+          <span data-es>CVC es para estudiantes que ya están inscritos en un colegio comunitario de California. El primer paso es aplicar por CCCApply (gratis) — cuando tengas un CCCID, vuelve aquí.</span>
+        </p>
+        <a href="https://www.cccapply.org/" target="_blank" rel="noopener" class="eligibility-link">
+          <span data-en>Apply at CCCApply →</span><span data-es>Aplicar en CCCApply →</span>
+        </a>
+        <button class="eligibility-secondary" data-restart="1" type="button">
+          <span data-en>Restart check</span><span data-es>Empezar de nuevo</span>
+        </button>
+      </div>
+
+      <!-- Result: A4 (under 18) -->
+      <div class="eligibility-result is-fail" data-result="A4">
+        <h3><span data-en>CVC isn't the path — <em>but community college is.</em></span><span data-es>CVC no es la ruta — <em>pero el colegio comunitario sí.</em></span></h3>
+        <p>
+          <span data-en>If you're still in high school and want to take a college class, you'd apply to that college directly as a "special-admit" or "dual-enrollment" student. Each college has its own form. CVC doesn't handle this enrollment type.</span>
+          <span data-es>Si todavía estás en la prepa y quieres tomar una clase universitaria, aplicarías directamente a ese colegio como estudiante de "admisión especial" o "inscripción dual". Cada colegio tiene su propio formulario. CVC no maneja este tipo de inscripción.</span>
+        </p>
+        <p>
+          <span data-en>Search "<strong>special admit dual enrollment</strong>" + the college name. Your high school counselor can also help.</span>
+          <span data-es>Busca "<strong>special admit dual enrollment</strong>" + el nombre del colegio. Tu consejero de la prepa también te puede ayudar.</span>
+        </p>
+        <button class="eligibility-secondary" data-restart="1" type="button">
+          <span data-en>Restart check</span><span data-es>Empezar de nuevo</span>
+        </button>
+      </div>
+
+      <!-- Result: A7 (matriculation gate) -->
+      <div class="eligibility-result is-fail" data-result="A7">
+        <h3><span data-en>You're <em>almost</em> there — but not yet.</span><span data-es>Estás <em>casi</em> ahí — pero todavía no.</span></h3>
+        <p>
+          <span data-en>This is the most common eligibility miss. Your Home College needs to see you in a class first — even one in progress counts. Once you're registered for any class at your HC, the Exchange will let you in.</span>
+          <span data-es>Este es el bloqueo más común. Tu Home College necesita verte en una clase primero — incluso una en progreso cuenta. Una vez que estés inscrita/o en cualquier clase en tu HC, el Exchange te dejará entrar.</span>
+        </p>
+        <p>
+          <span data-en><strong>What to do now:</strong> register for a class at your Home College through their normal student portal. Then come back to CVC to cross-enroll elsewhere. If your HC isn't open for registration yet, wait until it is.</span>
+          <span data-es><strong>Qué hacer ahora:</strong> inscríbete en una clase en tu Home College por su portal estudiantil normal. Después vuelve a CVC para inscribirte en otro colegio. Si tu HC aún no abre inscripciones, espera hasta que abra.</span>
+        </p>
+        <a href="#sym-new-student" class="eligibility-link">
+          <span data-en>Read the full explanation →</span><span data-es>Leer la explicación completa →</span>
+        </a>
+        <button class="eligibility-secondary" data-restart="1" type="button">
+          <span data-en>Restart check</span><span data-es>Empezar de nuevo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PASSED state: shown to returning students who already passed -->
+    <div class="eligibility-summary eligibility-passed-summary" style="display:none;">
+      <p class="eligibility-passed-text">
+        <strong><span data-en>✓ Eligibility confirmed</span><span data-es>✓ Elegibilidad confirmada</span></strong>
+        <span class="eligibility-passed-when" id="eligibility-passed-when"></span>
+      </p>
+      <button class="eligibility-retake" id="eligibility-retake" type="button">
+        <span data-en>Retake</span><span data-es>Repetir</span>
+      </button>
+    </div>
+
+  </div>
+</section>
 
 <!-- ═══════════════════════════════ FIND / SMART SEARCH ═══════════════════════════════ -->
 
@@ -9903,15 +10341,143 @@ document.getElementById('find-results').addEventListener('click', (e) => {
 })();
 
 // ════════════════════════════════════════════════════════════════════
+// ELIGIBILITY SELF-CHECK — 3-question gate at top of page
+// ════════════════════════════════════════════════════════════════════
+
+(function initEligibility() {
+  const card = document.getElementById('eligibility-card');
+  if (!card) return;
+
+  const STORAGE_KEY = 'cvc-eligibility-check';
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); } catch (e) {}
+
+  const startBtn = document.getElementById('eligibility-start');
+  const retakeBtn = document.getElementById('eligibility-retake');
+  const passedSummary = card.querySelector('.eligibility-passed-summary');
+  const idleSummary = card.querySelector('.eligibility-summary:not(.eligibility-passed-summary)');
+  const passedWhen = document.getElementById('eligibility-passed-when');
+  const pips = card.querySelectorAll('.eligibility-progress-pip');
+  const questions = card.querySelectorAll('.eligibility-question');
+  const results = card.querySelectorAll('.eligibility-result');
+
+  function setState(state) {
+    card.dataset.state = state;
+  }
+
+  function showQuestion(qNum) {
+    questions.forEach(q => q.classList.toggle('active', q.dataset.q === String(qNum)));
+    results.forEach(r => r.classList.remove('active'));
+    pips.forEach((pip, idx) => {
+      pip.classList.toggle('active', idx + 1 === qNum);
+      pip.classList.toggle('done', idx + 1 < qNum);
+    });
+    setState('active');
+  }
+
+  function showResult(resultKey) {
+    questions.forEach(q => q.classList.remove('active'));
+    results.forEach(r => r.classList.toggle('active', r.dataset.result === resultKey));
+    pips.forEach(pip => pip.classList.add('done'));
+    setState('result');
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        result: resultKey,
+        when: Date.now()
+      }));
+    } catch (e) {}
+
+    if (typeof track === 'function') track('eligibility_result', { result: resultKey });
+
+    if (resultKey === 'pass') {
+      setTimeout(() => {
+        if (card.dataset.state === 'result') showPassed(Date.now());
+      }, 4500);
+    }
+  }
+
+  function showPassed(when) {
+    idleSummary.style.display = 'none';
+    passedSummary.style.display = 'flex';
+    questions.forEach(q => q.classList.remove('active'));
+    results.forEach(r => r.classList.remove('active'));
+    setState('passed');
+    if (passedWhen) {
+      const d = new Date(when);
+      const dateStr = d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      passedWhen.textContent = ' · ' + dateStr;
+    }
+  }
+
+  function reset() {
+    idleSummary.style.display = 'flex';
+    passedSummary.style.display = 'none';
+    questions.forEach(q => q.classList.remove('active'));
+    results.forEach(r => r.classList.remove('active'));
+    pips.forEach(pip => { pip.classList.remove('active'); pip.classList.remove('done'); });
+    setState('idle');
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+  }
+
+  // Restore prior state
+  if (saved && saved.result === 'pass') {
+    showPassed(saved.when);
+  }
+
+  if (startBtn) startBtn.addEventListener('click', () => {
+    showQuestion(1);
+    if (typeof track === 'function') track('eligibility_start');
+  });
+
+  if (retakeBtn) retakeBtn.addEventListener('click', () => {
+    reset();
+    showQuestion(1);
+  });
+
+  // Question button delegation
+  card.addEventListener('click', (e) => {
+    const opt = e.target.closest('.eligibility-option');
+    if (opt) {
+      const next = opt.dataset.next;
+      const result = opt.dataset.result;
+      if (next) showQuestion(Number(next));
+      else if (result) showResult(result);
+      return;
+    }
+    const back = e.target.closest('.eligibility-back');
+    if (back) {
+      showQuestion(Number(back.dataset.back));
+      return;
+    }
+    const restart = e.target.closest('[data-restart]');
+    if (restart) {
+      reset();
+      showQuestion(1);
+      return;
+    }
+    const collapse = e.target.closest('[data-collapse]');
+    if (collapse) {
+      // smooth-scroll handled by anchor; just collapse to passed
+      setTimeout(() => showPassed(Date.now()), 400);
+      return;
+    }
+  });
+})();
+
+// ════════════════════════════════════════════════════════════════════
 // PER-ENTRY "WAS THIS HELPFUL?" FEEDBACK
 // ════════════════════════════════════════════════════════════════════
 
 (function initHelpful() {
   const STORAGE_KEY = 'cvc-faq-helpful-votes';
+  const REASONS_KEY = 'cvc-faq-helpful-reasons';
   let votes = {};
+  let reasons = {};
   try { votes = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) {}
+  try { reasons = JSON.parse(localStorage.getItem(REASONS_KEY) || '{}'); } catch (e) {}
 
-  const allEntries = document.querySelectorAll('details[id^="t-"], details[id^="sym-"], details[id^="err-"], details[id^="lim-"], details[id^="m-"]');
+  const allEntries = document.querySelectorAll('details[id^="t-"], details[id^="sym-"], details[id^="err-"], details[id^="lim-"], details[id^="m-"], details[id^="urgent-"], details[id^="q-"], details[id^="state-"]');
 
   allEntries.forEach(entry => {
     const body = entry.querySelector('.entry-body, .body, .entry-action');
@@ -9921,9 +10487,10 @@ document.getElementById('find-results').addEventListener('click', (e) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'helpful';
     wrapper.innerHTML = `
-      <span class="helpful-q">Was this helpful?</span>
-      <button type="button" class="helpful-btn" data-vote="up" aria-label="This was helpful">helpful</button>
-      <button type="button" class="helpful-btn" data-vote="down" aria-label="This wasn't helpful">not really</button>
+      <span class="helpful-q"><span data-en>Was this helpful?</span><span data-es>¿Te sirvió?</span></span>
+      <button type="button" class="helpful-btn" data-vote="up" aria-label="This was helpful"><span data-en>yes</span><span data-es>sí</span></button>
+      <button type="button" class="helpful-btn" data-vote="down" aria-label="This wasn't helpful"><span data-en>not really</span><span data-es>no del todo</span></button>
+      <span class="helpful-thanks" hidden></span>
     `;
     // append to body — find the deepest natural container
     const container = entry.querySelector('.entry-body') || entry.querySelector('.body') || body;
@@ -9932,6 +10499,36 @@ document.getElementById('find-results').addEventListener('click', (e) => {
     if (votes[entry.id]) {
       const btn = wrapper.querySelector(`[data-vote="${votes[entry.id]}"]`);
       if (btn) btn.classList.add('active');
+      if (votes[entry.id] === 'down') injectFollowup(wrapper, entry.id);
+    }
+
+    function injectFollowup(wrap, id) {
+      if (wrap.querySelector('.helpful-followup')) return;
+      const f = document.createElement('div');
+      f.className = 'helpful-followup';
+      f.innerHTML = `
+        <label class="helpful-followup-label">
+          <span data-en>What would have helped? <em>(optional — stays in your browser)</em></span>
+          <span data-es>¿Qué te habría ayudado? <em>(opcional — se queda en tu navegador)</em></span>
+        </label>
+        <textarea class="helpful-followup-input" rows="2" maxlength="280"
+          placeholder="e.g., I needed the exact form name, or this didn't match my situation"
+          data-placeholder-en="e.g., I needed the exact form name, or this didn't match my situation"
+          data-placeholder-es="ej., necesitaba el nombre exacto del formulario, o no era mi caso"></textarea>
+      `;
+      wrap.appendChild(f);
+      const ta = f.querySelector('textarea');
+      if (reasons[id]) ta.value = reasons[id];
+      let saveTimer;
+      ta.addEventListener('input', () => {
+        clearTimeout(saveTimer);
+        saveTimer = setTimeout(() => {
+          reasons[id] = ta.value.slice(0, 280);
+          try { localStorage.setItem(REASONS_KEY, JSON.stringify(reasons)); } catch (e) {}
+          track('helpful_reason', { id, len: ta.value.length });
+        }, 600);
+      });
+      if (typeof applyLang === 'function') applyLang();
     }
 
     wrapper.addEventListener('click', (e) => {
@@ -9943,15 +10540,18 @@ document.getElementById('find-results').addEventListener('click', (e) => {
       btn.classList.add('active');
       votes[entry.id] = vote;
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(votes)); } catch (e) {}
-      // append a thank-you (only once)
-      if (!wrapper.querySelector('.helpful-thanks')) {
-        const thanks = document.createElement('span');
-        thanks.className = 'helpful-thanks';
-        thanks.textContent = vote === 'up' ? 'thanks!' : 'noted — what would help?';
-        wrapper.appendChild(thanks);
+      const thanks = wrapper.querySelector('.helpful-thanks');
+      thanks.hidden = false;
+      thanks.innerHTML = vote === 'up'
+        ? '<span data-en>thanks!</span><span data-es>¡gracias!</span>'
+        : '<span data-en>noted — tell us more below if you want</span><span data-es>anotado — cuéntanos abajo si quieres</span>';
+      if (vote === 'down') {
+        injectFollowup(wrapper, entry.id);
       } else {
-        wrapper.querySelector('.helpful-thanks').textContent = vote === 'up' ? 'thanks!' : 'noted — what would help?';
+        const f = wrapper.querySelector('.helpful-followup');
+        if (f) f.remove();
       }
+      if (typeof applyLang === 'function') applyLang();
       track('helpful_vote', { id: entry.id, vote });
     });
   });
